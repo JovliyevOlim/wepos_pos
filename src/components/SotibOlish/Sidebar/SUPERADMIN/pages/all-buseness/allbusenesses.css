@@ -1,0 +1,342 @@
+.spbtn{
+    border-radius: 5px;
+    background: #49e60f;
+    color: #fff;
+    font-size: 15px;
+    margin: 5px;
+    padding:0 5px;
+    transition: 0.2s all ease-in-out;
+}
+.spbtn:hover{
+    background: rgb(60, 248, 13);
+}
+.redbtn{
+    border-radius: 5px;
+    background: red;
+    color: #fff;
+    font-size: 15px;
+    margin: 5px;
+    padding:0 5px;
+    transition: 0.2s all ease-in-out;
+}
+.redbtn:hover{
+    background: rgba(255, 0, 0, 0.78);
+}
+.bluebtn{
+    border-radius: 5px;
+    background: blue;
+    padding:0 5px;
+    color: #fff;
+    font-size: 15px;
+    margin: 5px;
+    transition: 0.2s all ease-in-out;
+}
+.bluebtn:hover{
+    background: rgba(0, 0, 255, 0.65);
+}
+.rowStyleSuperAdmin{
+       border-radius: 8px;
+       padding: 20px 30px 20px 30px;
+       background-color: #FFFFFF;
+}
+
+.rowStyleSuperAdmin .headerTextBox{
+       display: flex;
+       align-items: baseline;
+       margin-bottom: 30px;
+}
+.rowStyleSuperAdmin .sana input:hover{
+      cursor: pointer;
+}
+.textHeader h2{
+       margin-right: 10px;
+       font-size: 24px;
+
+}
+.rowStyleSuperAdmin select{
+       width: 100%;
+       height: 32px;
+       background-color:#F5F5F7;
+       padding-left: 4px;
+       font-size: 14px;
+       margin-bottom: 30px;
+}
+.rowStyleSuperAdmin .qoshishBH{
+       margin-bottom: 28px;
+}
+.rowStyleSuperAdmin .btnHaridlar{
+       display: flex;
+       justify-content: space-between;
+       margin-top: 32px;
+}
+.rowStyleSuperAdmin .sana input{
+       border: 1px solid grey;
+       margin-bottom: 32px;
+}
+.rowStyleSuperAdmin .haridlar{
+       margin-top: 64px;
+}
+
+.rowStyleSuperAdmin select{
+       width: 100%;
+       height: 32px;
+       background-color:#F5F5F7;
+}
+
+.rowStyleSuperAdmin select:hover{
+       cursor: pointer;
+}
+
+.rowStyleSA2{
+       justify-content: space-between;
+       border-radius: 8px;
+       padding: 20px 30px 20px 30px;
+       box-shadow: 0px 10px 20px grey;
+       background-color: #FFFF;
+       margin-top: 32px;
+}
+
+.textHeader{
+       display: flex;
+       align-items: baseline;
+}
+.textHeader h2{
+       margin-right: 10px;
+       font-size: 24px;
+
+}
+
+.rowStyleSA2 .qoshishBH{
+       display: flex;
+       justify-content: end;
+       border-radius: 16px;
+}
+.rowStyleSA2 .izlashBH{
+       display: flex;
+       justify-content: space-between;
+       margin-top: 32px;
+       
+}
+.rowStyleSA2 .izlashBH .izlashBox1{
+       display: flex;
+}
+
+.rowStyleSA2 .izlashBH p{
+       text-align: center;
+}
+.rowStyleSA2 .izlashBH select{
+       height: 28px;
+       border-radius: 4px;
+       border: 1px solid #6b6363a0;
+       margin-left: 4px;
+}
+.rowStyleSA2 .izlashBH button:hover{
+       cursor: pointer;
+       background-color: #e0dddd;
+}
+.rowStyleSA2 .izlashBH button{
+       height: 28px;
+       border-radius: 4px;
+       border: 1px solid #6b6363a0;
+       margin-left: 4px;
+       background-color: #f3efef;
+       font-size: 11px;
+}
+.rowStyleSA2 .izlashBH button img{
+       width: 16px;
+}
+
+.rowStyleSA2 .izlashBH input{
+       height: 28px;
+       border-radius: 4px;
+       border: 1px solid #6b6363a0;
+       background-color: #FFFF;
+       padding: 8px 0px 8px 12px;
+       margin-left: 24px;
+}
+.table tbody tr td .taxrirlash{
+       background-color: #0A58CA;
+       color: #FFFF;
+       border-radius: 4px;
+       border: none;
+       margin-right: 8px;
+       font-size: 12px;
+       padding: 2px;
+}
+.table tbody tr td .taxrirlash:hover{
+       background-color: #0947a5;
+}
+.table tbody tr td .korish{
+       background-color: #10e7d9;
+       color: #FFFF;
+       border-radius: 4px;
+       border: none;
+       margin-right: 8px;
+       font-size: 12px;
+       padding: 2px;
+}
+.table tbody tr td .korish:hover{
+       background-color: #0cd3c6;
+}
+.table tbody tr td .ochirish{
+       background-color: red;
+       color: #FFFF;
+       border-radius: 4px;
+       border: none;
+       margin-right: 8px; 
+       font-size: 12px;
+       padding: 2px;
+}
+.table tbody tr td .amallar{
+       background-color: rgb(10, 121, 138);
+       color: #FFFF;
+       border-radius: 4px;
+       border: none;
+       margin-right: 8px; 
+       font-size: 12px;
+       padding: 2px;
+}
+.table tbody tr td .ochirish:hover{
+       background-color: rgb(216, 25, 25);
+}
+.table tbody tr td button img{
+       width: 18px;
+       margin-bottom: 2px;
+}
+.rowStyleSA2 .sahifalar{
+       display: flex;
+       justify-content: end;
+}
+.rowStyleSA2 .sahifalar :first-child{
+       border-radius: 4px 0px 0px 4px;
+       border: 1px solid #6b6363a0;
+}
+.rowStyleSA2 .sahifalar button{
+       border: 1px solid #6b6363a0;
+       background-color: #FFFF;
+       color:#1f1c1ca0;
+}
+.sahifalar :last-child{
+     border-radius: 0px 4px 4px 0px;
+     
+}
+
+@media screen and (max-width: 425.9px){
+    .rowStyleSuperAdmin .headerTextBox {
+        display: block;
+    }
+    .rowStyleSA2 .qoshishBH .sarlavha{
+               font-size: 14px;
+        }
+        .rowStyleSA2 .izlashBH{
+               display: block;
+        }
+        .rowStyleSA2 .izlashBH .izlashBox1{
+               display: grid;
+               justify-content: center;
+               grid-template-columns: 110px 110px;
+               text-align: center;
+        }
+        .rowStyleSA2 .izlashBH .izlashBox2{
+               display: flex;
+               justify-content: center;
+        }
+        .rowStyleSA2 .izlashBH .izlashBox2 input{
+               width: 60%;
+               margin: 8px 0px 0px 4px;
+
+        }
+        .rowStyleSA2 .izlashBH .izlashBox1 select{
+               margin-bottom: 8px;
+        }
+        .rowStyleSA2 .izlashBH .izlashBox1 button{
+               line-height: 4px;
+               font-size: 10px;
+               margin-bottom: 8px;
+        }
+        .rowStyleSA2 p{
+               font-size: 12px;
+               line-height: 12px;
+        }
+        .rowStyleSA2 .qoshishBH h5{
+               font-size: 17px;
+        }
+        .rowStyleSA2 .izlashBH{
+               display: block;
+        }
+        .rowStyleSA2 .izlashBH .izlashBox1{
+               display: grid;
+               justify-content: center;
+               grid-template-columns: 110px 110px;
+               text-align: center;
+        }
+        .rowStyleSA2 .izlashBH .izlashBox2{
+               display: flex;
+               justify-content: center;
+        }
+        .rowStyleSA2 .izlashBH .izlashBox2 input{
+               width: 60%;
+               margin: 8px 0px 0px 4px;
+
+        }
+        .rowStyleSA2 .izlashBH .izlashBox1 select{
+               margin-bottom: 8px;
+        }
+        .rowStyleSA2 .izlashBH .izlashBox1 button{
+               line-height: 4px;
+               font-size: 10px;
+               margin-bottom: 8px;
+        }
+        .rowStyleSA2 p{
+               font-size: 12px;
+               line-height: 12px;
+        }
+        
+ }
+ 
+ @media (min-width: 426px) and (max-width: 768.9px){
+     .rowStyleSuperAdmin .headerTextBox {
+         display: block;
+     }
+        .rowStyleSA2 .izlashBH{
+               display: block;
+        }
+        .rowStyleSA2 .izlashBH .izlashBox1{
+               display: grid;
+               justify-content: center;
+               grid-template-columns: 33% 33% 33%;
+               text-align: center;
+        }
+        .rowStyleSA2 .qoshishBH .sarlavha{
+              font-size: 15px;
+       }
+        .rowStyleSA2 .izlashBH .izlashBox2{
+               display: flex;
+               justify-content: center;
+        }
+        .rowStyleSA2 .izlashBH .izlashBox2 input{
+               width: 70%;
+               margin: 8px 0px 0px 4px;
+ 
+        }
+        .rowStyleSA2 .izlashBH .izlashBox1 button{
+               line-height: 4px;
+               margin-bottom: 8px;
+        }
+ }
+ @media (min-width: 769px) and (max-width: 1024.9px){
+        .rowStyleSA2 .izlashBH .izlashBox1{
+               display: grid;
+               grid-template-columns:25% 25% 25% 25%;
+        }
+        .rowStyleSA2 .izlashBH .izlashBox1 button{
+               line-height: 4px;
+               margin-bottom: 8px;
+        }
+          
+ }
+ @media (min-width: 1025px) and (max-width: 1199.9px){
+        .rowStyleSA2 .izlashBH .izlashBox1 button{
+               line-height: 4px;
+        }
+ }

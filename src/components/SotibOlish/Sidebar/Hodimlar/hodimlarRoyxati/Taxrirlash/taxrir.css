@@ -1,0 +1,25 @@
+.ht{
+    justify-content: space-between;
+       border-radius: 8px;
+       padding: 20px 30px 20px 30px;
+       background-color: #FFFF;
+       margin: 20px;
+
+}
+@media (max-width: 425.9px) {
+    .ht .btnLogin{
+       font-size: 12px; 
+       padding: 4px;
+    }
+    .ht .btnSaqlash{
+       font-size: 12px; 
+    }
+      
+}
+
+input.placecolor::placeholder{
+    color: red;
+}
+.placecolor2::placeholder{
+    color:gray;
+}

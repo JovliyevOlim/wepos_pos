@@ -1,0 +1,94 @@
+.containerSet{
+    display:flex;
+    /* background: #FFFFFF; */
+    /* height: 100vh; */
+    margin: 32px 11px 0px 11px;
+}
+.containerSet .dashboardBox{
+    display: block;
+    width: 20%;
+    background-color: #FFFFFF;
+    margin-right: 12px;
+    padding: 12px;
+    
+}
+.containerSet .blokSet{
+    width: 80%;
+}
+.containerSet .dashboardBox button{
+    background: #FFFFFF;
+    border: 1px solid #6f717a;
+    box-sizing: border-box;
+    border-radius: 8px;
+    margin-top: 2px;
+    color: #525357;
+}
+.containerSet .dashboardBox button:hover{
+    background-color: blue;
+    color: #FFFFFF;
+}
+
+@media (max-width: 425.9px){
+    .containerSet{
+        display: block;
+    }
+    .containerSet .dashboardBox{
+        display: grid;
+        grid-gap: 4px;
+        grid-template-columns: 50% 50%;
+        width: 100%;
+        margin-right: 0px;
+        padding: 12px;
+        margin-bottom: 10px;
+    }
+    .containerSet .dashboardBox button{
+        font-size: 12px;
+    }
+    .containerSet .blokSet{
+        width: 100%;
+    }
+}
+
+@media (min-width: 426px) and (max-width: 768.9px){
+    .containerSet{
+        display: block;
+    }
+    .containerSet .dashboardBox{
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+        grid-gap: 4px;
+        width: 100%;
+        margin-right: 0px;
+        padding: 12px;
+        margin-bottom: 10px;
+    }
+    .containerSet .blokSet{
+        width: 100%;
+    }
+    .containerSet .dashboardBox button{
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1112.9px){
+    .containerSet{
+        display: block;
+    }
+    .containerSet .dashboardBox{
+        display: grid;
+        grid-template-columns: 24% 24% 24% 24%;
+        grid-gap: 4px;
+        width: 100%;
+        margin-right: 0px;
+        padding: 12px;
+        margin-bottom: 10px;
+    }
+    .containerSet .blokSet{
+        width: 100%;
+    }
+    .containerSet .dashboardBox button{
+        font-size: 12px;
+    }
+    
+}
+

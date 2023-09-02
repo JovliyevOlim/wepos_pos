@@ -1,0 +1,35 @@
+.list .imgDiv{
+    display: flex;
+    margin-left: 0;
+    margin-top: 15px;
+    align-items: center;
+}
+.list h6{
+    margin-left: 10px;
+    cursor: pointer;
+    transition: 0.2s linear;
+}
+.list h6:hover{
+    margin-left: 10px;
+    cursor: pointer;
+    color: #0044FF;
+}
+.list .xarajatImg{
+    cursor: pointer;
+    margin-left: 28%;
+}
+.list ul li{
+    margin-top: 5px;
+}
+.list ul{
+    display: block;
+    margin-left: 15%;
+}
+.list .mahsulotXarajat{
+    color: #3f3c3c;
+    text-decoration: none;
+}
+.xarajat{
+    max-height: 250px;
+    transition:all 0.3s ease;
+}

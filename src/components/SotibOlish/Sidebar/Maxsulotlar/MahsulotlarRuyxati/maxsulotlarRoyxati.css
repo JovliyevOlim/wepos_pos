@@ -1,0 +1,11 @@
+.productStatistic{
+       border-radius: 30px;
+       padding: 5px 10px;
+       text-align: center;
+       font-family: "TTFirsNeue" ,sans-serif !important;
+       font-size: 18px !important;
+       font-style: normal !important;
+       font-weight: 600 !important;
+       line-height: 20px !important;
+       border-width: 2px !important;
+}

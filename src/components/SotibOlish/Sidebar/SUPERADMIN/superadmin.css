@@ -1,0 +1,80 @@
+
+.textHeaderSuperAdmin{
+    display: flex;
+    align-items: baseline;
+}
+.rowStyleSA{
+    display: flex;
+    border-radius: 8px;
+    padding: 20px 30px 20px 30px;
+    background-color: #FFFF;
+}
+.rowStyleSA button{
+    margin: 0px 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    color: rgb(138, 134, 134);
+}
+.rowStyleSA button:hover{
+    color: black;
+}
+.rowStyleSA button img{
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
+
+}
+.textHeaderSuperAdmin h2{
+    margin-right: 10px;
+    font-size: 24px;
+}
+@media screen and (max-width: 425.9px) {
+    .rowStyleSA{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .rowStyleSA a button{
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+}
+@media (min-width: 426px) and (max-width: 767.9px){
+    .rowStyleSA{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .rowStyleSA a button{
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+}
+@media (min-width: 768px) and (max-width: 1023.9px) {
+    .rowStyleSA{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .rowStyleSA a button{
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+}
+@media (min-width: 1024px){
+    .rowStyleSA{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+    .rowStyleSA a button{
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+}

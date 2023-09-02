@@ -1,0 +1,120 @@
+.dashboard{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.dashboard-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.dashboard-header-body{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.dashboard-text{
+    margin: 0;
+    color:  #071A33;
+    font-size: 32px;
+    font-family: "TTFirsNeue" ,sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.dashboard-this-day{
+    margin: 5px;
+    color: #9A9FA6;
+    font-family: "TTFirsNeue" ,sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 142.857% */
+}
+.ant-segmented-group{
+    display: flex !important;
+    padding: 7px 6px !important;
+    gap: 8px !important;
+    border-radius: 8px !important;
+    background: #F5F6F6 !important;
+}
+.ant-segmented-item{
+    padding: 7px 40px !important;
+    background: transparent !important;
+    color:  #071A33 !important;
+    text-align: center !important;
+    height: 30px !important;
+    font-feature-settings: 'clig' off, 'liga' off !important;
+    font-family: "TTFirsNeue" ,sans-serif !important;
+    font-size: 15px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    line-height: 16px !important;
+}
+.ant-segmented .ant-segmented-item-label{
+    min-height: 1;
+    line-height: 1;
+}
+.ant-segmented-item-selected{
+    background: #FFF !important;
+    gap: 8px !important;
+    border-radius: 6px !important;
+    box-shadow: 0px 0px 4px 0px rgba(150, 166, 194, 0.16) !important;
+}
+.dashboard-datepicker{
+    font-family: "TTFirsNeue" ,sans-serif;
+    border-radius: 8px;
+    background: #F5F6F6;
+    padding: 9px 18px;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+.ant-select{
+    height:44px !important;
+    background: #F5F6F6 !important;
+    border-radius: 8px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+.ant-select-selector{
+    font-family: "TTFirsNeue" ,sans-serif !important;
+    padding: 9px 18px !important;
+    color: #071A33 !important;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    height: 100% !important;
+    line-height: 20px !important;
+    background: transparent !important;
+    border: none!important;
+    outline: none !important;
+}
+.ant-select-selection-item{
+    display:flex !important;
+    text-align: start !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+.dashboard-day-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 14px 20px;
+    gap: 8px;
+    border-radius: 8px;
+    background:  #1AA6E1;
+    color:  #FFF;
+    text-align: center;
+    font-family: "TTFirsNeue" ,sans-serif;
+    font-feature-settings: 'clig' off, 'liga' off;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+}
+@media (min-width: 1024px) and (max-width:1439.9px){
+    .dashboard-header-body{
+        display: none;
+    }
+}

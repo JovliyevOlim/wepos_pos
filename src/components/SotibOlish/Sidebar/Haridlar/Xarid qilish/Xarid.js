@@ -1,0 +1,597 @@
+import './xarid.css'
+import React, {useEffect, useState,useRef} from "react";
+import {ModalBody, ModalHeader, ModalFooter, Modal} from "reactstrap";
+import {connect} from "react-redux";
+import XaridReducer, {
+    getPurchaseById,
+    saveXarid,
+    editXarid
+} from '../reducer/XaridReducer'
+import users from "../../../../../reducer/users";
+import {useHistory} from 'react-router-dom'
+import {toast} from "react-toastify";
+import TaminotReducer, {
+    saveTaminot,
+    getAllSupplier
+} from "../../Hamkorlar/reducer/TaminotReducer";
+import PayReducer, {getPay} from "../../../../../reducer/PayReducer";
+import {useTranslation} from "react-i18next";
+import {ImCancelCircle} from "react-icons/im";
+import {useForm} from "react-hook-form";
+import ModalLoading from "../../../../ModalLoading";
+import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css'
+import MaxsulotlarRoyxariReducer, {getBarcodeAndName} from "../../Maxsulotlar/reducer/MaxsulotlarRoyxariReducer";
+
+
+function Xarid({
+                   getPurchaseById,
+                   PayReducer,
+                   saveXarid,
+                   saveTaminot,
+                   editXarid,
+                   XaridReducer,
+                   users,
+                   match,
+                   getPay,
+                   TaminotReducer,
+                   getAllSupplier,
+                   getBarcodeAndName,
+                   MaxsulotlarRoyxariReducer
+               }) {
+
+    const {t} = useTranslation()
+    const history = useHistory()
+    const [activeSupplier, setActiveSupplier] = useState(false);
+    const [supplierName, setSupplierName] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
+    const [isCheck, setIsCheck] = useState(false)
+    const [mainBranchId, setMainBranchId] = useState(null)
+    const [isView, setIsView] = useState(false)
+    const [search, setSearch] = useState('')
+    const [paidSum, setPaidSum] = useState(0)
+    const [saveModal, setSaveModal] = useState(false)
+    const [userId, setUserId] = useState('')
+    const {register, reset, handleSubmit, resetField, getValues, setValue, formState: {errors}} = useForm()
+
+    const [XaridArrayPost, setXaridArrayPost] = useState([])
+    const [totalQuantity, setTotalQuantity] = useState(0)
+    const [totalSumPurchase, setTotalSumPurchase] = useState(0)
+    const [totalLastSumPurchase, setLastTotalSumPurchase] = useState(0)
+    const inputRef = useRef()
+
+    function toggleSupplier() {
+        setActiveSupplier(!activeSupplier)
+        setSupplierName('')
+        setPhoneNumber('')
+        setIsCheck(false)
+    }
+
+
+    function XaridSearch(e) {
+        setSearch(e.target.value)
+        setIsView(true)
+        getBarcodeAndName({
+            branchId: mainBranchId ? mainBranchId : users.branchId,
+            name: e.target.value
+        })
+    }
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            return false;
+        }
+    };
+    function CalcTotalSum(array) {
+        console.log(array)
+        let totalSum = 0
+        let totalQuantity = 0
+        array.map(item => {
+                totalQuantity += parseFloat(item.quantity)
+                totalSum += parseFloat(item.quantity * item.buyPrice)
+            }
+        )
+        setTotalSumPurchase(totalSum)
+        setTotalQuantity(totalQuantity)
+        setValue('paidSum',totalSum)
+        setPaidSum(totalSum)
+    }
+
+    function ComboChangeAmount(e, index) {
+        let b = XaridArrayPost
+        b[index][e.target.name] = e.target.value
+        b[index].totalSum = parseFloat(b[index].quantity * b[index].buyPrice)
+        let a = [...XaridArrayPost]
+        setXaridArrayPost(a)
+        CalcTotalSum(a)
+    }
+
+
+    function AddXaridArray(item) {
+        setIsView(false)
+        setSearch('')
+        let a = XaridArrayPost
+        let find = XaridArrayPost.some(val => val.productId === item.id)
+        if (find) {
+            toast.warning('Mahsulot jadvalda bor')
+        } else {
+            a.push({
+                buyPrice: item.buyPrice,
+                salePrice: item.salePrice,
+                productId: item.id,
+                quantity: 0,
+                delete: false,
+                totalSum: 0,
+                amount: item.amount,
+                name: item.name,
+                measurement: item.measurementName
+            })
+        }
+
+        setXaridArrayPost(a)
+    }
+
+    const [deleteEdit, setDeleteEdit] = useState(false)
+
+    function DeleteXaridArrayPost(indx, purchasesId) {
+        if (purchasesId) {
+            XaridArrayPost?.map((item, index) => {
+                if (index === indx) {
+                    item.delete = true
+                }
+            })
+        } else {
+            XaridArrayPost?.map((item, index) => {
+                if (indx === index) {
+                    XaridArrayPost.splice(index, 1)
+                }
+            })
+        }
+        let a = [...XaridArrayPost]
+        setXaridArrayPost(a)
+        let sendArray = a.filter(item=>item.delete === false)
+        CalcTotalSum(sendArray)
+    }
+
+
+    useEffect(() => {
+        if (MaxsulotlarRoyxariReducer.productSearch) {
+            let findProduct = MaxsulotlarRoyxariReducer.productSearch
+                .find(val => val.barcode === search || val.name.toLowerCase() === search.toLowerCase())
+            console.log(findProduct)
+            if (findProduct) {
+                AddXaridArray(findProduct)
+                inputRef.current.focus()
+                setSearch('')
+            }
+            // else {
+            //     inputRef.current.focus()
+            // }
+        }
+        if (MaxsulotlarRoyxariReducer.isClearInput) {
+            setSearch('')
+        }
+    }, [MaxsulotlarRoyxariReducer.getBoolean])
+
+
+    useEffect(() => {
+        getPay(users.businessId)
+        if (match.params.id) {
+            getPurchaseById(match.params.id)
+        }
+    }, [])
+
+    useEffect(() => {
+        if (match.params.id) {
+            editX()
+        }
+    }, [XaridReducer.purchaseOne])
+
+
+    function editX() {
+
+        if (XaridReducer.purchaseOne?.length > 0) {
+            XaridReducer.purchaseOne.map(item => {
+                setValue('branchId', item?.branchId)
+                setMainBranchId(item?.branchId)
+                setValue('paidSum', item?.paidSum)
+                setValue('paymentStatus', item?.paymentStatus)
+                setValue('supplierId', item?.supplierId)
+                setValue('paymentMethodId', item?.paymentMethodId)
+                setValue('description', item?.description)
+                setTotalSumPurchase(item?.totalSum)
+                setLastTotalSumPurchase(item?.totalSum)
+                setPaidSum(item?.paidSum)
+                setUserId(item?.userId)
+                let a = []
+                item?.purchaseProductDtoList?.map(item => {
+                    a.push({
+                        buyPrice: item?.buyPrice,
+                        productId: item?.productId,
+                        quantity: item.quantity,
+                        salePrice: item.salePrice,
+                        delete: item.delete,
+                        totalSum: item.totalSum,
+                        name: item?.productName,
+                        measurement: item.measurementName,
+                        amount: item.amount,
+                        id: item?.id
+                    })
+                })
+                console.log(a)
+                setXaridArrayPost(a)
+                CalcTotalSum(a)
+            })
+
+        }
+
+    }
+
+    function saqla(data) {
+        if (paidSum > totalSumPurchase) {
+            toast.warning("Ko'proq Summa To'lanyapti")
+        } else {
+            let paymentStatus = ''
+            if (totalSumPurchase === paidSum) {
+                paymentStatus = 'TOLANGAN'
+            } else if (paidSum === 0) {
+                paymentStatus = 'TOLANMAGAN'
+            } else {
+                paymentStatus = 'QISMAN_TOLANGAN'
+            }
+            if (match.params.id) {
+                editXarid(
+                    {
+                        ...data,
+                        paymentStatus: paymentStatus,
+                        userId: userId,
+                        debtSum: totalSumPurchase - paidSum,
+                        totalSum: totalSumPurchase,
+                        purchaseProductDtoList: XaridArrayPost,
+                        id: match.params.id
+                    })
+            } else {
+                saveXarid(
+                    {
+                        ...data,
+                        paymentStatus: paymentStatus,
+                        userId: users.id,
+                        debtSum: totalSumPurchase - paidSum,
+                        totalSum: totalSumPurchase,
+                        purchaseProductDtoList: XaridArrayPost,
+                    })
+            }
+        }
+
+
+    }
+
+
+    function onSubmitSupplier() {
+        if (!phoneNumber || !supplierName) {
+            setIsCheck(true)
+        } else {
+            saveTaminot(
+                {
+                    businessId: users.businessId,
+                    name: supplierName,
+                    phoneNumber
+                }
+            )
+            setSaveModal(true)
+        }
+    }
+
+
+    useEffect(() => {
+        if (XaridReducer.saveBoolean) {
+            history.push('/main/purchaseList')
+            setUserId('')
+        }
+        setSaveModal(false)
+    }, [XaridReducer.current])
+
+
+    useEffect(() => {
+        if (TaminotReducer.saveBoolean) {
+            setActiveSupplier(false)
+            setPhoneNumber('')
+            setSupplierName('')
+            setIsCheck(false)
+        }
+        setTimeout(() => {
+            setSaveModal(false)
+        }, 500)
+        getAllSupplier(users.businessId)
+    }, [TaminotReducer.current])
+
+    return (
+        <div className='xaridQilishBox'>
+            <form onSubmit={handleSubmit(saqla)}>
+                <div className={'row  mt-5 '}>
+                    <h5 className={'text-center mt-3'}>{t('Purchase.10')}</h5>
+                    <div className="row d-flex justify-content-center">
+                        <div className="col-md-10 mt-4 d-flex justify-content-between align-items-center">
+                            <div className='col-md-4 col-sm-12'>
+                                <label htmlFor={'supplierId'}>{t('Purchase.2')}</label>
+                                <div className={'d-flex align-items-center'}>
+                                    {
+                                        <select name="" {...register('supplierId', {
+                                            required: {
+                                                value: true,
+                                                message: 'Ta\'minotchini tanlang !'
+                                            }
+                                        })}
+                                                id={'supplierId'}
+                                                disabled={match.params.id}
+                                                className={'form-control'}>
+                                            {
+
+                                                TaminotReducer.AllSupplier?.map(item =>
+                                                    <option value={item.id}>{item.name}</option>)
+                                            }
+                                        </select>
+                                    }
+                                    {
+                                        !match.params.id &&
+                                        <button type={'button'} onClick={toggleSupplier} className={'addBtn'}
+                                                                   style={{width: "75px", height: '100%', background: "#6664e9"}}>
+                                            <h2 style={{color: "#fff"}}>+</h2>
+                                        </button>
+                                    }
+
+                                </div>
+                                {
+                                    errors.supplierId &&
+                                    <div>
+                                        <p className={'text-danger text-center p-0 m-0'}>{errors.supplierId.message}</p>
+                                    </div>
+                                }
+                            </div>
+                            <div className="col-md-4 col-sm-12">
+                                <label htmlFor={'description'}>{t('Buttons.17')}</label>
+                                <input type="text"
+                                       className={'form-control'} {...register('description', {required: false})}
+                                       placeholder={'Eslatma'}
+                                       id={'description'}/></div>
+                            <div className="col-md-4 col-sm-12">
+                                <label htmlFor={'branchId'}>{t('ProductList.8')}</label>
+                                <select name="" id={'branchId'} disabled={match.params.id ? true : false}
+                                        {...register('branchId', {
+                                            required: {value: true, message: 'Filial tanlang !'}, onChange: (e) => {
+                                                setMainBranchId(e.target.value);
+                                                setXaridArrayPost([])
+                                            }
+                                        })}
+                                        className={'form-control'}>
+                                    {
+                                        users.branches?.map(item =>
+                                            <option value={item.id}>{item.name}</option>)
+                                    }
+                                </select>
+                                {
+                                    errors.branchId &&
+                                    <div>
+                                        <p className={'text-danger text-center m-0 p-0'}>{errors.branchId.message}</p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div className={'col-md-10 mt-4 offset-1'}>
+                        <div className="row">
+                            <div className="col-md-12">
+                                <input type="text"
+                                       autoFocus
+                                       onKeyPress={handleKeyPress}
+                                       ref={inputRef}
+                                       value={search}
+                                       onChange={XaridSearch}
+                                       className={'form-control'}
+                                       placeholder={'Mahsulot shtrix kodi yoki nomi'}/>
+                                {
+                                    isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?
+                                        <div className={'Combo-array'}>
+                                            {
+                                                MaxsulotlarRoyxariReducer.productSearch?.map(item =>
+                                                    <p onClick={() => AddXaridArray(item)}>
+                                                        {item.name}  ({item.barcode})
+                                                    </p>
+                                                )
+                                            }
+                                        </div>
+                                        : ''
+                                }
+                                <div className="table-responsive">
+                                    <table className={'table mt-3 border'}>
+                                        <thead>
+                                        <tr>
+                                            <th>{t('ProductEdit.2')}</th>
+                                            <th>{t('Purchase.20')}</th>
+                                            <th>{t('Purchase.21')}</th>
+                                            <th>{t('Purchase.22')}</th>
+                                            <th>{t('ProductList.12')}</th>
+                                            <th>x</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {
+                                            XaridArrayPost.map((item, index) =>
+                                                !item.delete &&
+                                                <tr className={'text-center'}>
+                                                    <td>
+                                                        <div>
+                                                            <h4>{item.name}</h4>
+                                                            <p>{item.amount} {item.measurement}</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            className={'d-flex justify-content-center align-items-center'}>
+                                                            <input className={'form-control'} name={'quantity'}
+                                                                   value={item.quantity}
+                                                                   onChange={(e) => ComboChangeAmount(e, index)}
+                                                                   type="number"
+                                                                   min={0}
+                                                            />
+                                                            <input className={'form-control'} type="text"
+                                                                   disabled={true}
+                                                                   value={item.measurement}/>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div className={'d-flex align-items-center'}>
+                                                            <input type="number" min={0} className={'form-control'}
+                                                                   name={"buyPrice"}
+                                                                   onChange={(e) => ComboChangeAmount(e, index)}
+                                                                   value={item.buyPrice} placeholder={item.buyPrice}/>
+                                                        </div>
+
+                                                    </td>
+                                                    <td>
+                                                        {item.quantity * item.buyPrice}
+                                                    </td>
+                                                    <td>
+
+                                                        <div className={'d-flex align-items-center'}>
+                                                            <input type="number" min={0} className={'form-control'}
+                                                                   name={"salePrice"}
+                                                                   onChange={(e) => ComboChangeAmount(e, index)}
+                                                                   value={item.salePrice}/>
+                                                        </div>
+                                                    </td>
+                                                    <td className={'text-danger'}><ImCancelCircle
+                                                        onClick={() => DeleteXaridArrayPost(index, item.id)}
+                                                        style={{width: '30px', height: '30px'}}/></td>
+                                                </tr>
+                                            )
+                                        }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <h6>{t('Purchase.23')}: {totalQuantity}</h6>
+                                <h6>{t('Purchase.22')}: {totalSumPurchase} So'm</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 className={'text-center mt-5'}>{t('Purchase.24')}</h5>
+
+                    <div className="row">
+                        <div className="col-md-10 offset-1  p-4 d-flex align-items-end">
+                            <div className="col-md-4 col-sm-12">
+                                {
+                                    match.params.id &&
+                                    <h6>Eski to'lov: {totalLastSumPurchase} so'm</h6>
+                                }
+                                <label htmlFor={'paidSum'}>{t('Purchase.25')}</label>
+                                <input type="number" min={0} className={'form-control'}
+                                       inputMode="numeric" pattern="[0-9]*"
+                                       {...register('paidSum', {
+                                           required: {
+                                               value: true,
+                                               message: 'To\'lovni kiriting'
+                                           }, onChange: (e) => setPaidSum(parseFloat(e.target.value))
+                                       })}
+                                       id={'paisSum'}/>
+                                {
+                                    errors.paidSum &&
+                                    <div>
+                                        <p className={'text-danger text-center p-0 m-0'}>{errors.paidSum.message}</p>
+                                    </div>
+                                }
+                            </div>
+                            <div className="col-md-4 col-sm-12">
+                                <label htmlFor={'tol'}>{t('Purchase.26')}</label>
+                                <select id={'tol'} className={'form-control'}
+                                        {...register('paymentMethodId', {
+                                            required: {
+                                                value: true,
+                                                message: 'To\'ov turini tanlang'
+                                            }
+                                        })}
+                                        disabled={match.params.id}
+                                >
+                                    {
+                                        PayReducer.paymethod?.map(item =>
+                                            <option value={item.id}>{item.name}</option>)
+                                    }
+                                </select>
+                                {
+                                    errors.paymentMethodId &&
+                                    <div>
+                                        <p className={'text-danger text-center p-0 m-0'}>{errors.paymentMethodId.message}</p>
+                                    </div>
+                                }
+                            </div>
+                            <div className="col-md-4 col-sm-12">
+                                <h5 className={'p-0 m-0 text-center'}>{t('Purchase.32')}!: {totalSumPurchase - paidSum} so`m</h5>
+                            </div>
+
+                        </div>
+                        <div className="col-md-10 offset-1  p-4 d-flex justify-content-end">
+                            <button type={'submit'} className={'btn btn-success'}>{t('Buttons.6')} </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <Modal isOpen={activeSupplier} toggle={toggleSupplier}>
+                <form>
+                    <ModalHeader>
+                        Ta'minotchi Qo'shish
+                    </ModalHeader>
+                    <ModalBody>
+                        <div className="row mt-2">
+                            <div className={'col-md-6 col-sm-12 mb-3'}>
+                                <label htmlFor={'supplierName'}>Ism</label>
+                                <input
+                                    id={'supplierName'} value={supplierName}
+                                    onChange={(e) => setSupplierName(e.target.value)} type="text"
+                                    className={'form-control'}/>
+                                {
+                                    isCheck && !supplierName &&
+                                    <div>
+                                        <p className={'m-0 p-0 text-center text-danger'}>Ismni kiriting !</p>
+                                    </div>
+                                }
+                            </div>
+                            <div className={'col-md-6 col-sm-12 mb-3'}>
+                                <label htmlFor={'phoneNumber'}>{t('Supplier.7')}</label>
+                                <PhoneInput
+                                    placeholder="Enter phone number"
+                                    value={phoneNumber}
+                                    className={'form-control'}
+                                    onChange={setPhoneNumber}/>
+                                {
+                                    isCheck && !phoneNumber &&
+                                    <div>
+                                        <p className={'m-0 p-0 text-center text-danger'}>Telefon raqamni kiriting !</p>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter>
+                        <button type={"button"} className={'btn btn-danger'}
+                                onClick={toggleSupplier}>{t('Buttons.7')}</button>
+                        <button className={'btn btn-success'}
+                                type={"button"} onClick={onSubmitSupplier}
+                        >Saqlash
+                        </button>
+                    </ModalFooter>
+                </form>
+            </Modal>
+            <ModalLoading isOpen={saveModal}/>
+        </div>
+    )
+}
+
+export default connect((PayReducer, XaridReducer, users, TaminotReducer, MaxsulotlarRoyxariReducer), {
+    getPurchaseById,
+    saveXarid,
+    getPay,
+    editXarid,
+    saveTaminot,
+    getAllSupplier,
+    getBarcodeAndName
+})(Xarid)

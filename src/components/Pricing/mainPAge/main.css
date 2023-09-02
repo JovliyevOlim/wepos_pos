@@ -1,0 +1,80 @@
+.main-active{
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 3.5rem;
+}
+.main-active input{
+    display: none;
+}
+.main-label{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.main-label p{
+    padding: 0;
+    margin: 0;
+    font-size: 14px;
+}
+.main-switch{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: #0c50e4;
+    padding:  0 1px 3px 1px;
+    margin-right: 10px;
+    transition: all 0.2s linear;
+}
+.main-checkbox{
+    transform: rotate(45deg);
+    width: 6px;
+    height: 10px;
+    display: block;
+    border-radius: 1px;
+    border-color: #fff;
+    border-bottom: 3px solid #fff;
+    border-right: 3px solid #fff;
+}
+#shI[type=checkbox]:checked + .main-label .main-switch{
+    transition: all 0.1s linear;
+    background-color: white;
+    border: 1px solid #A1AFCA;
+}
+#shS[type=checkbox]:checked + .main-label .main-switch{
+    transition: all 0.1s linear;
+    background-color: white;
+    border: 1px solid #A1AFCA;
+}
+#Cus[type=checkbox]:checked + .main-label .main-switch{
+     transition: all 0.1s linear;
+     background-color: white;
+     border: 1px solid #A1AFCA;
+ }
+@media screen and (max-width: 425.9px) {
+    .text h1{
+        font-size: 18px;
+    }
+    .text p{
+        font-size: 12px;
+    }
+    .main-active{
+        display: none;
+    }
+}
+@media (min-width: 426px) and (max-width: 767.9px) {
+    .text h1{
+        font-size: 20px;
+    }
+    .text p{
+        font-size: 14px;
+    }
+    .main-active{
+        display: none;
+    }
+}

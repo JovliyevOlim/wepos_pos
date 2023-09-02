@@ -1,0 +1,375 @@
+
+.btnB2{
+    width: 80px;
+    height: 25px;
+    color: #ffff;
+    border-radius: 15px;
+    background: linear-gradient(90deg, #5f4848, darkred);
+}
+.fix{
+    position: page;
+
+}
+.bn {
+    position: relative;
+    width: 100%;
+    padding: 7px;
+    transition: 0.4s all ease-in-out;
+    color: #ffff;
+    background: silver;
+    border-radius: 5px;
+}
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 405px;
+    overflow: auto;
+}
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+.scr{
+    /*overflow-y: scroll;*/
+    /*display: grid;*/
+    /*line-grid-progression: 10;*/
+    /*height: 60vh;*/
+    overflowY: scroll;
+    border:1px solid red;
+    width:500px;
+    float: left;
+    height:500px;
+    position:relative;
+}
+
+.bn:hover{
+    position: relative;
+    width: 100%;
+    padding: 5px;
+    color: #fff;
+    background: #833d3d;
+}
+
+.rowStyleTM {
+    justify-content: space-between;
+    border-radius: 8px;
+    padding: 20px 30px 20px 30px;
+    /*box-shadow: 0px 10px 20px grey;*/
+    background-color: #FFFF;
+}
+
+.li2 {
+    cursor: pointer;
+    font-size: 14px;
+    color: #fff;
+    transition: 0.2s all ease-in-out;
+}
+
+.li2:hover {
+    cursor: pointer;
+    font-size: 14.8px;
+    color: #67c41e;
+}
+
+.ul2 {
+    position: absolute;
+    top: 40%;
+    left: 54%;
+    height: 180px;
+    width: 150px;
+    background: #1f1f73;
+    opacity: 1;
+}
+
+.posrel {
+    position: relative;
+}
+
+.textHeaderTM {
+    display: flex;
+    align-items: baseline;
+}
+
+.textHeaderTM h2 {
+    margin-right: 10px;
+    font-size: 24px;
+
+}
+
+.rowStyleTM .qoshishTM {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 16px;
+}
+
+.rowStyleTM .izlashTM {
+    display: flex;
+    margin-top: 32px;
+    justify-content: space-between;
+}
+
+.rowStyleTM .izlashTM .izlashBox1 {
+    display: flex;
+}
+
+.rowStyleTM .izlashTM p {
+    text-align: center;
+}
+
+.rowStyleTM .izlashTM select {
+    height: 28px;
+    border-radius: 4px;
+    border: 1px solid #6b6363a0;
+    margin-left: 4px;
+}
+
+.rowStyleTM .izlashTM button:hover {
+    cursor: pointer;
+    background-color: #e0dddd;
+}
+
+.rowStyleTM .izlashTM button {
+    height: 28px;
+    border-radius: 4px;
+    border: 1px solid #6b6363a0;
+    margin-left: 4px;
+    background-color: #f3efef;
+    font-size: 11px;
+}
+
+.rowStyleTM .izlashTM button img {
+    width: 16px;
+}
+
+.rowStyleTM .izlashTM input {
+    height: 28px;
+    border-radius: 4px;
+    border: 1px solid #6b6363a0;
+    background-color: #FFFF;
+    padding: 8px 0px 8px 12px;
+    margin-left: 24px;
+}
+
+.table tbody tr td .taxrirlash {
+    background-color: #0A58CA;
+    color: #FFFF;
+    border-radius: 4px;
+    border: none;
+    margin-right: 8px;
+    font-size: 12px;
+    padding: 2px;
+}
+
+.table tbody tr td .taxrirlash:hover {
+    background-color: #0947a5;
+}
+
+.table tbody tr td .korish {
+    background-color: #10e7d9;
+    color: #FFFF;
+    border-radius: 4px;
+    border: none;
+    margin-right: 8px;
+    font-size: 12px;
+    padding: 2px;
+}
+
+.table tbody tr td .korish:hover {
+    background-color: #0cd3c6;
+}
+
+.table tbody tr td .ochirish {
+    background-color: red;
+    color: #FFFF;
+    border-radius: 4px;
+    border: none;
+    margin-right: 8px;
+    font-size: 12px;
+    padding: 2px;
+}
+
+.table tbody tr td .amallar {
+    background-color: rgb(10, 121, 138);
+    color: #FFFF;
+    border-radius: 4px;
+    border: none;
+    margin-right: 8px;
+    font-size: 12px;
+    padding: 2px;
+}
+
+.table tbody tr td .ochirish:hover {
+    background-color: rgb(216, 25, 25);
+}
+
+.table tbody tr td button img {
+    width: 18px;
+    margin-bottom: 2px;
+}
+
+.rowStyleTM .sahifalar {
+    display: flex;
+    justify-content: end;
+}
+
+.rowStyleTM .sahifalar :first-child {
+    border-radius: 4px 0px 0px 4px;
+    border: 1px solid #6b6363a0;
+}
+
+.rowStyleTM .sahifalar button {
+    border: 1px solid #6b6363a0;
+    background-color: #FFFF;
+    color: #1f1c1ca0;
+}
+
+.sahifalar :last-child {
+    border-radius: 0px 4px 4px 0px;
+
+}
+
+@media (max-width: 425.9px) {
+    .textHeaderTM {
+        display: block;
+    }
+
+    .rowStyleTM .qoshishTM h5 {
+        font-size: 17px;
+    }
+
+    .rowStyleTM .izlashTM {
+        display: block;
+    }
+
+    .rowStyleTM .izlashTM .izlashBox1 {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: 110px 110px;
+        text-align: center;
+    }
+
+    .rowStyleTM .izlashTM .izlashBox2 {
+        display: flex;
+        justify-content: center;
+    }
+
+    .rowStyleTM .izlashTM .izlashBox2 input {
+        width: 60%;
+        margin: 8px 0px 0px 4px;
+
+    }
+
+    .rowStyleTM .izlashTM .izlashBox1 select {
+        margin-bottom: 8px;
+    }
+
+    .rowStyleTM .izlashTM .izlashBox1 button {
+        line-height: 4px;
+        font-size: 10px;
+        margin-bottom: 8px;
+    }
+
+    .rowStyleTM p {
+        font-size: 12px;
+        line-height: 12px;
+    }
+
+    .rowStyleTM .qoshishTM h5 {
+        font-size: 17px;
+    }
+
+    .rowStyleTM .izlashTM {
+        display: block;
+    }
+
+    .rowStyleTM .izlashTM .izlashBox1 {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: 110px 110px;
+        text-align: center;
+    }
+
+    .rowStyleTM .izlashTM .izlashBox2 {
+        display: flex;
+        justify-content: center;
+    }
+
+    .rowStyleTM .izlashTM .izlashBox2 input {
+        width: 60%;
+        margin: 8px 0px 0px 4px;
+
+    }
+
+    .rowStyleTM .izlashTM .izlashBox1 select {
+        margin-bottom: 8px;
+    }
+
+    .rowStyleTM .izlashTM .izlashBox1 button {
+        line-height: 4px;
+        font-size: 10px;
+        margin-bottom: 8px;
+    }
+
+    .rowStyleTM p {
+        font-size: 12px;
+        line-height: 12px;
+    }
+
+}
+
+@media (min-width: 426px) and (max-width: 768.9px) {
+    .rowStyleTM .izlashTM {
+        display: block;
+    }
+
+    .rowStyleTM .izlashTM .izlashBox1 {
+        display: grid;
+        justify-content: center;
+        grid-template-columns: 33% 33% 33%;
+        text-align: center;
+    }
+
+    .rowStyleTM .izlashTM .izlashBox2 {
+        display: flex;
+        justify-content: center;
+    }
+
+    .rowStyleTM .izlashTM .izlashBox2 input {
+        width: 70%;
+        margin: 8px 0px 0px 4px;
+
+    }
+
+    .rowStyleTM .izlashTM .izlashBox1 button {
+        line-height: 4px;
+        margin-bottom: 8px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024.9px) {
+    .rowStyleTM .izlashTM .izlashBox1 {
+        display: grid;
+        grid-template-columns:36% 36% 36%;
+    }
+
+    .rowStyleTM .izlashTM .izlashBox1 button {
+        line-height: 4px;
+        margin-bottom: 8px;
+    }
+
+}
+
+@media (min-width: 1025px) and (max-width: 1199.9px) {
+    .rowStyleTM .izlashTM .izlashBox1 button {
+        line-height: 4px;
+
+    }
+}
+
+input.pcolor::placeholder {
+    color: red
+}
+
+input.pcolor2::placeholder {
+    color: gray
+}

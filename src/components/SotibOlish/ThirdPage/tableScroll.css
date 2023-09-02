@@ -1,0 +1,16 @@
+.my-custom-scrollbar-table {
+    position: relative;
+    height: 200px;
+    overflow: auto;
+}
+.table-wrapper-scroll-y-table {
+    display: block;
+}
+.my-custom-scrollbar-table4 {
+    position: relative;
+    height: 250px;
+    overflow: auto;
+}
+.table-wrapper-scroll-y-table4 {
+    display: block;
+}

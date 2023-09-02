@@ -1,0 +1,47 @@
+.list .imgDiv{
+    display: flex;
+    margin-left: 0;
+    margin-top: 15px;
+    align-items: center;
+}
+.list h6{
+    margin-left: 10px;
+    cursor: pointer;
+    transition: 0.2s linear;
+}
+.list h6:hover{
+    margin-left: 10px;
+    cursor: pointer;
+    /*border-bottom: 2px solid gray;*/
+    color: #0044FF;
+}
+.list .mahsulotImg{
+    cursor: pointer;
+    margin-left: 22%;
+}
+.list ul li{
+    margin-top: 5px;
+}
+.list ul{
+    display: block;
+    margin-left: 15%;
+}
+.list ul li .mahqosh{
+    color: #3f3c3c;
+    text-decoration: none;
+    width: 80%;
+}
+
+.b3{
+    color: #2222bb;
+    font-size: 20px;
+    transition: 0.3s all;
+}
+.b4{
+    background: transparent;
+    transition: 0.3s all;
+}
+.mahsulot2{
+    max-height: 340px;
+    transition:all 0.3s ease;
+}

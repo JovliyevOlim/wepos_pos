@@ -1,0 +1,62 @@
+.dashboard-card{
+    width: 24%;
+    border-radius: 12px;
+    border: 3px solid #F1F2F3;
+    background:  #FFF;
+    padding: 1.5rem !important;
+}
+.dashboard-card-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+.dashboard-card-header-text{
+    color:#565D6A;
+    font-family:'TTFirsNeue' ,sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    margin: 0;
+    line-height: 20px; /* 111.111% */
+}
+.dashboard-card-header-icon{
+    width: 40px;
+    height: 40px;
+}
+.dashboard-card-body-text{
+    color: #071A33;
+    font-family:'TTFirsNeue',sans-serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 8px;
+}
+.dashboard-card-footer{
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+.dashboard-card-footer p{
+    margin:0;
+}
+.dashboard-card-footer-text{
+    color: #9A9FA6;
+    font-family: "TTFirsNeue" ,sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.dashboard-card-footer-percent-success{
+    color: #00CD69;
+}
+.dashboard-card-footer-percent-error{
+    color: #E55E61;
+}
+@media (min-width: 1024px) and (max-width:1439.9px){
+ .dashboard-card{
+     width: 48%;
+ }
+}

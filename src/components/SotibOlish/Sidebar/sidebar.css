@@ -1,0 +1,302 @@
+.sidebar {
+    background: #ffffff;
+    margin-top: 1%;
+    transition:all 0.1s linear;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    padding-top: 1px !important;
+}
+.mr {
+    margin-left: 12px;
+    margin-top: -2px;
+}
+.im3 {
+    width: 24px;
+    height: 24px;
+}
+.hhh {
+    transition: 0.5s all;
+}
+.sidebar2 {
+    transition: 0.6s linear;
+    transform: translateX(0);
+}
+.nav .bosh hr{
+    margin: 0;
+}
+
+.sidebar ul li {
+    transition: all 0.3s linear;
+    width: 100%;
+}
+
+.sidebar ul li:hover {
+    width: 100%;
+    font-size: 18px;
+}
+
+.sidehead img {
+    width: 30%;
+}
+
+.sidebar .sidehead {
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.sidebar .sidehead h5 {
+    margin-left: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.imgDiv {
+    display: flex;
+    justify-content: space-between;
+}
+
+.sidebar-text {
+    margin-left: 10px;
+    margin-top: 7px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #3A3C40;
+}
+
+.sidebar-active {
+    position: relative;
+}
+
+.imgDiv:hover .sidebar-text {
+    color: #0044FF;
+}
+
+.imgDiv:checked img {
+    transform: rotate(180deg);
+}
+
+.imgDiv:hover .sidebar-img path {
+    stroke: #0044FF;
+}
+
+.sidebar-img path {
+    stroke: #3A3C40;
+}
+
+.sidebar-img2 path {
+    fill: #3A3C40;
+}
+
+.sidebar-img3 g g path {
+    fill: #3A3C40;
+}
+
+.imgDiv:hover .sidebar-img2 path {
+    fill: #0044FF;
+}
+
+.imgDiv:hover .sidebar-img3  path {
+    fill: #0044FF;
+}
+
+.sidebar .bosh {
+    cursor: pointer;
+    display: flex;
+    margin-top: 35px;
+    align-items: center;
+}
+
+.sidehead {
+    cursor: pointer;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar:hover {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 5px solid #0044FF;
+}
+
+.fill path {
+    fill: #0044FF;
+}
+
+.fontsize {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.stroke path {
+    stroke: #0044FF;
+}
+
+li {
+    list-style: disc;
+    margin-top: 5px;
+}
+
+
+@media screen  and  (max-width: 425.9px) {
+    .sidebar {
+        padding: 1rem;
+        transition: all 0.1s linear;
+        width: 250px;
+    }
+
+}
+
+@media (min-width: 426px)  and  (max-width: 500.9px) {
+    .sidebar {
+        padding: 1rem;
+        transition: all 0.1s linear;
+        width: 270px;
+    }
+
+
+}
+
+@media (min-width: 501px)  and  (max-width: 767.9px) {
+    .sidebar {
+        padding: 1rem;
+        transition: all 0.1s linear;
+        width: 270px;
+    }
+
+    .sidebar-text {
+        font-size: 20px;
+    }
+
+}
+
+@media (min-width: 768px)  and  (max-width: 1023.9px) {
+    .sidebar {
+        padding: 1rem;
+        transition: all 0.1s linear;
+        width: 310px;
+    }
+
+    .sidebar-text {
+        font-size: 24px;
+    }
+
+    .li-text {
+        font-size: 14px !important;
+        transition: 0.5s;
+    }
+
+    .li-text:hover {
+        font-size: 17px !important;
+        color: #0044FF;
+        border: 1px dot-dash #0044FF;
+    }
+}
+
+@media (min-width: 1024px)  and  (max-width: 1280.9px) {
+    .sidebar {
+        padding: 1rem;
+        transition: all 0.1s linear;
+        width: 250px;
+    }
+    .sidebar-text {
+        font-size: 14px;
+    }
+
+     .sidebar-text {
+        font-size: 14px;
+    }
+
+    .li-text {
+        font-size: 14px !important;
+        transition: 0.5s;
+    }
+
+    .li-text:hover {
+        font-size: 15px !important;
+        color: #0044FF;
+        border: 1px dot-dash #0044FF;
+    }
+}
+@media (min-width: 1281px) {
+    .sidebar {
+        padding: 1rem;
+        transition: all 0.1s linear;
+        width: 250px;
+    }
+    .sidebar-text {
+        font-size: 14px;
+    }
+
+    .li-text {
+        font-size: 14px !important;
+        transition: 0.5s;
+    }
+}
+.navigation {
+    position: relative;
+}
+
+.list {
+    max-height: 50px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.list .imgDiv {
+    display: flex;
+    margin-left: 0;
+    margin-top: 15px;
+    align-items: center;
+}
+
+.list h6 {
+    margin-left: 10px;
+    cursor: pointer;
+    transition: 0.2s linear;
+}
+
+.list h6:hover {
+    margin-left: 10px;
+    cursor: pointer;
+    color: #0044FF;
+}
+
+.list ul {
+    display: block;
+    margin-left: 15%;
+}
+
+.list .hamkorImg {
+    cursor: pointer;
+    margin-left: 24%;
+}
+
+.list ul li {
+    margin-top: 5px;
+}
+
+.list ul {
+    display: block;
+    margin-left: 15%;
+}
+
+.list ul li .hamkorlar {
+    text-decoration: none;
+    color: #3f3c3c;
+}

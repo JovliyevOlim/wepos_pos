@@ -1,0 +1,264 @@
+.supAdmSetContStyle {
+    border-radius: 8px;
+    padding: 20px 30px 20px 30px;
+    background-color: #FFFF;
+}
+
+.supAdmSetContStyle .textHeaderSuprAdmin {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+
+}
+
+.supAdmSetContStyle .textHeaderSuprAdmin h4 {
+    margin-bottom: 28px;
+}
+
+.supAdmSetContStyle .textHeaderSuprAdmin .selectStyl {
+    background: #FFFFFF;
+    border: 1px solid #9FA2B4;
+    border-radius: 4px;
+    color: #9FA2B4;
+    width: 190px;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.supAdmSetContStyle .settingsBlock {
+    display: flex;
+
+}
+
+.supAdmSetContStyle .settinButtonsBox {
+    display: grid;
+    height: 400px;
+}
+
+.supAdmSetContStyle .settinButtonsBox .buttonsStyle {
+    background: #FFFFFF;
+    border: 1px solid #9FA2B4;
+    border-radius: 4px;
+    color: #9FA2B4;
+    width: 190px;
+    line-height: 14px;
+    margin-bottom: 4px;
+    padding: 12px 12px;
+}
+
+.supAdmSetContStyle .settinButtonsBox .buttonsStyle:hover {
+    background-color: rgb(209, 203, 203);
+    color: white;
+
+}
+
+.supAdmSetContStyle .settinButtonsBox .buttonsStyle:focus {
+    background-color: #0044FF;
+    color: white;
+
+}
+
+.supAdmSetContStyle .settinPages {
+
+}
+
+.supAdmSetContStyle .settinButtonsBox .clicButtonStyle {
+    background-color: red;
+    border: 1px solid #9FA2B4;
+    border-radius: 4px;
+    color: #9FA2B4;
+    width: 190px;
+    line-height: 14px;
+    margin-bottom: 6px;
+    padding: 12px 12px;
+}
+
+.superAdminMenu {
+    display: none;
+}
+
+@media screen and (max-width: 425.9px) {
+    .supAdmSetContStyle {
+        padding: 10px 15px 10px 15px;
+    }
+
+    .superAdminMenu {
+        display: inline;
+        margin-bottom: 5px;
+        margin-right: 15px;
+    }
+
+    .superAdminMenu:hover {
+        border-radius: 5px;
+        border: 1px solid gray;
+    }
+
+    .superAdminMenu.active {
+        background-color: gray;
+    }
+
+    .textHeaderSuprAdmin {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 1rem;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .supAdmSetContStyle .settingsBlock {
+        display: block;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .select-Menu {
+        background-color: #0d6efd;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 14px;
+        padding: 10px 5rem;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        width: 100%;
+        margin: 0;
+    }
+
+    .supAdmSetContStyle .settinButtonsBox {
+        position: absolute;
+        display: none;
+    }
+
+    .settinButtonsBox-sm {
+        z-index: 10000;
+        height: 0;
+        overflow: hidden;
+        transition: all 0.1s linear;
+
+    }
+
+    .settinButtonsBox-sm-ts {
+        position: relative;
+        margin: 0;
+        height: 260px;
+        top: 20%;
+        z-index: 100000;
+        background-color: #0c63e4;
+        transition: all 0.1s linear;
+    }
+
+    .liStyle {
+        list-style: none;
+    }
+
+    .settinPages {
+        margin-top: 10px;
+    }
+}
+
+@media (min-width: 426px) and (max-width: 767.9px) {
+    .supAdmSetContStyle {
+        padding: 10px 15px 10px 15px;
+    }
+
+    .superAdminMenu {
+        display: inline;
+        margin-bottom: 5px;
+        margin-right: 15px;
+    }
+
+    .superAdminMenu:hover {
+        border-radius: 5px;
+        border: 1px solid gray;
+    }
+
+    .superAdminMenu.active {
+        background-color: gray;
+    }
+
+    .textHeaderSuprAdmin {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 1rem;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .supAdmSetContStyle .settingsBlock {
+        display: block;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .select-Menu {
+        background-color: #0d6efd;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 14px;
+        padding: 10px 5rem;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        width: 100%;
+        margin: 0;
+    }
+
+    .supAdmSetContStyle .settinButtonsBox {
+        position: absolute;
+        display: none;
+    }
+
+    .settinButtonsBox-sm {
+        z-index: 10000;
+        height: 0;
+        overflow: hidden;
+        transition: all 0.1s linear;
+
+    }
+
+    .settinButtonsBox-sm-ts {
+        position: relative;
+        margin: 0;
+        height: 260px;
+        top: 20%;
+        z-index: 100000;
+        background-color: #0c63e4;
+        transition: all 0.1s linear;
+    }
+
+    .liStyle {
+        list-style: none;
+    }
+
+    .settinPages {
+        margin-top: 10px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023.9px) {
+    .select-Menu {
+        display: none;
+    }
+
+    .settinButtonsBox-sm {
+        display: none;
+    }
+
+    .settinButtonsBox-sm-ts {
+        display: none;
+    }
+}
+
+@media (min-width: 1024px) {
+    .select-Menu {
+        display: none;
+    }
+
+    .settinButtonsBox-sm {
+        display: none;
+    }
+
+    .settinButtonsBox-sm-ts {
+        display: none;
+    }
+}

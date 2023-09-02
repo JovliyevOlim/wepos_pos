@@ -1,0 +1,147 @@
+.containersSuperAdmin{
+    border-radius: 8px;
+    padding: 20px 30px 20px 30px;
+    background-color: #FFFF;
+}
+.containersSuperAdmin .header123{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.containersSuperAdmin .header123 .buttonBox{
+    margin-top: 40px;
+}
+.containersSuperAdmin .header123 .buttonBox .buttonStyle{
+    width: 100px;
+    height: 32px;
+    color: white;
+    background: #3467f3;
+    font-size: 14px;
+    margin: 4px;
+}
+.containersSuperAdmin .header123 .buttonBox .buttonStyle:hover{
+    background: #27428e;
+}
+.containersSuperAdmin .cardBlock{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+.containersSuperAdmin .cardBlock p{
+    color: white;
+    font-size: 14px;
+}
+.containersSuperAdmin .cardBlock .card1{
+    display: block;
+    background-color:  #3467f3;
+    width: 32%;
+    height: 100px;
+    border-radius: 4px;
+}
+.containersSuperAdmin .cardBlock .card2{
+    display: block;
+    background-color: #F39034
+    ;
+    width: 32%;
+    height: 100px;
+    border-radius: 4px;
+}
+.containersSuperAdmin .cardBlock .card3{
+    display: block;
+    background-color: #EE5D50;
+    width: 32%;
+    height: 100px;
+    border-radius: 4px;
+}
+.containersSuperAdmin .cardBlock .card1 button{
+    width: 100%;
+    height: 30px;
+    background-color: #1b45b9;
+    color: rgb(240, 241, 255);
+    border-radius: 0px 0px 4px 4px;
+}
+.containersSuperAdmin .cardBlock .card2 button{
+    width: 100%;
+    height: 30px;
+    background-color: rgb(203, 92, 52);
+    color: rgb(240, 241, 255);
+    border-radius: 0px 0px 4px 4px;
+}
+.containersSuperAdmin .cardBlock .card3 button{
+    width: 100%;
+    height: 30px;
+    background-color: #EE5D50;
+    border: 1px solid darkred;
+    color: rgb(240, 241, 255);
+    border-radius: 0px 0px 4px 4px;
+}
+.containersSuperAdmin .cardBlock .card1 button:hover{
+    background-color: #233b80;
+}
+.containersSuperAdmin .cardBlock .card2 button:hover{
+    background-color: rgb(177, 71, 32);
+}
+.containersSuperAdmin .cardBlock .card3 button:hover{
+    background-color: #145d31;
+}
+.containersSuperAdmin .chartBox{
+    margin-top: 60px;
+}
+@media screen and (max-width: 425.9px) {
+    .header123{
+        display: block !important;
+    }
+    .header123 h4{
+        text-align: center;
+    }
+    .containersSuperAdmin .header123 .buttonBox {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    .containersSuperAdmin .cardBlock{
+        display: block;
+    }
+    .containersSuperAdmin .cardBlock .card1,
+    .containersSuperAdmin .cardBlock .card2,
+    .containersSuperAdmin .cardBlock .card3 {
+        width: 100%;
+        margin-bottom: 25px;
+    }
+    .chartBox h5{
+        font-size: 14px;
+    }
+    .chartBox div{
+    }
+}
+@media (min-width: 426px) and (max-width: 767.9px) {
+    .header123{
+        display: block !important;
+    }
+    .header123 h4{
+        text-align: center;
+    }
+    .containersSuperAdmin .header123 .buttonBox {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 10px;
+    }
+    .containersSuperAdmin .cardBlock{
+        display: block;
+    }
+    .containersSuperAdmin .cardBlock .card1,
+    .containersSuperAdmin .cardBlock .card2,
+    .containersSuperAdmin .cardBlock .card3 {
+        width: 100%;
+        margin-bottom: 25px;
+    }
+    .chartBox h5{
+        font-size: 25px;
+    }
+    .chartBox div{
+    }
+}
+

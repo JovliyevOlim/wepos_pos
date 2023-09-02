@@ -1,0 +1,47 @@
+.la{
+    background: #a8a8b7;
+}
+:root{
+    --color:"aqua"
+}
+
+body{
+    background: silver;
+    height: auto;
+}
+
+#root{
+    height: 100%;
+}
+
+.app-css{
+    width: 100%;
+    display: flex;
+    transition: 1s linear;
+    overflow: hidden;
+    height: 100%;
+    background-color: silver;
+}
+.active-enter-link{
+    color:#0a53be;
+    /*color: #e3e2e2;*/
+    font-weight: bold;
+}
+.border-box{
+    box-sizing: border-box !important;
+}
+.border-radius{
+    border-radius: 10px;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+
+}
+input{
+    outline: none;
+}

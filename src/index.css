@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  font-family:'TTFirsNeue', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.loader{
+  position: relative;
+}
+.load{
+  position: absolute;
+  /*top: 40%;*/
+  margin-top: 15%;
+  left: 30%;
+}
+.z-index{
+  width: 100%;
+  z-index: 10000;
+}
+@page {
+  size: auto;
+}
+@font-face {
+  font-family: "TTFirsNeue";
+  src: local("TTFirsNeue"),
+  url("../src/font-size/TTFirsNeue-Medium.ttf") format("truetype");
+  font-weight: bold;
+}

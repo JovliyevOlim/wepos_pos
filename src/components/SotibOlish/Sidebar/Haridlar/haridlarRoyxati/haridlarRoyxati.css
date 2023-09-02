@@ -1,0 +1,328 @@
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 400px;
+    overflow: auto;
+}
+.table-wrapper-scroll-y {
+    display: block;
+}
+.li23{
+    cursor: pointer;
+    font-size: 14px;
+    color: #fff;
+    transition: 0.2s all ease-in-out;
+}
+.li23:hover{
+    cursor: pointer;
+    font-size: 14.7px;
+    color: #67c41e;
+}
+.ul23{
+    position: absolute;
+    top: 92%;
+    left: 52%;
+    height: 180px;
+    width: 150px;
+    background: #4c4ca0;
+    opacity: 0.9;
+}
+.rowStyleHarid{
+       border-radius: 8px;
+       padding: 20px 30px 20px 30px;
+       background-color: #FFFFFF;
+}
+
+.textHeaderHarid{
+       display: flex;
+       align-items: baseline;
+}
+.rowStyleHarid .sana input:hover{
+      cursor: pointer;
+}
+.textHeader h2{
+       margin-right: 10px;
+       font-size: 24px;
+
+}
+.rowStyleHarid select{
+       width: 100%;
+       height: 32px;
+       background-color:#F5F5F7;
+       padding-left: 4px;
+       font-size: 14px;
+       margin-bottom: 30px;
+}
+.rowStyleHarid .qoshishBH{
+       margin-bottom: 28px;
+}
+.rowStyleHarid .btnHaridlar{
+       display: flex;
+       justify-content: space-between;
+       margin-top: 32px;
+}
+.rowStyleHarid .sana input{
+       border: 1px solid grey;
+       margin-bottom: 32px;
+}
+.rowStyleHarid .haridlar{
+       margin-top: 64px;
+}
+
+.rowStyleHarid select{
+       width: 100%;
+       height: 32px;
+       background-color:#F5F5F7;
+}
+
+.rowStyleHarid select:hover{
+       cursor: pointer;
+}
+
+.rowStyleBH{
+       justify-content: space-between;
+       border-radius: 8px;
+       padding: 20px 30px 20px 30px;
+       box-shadow: 0px 10px 20px grey;
+       background-color: #FFFF;
+       margin-top: 32px;
+}
+
+.textHeader{
+       display: flex;
+       align-items: baseline;
+}
+.textHeader h2{
+       margin-right: 10px;
+       font-size: 24px;
+
+}
+
+.rowStyleBH .qoshishBH{
+       display: flex;
+       justify-content: space-between;
+       border-radius: 16px;
+}
+.rowStyleBH .izlashBH{
+       display: flex;
+       justify-content: space-between;
+       margin-top: 32px;
+       
+}
+.rowStyleBH .izlashBH .izlashBox1{
+       display: flex;
+}
+
+.rowStyleBH .izlashBH p{
+       text-align: center;
+}
+.rowStyleBH .izlashBH select{
+       height: 28px;
+       border-radius: 4px;
+       border: 1px solid #6b6363a0;
+       margin-left: 4px;
+}
+.rowStyleBH .izlashBH button:hover{
+       cursor: pointer;
+       background-color: #e0dddd;
+}
+.rowStyleBH .izlashBH button{
+       height: 28px;
+       border-radius: 4px;
+       border: 1px solid #6b6363a0;
+       margin-left: 4px;
+       background-color: #f3efef;
+       font-size: 11px;
+}
+.rowStyleBH .izlashBH button img{
+       width: 16px;
+}
+
+.rowStyleBH .izlashBH input{
+       height: 28px;
+       border-radius: 4px;
+       border: 1px solid #6b6363a0;
+       background-color: #FFFF;
+       padding: 8px 0px 8px 12px;
+       margin-left: 24px;
+}
+.table tbody tr td .taxrirlash{
+       background-color: #0A58CA;
+       color: #FFFF;
+       border-radius: 4px;
+       border: none;
+       margin-right: 8px;
+       font-size: 12px;
+       padding: 2px;
+}
+.table tbody tr td .taxrirlash:hover{
+       background-color: #0947a5;
+}
+.table tbody tr td .korish{
+       background-color: #10e7d9;
+       color: #FFFF;
+       border-radius: 4px;
+       border: none;
+       margin-right: 8px;
+       font-size: 12px;
+       padding: 2px;
+}
+.table tbody tr td .korish:hover{
+       background-color: #0cd3c6;
+}
+.table tbody tr td .ochirish{
+       background-color: red;
+       color: #FFFF;
+       border-radius: 4px;
+       border: none;
+       margin-right: 8px; 
+       font-size: 12px;
+       padding: 2px;
+}
+.table tbody tr td .amallar{
+       background-color: rgb(10, 121, 138);
+       color: #FFFF;
+       border-radius: 4px;
+       border: none;
+       margin-right: 8px; 
+       font-size: 12px;
+       padding: 2px;
+}
+.table tbody tr td .ochirish:hover{
+       background-color: rgb(216, 25, 25);
+}
+.table tbody tr td button img{
+       width: 18px;
+       margin-bottom: 2px;
+}
+.rowStyleBH .sahifalar{
+       display: flex;
+       justify-content: end;
+}
+.rowStyleBH .sahifalar :first-child{
+       border-radius: 4px 0px 0px 4px;
+       border: 1px solid #6b6363a0;
+}
+.rowStyleBH .sahifalar button{
+       border: 1px solid #6b6363a0;
+       background-color: #FFFF;
+       color:#1f1c1ca0;
+}
+.sahifalar :last-child{
+     border-radius: 0px 4px 4px 0px;
+     
+}
+
+@media (max-width: 425.9px){
+       .rowStyleBH .qoshishBH .sarlavha{
+               font-size: 14px;
+        }
+        .rowStyleBH .izlashBH{
+               display: block;
+        }
+        .rowStyleBH .izlashBH .izlashBox1{
+               display: grid;
+               justify-content: center;
+               grid-template-columns: 110px 110px;
+               text-align: center;
+        }
+        .rowStyleBH .izlashBH .izlashBox2{
+               display: flex;
+               justify-content: center;
+        }
+        .rowStyleBH .izlashBH .izlashBox2 input{
+               width: 60%;
+               margin: 8px 0px 0px 4px;
+ 
+        }
+        .rowStyleBH .izlashBH .izlashBox1 select{
+               margin-bottom: 8px;
+        }
+        .rowStyleBH .izlashBH .izlashBox1 button{
+               line-height: 4px;
+               font-size: 10px;
+               margin-bottom: 8px;
+        }
+        .rowStyleBH p{
+               font-size: 12px;
+               line-height: 12px;
+        }
+        .rowStyleBH .qoshishBH h5{
+               font-size: 17px;
+        }
+        .rowStyleBH .izlashBH{
+               display: block;
+        }
+        .rowStyleBH .izlashBH .izlashBox1{
+               display: grid;
+               justify-content: center;
+               grid-template-columns: 110px 110px;
+               text-align: center;
+        }
+        .rowStyleBH .izlashBH .izlashBox2{
+               display: flex;
+               justify-content: center;
+        }
+        .rowStyleBH .izlashBH .izlashBox2 input{
+               width: 60%;
+               margin: 8px 0px 0px 4px;
+ 
+        }
+        .rowStyleBH .izlashBH .izlashBox1 select{
+               margin-bottom: 8px;
+        }
+        .rowStyleBH .izlashBH .izlashBox1 button{
+               line-height: 4px;
+               font-size: 10px;
+               margin-bottom: 8px;
+        }
+        .rowStyleBH p{
+               font-size: 12px;
+               line-height: 12px;
+        }
+        
+ }
+ 
+ @media (min-width: 426px) and (max-width: 768.9px){
+        .rowStyleBH .izlashBH{
+               display: block;
+        }
+        .rowStyleBH .izlashBH .izlashBox1{
+               display: grid;
+               justify-content: center;
+               grid-template-columns: 33% 33% 33%;
+               text-align: center;
+        }
+        .rowStyleBH .qoshishBH .sarlavha{
+              font-size: 15px;
+       }
+        .rowStyleBH .izlashBH .izlashBox2{
+               display: flex;
+               justify-content: center;
+        }
+        .rowStyleBH .izlashBH .izlashBox2 input{
+               width: 70%;
+               margin: 8px 0px 0px 4px;
+ 
+        }
+        .rowStyleBH .izlashBH .izlashBox1 button{
+               line-height: 4px;
+               margin-bottom: 8px;
+        }
+ }
+ @media (min-width: 769px) and (max-width: 1024.9px){
+        .rowStyleBH .izlashBH .izlashBox1{
+               display: grid;
+               grid-template-columns:36% 36% 36% ;
+        }
+        .rowStyleBH .izlashBH .izlashBox1 button{
+               line-height: 4px;
+               margin-bottom: 8px;
+        }
+          
+ }
+ @media (min-width: 1025px) and (max-width: 1199.9px){
+        .rowStyleBH .izlashBH .izlashBox1 button{
+               line-height: 4px;
+        }
+ }

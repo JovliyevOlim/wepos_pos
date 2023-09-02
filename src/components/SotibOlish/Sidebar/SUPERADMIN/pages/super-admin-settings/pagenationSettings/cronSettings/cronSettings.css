@@ -1,0 +1,19 @@
+.cronContainer .text1{
+    color: gray;
+    font-size: 14px;
+    margin: 0;
+}
+.cronContainer .text1 b{
+    color: black;
+    margin: 0;
+}
+.cronContainer .text2{
+    font-size: 14px;
+    color: gray;
+    margin: 0;
+}
+.cronContainer .textColorRed{
+    color: red;
+    margin: 0;
+    font-size: 14px;
+}

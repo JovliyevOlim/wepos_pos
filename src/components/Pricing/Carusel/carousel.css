@@ -1,0 +1,78 @@
+.row .card .price{
+    display: flex;
+    align-items: flex-end;;
+}
+.ch{
+    margin-top: 12%;
+    display: flex;
+    justify-content:start;
+    align-items: center;
+    line-height: 2px;
+    /*margin-top: 5%;*/
+}
+.ch img{
+    margin-right: 10px  ;
+}
+.row .card .ch p{
+    font-weight: 400;
+    font-size: 14px;
+    margin-top: 5%;
+    margin-left: 10%;
+}
+.card{
+    padding: 2rem;
+    margin-top: 30%;
+    border-radius: 10px;
+    /* margin-left: -10%; */
+}
+.row .card .price p{
+    margin-left: 5%;
+    line-height: 2px;
+    margin-top: 3%;
+}
+.carousel-width{
+    width: 800px;
+}
+.carousel-tariff{
+    width: 340px;
+    height:500px;
+    border: 25px solid transparent;
+    text-align: center;
+    box-sizing:border-box;
+    border-radius: 20px;
+}
+@media (max-width: 425.9px){
+    .row .card p{
+        font-size: 12px;
+    }
+    .carousel-tariff{
+        width: 340px;
+        height:500px;
+        border: 25px solid transparent;
+        text-align: center;
+        box-sizing:border-box;
+        border-radius: 3px;
+    }
+}
+@media (min-width: 769px) and (max-width: 1024.9px){
+    .card p{
+        font-size: 12px;
+
+    }
+    .row .card{
+        padding: 0px;
+        margin-top: 30%;
+    }
+    .card{
+        padding: 0px;
+    }
+    .row .card h4{
+        font-size: 18px;
+    }
+
+}
+@media (min-width: 1025px) and (max-width: 1199.9px){
+    .card p{
+        font-size: 14px;
+    }
+}

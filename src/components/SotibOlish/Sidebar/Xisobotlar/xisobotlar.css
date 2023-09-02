@@ -1,0 +1,35 @@
+.mahsulot .imgDiv{
+    display: flex;
+    margin-left: 0;
+    margin-top: 15px;
+    align-items: center;
+}
+.mahsulot h6{
+    margin-left: 10px;
+    cursor: pointer;
+    transition: 0.2s linear;
+}
+.mahsulot h6:hover{
+    margin-left: 10px;
+    cursor: pointer;
+    /*border-bottom: 2px solid gray;*/
+    color: #0044FF;
+}
+.mahsulot .xisobotImg{
+    cursor: pointer;
+}
+.mahsulot ul li{
+    margin-top: 5px;
+}
+.mahsulot ul{
+    display: block;
+    margin-left: 15%;
+}
+.mahsulot .mahsulotXisobot{
+    color: #3f3c3c;
+    text-decoration: none;
+}
+.xisbot{
+    max-height: 400px;
+    transition:all 0.3s ease;
+}

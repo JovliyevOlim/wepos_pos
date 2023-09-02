@@ -1,0 +1,192 @@
+body::-webkit-scrollbar {
+    border-radius: 2px;
+    width: 6px;
+}
+body::-webkit-scrollbar-thumb {
+    background:  #1AA6E1;
+    border-radius: 4px;
+}
+body::-webkit-scrollbar-track {
+    background: #ccc;
+}
+.sidebar-scroll{
+    background:#FFFFFF !important;
+    borderRight: 2px solid #F1F2F3 !important;
+    overflow: auto !important;
+    height: 100vh !important;
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+}
+.sidebar-scroll::-webkit-scrollbar {
+    border-radius: 2px;
+    width: 4px;
+}
+.sidebar-scroll::-webkit-scrollbar-thumb {
+    background:  #1AA6E1;
+    border-radius: 8px;
+}
+.sidebar-scroll::-webkit-scrollbar-track {
+    background: #ccc;
+}
+.demo-logo-vertical {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 14px 20px 30px;
+    height: 84px;
+    background: transparent;
+    border-radius: 6px;
+}
+
+.demo-logo-text {
+    color: #565D6A;
+    font-family: 'Tahoma', sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 32px; /* 160% */
+    letter-spacing: 0.8px;
+    margin: 0;
+}
+
+.ant-btn img {
+    padding: 10px !important;
+}
+
+.content {
+    padding: 1.5rem;
+    background: #FDFDFD;
+}
+
+.ant-menu {
+    padding: 0 0.8rem;
+}
+.ant-menu.ant-menu-vertical{
+    padding: 0 0.8rem;
+}
+.ant-menu.ant-menu-vertical li{
+    margin-bottom: 10px;
+}
+.ant-menu-inline .ant-menu-item {
+    padding: 11px 10px !important;
+    border-radius: 8px !important;
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    color: #565D6A;
+    font-size: 14px;
+    font-family: "TTFirsNeue", sans-serif;
+    line-height: 20px;
+    font-weight: 500;
+}
+.ant-menu-vertical .ant-menu-item {
+    padding: 0;
+    margin: auto;
+    border-radius: 8px !important;
+    color: #565D6A;
+    font-size: 14px;
+    font-family: "TTFirsNeue", sans-serif;
+    line-height: 20px;
+    font-weight: 500;
+}
+.ant-menu-submenu.ant-menu-submenu-vertical {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #565D6A;
+    font-size: 14px;
+    font-family: "TTFirsNeue", sans-serif;
+    line-height: 20px;
+    font-weight: 500;
+}
+.ant-menu-submenu-inline .ant-menu-submenu-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "TTFirsNeue", sans-serif;
+    padding: 11px 10px !important;
+    border-radius: 8px !important;
+    color: #565D6A;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+}
+.ant-menu-submenu-vertical .ant-menu-submenu-title{
+    margin-right: 0;
+    margin-left: 0;
+    padding:0 !important;
+    font-family: "TTFirsNeue", sans-serif;
+    border-radius: 8px !important;
+    color: #565D6A;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+}
+.ant-menu-title-content {
+    margin: 0 !important;
+    padding: 11px 11px !important;
+}
+
+.ant-menu-item-selected {
+    color: #1AA6E1 !important;
+    background: #F5F6F6 !important;
+}
+
+.ant-menu-inline .ant-menu-item-icon {
+    width: 22px !important;
+    height: 22px !important;
+}
+.ant-menu-vertical .ant-menu-item-icon {
+    padding: 10px 0 0 0 !important;
+    display: flex !important;
+    justify-content:center !important;
+    align-items:center !important;
+    margin: auto !important;
+    width: 32px !important;
+    height: 32px !important;
+}
+
+.ant-menu-inline.ant-menu-item-icon svg {
+    width: 100% !important;
+}
+.ant-menu-vertica.ant-menu-item-icon svg {
+    width: 100% !important;
+}
+
+.svgColor path, .svgColorSubMenu path, .svgFillColorSubMenu ellipse,circle {
+    stroke: #565D6A;
+}
+
+.svgFillColorSubMenu path {
+    fill: #565D6A;
+}
+
+.ant-menu-item-selected .svgColor path {
+    stroke: #1AA6E1;
+}
+
+.ant-menu-submenu-selected .svgColorSubMenu path {
+    stroke: #1777ff;
+}
+
+.ant-menu-submenu-selected .svgFillColorSubMenu path {
+    fill: #1777ff;
+}
+
+.ant-menu-submenu-selected .svgFillColorSubMenu ellipse, circle {
+    stroke: #1777ff;
+}
+@media (max-width: 425.9px){
+    .sidebar-scroll{
+        height:100%
+    }
+}
+@media (min-width: 768px) {
+    .content {
+        padding: 1.5rem;
+        background: #FDFDFD;
+        overflow: hidden;
+    }
+}

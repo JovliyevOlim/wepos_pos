@@ -1,0 +1,52 @@
+/*.list{*/
+/*    margin: 0;*/
+/*}*/
+
+.list h6 {
+    margin-left: 10px;
+    cursor: pointer;
+    transition: 0.2s linear;
+    margin-top: 2%;
+
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+    color: #3A3C40;
+}
+
+li{
+    list-style: disc;
+    /*border: 1px solid red;*/
+    margin-top: 5px;
+}
+.list .imgDiv{
+}
+.list .imgDiv .right{
+    margin-left: 30%;
+}
+.right2{
+    transform: rotate(90deg);
+}
+.list .ul li{
+    color: black;
+    width: 80%;
+}
+.list .imgDiv img{
+    margin-left: 3px;
+}
+.list22{
+    max-height: 250px;
+    transition:all 0.3s ease;
+}
+
+
+
+
+
+/*.fff{*/
+/*    transition: 1s all;*/
+/*}*/
+/*.fff:active{*/
+/*    transition: 1s all;*/
+/*    background: #0A58CA;*/
+/*}*/

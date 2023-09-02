@@ -1,0 +1,120 @@
+.rowStyleBaza{
+    justify-content: space-between;
+    border-radius: 8px;
+    padding: 20px 30px 20px 30px;
+    /*box-shadow: 0px 10px 20px grey;*/
+    background-color: #FFFF;
+}
+
+.textHeaderBaza{
+    display: flex;
+    align-items: baseline;
+}
+.textHeaderBaza h2{
+    margin-right: 10px;
+    font-size: 24px;
+
+}
+
+.rowStyleBaza .qoshish{
+    display: flex;
+    justify-content: space-between;
+    border-radius: 16px;
+}
+.rowStyleBaza .izlashBaza{
+    display: flex;
+    justify-content: end;
+    margin-top: 32px;
+    
+}
+
+.rowStyleBaza .izlashBaza p{
+    text-align: center;
+}
+.rowStyleBaza .izlashBaza select{
+    height: 28px;
+    border-radius: 4px;
+    border: 1px solid #6b6363a0;
+    margin-left: 4px;
+}
+.rowStyleBaza .izlashBaza button:hover{
+    cursor: pointer;
+    background-color: #e0dddd;
+}
+.rowStyleBaza .izlashBaza button{
+    height: 28px;
+    border-radius: 4px;
+    border: 1px solid #6b6363a0;
+    margin-left: 4px;
+    background-color: #f3efef;
+    font-size: 11px;
+}
+.rowStyleBaza .izlashBaza button img{
+    width: 16px;
+}
+
+.rowStyleBaza .izlashBaza input{
+    height: 28px;
+    border-radius: 4px;
+    border: 1px solid #6b6363a0;
+    background-color: #FFFF;
+    padding: 8px 0px 8px 12px;
+    margin-left: 24px;
+}
+.table tbody tr td .taxrirlash{
+    background-color: #0A58CA;
+    color: #FFFF;
+    border-radius: 4px;
+    border: none;
+    margin-right: 8px;
+    font-size: 12px;
+    padding: 2px;
+}
+.table tbody tr td .taxrirlash:hover{
+    background-color: #0947a5;
+}
+.table tbody tr td .korish{
+    background-color: #10e7d9;
+    color: #FFFF;
+    border-radius: 4px;
+    border: none;
+    margin-right: 8px;
+    font-size: 12px;
+    padding: 2px;
+}
+.table tbody tr td .korish:hover{
+    background-color: #0cd3c6;
+}
+.table tbody tr td .ochirish{
+    background-color: red;
+    color: #FFFF;
+    border-radius: 4px;
+    border: none;
+    margin-right: 8px; 
+    font-size: 12px;
+    padding: 2px;
+}
+.table tbody tr td .ochirish:hover{
+    background-color: rgb(216, 25, 25);
+}
+.table tbody tr td button img{
+    width: 18px;
+    margin-bottom: 2px;
+}
+.rowStyleBaza .sahifalar{
+    display: flex;
+    justify-content: end;
+}
+.rowStyleBaza .sahifalar :first-child{
+    border-radius: 4px 0px 0px 4px;
+    border: 1px solid #6b6363a0;
+}
+.rowStyleBaza .sahifalar button{
+    border: 1px solid #6b6363a0;
+    background-color: #FFFF;
+    color:#1f1c1ca0;
+}
+.sahifalar :last-child{
+  border-radius: 0px 4px 4px 0px;
+  
+}

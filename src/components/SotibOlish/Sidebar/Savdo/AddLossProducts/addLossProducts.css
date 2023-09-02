@@ -1,0 +1,27 @@
+.savdoQBox{
+    background-color: #FFFF;
+    margin: 20px;
+    border-radius: 8px;
+    padding: 20px 30px 20px 30px;
+
+}
+#avans::placeholder{
+    color: red;
+}
+
+.combo-trade-array{
+    width: 100%;
+    border: 1px solid gray;
+    background-color: #FFFFFF;
+    position: relative;
+}
+
+.combo-trade-array p{
+    padding: 1px 5px;
+    margin: 0;
+}
+.combo-trade-array p:hover{
+    background-color: #0c63e4;
+    color: #FFFFFF;
+    cursor: pointer;
+}

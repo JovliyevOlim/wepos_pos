@@ -1,0 +1,171 @@
+.btnPercent{
+    border: 1px solid silver;
+    border-radius: 8px;
+    background: darkgreen;
+    color: #fff;
+    padding: 1px;
+    margin-right: 5px;
+}
+.addBtn{
+    border: 1px solid silver;
+    border-radius: 8px;
+    background: transparent;
+    margin-left: 5px;
+    margin-right: 5px;
+    transition: 0.1s all ease-in;
+}
+.addBtn:hover{
+    background: silver;
+}
+.messageBtn{
+    padding: 3px;
+    border: 1px solid silver;
+    border-radius: 8px;
+    background: transparent;
+    transition: 0.1s all ease-in;
+}
+.messageBtn:hover{
+    background: silver;
+}
+.click{
+    cursor: pointer;
+    transition: 0.4s all;
+    position: center;
+    top: 56%;
+    left: 70%;
+}
+.click:hover{
+    cursor: pointer;
+    color: #0A58CA;
+    transform: scale(1.2);
+}
+.h2{
+    transition: 0.4s all;
+}
+.h2:hover{
+    color: #3a3ad2;
+    transform: rotateZ(180deg) scale(1.5);
+}
+.contanerT{
+    border-radius: 8px;
+    padding: 40px 16px 40px 16px;
+    background-color: #FFFFFF;
+    margin: 20px;
+}
+.cont select{
+    height: 40px;
+}
+
+.cont input{
+    height: 40px;
+}
+.cont button {
+    width: 120px;
+}
+.mahcolor::placeholder{
+    color: red;
+}
+#maxNomi::placeholder{
+    color: red;
+}
+#shtrixKod::placeholder{
+    color: red;
+}
+#miqdor::placeholder{
+    color: red;
+}
+#bazalar::placeholder{
+    color: red;
+}
+#soliqszNarx::placeholder{
+    color: red;
+}
+#soliqszNarx2::placeholder{
+    color: red;
+}
+#foy::placeholder{
+    color: red;
+}
+#sotishNarxi::placeholder{
+    color: red;
+}
+#sotibOlishNarxi::placeholder{
+    color: red;
+}
+.filterbranch{
+    position: absolute;
+}
+.addimg{
+    padding: 6px 40px;
+    border-radius: 5px;
+    background: #0044FF;
+    color: white;
+}
+.btnx{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: darkred;
+    color: #fff;
+    margin-top: 5px;
+}
+.table-text-add-product{
+    font-size: 14px;
+    padding: 2px;
+    color: #ffffff;
+}
+.manytype-input{
+    border:1px solid gray;
+    padding: 2px;
+    width: 130px;
+    font-size: 12px;
+}
+.manytype-input::placeholder{
+    font-size: 12px;
+}
+i.text{
+    font-size: 12px;
+}
+.search-combo{
+    border: 1px solid gray;
+    padding: 0;
+}
+.search-combo .label{
+    border-right: 1px solid gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    width: 5%;
+}
+
+.search-icon{
+    width: 25px;
+    height: 25px;
+}
+.search-combo input{
+    padding: 5px;
+    width: 100%;
+}
+.search-combo .input{
+    width: 96%;
+}
+.input-combo{
+    width: 100%;
+    position: absolute;
+}
+.Combo-array{
+    width: 100%;
+    border: 1px solid gray;
+    background-color: #FFFFFF;
+    position: relative;
+}
+.Combo-array p{
+    padding: 1px 5px;
+    margin: 0;
+}
+.Combo-array p:hover{
+    background-color: #0c63e4;
+    color: #FFFFFF;
+    cursor: pointer;
+}

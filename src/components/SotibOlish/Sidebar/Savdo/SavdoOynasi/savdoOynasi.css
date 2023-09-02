@@ -1,0 +1,579 @@
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar:hover {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 5px solid #0044FF;
+}
+
+.sss2{
+    padding: 4px;
+    width: 91px;
+    color: grey;
+    cursor: pointer;
+    height: 35px;
+    border-radius: 10px;
+}
+.combo-trade-array{
+    border: 1px solid gray;
+    background-color: #FFFFFF;
+}
+.combo-trade-array button{
+    text-align: start;
+    background-color: #ffffff;
+    width: 100%;
+    color: #000000;
+    padding:0 10px;
+    margin: 0;
+    border-bottom: 1px solid gray;
+}
+.combo-trade-array button:hover{
+    background-color: #0c50e4;
+    color: #FFFFFF;
+}
+.combo-trade-array button:disabled{
+    color: rgba(128, 128, 128, 0.55);
+}
+.shopping{
+    width: 100%;
+    position: absolute;
+}
+.shopping-modal{
+    width: 100%;
+    overflow: hidden;
+}
+.hoverimg{
+    transition: 0.4s all;
+}
+.hoverimg:hover{
+    transform: translateY(-6px);
+    opacity: 0.8;
+}
+.savdoOynaContainers{
+    width: 100%;
+    background-color:#e8e3ff;
+    padding: 5px 0 0 0;
+    border-radius: 0;
+    position: absolute;
+    top: 0;
+
+}
+.namepointer{
+    transition: 0.4s all;
+    cursor: pointer;
+}
+.namepointer:hover{
+    border-bottom: 5px solid darkblue;
+    color: darkblue;
+    font-size: 17px;
+    transform: translateX(20px);
+    cursor: pointer;
+}
+.liniya{
+    background: black;
+    transform: rotateZ(90deg);
+    margin-top: 3rem;
+    width: 100%;
+    height: 1px;
+}
+.savdoOynaContainers{
+    overflow: hidden;
+}
+.savdoOynaContainers .savdoNavbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FFFFFF;
+    padding: 16px 32px;
+    margin-bottom: 6px;
+
+}
+.savdoOynaContainers .savdoNavbar .navbarLeft h5{
+    text-align: center;
+    margin: 0px 5px ;
+}
+
+.ocbutton{
+    width: 40px;
+    height: 40px;
+    padding: 3px;
+    border-radius: 50%;
+    background: #19196a;
+    color: white;
+    margin-left: 10px;
+    transition: 0.4s all ease-in-out;
+}
+.ocbutton:hover{
+    width: 40px;
+    height: 40px;
+    padding: 3px;
+    border-radius: 3%;
+    background: #870e0e;
+    transform: scale(1.1);
+}.kv{
+    width: 40px;
+    height: 40px;
+    padding: 3px;
+    background: #1b5c2a;
+    color: white;
+    border-radius: 5px;
+    margin-left: 10px;
+    transition: 0.4s all ease-in-out;
+}
+.kv:hover{
+    width: 40px;
+    height: 40px;
+    padding: 3px;
+    border-radius: 50%;
+    background: #870e0e;
+    transform: scale(1.1);
+}
+.savdoOynaContainers .savdoNavbar .navbarRigth{
+    display: flex;
+    justify-content: space-around;
+    /*border: 1px solid green;*/
+    align-items: center;
+    width: 450px;
+}
+.savdoOynaContainers .savdoNavbar .navbarRigth img{
+    width: 18px;
+    height: 20px;
+    cursor: pointer;
+}
+.savdoOynaContainers .savdoNavbar .navbarRigth button{
+    height: 32px;
+    padding: 0px 16px;
+    background-color: #FFFFFF;
+    border: 1px solid #9FA2B4;
+    box-sizing: border-box;
+    border-radius: 8px;
+    color: #9FA2B4;
+}
+.savdoOynaContainers .savdoNavbar .navbarLeft .bazaSelect1{
+    height: 32px;
+    padding: 0px 16px;
+    background-color: #FFFFFF;
+    border: 1px solid #9FA2B4;
+    box-sizing: border-box;
+    border-radius: 8px;
+    color: #9FA2B4;
+}
+.savdoOynaContainers .savdoBlock{
+    padding: 6px 16px;
+    display: flex;
+    justify-content: space-between;
+}
+.savdoOynaContainers .savdoBlock .savdoBlockLeft {
+    background: #FFFFFF;
+    border: 1px solid rgba(159, 162, 180, 0.25);
+    border-radius: 20px;
+    padding: 24px 20px;
+    width: 55%;
+    height: 75vh;
+}
+.savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox .addButton{
+    background: #FFFFFF;
+    border: 1px solid #9FA2B4;
+    border-radius: 6px;
+    color: #9FA2B4;
+    height: 32px;
+    width: 50px;
+}
+/*.savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox select{*/
+/*    background: #FFFFFF;*/
+/*    border: 1px solid #9FA2B4;*/
+/*    border-radius: 6px;*/
+/*    color: #9FA2B4;*/
+/*    height: 32px;*/
+/*    width: 35%;*/
+/*    padding: 0px 6px;*/
+/*}*/
+/*.savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox input{*/
+/*    background: #FFFFFF;*/
+/*    width: 50%;*/
+/*    padding-left: 4px;*/
+/*    border: 1px solid #9FA2B4;*/
+/*    border-radius: 6px;*/
+/*    color: #9FA2B4;*/
+/*    height: 32px;*/
+/*    padding: 0px 8px;*/
+/*}*/
+.savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox input::placeholder{
+    color: #9FA2B4;
+    opacity: 1;
+}
+
+.savdoOynaContainers .savdoBlock .savdoBlockLeft .maxSoniBox{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.savdoOynaContainers .savdoBlock .savdoBlockLeft .chegirmalarBox{
+    display: flex;
+    justify-content: space-between;
+}
+.savdoOynaContainers .savdoBlock .savdoBlockLeft .chegirmalarBox p{
+    margin: 9px 0px 0px 0px;
+}
+
+.tbodyY{
+    height: 50vh;
+    overflow-y: scroll;
+    /* position: relative; */
+}
+.tbodyY thead{
+    position: sticky;
+    top: 0px;
+    background-color: white;
+}
+.savdoOynaContainers .savdoBlock .savdoBlockRigth{
+    background: #FFFFFF;
+    border: 1px solid rgba(159, 162, 180, 0.25);
+    border-radius: 20px;
+    padding: 12px 20px;
+    width: 42%;
+    height: 75vh;
+}
+.toprint{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.savdoOynaContainers .savdoBlock .savdoBlockRigth .bazaBox select{
+    background-color: #FFFFFF;
+    border: 1px solid #9FA2B4;
+    box-sizing: border-box;
+    border-radius: 6px;
+    color: #9FA2B4;
+    height: 32px;
+}
+.savdoOynaContainers .savdoBlock .savdoBlockRigth .maxsulotImgBlock{
+    margin-top: 16px;
+    overflow-y: scroll;
+    display: flex;
+    gap:2px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    height: 60vh;
+}
+.trade-button{
+    background-color: transparent;
+    border-radius:20px
+}
+.trade-button:hover{
+    transition: all 0.5s ease-in-out;
+    background-color: #f0b800;
+}
+.savdoOynaContainers .savBtnBox{
+    display: flex;
+    margin-bottom: 16px;
+    margin-top: 16px;
+    padding: 6px 16px;
+    overflow: hidden;
+}
+.savdoOynaContainers .savBtnBox {
+    background: transparent;
+
+}
+.savdoOynaContainers .savBtnBox button{
+    width: 10%;
+    height: 56px;
+    border-radius: 4px;
+    padding: 0px 4px;
+    color: #FFFFFF;
+    line-height: 12px;
+}
+
+.savdoOynaContainers .savBtnBox .jamiTolov{
+    background-color: #FFFFFF;
+    height: 36px;
+    padding: 0px 6px;
+    border-radius: 8px;
+    color: black;
+    width: 300px;
+    font-size: 14px;
+    border: 1px solid rgba(37, 37, 37, 0.5);;
+    line-height: 12px;
+}
+
+.savdoOynaContainers .savBtnBox .qchiqish{
+    height: 36px;
+    padding: 0px 4px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 12px;
+    width: 10%;
+}
+.savdoOynaContainers .savdoBlock .savdoBlockRigth .maxsulotImgBlock .maxsuImgBox{
+    width: 24%;
+    cursor: pointer;
+}
+.savdoOynaContainers .savdoBlock .savdoBlockRigth .maxsulotImgBlock .maxsuImgBox img{
+    width: 80%;
+    height: 50%;
+    margin: 4px 10px;
+    justify-content: space-between;
+}
+
+
+.savdoOynaContainers .savdoBlock .savdoBlockRigth .maxsulotImgBlock .maxsuImgBox h6{
+    /* overflow: hidden; */
+    margin: 0px 4px;
+    text-align: center;
+    font-size: 12px;
+    font-family: Golos;
+    color: #000000;
+    
+}
+.savdoOynaContainers .savdoBlock .savdoBlockRigth .maxsulotImgBlock .maxsuImgBox p{
+    text-align: center;
+    font-size: 12px;
+}
+
+.ddd{
+    cursor: pointer;
+}
+
+
+@media (max-width: 425.9px){
+    .savdoOynaContainers{
+        width: 100%;
+
+    }
+    .savdoOynaContainers .savdoNavbar{
+        display: block;
+        justify-content: start;
+    }
+    .savdoOynaContainers .savdoNavbar .navbarRigth{
+        width: 100%;
+        margin-top: 12px;
+    }
+    .savdoOynaContainers .savdoNavbar .navbarRigth .headerImgStyle{
+        width: 30px;
+        height: 30px;
+    }
+    .savdoOynaContainers .savdoNavbar .navbarLeft h5{
+        display: flex;
+        justify-content: start;
+        margin-bottom: 4px;
+    }
+    .savdoOynaContainers .savdoBlock{
+        padding: 4px 10px;
+        display: block;
+    }
+    .tbodyY {
+        height: 50%;
+    }
+
+    .savdoOynaContainers .savdoBlock .savdoBlockLeft{
+        width: 100%;
+        height: 600px;
+        margin-bottom: 24px;
+        padding: 18px 14px;
+    }
+    .savdoOynaContainers .savdoBlock .savdoBlockRigth{
+        width: 100%;
+        height: 600px;
+        padding: 18px 14px;
+
+    }
+    .savdoOynaContainers .savdoNavbar .navbarRigth button{
+        width: 116px;
+        font-size: 12px;
+
+    }
+    .savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox{
+        display: block;
+    }
+    .savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox select{
+        width: 100%;
+        margin-bottom: 12px;
+        font-size: 12px;
+    }
+    .savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox input{
+        width: 80%;
+        font-size: 12px;
+        margin-right: 4px;
+    }
+    .savdoOynaContainers .savdoBlock .savdoBlockLeft .chegirmalarBox{
+        display: block;
+    }
+    .savdoOynaContainers .savBtnBox{
+        display: block;
+        padding: 0 1.2rem;
+    }
+    .savdoOynaContainers .savBtnBox button{
+        width: 47%;
+    }
+    .savdoOynaContainers .savBtnBox .jamiTolov{
+        width: 97%;
+    }
+    .savdoOynaContainers .savBtnBox .qchiqish{
+        width: 97%;
+    }
+    .savdoOynaContainers .savdoBlock .savdoBlockLeft .maxSoniBox{
+        display: block;
+    }
+
+    
+}
+@media (min-width: 426px) and (max-width: 768.9px){
+    .savdoOynaContainers{
+        width: 100%;
+
+    }
+    .savdoOynaContainers .savdoNavbar{
+        display: block;
+        justify-content: start;
+    }
+    .savdoOynaContainers .savdoNavbar .navbarRigth{
+        width: 100%;
+        margin-top: 12px;
+    }
+    .savdoOynaContainers .savdoNavbar .navbarRigth .headerImgStyle{
+        width: 30px;
+        height: 30px;
+    }
+    .savdoOynaContainers .savdoNavbar .navbarLeft h5{
+        display: flex;
+        justify-content: start;
+        margin-bottom: 4px;
+    }
+    .savdoOynaContainers .savdoBlock{
+        padding: 4px 26px;
+        display: block;
+    }
+
+    .tbodyY {
+        height: 60vh;
+    }
+
+    .savdoOynaContainers .savdoBlock .savdoBlockLeft{
+        width: 100%;
+        height: 600px;
+        margin-bottom: 24px;
+        padding: 18px 14px;
+    }
+    .savdoOynaContainers .savdoBlock .savdoBlockRigth{
+        width: 100%;
+        height: 600px;
+        padding: 18px 14px;
+
+    }
+    .savdoOynaContainers .savdoNavbar .navbarRigth button{
+        width: 116px;
+        font-size: 12px;
+
+    }
+    .savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox{
+        display: block;
+    }
+    .savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox select{
+        width: 80%;
+        margin-bottom: 12px;
+        font-size: 12px;
+    }
+    .savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox input{
+        width: 80%;
+        font-size: 12px;
+        margin-right: 8px;
+    }
+    .savdoOynaContainers .savdoBlock .savdoBlockLeft .chegirmalarBox p{
+        font-size: 13px;
+    }
+    .savdoOynaContainers .savBtnBox button{
+        width: 100%;
+    }
+    .savdoOynaContainers .savBtnBox .jamiTolov{
+        width: 100%;
+    }
+    .savdoOynaContainers .savBtnBox .qchiqish{
+        width: 100%;
+    }
+    /* .savdoOynaContainers .savdoBlock .savdoBlockLeft .maxSoniBox{
+        
+    } */
+    .savdoOynaContainers .savdoBlock .savdoBlockRigth .maxsulotImgBlock .maxsuImgBox{
+        width: 60%;
+    }
+
+}
+@media (min-width: 769px) and (max-width: 1024.9px){
+    .savdoOynaContainers{
+        width: 100%;
+    }
+    .savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox{
+        display: block;
+    }
+    /*.savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox select{*/
+    /*    width: 100%;*/
+    /*    margin-bottom: 12px;*/
+    /*    font-size: 12px;*/
+    /*}*/
+    .tbodyY {
+        height: 60%;
+    }
+    /*.savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox input{*/
+    /*    width: 80%;*/
+    /*    font-size: 12px;*/
+    /*    margin-right: 8px;*/
+    /*}*/
+    .savdoOynaContainers .savdoBlock .savdoBlockLeft .chegirmalarBox p{
+        font-size: 13px;
+    }
+    .savdoOynaContainers .savBtnBox button{
+        width: 100%;
+    }
+    .savdoOynaContainers .savBtnBox .jamiTolov{
+        width: 100%;
+    }
+    .savdoOynaContainers .savBtnBox .qchiqish{
+        width: 100%;
+    }
+    .savdoOynaContainers .savdoBlock .savdoBlockLeft .maxSoniBox{
+        margin-top: 12px;
+    }
+    .savdoOynaContainers .savdoBlock .savdoBlockLeft .maxSoniBox h6{
+        font-size: 12px;
+    }
+    .savdoOynaContainers .savdoBlock .savdoBlockLeft .chegirmalarBox p{
+        font-size: 12px;
+    }
+    .savdoOynaContainers .savdoBlock .savdoBlockRigth .maxsulotImgBlock .maxsuImgBox{
+        width: 80%;
+    }
+    .savdoOynaContainers .savBtnBox button{
+        width: 100%;
+    }
+    .savdoOynaContainers .savBtnBox .jamiTolov{
+        width: 100%;
+    }
+    .savdoOynaContainers .savBtnBox .qchiqish{
+        width: 100%;
+    }
+
+}
+
+@media (min-width: 1025px) and (max-width: 1119.9px){
+    /* .savdoOynaContainers{
+    }
+    .savdoOynaContainers .savBtnBox button{
+    } */
+}
+
