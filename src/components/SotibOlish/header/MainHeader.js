@@ -20,9 +20,16 @@ import ModalLoading from "../../ModalLoading";
 import moment from "moment";
 import 'moment/locale/uz-latn'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import avatar from "../../../img/Ellipse 48.svg"
+import avatar from "../../../img/defaul-user-profile.svg"
+import notificationActive from '../../../img/notification-active.svg'
+import notification from '../../../img/notification.svg'
+import uzLanguage from '../../../img/🇺🇿.svg'
+import rusLanguage from '../../../img/🇷🇺.svg'
+import arrowDown from "../../../img/direction-down 01.svg";
+
 import Icon from "@ant-design/icons";
 import {EditIcon, LogOutIcon, PersonIcon} from "../../Svg/svg";
+import {changeLanguage} from "i18next";
 function MainHeader({
                     deleteNotification,
                     logOutUser,
@@ -47,8 +54,16 @@ function MainHeader({
     const [activeN, setactiveN] = useState(false)
     const [activeN2, setactiveN2] = useState(false)
     const [exit, setExit] = useState(false)
+    const [langShown, setlangShown] = useState(false)
+    const [selectedImg,setselectedImg] = useState(uzLanguage)
+    const [selectedLang,setselectedLang] = useState('Uzbek')
 
 
+    const [languagesList,setLanguagesList] = useState([
+        {id:'uz',name:'Uzbek',img:uzLanguage,active:true},
+        {id:'ki',name:'Крилл',img:uzLanguage,active: false},
+        {id:'ru',name:'Русский',img:rusLanguage,active: false},
+    ])
 
     function out() {
         setExit(!exit)
@@ -70,12 +85,23 @@ function MainHeader({
 
     const {t, i18n} = useTranslation()
 
-    function ChangeLanguage(e) {
-        setLang(e.target.value)
-        i18n.changeLanguage(e.target.value)
+    function ChangeLanguage(list) {
+        languagesList.map((item,val)=>{
+            if(list.id === item.id){
+                setselectedImg(item.img)
+                setselectedLang(item.name)
+                i18n.changeLanguage(item.id)
+                item.active = true
+            }
+            else{
+                item.active = false
+            }
+        })
+        console.log(languagesList)
+        setLanguagesList(languagesList)
+        setlangShown(false)
     }
 
-    const [lang, setLang] = useState()
 
     function isRead(id) {
         isReadNotification(id)
@@ -87,7 +113,6 @@ function MainHeader({
 
     useEffect(() => {
         const storageLanguage = localStorage.getItem("i18nextLng")
-        setLang(storageLanguage)
     }, [])
 
 
@@ -121,15 +146,6 @@ function MainHeader({
     return (
         <div className={'main-header'}>
             <div className={'main-header-left'}>
-                <div className={'main-header-img'} onClick={out}>
-                    <img className={'img-fluid'} src={users.users?.photoId ? `${BaseUrl}/attachment/download/${users.users?.photoId}`: avatar} alt="avatar"/>
-                </div>
-                <div className={'main-header-text'}>
-                    <p className={'main-header-text-login'}>{users.users?.username}</p>
-                     <h6 className={'main-header-text-fio'}>{users.users?.fio}</h6>
-                </div>
-            </div>
-            <div className={'main-header-right'}>
                 <div></div>
                 {/*<div onClick={openNotification} className="notificBox">*/}
                 {/*    <img src={imgNot} className={'im3'} alt=""/>*/}
@@ -139,8 +155,47 @@ function MainHeader({
                 {/*        <div className="notificatNum">*/}
                 {/*            <p>{notificationReducer.notificationCount}</p>*/}
                 {/*        </div>*/}
-                {/*    }*/}
-                {/*</div>*/}
+            </div>
+            <div className={'main-header-right'}>
+                <div>
+                  <div className="drop-down">
+                      <div className={'wrapper-con'} onClick={()=>setlangShown(true)}>
+                          <div className="wrapper">
+                              <img className={'lang-logo'} src={selectedImg} alt="country"/>
+                              <div className={'selected-lang-text'}>{selectedLang}</div>
+                          </div>
+                          <img src={arrowDown} alt="arrow"/>
+                      </div>
+                      {
+                          langShown && <div className="lang-list">
+                              {
+                                  languagesList.filter(item=>item.active===false).map((lang) =>
+                                      <div className="lang-list-item" onClick={()=>ChangeLanguage(lang)}>
+                                          <img className={'lang-logo'} src={lang.img} alt="rus"/>
+                                          <div className={'selected-lang-text'}>{lang.name}</div>
+                                      </div>
+                                  )
+                              }
+
+                          </div>
+                      }
+
+                  </div>
+                </div>
+                <div>
+                    <div className={'main-notification-img'} onClick={openNotification}>
+                        <img className={'img-fluid'} src={notificationReducer.notificationCount > 0 ? notificationActive:notification}  alt="notification"/>
+                    </div>
+                </div>
+                <div className={'d-flex align-items-center'} style={{columnGap:'12px'}}>
+                    <div className={'main-header-img'} onClick={out}>
+                        <img className={'img-fluid'} src={users.users?.photoId ? `${BaseUrl}/attachment/download/${users.users?.photoId}`: avatar} alt="avatar"/>
+                    </div>
+                    <div className={'main-header-text'}>
+                        <h6 className={'main-header-text-fio'}>{users.users?.fio}</h6>
+                        <p className={'main-header-text-login'}>{users.users?.username}</p>
+                    </div>
+                </div>
             </div>
             <div className="main-header-profile">
                 {
