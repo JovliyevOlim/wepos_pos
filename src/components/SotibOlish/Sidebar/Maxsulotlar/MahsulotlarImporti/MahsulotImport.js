@@ -69,9 +69,9 @@ function MahsulotImport({users, saveProductByExcelFile, MaxsulotlarRoyxariReduce
                 </a>
             </div>
             <CardBody>
-                <div className="col-md-12 mb-4 d-flex align-items-end ">
+                <div className="col-md-12 mb-4 gap-2 d-flex align-items-end ">
                     <div className="col-md-3">
-                        <SelectAnt name={"Filiallar"} permission={false} selectList={users.branches} onChange={(e) => setbranch(e === '' ? null : e)} />
+                        <SelectAnt name={"Filiallar"} all={'Filial tanlang'} permission={true} selectList={users.branches} onChange={(e) => setbranch(e === '' ? null : e)} />
                     </div>
                     <div className="col-md-3">
                         <form>

@@ -169,7 +169,7 @@ const Sidebar = ({users}) => {
             }}
         >
             <Sider trigger={null} className={'sidebar-scroll'} collapsible
-                   width={268} collapsed={collapsed}>
+                   width={250} collapsed={collapsed}>
                 <div className="demo-logo-vertical">
                     {
                         !collapsed && <div className={'d-flex gap-1 align-items-center'}>
@@ -196,14 +196,14 @@ const Sidebar = ({users}) => {
                       mode="inline" items={items}/>
             </Sider>
             <Layout style={{
-                marginLeft: collapsed ? 80 : 268,
+                marginLeft: collapsed ? 80 : 250,
             }} >
                 <Header
                     style={{
-                        padding: 0,
-                        borderBottom: "2px solid #F1F2F3",
+                        padding: 32,
+                        // borderBottom: "2px solid #F1F2F3",
                         background: "#FFF",
-                        height: 84
+                        height: 103
                     }}
                 ><MainHeader/>
                 </Header>
