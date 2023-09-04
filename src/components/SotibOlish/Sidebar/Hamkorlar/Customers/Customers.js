@@ -187,7 +187,7 @@ function Customers({
 
     function onSubmitDebt(data) {
         if (data.paymentMethodId === 'all') {
-            toast.warning('To\'lov turini tanlang')
+            toast.warning(t('bal.19'))
         } else {
             if (customerGetPay) {
                 customerGetPayment({
@@ -285,10 +285,10 @@ function Customers({
     return (
         <>
             <div className="d-flex align-items-center mb-5 justify-content-between">
-                <MainHeaderText text={'Mijozlar'}/>
+                <MainHeaderText text={t('bal.20')}/>
                 {
                     users.addCustomer ?
-                        <ButtonAnt onClick={toggle} text={'Qo\'shish'} type={'primary'}/> : ''
+                        <ButtonAnt onClick={toggle} text={t('bal.21')} type={'primary'}/> : ''
                 }
             </div>
             {
@@ -296,10 +296,10 @@ function Customers({
                     <CardBody>
                         <div className="col-md-12 d-flex align-items-center flex-wrap">
                             <div className={'col-md-3'}>
-                                <SelectAnt name={'Filiallar'} onChange={(e) => setMainBranchId(e)} permission={users.getCustomerAdmin} selectList={users?.branches}/>
+                                <SelectAnt name={t('bal.2')} onChange={(e) => setMainBranchId(e)} permission={users.getCustomerAdmin} selectList={users?.branches}/>
                             </div>
                             <div className={'col-md-6'}>
-                                <SearchAnt name={'Mijozlarni qidirish'} onChange={(e) => setSearch(e.target.value)}/>
+                                <SearchAnt name={t('bal.22')} onChange={(e) => setSearch(e.target.value)}/>
                             </div>
                         </div>
                     </CardBody>:''
@@ -335,15 +335,15 @@ function Customers({
                                                             {/*        />*/}
                                                             {/*    </Tooltip>*/}
                                                             {/*</TableCell>*/}
-                                                            <TableCell>Nomi</TableCell>
+                                                            <TableCell>{t('bal.23')}</TableCell>
                                                             <TableCell
-                                                                align={'center'}>Telefon raqam</TableCell>'
+                                                                align={'center'}>{t('bal.24')}</TableCell>'
                                                             <TableCell
-                                                                align={'center'}>Filial</TableCell>
-                                                            <TableCell align={'center'}>Qarz</TableCell>
-                                                            <TableCell align={'center'}>Foiz</TableCell>
+                                                                align={'center'}>{t('bal.7')}</TableCell>
+                                                            <TableCell align={'center'}>{t('bal.25')}</TableCell>
+                                                            <TableCell align={'center'}>{t('bal.26')}</TableCell>
                                                             <TableCell align={'center'}
-                                                                       className={'text-center'}>Amallar</TableCell>
+                                                                       className={'text-center'}>{t('bal.27')}</TableCell>
                                                         </TableRow>
                                                     </TableHead>
 
@@ -417,8 +417,7 @@ function Customers({
                                                                             {/*</Tooltip>*/}
                                                                             {
                                                                                 users.editCustomer ?
-                                                                                    <Tooltip title={"Tahrirlash"}
-                                                                                             arrow>
+                                                                                    <Tooltip title={t('bal.28')}                                                                                             arrow>
                                                                                         <IconButton
                                                                                             onClick={() => editM(item.id)}
                                                                                             color="primary"
@@ -429,7 +428,7 @@ function Customers({
                                                                             }
                                                                             {
                                                                                 users.deleteCustomer ?
-                                                                                    <Tooltip title={"O'chirish"}
+                                                                                    <Tooltip title={t('bal.29')}
                                                                                              arrow>
                                                                                         <IconButton
                                                                                             onClick={() => deleteCustomerById(item.id)}
@@ -441,7 +440,7 @@ function Customers({
                                                                                     </Tooltip> : ''
                                                                             }
 
-                                                                            <Tooltip title={"Qarz uzish"} arrow>
+                                                                            <Tooltip title={t('bal.30')} arrow>
                                                                                 <IconButton
                                                                                     onClick={() => customerGetPayFunc(item.id)}
                                                                                     color="primary"
@@ -450,7 +449,7 @@ function Customers({
                                                                                         fontSize="small"/>
                                                                                 </IconButton>
                                                                             </Tooltip>
-                                                                            <Tooltip title={"Pulini qaytarish"} arrow>
+                                                                            <Tooltip title={t('bal.31')} arrow>
                                                                                 <IconButton
                                                                                     onClick={() => customerReturnPayFunc(item.id)}
                                                                                     color="success"
@@ -490,7 +489,7 @@ function Customers({
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <ModalHeader>
                                     {
-                                        editId ? 'Taxrirlash' : 'Qo\'shish'
+                                        editId ? (t('bal.28')) : (t('bal.21'))
                                     }
                                 </ModalHeader>
                                 <ModalBody>
@@ -501,16 +500,16 @@ function Customers({
                                                 {...register('name', {
                                                     required: {
                                                         value: true,
-                                                        message: 'Ismni kiriting'
+                                                        message: (t('bal.32'))
                                                     }
                                                 })}
-                                                placeholder={"Ism"}
+                                                placeholder={t('bal.33')}
                                                 defaultValue={''}
                                                 id={'nomi'} type="text"
                                                 className={'form-control'}/>
                                             {
                                                 errors.name &&
-                                                <p className={'text-danger text-center p-0 m-0'}>Ismni kiriting</p>
+                                                <p className={'text-danger text-center p-0 m-0'}>{t('bal.32')}</p>
                                             }
                                         </div>
                                         <div className="col-md-6">
@@ -519,10 +518,10 @@ function Customers({
                                                     disabled={editId}  {...register('branchId', {
                                                 required: {
                                                     value: true,
-                                                    message: 'Filial tanlang'
+                                                    message: (t('bal.34'))
                                                 }
                                             })}>
-                                                <option value="">Tanlang</option>
+                                                <option value="">{t('bal.35')}</option>
                                                 {
                                                     users?.branches.map(item =>
                                                         <option value={item.id} key={item.id}>{item.name}</option>
@@ -531,33 +530,32 @@ function Customers({
                                             </select>
                                             {
                                                 errors.branchId &&
-                                                <p className={'text-danger text-center p-0 m-0'}>Filial tanlang</p>
+                                                <p className={'text-danger text-center p-0 m-0'}>{t('bal.34')}</p>
                                             }
                                         </div>
                                         <div className="col-md-6">
                                             <label className={'mt-1'} htmlFor={'tel'}>{t('Buttons.14')}</label>
                                             <PhoneInput
-                                                placeholder="Enter phone number"
+                                                placeholder={t('bal.36')}
                                                 value={phoneNumber}
                                                 className={'form-control'}
                                                 onChange={setPhoneNumber}/>
                                             {isCheck && !phoneNumber && <p
-                                                className={'text-danger text-center p-0 m-0'}>Telefon raqamni
-                                                kiriting</p>}
+                                                className={'text-danger text-center p-0 m-0'}>{t('bal.36')}</p>}
                                         </div>
 
                                         <div className="col-md-6">
-                                            <label className={'mt-1'} htmlFor="">Foiz</label>
+                                            <label className={'mt-1'} htmlFor="">{t('bal.26')}</label>
                                             <input type="number" {...register('percent',
                                                 {
                                                     required: {
                                                         value: allbusinessreducer.onebusiness?.customer,
-                                                        message: 'Foizni kiriting'
-                                                    },
-                                                    min: {value: 0, message: 'Foiz minusda kiritilmaydi!'},
-                                                    max: {value: 50, message: 'Foiz 50 dan baland kiritilmaydi!'},
+                                                        message: (t('bal.37'))
+                                                    }, 
+                                                    min: {value: 0, message: (t('bal.38'))},
+                                                    max: {value: 50, message: (t('bal.39'))},
                                                 })}
-                                                   placeholder={'Foiz'}
+                                                   placeholder={t('bal.26')}
                                                    defaultValue={'0'}
                                                    disabled={!allbusinessreducer.onebusiness?.customer}
                                                    className={'form-control'}/>
@@ -590,17 +588,17 @@ function Customers({
                             <form onSubmit={handleSubmit1(onSubmitDebt)}>
                                 <ModalHeader>
                                     {
-                                        customerGetPay ? 'Mijoz qarzini uzish' : 'Mijozga pulini qaytarish'
+                                        customerGetPay ? (t('bal.40')) : (t('bal.41'))
                                     }
                                 </ModalHeader>
                                 <ModalBody>
                                     <div className="row">
                                         <div className="col-md-12">
                                             <label
-                                                htmlFor={'l'}>Miqdor</label>
+                                                htmlFor={'l'}>{t('bal.42')}</label>
                                             <input type="number" min={0}
                                                    {...register1('sum', {required: true})}
-                                                   placeholder={errors1.sum ? errors1.sum?.type === "required" && "Miqdorni kiriting" : 'Miqdor'}
+                                                   placeholder={errors1.sum ? errors1.sum?.type === "required" && (t('bal.43')) : (t('bal.42'))}
                                                    className={'form-control'}
                                             />
                                         </div>
