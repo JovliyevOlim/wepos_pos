@@ -110,28 +110,28 @@ function BalanceHistory({
 
     return (
         <div className="col-md-12 mt-4 mb-4">
-            <MainHeaderText text={'Kassadagi o\'zgarishlar'}/>
+            <MainHeaderText text={t('bal.1')}/>
             {
                 users.getBalance || users.getBalanceAdmin ?
                     <CardBody>
                         <div className="col-md-12 d-flex flex-wrap">
                             <div className="col-md-3">
-                                <SelectAnt name={'Filiallar'}
+                                <SelectAnt name={t('bal.2')}
                                            onChange={(e) => setMainBranchId(e === "" ? null : e)}
                                            selectList={users.branches} permission={users.getBalanceAdmin}/>
                             </div>
                             <div className="col-md-3">
-                                <SelectAnt name={'To\'lov turlari'}
+                                <SelectAnt name={t('bal.3')}
                                            onChange={(e) => setPaymentMethodId(e === "" ? null : e)}
                                            selectList={PayReducer?.paymethod} permission={true}/>
                             </div>
                             <div className="col-md-3">
-                                <SelectAnt name={'Xodimlar'}
+                                <SelectAnt name={t('bal.4')}
                                            onChange={(e) => setUserId(e === "" ? null : e)}
                                            selectList={XodimReducer.usersFiltering.map((item) => ({id: item.id, name: item.fio}))} permission={true}/>
                             </div>
                             <div className="col-md-3">
-                                <SelectAnt name={'Kirim-Chiqim'}
+                                <SelectAnt name={t('bal.5')}
                                            onChange={changePlus}
                                            selectList={[{id:'true',name:'Kirimlar'},{id:'false',name:'Chiqimlar'}]} permission={true}/>
                             </div>
@@ -155,12 +155,12 @@ function BalanceHistory({
                                             <thead>
                                             <tr>
                                                 <th>T/R</th>
-                                                <th>Xodim</th>
-                                                <th>Filial</th>
-                                                <th>To'lov turi</th>
-                                                <th>Summa</th>
-                                                <th>Sana</th>
-                                                <th>Ish Tavsifi</th>
+                                                <th>{t('bal.6')}</th>
+                                                <th>{t('bal.7')}</th>
+                                                <th>{t('bal.8')}</th>
+                                                <th>{t('bal.9')}</th>
+                                                <th>{t('bal.10')}</th>
+                                                <th>{t('bal.11')}</th>
                                             </tr>
                                             </thead>
                                             <tbody>

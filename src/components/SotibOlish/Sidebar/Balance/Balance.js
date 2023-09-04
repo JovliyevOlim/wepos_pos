@@ -84,7 +84,7 @@ function Balance({sidebaractive2, changeLink, link, users}) {
                             </g>
                         </g>
                     </svg>
-                    <h4 className={`sidebar-text ${fontsiza}`}>Kassa</h4>
+                    <h4 className={`sidebar-text ${fontsiza}`}>{t('bal.12')}</h4>
                 </div>
                 <svg className={`sidebar-img  ${classs}`} width="24" height="24" viewBox="0 0 24 24" fill="none"
                      xmlns="http://www.w3.org/2000/svg">
@@ -99,16 +99,14 @@ function Balance({sidebaractive2, changeLink, link, users}) {
                     {
                         users.getBalance || users.getBalanceAdmin ?
                             <li onClick={sidebaractive}><NavLink to={'/main/balanceTable'}
-                        className={isActive => isActive ? 'active-enter-link lll li-text' : 'lll li-text'}>Kassa
-                                Holati</NavLink>
+                        className={isActive => isActive ? 'active-enter-link lll li-text' : 'lll li-text'}> {t('bal.17')}</NavLink>
                             </li> : ''
                     }
 
                     {
                         users.getBalance || users.getBalanceAdmin ?
                             <li onClick={sidebaractive}><NavLink to={'/main/balanceHistory'}
-                                                                 className={isActive => isActive ? 'active-enter-link lll li-text' : 'lll li-text'}>Kassadagi
-                                o'zgarishlar</NavLink>
+                                                                 className={isActive => isActive ? 'active-enter-link lll li-text' : 'lll li-text'}>{t('bal.18')}</NavLink>
                             </li> : ''
                     }
 
