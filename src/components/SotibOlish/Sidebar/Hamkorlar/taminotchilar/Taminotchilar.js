@@ -195,11 +195,11 @@ function Taminotchilar({
     return (
         <div>
             <div className={'d-flex align-items-center justify-content-between mb-5'}>
-                <MainHeaderText text={'Ta\'minotchilar'}/>
+                <MainHeaderText text={t('bal.44')}/>
 
                 {
                     users.addSupplier ?
-                        <ButtonAnt onClick={toggle} text={'Qo\'shish'} type={'primary'}/> : ''
+                        <ButtonAnt onClick={toggle} text={t('bal.21')} type={'primary'}/> : ''
                 }
             </div>
             <div className="col-md-12 pt-4 pb-4 mt-2 ">
@@ -211,13 +211,13 @@ function Taminotchilar({
                     {
                         users.getSupplier && <div className="izlashTM">
                             <div>
-                                <button><img src={Excel} alt=""/> Export Excel</button>
+                                <button><img src={Excel} alt=""/> {t('bal.45')}</button>
                             </div>
                             <div className="izlashBox2">
                                 <input type="text"
 
                                        value={search} onChange={(e) => setSearch(e.target.value)}
-                                       placeholder={'Izlash'}/>
+                                       placeholder={t('bal.46')}/>
                             </div>
 
                         </div>
@@ -233,10 +233,10 @@ function Taminotchilar({
                                                 <thead className={'fix'}>
                                                 <tr>
                                                     <th>T/R</th>
-                                                    <th>Ismi</th>
-                                                    <th>Telefon raqami</th>
-                                                    <th>Qarz</th>
-                                                    <th>Amallar</th>
+                                                    <th>{t('bal.47')}</th>
+                                                    <th>{t('bal.48')}</th>
+                                                    <th>{t('bal.25')}</th>
+                                                    <th>{t('bal.27')}</th>
                                                 </tr>
                                                 </thead>
 
@@ -322,16 +322,16 @@ function Taminotchilar({
                         <ModalBody>
                             <div className="row">
                                 <div className="col-md-6">
-                                    <label htmlFor="sum">Miqdor</label>
+                                    <label htmlFor="sum">{t('bal.42')}</label>
                                     <input type="number" className={'form-control'}
                                            {...register1('sum', {
                                                required: {
                                                    value: true,
-                                                   message: 'Miqdorni kiriting'
+                                                   message: (t('bal.43'))
                                                },
                                                min: {
                                                    value: true,
-                                                   message: 'Miqdor 0 dan katta bo\'lishi kerak'
+                                                   message: (t('bal.49'))
                                                }
                                            })} id={'sum'} min={0}/>
                                     {
@@ -344,15 +344,15 @@ function Taminotchilar({
                                     }
                                 </div>
                                 <div className="col-md-6">
-                                    <label htmlFor="">Filial tanlang</label>
+                                    <label htmlFor="">{t('bal.34')}</label>
                                     <select className={'form-control'}
                                             {...register1('branchId', {
                                                 required: {
                                                     value: true,
-                                                    message: 'Filial tanlang'
+                                                    message: (t('bal.34'))
                                                 }
                                             })} >
-                                        <option value="">Tanlang
+                                        <option value="">{t('bal.35')}
                                         </option>
                                         {
                                             users.branches ?
@@ -367,15 +367,15 @@ function Taminotchilar({
                                     }
                                 </div>
                                 <div className="col-md-6">
-                                    <label htmlFor="">Tulov usuli</label>
+                                    <label htmlFor="">{t('bal.50')}</label>
                                     <select className={'form-control'}
                                             {...register1('paymentMethodId', {
                                                 required: {
                                                     value: true,
-                                                    message: 'To\'lov turni tanlang'
+                                                    message: (t('bal.51'))
                                                 }
                                             })} >
-                                        <option value="">Tanlang
+                                        <option value="">{t('bal.35')}
                                         </option>
                                         {
                                             PayReducer.paymethod ?
@@ -419,18 +419,17 @@ function Taminotchilar({
                                                value={name} onChange={(e) => setName(e.target.value)}
                                                className={'form-control'}/>
                                         {isCheck && name === "" && <p
-                                            className={'text-danger text-center p-0 m-0'}>Ismni kiriting</p>}
+                                            className={'text-danger text-center p-0 m-0'}>{t('bal.32')}</p>}
                                     </div>
                                     <div className={'col-md-6 col-sm-12'}>
                                         <label htmlFor={'phoneNumber'}>{t('Supplier.7')}</label>
                                         <PhoneInput
-                                            placeholder="Enter phone number"
+                                            placeholder={t('bal.36')}
                                             value={phoneNumber}
                                             className={'form-control'}
                                             onChange={setPhoneNumber}/>
                                         {isCheck && phoneNumber === "" && <p
-                                            className={'text-danger text-center p-0 m-0'}>Telefon raqamni
-                                            kiriting</p>}
+                                            className={'text-danger text-center p-0 m-0'}>{t('bal.36')}</p>}
                                     </div>
                                 </div>
                             </div>
@@ -439,7 +438,7 @@ function Taminotchilar({
                             <button type={"button"} className={'btn btn-danger'}
                                     onClick={toggle}>{t('Buttons.7')}</button>
                             <button className={'btn btn-success'}
-                                    type={"button"} onClick={onSubmit}>Saqlash
+                                    type={"button"} onClick={onSubmit}> {t('bal.52')}
                             </button>
                         </ModalFooter>
                     </form>

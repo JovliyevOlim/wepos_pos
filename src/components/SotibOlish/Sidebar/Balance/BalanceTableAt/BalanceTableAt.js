@@ -43,11 +43,11 @@ function BalanceTableAt({users, balanceReducer, getBalanceByBranch, getBalanceBy
 
     return (
         <div className="balanceTable">
-            <MainHeaderText text={'Kassa'}/>
+            <MainHeaderText text={t('bal.12')}/>
             <CardBody>
                 <div className="col-md-12 d-flex flex-wrap justify-content-between align-items-center">
                     <div className="col-md-3">
-                        <SelectAnt name={'Filiallar'}
+                        <SelectAnt name={t('bal.13')}
                                    onChange={(e) => setMainBranchId(e === "" ? null : e)}
                                    selectList={users.branches} permission={users.getBalanceAdmin}/>
                     </div>
@@ -64,14 +64,14 @@ function BalanceTableAt({users, balanceReducer, getBalanceByBranch, getBalanceBy
                                 balanceReducer.balance?.length > 0 ?
                                     balanceReducer.balance?.map(item =>
                                         <div className="table-responsive col-md-6 mb-4 table-wrapper-scroll-y">
-                                            <h4>Filial nomi: {item[0].branchName}</h4>
+                                            <h4>{t('bal.14')} {item[0].branchName}</h4>
                                             <table
                                                 className='table table-hover table-primary table-striped table-bordered mt-4 '>
                                                 <thead>
                                                 <tr>
                                                     <th>T/R</th>
-                                                    <th>To'lov turi</th>
-                                                    <th>Summasi</th>
+                                                    <th>{t('bal.8')}</th>
+                                                    <th>{t('bal.15')}</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -80,7 +80,7 @@ function BalanceTableAt({users, balanceReducer, getBalanceByBranch, getBalanceBy
                                                         <tr key={val.id}>
                                                             <td>{index + 1}</td>
                                                             <td>{camelize(val?.paymentMethodName)}</td>
-                                                            <td>{val?.sum} so'm</td>
+                                                            <td>{val?.sum} {t('bal.16')}</td>
                                                         </tr>)
                                                 }
                                                 </tbody>

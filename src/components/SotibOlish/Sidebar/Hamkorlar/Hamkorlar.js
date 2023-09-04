@@ -96,7 +96,7 @@ function Hamkorlar({changeLink, link, sidebaractiveopen,users}) {
                     users.addCustomer || users.getCustomerAdmin || users.getCustomer ?
                         <li onClick={sidebaractive}><NavLink
                             className={isActive => isActive ? 'active-enter-link  li-text' : 'li-text'}
-                            to={'/main/customer'}>Mijozlar</NavLink></li>:''
+                            to={'/main/customer'}>{t('bal.20')}</NavLink></li>:''
                 }
             </ul>
 
