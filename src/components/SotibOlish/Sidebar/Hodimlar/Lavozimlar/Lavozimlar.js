@@ -67,10 +67,10 @@ function Lavozimlar({getLavozim, users, deleteLavozim, LavozimReducer}) {
     return (
         <>
             <div className="d-flex justify-content-between align-items-center">
-                <MainHeaderText text={'Lavozimlar'}/>
+                <MainHeaderText text={t('ol.102')}/>
                 {
                     users.addRole ? <Link to={'/main/addRole'}>
-                        <ButtonAnt text={'Qo\'shish'} type={'primary'}/>
+                        <ButtonAnt text={t('ol.2')} type={'primary'}/>
                     </Link> : ''
                 }
             </div>
@@ -86,7 +86,7 @@ function Lavozimlar({getLavozim, users, deleteLavozim, LavozimReducer}) {
                                             <tr>
                                                 <th>T/R</th>
                                                 <th>{t('Roles.1')}</th>
-                                                <th>Tavsif</th>
+                                                <th>{t('ol.103')}</th>
                                                 <th>{t('Buttons.9')}</th>
                                             </tr>
                                             </thead>

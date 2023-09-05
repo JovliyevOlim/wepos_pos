@@ -149,10 +149,10 @@ function HaridlarRoyxati({
     return (
         <div>
             <div className={'d-flex col-md-12 mb-5 align-items-center justify-content-between'}>
-                <MainHeaderText text={'Xaridlar ro\'yhati'}/>
+                <MainHeaderText text={t('ol.1')}/>
                 {
                     users.addTrade ? <Link to={'/main/addPurchase'}>
-                        <ButtonAnt text={'Qo\'shish'} type={'primary'}/>
+                        <ButtonAnt text={t('ol.2')} type={'primary'}/>
                     </Link> : ''
                 }
             </div>
@@ -163,32 +163,32 @@ function HaridlarRoyxati({
                         <div className="col-md-12 d-flex flex-wrap">
                             <div className="col-md-3">
                                 <SelectAnt
-                                    name={'Filiallar'}
+                                    name={t('ol.3')}
                                     onChange={(e) => setMainBranchId(e === "" ? null : e)}
                                     permission={users.getPurchaseAdmin}
                                     selectList={users.branches}/>
                             </div>
                             <div className="col-md-3">
                                 <SelectAnt
-                                    name={'Ta\'minotchilar'}
+                                    name={t('ol.4')}
                                     onChange={(e) => setSupplierId(e === "" ? null : e)}
                                     permission={true}
                                     selectList={TaminotReducer.AllSupplier}/>
                             </div>
                             <div className="col-md-3">
                                 <SelectAnt
-                                    name={'To\'lov statusi'}
+                                    name={t('ol.5')}
                                     onChange={(e) => setPaymentStatus(e === "" ? null : e)}
                                     permission={true}
                                     selectList={[
-                                        {id:'TOLANGAN',name:'To\'langan'},
-                                        {id:'TOLANMAGAN',name:'To\'lanmagan'},
-                                        {id:'QISMAN_TOLANGAN',name:'Qisman to\'langan'},
+                                        {id:'TOLANGAN',name:(t('ol.6'))},
+                                        {id:'TOLANMAGAN',name:(t('ol.7'))},
+                                        {id:'QISMAN_TOLANGAN',name:(t('ol.'))},
                                     ]}/>
                             </div>
                             <div className="col-md-3">
                                 <SelectAnt
-                                    name={'Hodimlar'}
+                                    name={t('ol.9')}
                                     onChange={(e) => setUserId(e === "" ? null : e)}
                                     permission={true}
                                     selectList={XodimReducer.usersFiltering?.map((item) => ({
@@ -216,18 +216,18 @@ function HaridlarRoyxati({
                                             <thead>
                                             <tr>
                                                 <th>T/R</th>
-                                                <th>Xodim</th>
-                                                <th>Sana</th>
-                                                <th>Xarid raqami</th>
-                                                <th>Filial</th>
-                                                <th>Diller</th>
-                                                <th>Jami</th>
-                                                <th>To'langan</th>
-                                                <th>Qarz</th>
-                                                <th>To'lov holati</th>
-                                                <th>To'lov turi</th>
+                                                <th>{t('ol.10')}</th>
+                                                <th>{t('ol.11')}</th>
+                                                <th>{t('ol.12')}</th>
+                                                <th>{t('ol.13')}</th>
+                                                <th>{t('ol.14')}</th>
+                                                <th>{t('ol.15')}</th>
+                                                <th>{t('ol.16')}</th>
+                                                <th>{t('ol.17')}</th>
+                                                <th>{t('ol.18')}</th>
+                                                <th>{t('ol.19')}</th>
                                                 {/*<th>Eslatma</th>*/}
-                                                <th>Amallar</th>
+                                                <th>{t('ol.20')}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -291,7 +291,7 @@ function HaridlarRoyxati({
             <Modal isOpen={viewOnePurchase} size={'xl'} toggle={() => setViewOnePurchase(!viewOnePurchase)}>
                 <ModalHeader>
                     <h4>
-                        Xarid Ma'lumotlarini Ko'rish
+                        {t('ol.25')}
                     </h4>
                 </ModalHeader>
                 <ModalBody>
@@ -302,35 +302,31 @@ function HaridlarRoyxati({
                                     <div>
                                         <div className="col-md-12 ">
                                             <div className="col-md-12 d-flex flex-wrap">
-                                                <div className="col-md-4"><p>Xarid
-                                                    Sanasi: <strong> {moment(new Date(item?.createdAt)).format('LLLL')}</strong>
+                                                <div className="col-md-4"><p>{t('ol.26')} <strong> {moment(new Date(item?.createdAt)).format('LLLL')}</strong>
                                                 </p>
                                                 </div>
-                                                <div className="col-md-4"><p>To'lov
-                                                    turi: <strong>{item?.paymentMethodName}</strong></p>
+                                                <div className="col-md-4"><p>{t('ol.27')} <strong>{item?.paymentMethodName}</strong></p>
                                                 </div>
-                                                <div className="col-md-4"><p>To'lov
-                                                    Holati: <strong>{item?.paymentStatus}</strong></p>
+                                                <div className="col-md-4"><p>{t('ol.28')} <strong>{item?.paymentStatus}</strong></p>
                                                 </div>
                                                 <div className="col-md-12">
-                                                    <p>Tavsif: <strong>{item?.description}</strong></p>
+                                                    <p>{t('ol.29')} <strong>{item?.description}</strong></p>
                                                 </div>
                                             </div>
                                             <div className="col-md-12 d-flex flex-wrap">
                                                 <div className="col-md-5">
-                                                    <p>Diller: <strong>{item?.supplierName}</strong></p>
+                                                    <p>{t('ol.30')} <strong>{item?.supplierName}</strong></p>
                                                 </div>
                                                 <div className="col-md-5">
-                                                    <p className={''}>Jami Summa: <strong>{item?.totalSum} So'm</strong>
+                                                    <p className={''}>{t('ol.31')} <strong>{item?.totalSum} {t('ol.32')}</strong>
                                                     </p>
                                                 </div>
                                                 <div className="col-md-5">
-                                                    <p className={''}>To'langan
-                                                        Summa: <strong>{item?.paidSum} So'm</strong>
+                                                    <p className={''}>{t('ol.33')} <strong>{item?.paidSum} {t('ol.34')}</strong>
                                                     </p>
                                                 </div>
                                                 <div className="col-md-5">
-                                                    <p className={''}>Qarz: <strong>{item.debtSum} So'm</strong>
+                                                    <p className={''}>{t('ol.35')} <strong>{item.debtSum} {t('ol.34')}</strong>
                                                     </p>
                                                 </div>
 
@@ -342,14 +338,14 @@ function HaridlarRoyxati({
                                             <thead>
                                             <tr>
                                                 <th>Tr</th>
-                                                <th>Mahsulot</th>
-                                                <th>Miqdori</th>
-                                                <th>Sotildi</th>
-                                                <th>Qoldi</th>
-                                                <th>Sotib olish narxi</th>
-                                                <th>Sotish Narxi</th>
-                                                <th>Foyda</th>
-                                                <th>Jami summa</th>
+                                                <th>{t('ol.36')}</th>
+                                                <th>{t('ol.37')}</th>
+                                                <th>{t('ol.38')}</th>
+                                                <th>{t('ol.39')}</th>
+                                                <th>{t('ol.40')}</th>
+                                                <th>{t('ol.41')}</th>
+                                                <th>{t('ol.42')}</th>
+                                                <th>{t('ol.43')}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -363,27 +359,27 @@ function HaridlarRoyxati({
                                                         <th>{item.quantity - item?.soldQuantity} {item.measurementName}</th>
                                                         <th>
                                                             <div>
-                                                                <h6>{item.buyPrice} So'm</h6>
+                                                                <h6>{item.buyPrice} {t('ol.34')}</h6>
                                                             </div>
 
                                                         </th>
                                                         <th>
                                                             <div>
-                                                                <h6>{item.salePrice} So'm</h6>
+                                                                <h6>{item.salePrice} {t('ol.34')}</h6>
                                                             </div>
 
                                                         </th>
                                                         {/*<th>{item?.profit}</th>*/}
                                                         <th>
                                                             <div>
-                                                                <h6>{item?.profit} So'm</h6>
+                                                                <h6>{item?.profit} {t('ol.34')}</h6>
                                                             </div>
 
                                                         </th>
 
                                                         <th>
                                                             <div>
-                                                                <h6>{item.totalSum} So'm</h6>
+                                                                <h6>{item.totalSum} {t('ol.34')}</h6>
                                                             </div>
 
                                                         </th>
@@ -400,7 +396,7 @@ function HaridlarRoyxati({
                     }
                 </ModalBody>
                 <ModalFooter>
-                    <button className={'btn btn-danger'} onClick={() => setViewOnePurchase(!viewOnePurchase)}>Chiqish
+                    <button className={'btn btn-danger'} onClick={() => setViewOnePurchase(!viewOnePurchase)}>{t('ol.44')}
                     </button>
                 </ModalFooter>
             </Modal>

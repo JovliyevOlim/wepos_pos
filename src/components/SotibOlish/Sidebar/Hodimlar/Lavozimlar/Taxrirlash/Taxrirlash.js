@@ -604,25 +604,25 @@ function Taxrirlash({
                         <div className="col-md-6"><label htmlFor={'name'}>{t('Roles.5')}</label>
                             <input type="text" className={'form-control mt-2'} id={'name'} value={input.name}
                                    onChange={changeName}
-                                   placeholder={"Lavozim nomi"}/>
+                                   placeholder={t('ol.80')}/>
                             {
                                 isCheck && input.name === "" &&
                                 <div>
-                                    <p className={'text-danger text-center m-0 p-0'}>Lavozim nomi kiriting</p>
+                                    <p className={'text-danger text-center m-0 p-0'}>{t('ol.81')}</p>
                                 </div>
                             }
                         </div>
                         <div className="col-md-6">
-                            <label htmlFor={'description'}>Tasnifi</label>
+                            <label htmlFor={'description'}>{t('ol.82')}</label>
                             <input type="text" className={'form-control mt-2'} id={'description'}
                                    value={input.description}
                                    onChange={changeDescription}
-                                   placeholder={'Lavozim tasnifi'}/>
+                                   placeholder={t('ol.83')}/>
                         </div>
 
                     </div>
                     <div className="l1 p-4 mt-5 col-sm-10 col-md-4 col-5 border">
-                        <label htmlFor={'l'}>Xodimlar</label>
+                        <label htmlFor={'l'}>{t('ol.9')}</label>
                         <div className="ruxsat mt-4">
                             <label htmlFor={'ch'}>{t('Roles.7')}</label>
                             <input type="checkbox" checked={input.AllUserRoles}
@@ -633,13 +633,13 @@ function Taxrirlash({
                                 <input type="checkbox" name={'getUserAdmin'} checked={input.getUserAdminChecked}
                                        value={'GET_USER_ADMIN'} onChange={changeRoles}
                                        style={{width: '15px', height: '15px', marginTop: '4px'}} id={'getUserAdmin'}/>
-                                <label htmlFor={'getUserAdmin'}>Hammasini ko'rish</label>
+                                <label htmlFor={'getUserAdmin'}>{t('ol.84')}</label>
                             </div>
                             <div>
                                 <input type="checkbox" name={'getUser'} checked={input.getUserChecked}
                                        value={'GET_USER'} onChange={changeRoles}
                                        style={{width: '15px', height: '15px', marginTop: '4px'}} id={'getUser'}/>
-                                <label htmlFor={'getUser'}>O'zini filialidagini ko'rish</label>
+                                <label htmlFor={'getUser'}>{t('ol.85')}</label>
                             </div>
                             <div>
                                 <input type="checkbox" id={'addUser'} checked={input.addUserChecked}
@@ -653,7 +653,7 @@ function Taxrirlash({
                                 <input type="checkbox" checked={input.editUserChecked}
                                        name={'editUser'} value={'EDIT_USER'} id={'editUser'} onChange={changeRoles}
                                        style={{width: '15px', height: '15px', marginTop: '10px'}}/>
-                                <label htmlFor={'editUser'}>Xodimlarni taxrirlash</label>
+                                <label htmlFor={'editUser'}>{t('ol.86')}</label>
                             </div>
                             <div>
                                 <input type="checkbox" checked={input.deleteUserChecked} onChange={changeRoles}
@@ -714,14 +714,14 @@ function Taxrirlash({
                                        onChange={changeRoles}
                                        style={{width: '15px', height: '15px', marginTop: '4px'}}
                                        id={'xaridkorIdAdmin'}/>
-                                <label htmlFor={'xaridkorIdAdmin'}>Hamma Xaridlarni ko'rish</label>
+                                <label htmlFor={'xaridkorIdAdmin'}>{t('ol.87')}</label>
                             </div>
                             <div>
                                 <input type="checkbox" checked={input.getPurchaseChecked} name={'getPurchase'}
                                        value={'GET_PURCHASE'}
                                        onChange={changeRoles}
                                        style={{width: '15px', height: '15px', marginTop: '4px'}} id={'xaridkorId'}/>
-                                <label htmlFor={'xaridkorId'}>O'zini filialidagini ko'rish</label>
+                                <label htmlFor={'xaridkorId'}>{t('ol.85')}</label>
                             </div>
                             <div>
                                 <input type="checkbox" checked={input.addPurchaseChecked} onChange={changeRoles}
@@ -796,14 +796,14 @@ function Taxrirlash({
                                        name={'getOutlayAdmin'} value={'GET_OUTLAY_ADMIN'}
                                        style={{width: '15px', height: '15px', marginTop: '4px'}}
                                        id={'xarajatKorishId'}/>
-                                <label htmlFor={'xarajatKorishId'}>Hammasini ko'rish</label>
+                                <label htmlFor={'xarajatKorishId'}>{t('ol.84')}</label>
                             </div>
                             <div>
                                 <input type="checkbox" checked={input.getOutlayChecked} onChange={changeRoles}
                                        name={'getOutlay'} value={'GET_OUTLAY'}
                                        style={{width: '15px', height: '15px', marginTop: '4px'}}
                                        id={'xarajatKorishId'}/>
-                                <label htmlFor={'xarajatKorishId'}>O'zini filialidagini ko'rish</label>
+                                <label htmlFor={'xarajatKorishId'}>{t('ol.85')}</label>
                             </div>
                             <div>
                                 <input type="checkbox" checked={input.addOutlayChecked} onChange={changeRoles}
@@ -837,13 +837,13 @@ function Taxrirlash({
                                 <input type="checkbox" checked={input.getTradeAdminChecked} onChange={changeRoles}
                                        name={'getTradeAdmin'} value={'GET_TRADE_ADMIN'}
                                        style={{width: '15px', height: '15px', marginTop: '4px'}} id={'savdoKorId'}/>
-                                <label htmlFor={'savdoKorId'}>Hammasini ko'rish</label>
+                                <label htmlFor={'savdoKorId'}>{t('ol.84')}</label>
                             </div>
                             <div>
                                 <input type="checkbox" checked={input.getTradeChecked} onChange={changeRoles}
                                        name={'getTrade'} value={'GET_TRADE'}
                                        style={{width: '15px', height: '15px', marginTop: '4px'}} id={'savdoKorId'}/>
-                                <label htmlFor={'savdoKorId'}>O'zini filialidagini ko'rish</label>
+                                <label htmlFor={'savdoKorId'}>{t('ol.85')}</label>
                             </div>
                             <div>
                                 <input type="checkbox" checked={input.addTradeChecked} onChange={changeRoles}
@@ -924,13 +924,13 @@ function Taxrirlash({
                                 <input type="checkbox" checked={input.getCustomerAdminChecked} onChange={changeRoles}
                                        name={'getCustomerAdmin'} value={'GET_CUSTOMER_ADMIN'}
                                        style={{width: '15px', height: '15px', marginTop: '4px'}} id={'kor2'}/>
-                                <label htmlFor={'kor2'}>Hammasini ko'rish</label>
+                                <label htmlFor={'kor2'}>{t('ol.84')}</label>
                             </div>
                             <div>
                                 <input type="checkbox" checked={input.getCustomerChecked} onChange={changeRoles}
                                        name={'getCustomer'} value={'get_CUSTOMER'}
                                        style={{width: '15px', height: '15px', marginTop: '4px'}} id={'kor2'}/>
-                                <label htmlFor={'kor2'}>O'zini filialidagini ko'rish</label>
+                                <label htmlFor={'kor2'}>{t('ol.85')}</label>
                             </div>
                             <div>
                                 <input type="checkbox" checked={input.addCustomerChecked} onChange={changeRoles}
@@ -956,7 +956,7 @@ function Taxrirlash({
                     </div>
                     <div className="l1 mt-5 p-4 col-sm-10 col-md-4 col-5 border">
                         <div>
-                            <label htmlFor={'l'}>Mahsulotlar</label>
+                            <label htmlFor={'l'}>{t('ol.88')}</label>
 
                             <div className="ruxsat mt-4">
 
@@ -970,35 +970,35 @@ function Taxrirlash({
                                            name={'getProductAdmin'} value={'GET_PRODUCT_ADMIN'}
                                            onChange={changeRoles}
                                            style={{width: '15px', height: '15px', marginTop: '4px'}}/>
-                                    <label>Hammasini korish</label>
+                                    <label>{t('ol.84')}</label>
                                 </div>
                                 <div>
                                     <input type="checkbox" checked={input.getProductChecked}
                                            name={'getProduct'} value={'GET_PRODUCT'}
                                            onChange={changeRoles}
                                            style={{width: '15px', height: '15px', marginTop: '4px'}}/>
-                                    <label>O'zini filialidagini korish</label>
+                                    <label>{t('ol.85')}</label>
                                 </div>
 
                                 <div>
                                     <input type="checkbox" checked={input.addProductChecked} onChange={changeRoles}
                                            name={'addProduct'} value={'ADD_PRODUCT'}
                                            style={{width: '15px', height: '15px', marginTop: '10px'}}/>
-                                    <label>Mahsulot qo'shish</label>
+                                    <label>{t('ol.89')}</label>
                                 </div>
                                 <div>
                                     <input type="checkbox" checked={input.editProductChecked}
                                            name={'editProduct'} value={'EDIT_PRODUCT'}
                                            onChange={changeRoles}
                                            style={{width: '15px', height: '15px', marginTop: '10px'}}/>
-                                    <label>Mahsulotni taxrirlash</label>
+                                    <label>{t('ol.90')}</label>
                                 </div>
                                 <div>
                                     <input type="checkbox" checked={input.deleteProductChecked}
                                            name={'deleteProduct'} value={'DELETE_PRODUCT'}
                                            onChange={changeRoles}
                                            style={{width: '15px', height: '15px', marginTop: '10px'}}/>
-                                    <label>Mahsulotni o'chirish</label>
+                                    <label>{t('ol.91')}</label>
                                 </div>
 
                             </div>
@@ -1011,34 +1011,34 @@ function Taxrirlash({
                                 <input type="checkbox" checked={input.measurementRolesChecked} onChange={changeRoles}
                                        name={'measurementRoles'} value={'ALL_MEASUREMENT'}
                                        style={{width: '15px', height: '15px', marginTop: '4px'}}/>
-                                <label htmlFor={'kor1'}>O'lchov birligi</label>
+                                <label htmlFor={'kor1'}>{t('ol.92')}</label>
                             </div>
                             <div>
                                 <input type="checkbox" checked={input.brandRolesChecked} onChange={changeRoles}
                                        name={'brandRoles'} value={'ALL_BRAND'}
                                        style={{width: '15px', marginTop: '10px', height: '15px'}}/>
-                                <label htmlFor={'qosh3'}>Firmalar</label>
+                                <label htmlFor={'qosh3'}>{t('ol.93')}</label>
                             </div>
                             <div>
                                 <input type="checkbox" checked={input.categoryRolesChecked}
                                        name={'categoryRoles'} value={'ALL_CATEGORY'}
                                        onChange={changeRoles}
                                        style={{width: '15px', height: '15px', marginTop: '10px'}}/>
-                                <label>Bo'limlar</label>
+                                <label>{t('ol.94')}</label>
                             </div>
                             <div>
                                 <input type="checkbox" checked={input.productTypeRolesChecked}
                                        name={'productTypeRoles'} value={'ALL_TYPE'}
                                        onChange={changeRoles}
                                        style={{width: '15px', height: '15px', marginTop: '10px'}}/>
-                                <label>Mahsulot turi</label>
+                                <label>{t('ol.95')}</label>
                             </div>
                         </div>
 
                     </div>
                     <div className="l1 mt-5 p-4 col-sm-10 col-md-4 col-5 border">
                         <div>
-                            <label htmlFor={'l'}>Yo'qotilgan maxsulot </label>
+                            <label htmlFor={'l'}>{t('ol.96')} </label>
 
                             <div className="ruxsat mt-4">
                                 <label>{t('Roles.7')}</label>
@@ -1050,21 +1050,21 @@ function Taxrirlash({
                                     <input type="checkbox" checked={input.addLossChecked} onChange={changeRoles}
                                            name={'addLoss'} value={'ADD_LOSS'}
                                            style={{width: '15px', height: '15px', marginTop: '10px'}}/>
-                                    <label>Qo'shish</label>
+                                    <label>{t('ol.2')}</label>
                                 </div>
                                 <div>
                                     <input type="checkbox" checked={input.getLossAdmin}
                                            name={'getLossAdmin'} value={'GET_LOSS_ADMIN'}
                                            onChange={changeRoles}
                                            style={{width: '15px', height: '15px', marginTop: '10px'}}/>
-                                    <label>Hammasini ko'rish</label>
+                                    <label>{t('ol.84')}</label>
                                 </div>
                                 <div>
                                     <input type="checkbox" checked={input.getLoss}
                                            name={'getLoss'} value={'GET_LOSS'}
                                            onChange={changeRoles}
                                            style={{width: '15px', height: '15px', marginTop: '10px'}}/>
-                                    <label>O'zini filialidagini ko'rish</label>
+                                    <label>{t('ol.85')}</label>
                                 </div>
 
                             </div>
@@ -1072,7 +1072,7 @@ function Taxrirlash({
                     </div>
                     <div className="l1 mt-5 p-4 col-sm-10 col-md-4 col-5 border">
                         <div>
-                            <label htmlFor={'l'}>Balance </label>
+                            <label htmlFor={'l'}>{t('ol.97')} </label>
 
                             <div className="ruxsat mt-4">
                                 <label>{t('Roles.7')}</label>
@@ -1084,21 +1084,21 @@ function Taxrirlash({
                                     <input type="checkbox" checked={input.editBalanceChecked} onChange={changeRoles}
                                            name={'editBalance'} value={'EDIT_BALANCE'}
                                            style={{width: '15px', height: '15px', marginTop: '10px'}}/>
-                                    <label>Taxrirlash</label>
+                                    <label>{t('ol.78')}</label>
                                 </div>
                                 <div>
                                     <input type="checkbox" checked={input.getBalanceAdmin}
                                            name={'getBalanceAdmin'} value={'GET_BALANCE_ADMIN'}
                                            onChange={changeRoles}
                                            style={{width: '15px', height: '15px', marginTop: '10px'}}/>
-                                    <label>Hammasini ko'rish</label>
+                                    <label>{t('ol.84')}</label>
                                 </div>
                                 <div>
                                     <input type="checkbox" checked={input.getBalance}
                                            name={'getBalance'} value={'GET_BALANCE'}
                                            onChange={changeRoles}
                                            style={{width: '15px', height: '15px', marginTop: '10px'}}/>
-                                    <label>O'zini filialidagini ko'rish</label>
+                                    <label>{t('ol.85')}</label>
                                 </div>
 
                             </div>
@@ -1106,7 +1106,7 @@ function Taxrirlash({
                     </div>
                     <div className="l1 mt-5 p-4 col-sm-10 col-md-4 col-5 border">
                         <div>
-                            <label htmlFor={'l'}>Ma'lumotlarni ko'rish </label>
+                            <label htmlFor={'l'}>{t('ol.98')} </label>
 
                             <div className="ruxsat mt-4">
                                 <label>{t('Roles.7')}</label>
@@ -1119,21 +1119,21 @@ function Taxrirlash({
                                            name={'getInfoAdmin'} value={'GET_INFO_ADMIN'}
                                            onChange={changeRoles}
                                            style={{width: '15px', height: '15px', marginTop: '10px'}}/>
-                                    <label>Hammasini ko'rish</label>
+                                    <label>{t('ol.84')}</label>
                                 </div>
                                 <div>
                                     <input type="checkbox" checked={input.getInfo}
                                            name={'getInfo'} value={'GET_INFO'}
                                            onChange={changeRoles}
                                            style={{width: '15px', height: '15px', marginTop: '10px'}}/>
-                                    <label>O'zini filialidagini ko'rish</label>
+                                    <label>{t('ol.85')}</label>
                                 </div>
                                 <div>
                                     <input type="checkbox" checked={input.deleteInfo}
                                            name={'deleteInfo'} value={'DELETE_INFO'}
                                            onChange={changeRoles}
                                            style={{width: '15px', height: '15px', marginTop: '10px'}}/>
-                                    <label>Xisobotlarni o'chirish(Xodimlar,Mahsulotlar,Balance)</label>
+                                    <label>{t('ol.99')}</label>
                                 </div>
 
                             </div>
@@ -1146,7 +1146,7 @@ function Taxrirlash({
                                     <input type="checkbox" checked={input.editInvoiceChecked} onChange={changeRoles}
                                            name={'editInvoice'} value={'EDIT_INVOICE'}
                                            style={{width: '15px', height: '15px', marginTop: '10px'}}/>
-                                    <label>Chekni taxrirlash</label>
+                                    <label>{t('ol.100')}</label>
                                 </div>
                             </div>
                             <div className="ruxsat mt-4">
@@ -1154,7 +1154,7 @@ function Taxrirlash({
                                     <input type="checkbox" checked={input.editMyBusinessChecked} onChange={changeRoles}
                                            name={'editMyBusiness'} value={'EDIT_MY_BUSINESS'}
                                            style={{width: '15px', height: '15px', marginTop: '10px'}}/>
-                                    <label>O'zini biznesini taxrirlash</label>
+                                    <label>{t('ol.101')}</label>
                                 </div>
                             </div>
                         </div>
@@ -1165,7 +1165,7 @@ function Taxrirlash({
                     input.name === "" ?
                         <div style={{padding: '5px'}}>
                             <button style={{width: '91%', marginLeft: '5%',}}
-                                    className={'btn btn-primary form-control mt-4 ml-4'} onClick={saqla}>Saqlash
+                                    className={'btn btn-primary form-control mt-4 ml-4'} onClick={saqla}>{t('ol.60')}
                             </button>
 
                         </div>

@@ -7,7 +7,7 @@ import {camelize} from "../../util";
 const { Search } = Input;
 
 function SelectAnt({name,permission,selectList,onChange}) {
-    const selectOption = permission ? [{value: '', label: "Barchasi"},
+    const selectOption = permission ? [{value: '', label: (t('ol.21'))},
             ...selectList.map((item) => ({value: item.id, label: camelize(item?.name)}))] :
         selectList.map((item) => ({value: item.id, label:camelize(item?.name)}))
 
@@ -17,7 +17,7 @@ function SelectAnt({name,permission,selectList,onChange}) {
             <Select
                 suffixIcon={<Image preview={false} src={arrowDown}/>}
                 showSearch
-                placeholder="Tanlang"
+                placeholder={t('ol.22')}
                 optionFilterProp="children"
                 onChange={onChange}
                 defaultValue={selectOption[0]}
@@ -41,7 +41,7 @@ export function SearchAnt({name,onChange}) {
         <>
             <h5 className={'selectLabel'}>{name}:</h5>
                <Search
-                   placeholder="Qidirish...."
+                   placeholder={t('ol.23')}
                    allowClear
                    onChange={onChange}
                />
@@ -56,7 +56,7 @@ export function InputAnt({name,onChange}) {
     return (
         <>
             <h5 className={'selectLabel'}>{name}:</h5>
-            <Input rootClassName={'input-ant'} placeholder="Basic usage" />
+            <Input rootClassName={'input-ant'} placeholder={t('ol.24')} />
         </>
     );
 }
