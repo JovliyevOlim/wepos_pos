@@ -114,7 +114,7 @@ function Xarid({
         let a = XaridArrayPost
         let find = XaridArrayPost.some(val => val.productId === item.id)
         if (find) {
-            toast.warning('Mahsulot jadvalda bor')
+            toast.warning(t('ol.45'))
         } else {
             a.push({
                 buyPrice: item.buyPrice,
@@ -230,7 +230,7 @@ function Xarid({
 
     function saqla(data) {
         if (paidSum > totalSumPurchase) {
-            toast.warning("Ko'proq Summa To'lanyapti")
+            toast.warning(t('ol.46'))
         } else {
             let paymentStatus = ''
             if (totalSumPurchase === paidSum) {
@@ -320,7 +320,7 @@ function Xarid({
                                         <select name="" {...register('supplierId', {
                                             required: {
                                                 value: true,
-                                                message: 'Ta\'minotchini tanlang !'
+                                                message: (t('ol.47'))
                                             }
                                         })}
                                                 id={'supplierId'}
@@ -353,13 +353,13 @@ function Xarid({
                                 <label htmlFor={'description'}>{t('Buttons.17')}</label>
                                 <input type="text"
                                        className={'form-control'} {...register('description', {required: false})}
-                                       placeholder={'Eslatma'}
+                                       placeholder={t('ol.48')}
                                        id={'description'}/></div>
                             <div className="col-md-4 col-sm-12">
                                 <label htmlFor={'branchId'}>{t('ProductList.8')}</label>
                                 <select name="" id={'branchId'} disabled={match.params.id ? true : false}
                                         {...register('branchId', {
-                                            required: {value: true, message: 'Filial tanlang !'}, onChange: (e) => {
+                                            required: {value: true, message: (t('ol.49'))}, onChange: (e) => {
                                                 setMainBranchId(e.target.value);
                                                 setXaridArrayPost([])
                                             }
@@ -389,7 +389,7 @@ function Xarid({
                                        value={search}
                                        onChange={XaridSearch}
                                        className={'form-control'}
-                                       placeholder={'Mahsulot shtrix kodi yoki nomi'}/>
+                                       placeholder={t('ol.50')}/>
                                 {
                                     isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?
                                         <div className={'Combo-array'}>
@@ -471,7 +471,7 @@ function Xarid({
                                     </table>
                                 </div>
                                 <h6>{t('Purchase.23')}: {totalQuantity}</h6>
-                                <h6>{t('Purchase.22')}: {totalSumPurchase} So'm</h6>
+                                <h6>{t('Purchase.22')}: {totalSumPurchase} {t('ol.34')}</h6>
                             </div>
                         </div>
                     </div>
@@ -482,7 +482,7 @@ function Xarid({
                             <div className="col-md-4 col-sm-12">
                                 {
                                     match.params.id &&
-                                    <h6>Eski to'lov: {totalLastSumPurchase} so'm</h6>
+                                    <h6>{t('ol.52')} {totalLastSumPurchase} {t('ol.51')}</h6>
                                 }
                                 <label htmlFor={'paidSum'}>{t('Purchase.25')}</label>
                                 <input type="number" min={0} className={'form-control'}
@@ -490,7 +490,7 @@ function Xarid({
                                        {...register('paidSum', {
                                            required: {
                                                value: true,
-                                               message: 'To\'lovni kiriting'
+                                               message: (t('ol.53'))
                                            }, onChange: (e) => setPaidSum(parseFloat(e.target.value))
                                        })}
                                        id={'paisSum'}/>
@@ -507,7 +507,7 @@ function Xarid({
                                         {...register('paymentMethodId', {
                                             required: {
                                                 value: true,
-                                                message: 'To\'ov turini tanlang'
+                                                message: (t('ol.54'))
                                             }
                                         })}
                                         disabled={match.params.id}
@@ -525,7 +525,7 @@ function Xarid({
                                 }
                             </div>
                             <div className="col-md-4 col-sm-12">
-                                <h5 className={'p-0 m-0 text-center'}>{t('Purchase.32')}!: {totalSumPurchase - paidSum} so`m</h5>
+                                <h5 className={'p-0 m-0 text-center'}>{t('Purchase.32')}!: {totalSumPurchase - paidSum} {t('ol.51')}</h5>
                             </div>
 
                         </div>
@@ -538,12 +538,12 @@ function Xarid({
             <Modal isOpen={activeSupplier} toggle={toggleSupplier}>
                 <form>
                     <ModalHeader>
-                        Ta'minotchi Qo'shish
+                        {t('ol.55')}
                     </ModalHeader>
                     <ModalBody>
                         <div className="row mt-2">
                             <div className={'col-md-6 col-sm-12 mb-3'}>
-                                <label htmlFor={'supplierName'}>Ism</label>
+                                <label htmlFor={'supplierName'}>{t('ol.56')}</label>
                                 <input
                                     id={'supplierName'} value={supplierName}
                                     onChange={(e) => setSupplierName(e.target.value)} type="text"
@@ -551,21 +551,21 @@ function Xarid({
                                 {
                                     isCheck && !supplierName &&
                                     <div>
-                                        <p className={'m-0 p-0 text-center text-danger'}>Ismni kiriting !</p>
+                                        <p className={'m-0 p-0 text-center text-danger'}>{t('ol.57')}</p>
                                     </div>
                                 }
                             </div>
                             <div className={'col-md-6 col-sm-12 mb-3'}>
                                 <label htmlFor={'phoneNumber'}>{t('Supplier.7')}</label>
                                 <PhoneInput
-                                    placeholder="Enter phone number"
+                                    placeholder={t('ol.59')}
                                     value={phoneNumber}
                                     className={'form-control'}
                                     onChange={setPhoneNumber}/>
                                 {
                                     isCheck && !phoneNumber &&
                                     <div>
-                                        <p className={'m-0 p-0 text-center text-danger'}>Telefon raqamni kiriting !</p>
+                                        <p className={'m-0 p-0 text-center text-danger'}>{t('ol.58')}</p>
                                     </div>
                                 }
                             </div>
@@ -576,7 +576,7 @@ function Xarid({
                                 onClick={toggleSupplier}>{t('Buttons.7')}</button>
                         <button className={'btn btn-success'}
                                 type={"button"} onClick={onSubmitSupplier}
-                        >Saqlash
+                        >{t('ol.60')}
                         </button>
                     </ModalFooter>
                 </form>

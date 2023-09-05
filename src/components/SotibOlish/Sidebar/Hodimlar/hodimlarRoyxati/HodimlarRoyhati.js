@@ -150,11 +150,11 @@ function HodimlarRoyhati({
     return (
         <>
                 <div className="d-flex justify-content-between align-items-center mb-5">
-                    <MainHeaderText  text={'Hodimlar'}/>
+                    <MainHeaderText  text={t('ol.9')}/>
                     {
                         users.addUser ?
                             <Link to={'/main/addUser'}>
-                               <ButtonAnt text={'Qo\'shish'} type={'primary'}/>
+                               <ButtonAnt text={t('ol.2')} type={'primary'}/>
                             </Link> : ''
                     }
                 </div>
@@ -163,20 +163,20 @@ function HodimlarRoyhati({
                         <CardBody>
                             <div className="col-md-12 d-flex flex-wrap  align-items-center">
                                 <div className="col-md-3">
-                                    <SelectAnt name={'Filiallar'}
+                                    <SelectAnt name={t('ol.3')}
                                                onChange={(e) => setMainBranchId(e === "" ? null : e)}
                                                selectList={users.branches} permission={users.getBalanceAdmin}/>
                                 </div>
                                 {
                                     users.getRole &&
                                     <div className="col-md-3">
-                                        <SelectAnt name={'Filiallar'}
+                                        <SelectAnt name={t('ol.3')}
                                                    onChange={(e) => setRoleId(e)}
                                                    selectList={LavozimReducer.roles} permission={users.getBalanceAdmin}/>
                                     </div>
                                 }
                                 <div className="col-md-6">
-                                    <SearchAnt name={'F.I.O bo\'yicha qidirish'} onChange={handleQueryChange}/>
+                                    <SearchAnt name={t('ol.73')} onChange={handleQueryChange}/>
                                 </div>
                             </div>
                         </CardBody>
@@ -207,11 +207,11 @@ function HodimlarRoyhati({
                                                             {/*        />*/}
                                                             {/*    </Tooltip>*/}
                                                             {/*</TableCell>*/}
-                                                            <TableCell>Login</TableCell>
-                                                            <TableCell>Rasm</TableCell>
-                                                            <TableCell>Lavozim</TableCell>
-                                                            <TableCell>Telefon raqam</TableCell>
-                                                            <TableCell align="center">{t('Actions')}</TableCell>
+                                                            <TableCell>{t('ol.74')}</TableCell>
+                                                            <TableCell>{t('ol.75')}</TableCell>
+                                                            <TableCell>{t('ol.76')}</TableCell>
+                                                            <TableCell>{t('ol.77')}</TableCell>
+                                                            <TableCell align="center">{t('ol.20')}</TableCell>
                                                         </TableRow>
                                                     </TableHead>
                                                     <TableBody>
@@ -279,7 +279,7 @@ function HodimlarRoyhati({
                                                                         </Tooltip>
                                                                         {
                                                                             users.editUser ?
-                                                                                <Tooltip title={t('Edit')} arrow>
+                                                                                <Tooltip title={t('ol.78')} arrow>
                                                                                     <Link
                                                                                         to={'/main/addUser/' + user.id}>
                                                                                         <IconButton
@@ -292,7 +292,7 @@ function HodimlarRoyhati({
                                                                         }
                                                                         {
                                                                             users.deleteUser ?
-                                                                                <Tooltip title={t('Delete')} arrow>
+                                                                                <Tooltip title={t('ol.79')} arrow>
                                                                                     <IconButton
                                                                                         onClick={() => deleteUserById(user.id)}
                                                                                         color="primary"
