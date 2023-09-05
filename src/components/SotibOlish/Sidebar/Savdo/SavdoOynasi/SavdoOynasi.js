@@ -842,9 +842,9 @@ function SavdoOynasi({
 
 
     useEffect(() => {
-        if (users.getTrade && activeHoldOn) {
+        // if (users.getTrade && activeHoldOn) {
             getHoldOn(mainBranchId ? mainBranchId : users.branchId)
-        }
+        // }
     }, [SavdoQoshishReducer.current, holdOnReducer.current, mainBranchId, activeHoldOn])
     useEffect(() => {
         getBolim(users.businessId)

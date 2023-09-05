@@ -6,8 +6,10 @@ import {SearchOutlined} from "@ant-design/icons"
 import {camelize} from "../../util";
 const { Search } = Input;
 
-function SelectAnt({name,permission,selectList,onChange}) {
-    const selectOption = permission ? [{value: '', label: (t('ol.21'))},
+
+function SelectAnt({name,permission,selectList,onChange,all}) {
+    const selectOption = permission ? [{value: '', label:all ? all :(t('ol.21'))},
+
             ...selectList.map((item) => ({value: item.id, label: camelize(item?.name)}))] :
         selectList.map((item) => ({value: item.id, label:camelize(item?.name)}))
 

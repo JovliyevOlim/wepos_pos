@@ -136,3 +136,4 @@ export const LogOutIcon = () => (
         </g>
     </svg>
 );
+
