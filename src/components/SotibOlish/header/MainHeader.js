@@ -30,6 +30,7 @@ import arrowDown from "../../../img/direction-down 01.svg";
 import Icon from "@ant-design/icons";
 import {EditIcon, LogOutIcon, PersonIcon} from "../../Svg/svg";
 import {changeLanguage} from "i18next";
+import {formatDayDashboard} from "../../../util";
 function MainHeader({
                     deleteNotification,
                     logOutUser,
@@ -91,13 +92,13 @@ function MainHeader({
                 setselectedImg(item.img)
                 setselectedLang(item.name)
                 i18n.changeLanguage(item.id)
+                localStorage.setItem("i18nextLng",item.id)
                 item.active = true
             }
             else{
                 item.active = false
             }
         })
-        console.log(languagesList)
         setLanguagesList(languagesList)
         setlangShown(false)
     }
@@ -112,7 +113,9 @@ function MainHeader({
     }
 
     useEffect(() => {
-        const storageLanguage = localStorage.getItem("i18nextLng")
+        // const storageLanguage = localStorage.getItem("i18nextLng")
+        // const list = languagesList.find(item=>item.id === storageLanguage)
+        // ChangeLanguage(list)
     }, [])
 
 
@@ -146,15 +149,10 @@ function MainHeader({
     return (
         <div className={'main-header'}>
             <div className={'main-header-left'}>
-                <div></div>
-                {/*<div onClick={openNotification} className="notificBox">*/}
-                {/*    <img src={imgNot} className={'im3'} alt=""/>*/}
-
-                {/*    {*/}
-                {/*        notificationReducer.notificationCount > 0 &&*/}
-                {/*        <div className="notificatNum">*/}
-                {/*            <p>{notificationReducer.notificationCount}</p>*/}
-                {/*        </div>*/}
+                <div className={'main-header-body'}>
+                    <h4 className={'main-header-text'}>Asosiy</h4>
+                    <p className={'main-header-this-day'}>Bugun {formatDayDashboard()}</p>
+                </div>
             </div>
             <div className={'main-header-right'}>
                 <div>
@@ -170,9 +168,11 @@ function MainHeader({
                           langShown && <div className="lang-list">
                               {
                                   languagesList.filter(item=>item.active===false).map((lang) =>
-                                      <div className="lang-list-item" onClick={()=>ChangeLanguage(lang)}>
-                                          <img className={'lang-logo'} src={lang.img} alt="rus"/>
-                                          <div className={'selected-lang-text'}>{lang.name}</div>
+                                      <div className={'lang-list-items'}>
+                                          <div className="lang-list-item" onClick={()=>ChangeLanguage(lang)}>
+                                              <img className={'lang-logo'} src={lang.img} alt="rus"/>
+                                              <div className={'selected-lang-text'}>{lang.name}</div>
+                                          </div>
                                       </div>
                                   )
                               }

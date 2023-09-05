@@ -620,11 +620,12 @@ function BarchaSavdolar({
                                                         <th>{item.quantity} {item.measurementName}</th>
                                                         <th>{item?.backing} {item.measurementName}</th>
                                                         <th>
-                                                            {item?.totalSalePrice}
-                                                        </th>
-                                                        <th>
                                                             {item?.profit} So'm
                                                         </th>
+                                                        <th>
+                                                            {item?.totalSalePrice}
+                                                        </th>
+
 
                                                     </tr>
                                                 )

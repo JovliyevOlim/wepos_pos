@@ -1,24 +1,29 @@
 import React from 'react';
 import './card.css';
-import cardPicture from '../../../../img/Group 237816.svg'
-import  hartArrowUp from '../../../../img/hart-arrow-up.svg'
-import  hartArrowDowm from '../../../../img/hart-arrow-down.svg'
+import {prettify} from "../../../../util";
+
 function Card({title,img,sum,percent}) {
     return (
         <div className={'dashboard-card'}>
             <div className={'dashboard-card-header'}>
-                <h4 className={'dashboard-card-header-text'}>{title}</h4>
                 <img className={'dashboard-card-header-icon'} src={img} alt={title}/>
+                <div className={'dashboard-card-header-percent'}>
+                    <svg width="20" height="20" className={percent < 0 ? 'dashboard-svg-error':'dashboard-svg-success'} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g id="Arrow">
+                            <path id="Vector" d="M9.64645 8.35355C9.84171 8.15829 10.1583 8.15829 10.3536 8.35355L14.1464 12.1464C14.4614 12.4614 14.2383 13 13.7929 13L6.20711 13C5.76165 13 5.53857 12.4614 5.85355 12.1464L9.64645 8.35355Z" fill="#38CB89"/>
+                        </g>
+                    </svg>
+                    <p className={`dashboard-card-header-text ${percent < 0 ? 'dashboard-card-header-percent-error' :'dashboard-card-header-percent-success'}`}>
+                        {percent < 0 ? `${percent}`
+                            : `+${percent}`}%
+                    </p>
+                </div>
             </div>
             <div>
-                <h2 className={'dashboard-card-body-text'}>{sum} so'm</h2>
+                <h2 className={'dashboard-card-body-text'}>{prettify(sum)} so'm</h2>
             </div>
             <div className={'dashboard-card-footer'}>
-                <img src={percent < 0 ? hartArrowDowm : hartArrowUp} alt="hartArrowUp"/>
-                <p className={`dashboard-card-footer-text ${percent < 0 ? 'dashboard-card-footer-percent-error' :'dashboard-card-footer-percent-success'}`}>
-                    {percent < 0 ? `${percent}`: `+${percent}`}% vs
-                </p>
-                <p className={'dashboard-card-footer-text'}>oxirgi 30 kun</p>
+                <h4 className={'dashboard-card-footer-text'}>{title}</h4>
             </div>
         </div>
     );

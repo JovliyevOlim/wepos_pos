@@ -45,13 +45,12 @@ const slice = createSlice({
         },
         saveFrom: (state, action) => {
             if (action.payload.success) {
-                toast.success('Success')
+                toast.success(action.payload.message)
                 state.saveBoolean = true
             } else {
                 toast.error(action.payload.message)
             }
             state.current = !state.current
-
         },
 
     }
@@ -91,9 +90,9 @@ export const editBalance = (data) => apiCall({
     onSuccess: slice.actions.editfrom.type,
     onFail: slice.actions.editfrom.type,
 });
-export const saveBalance = (data) => apiCall({
-    url: '/balance/get-put/' + data,
-    method: 'post',
+export const changeBalance = (data) => apiCall({
+    url: '/balance',
+    method: 'put',
     data,
     onSuccess: slice.actions.saveFrom.type,
     onFail: slice.actions.saveFrom.type,

@@ -26,19 +26,20 @@ import 'moment/locale/uz-latn'
 import {formatDayDashboard} from "../../../util";
 import {DatePicker, Space, Select, Image, Segmented} from 'antd';
 import Card from "./Card/Card";
-import kassa from '../../../img/Group 237816.svg'
-import savdo from '../../../img/savdo.svg'
-import savdotolov from '../../../img/savdotolov.svg'
-import savdoqarz from '../../../img/savdodaqarz.svg'
-import foyda from '../../../img/foyda.svg'
-import xarid from '../../../img/xarid.svg'
-import xaridtolov from '../../../img/xaridtolov.svg'
-import xaridqarz from '../../../img/xaridqarz.svg'
-import mijozolsum from '../../../img/mijozolsumma.svg'
-import mijozbersum from '../../../img/mijozbersumma.svg'
-import dillerbersum from '../../../img/dillersumma.svg'
-import xarajat from '../../../img/xarajat.svg'
+import kassa from '../../../img/money bag coin.svg'
+import savdo from '../../../img/shopping basket check.svg'
+import savdotolov from '../../../img/wallet check.svg'
+import savdoqarz from '../../../img/wallet minus.svg'
+import foyda from '../../../img/gold.svg'
+import xarid from '../../../img/cart check.svg'
+import xaridtolov from '../../../img/money check.svg'
+import xaridqarz from '../../../img/money minus.svg'
+import mijozolsum from '../../../img/money user.svg'
+import mijozbersum from '../../../img/moeny bag.svg'
+import dillerbersum from '../../../img/card-withdraw.svg'
+import xarajat from '../../../img/bill.svg'
 import dayjs from "dayjs";
+import MainHeaderText from "../../Svg/MainHeaderText";
 
 const {RangePicker} = DatePicker;
 
@@ -193,50 +194,47 @@ function Third({
 
     return (
         <section className={'dashboard'}>
+            <MainHeaderText text={'Bosh sahifa'}/>
             {
                 users.getInfo || users.getInfoAdmin ?
                     <>
-                        <div className={'dashboard-header'}>
-                            <div className={'dashboard-header-body'}>
-                                <h4 className={'dashboard-text'}>Asosiy</h4>
-                                <p className={'dashboard-this-day'}>Bugun {formatDayDashboard()}</p>
-                            </div>
-                            <div className={'d-flex flex-wrap gap-2  align-items-center'}>
-                                <Segmented options={listDay} value={currentDay} onChange={(e) => Dates(e)}/>
-                                <div className={'dashboard-buttons'}>
-                                    {/*{*/}
-                                    {/*    listDay.map((item, index) =>*/}
-                                    {/*        <button onClick={() => Dates(item.name)}*/}
-                                    {/*                className={`dashboard-buttons-item ${item.name === currentDay && 'dashboard-buttons-item-active'}`}>{item.value}</button>*/}
-                                    {/*    )*/}
-                                    {/*}*/}
-                                </div>
-                                <div className={'dashboard-datepicker'}>
-                                    <Space direction="vertical" style={{height: '20px'}} color={'#071A33'} size={0}>
-                                        <RangePicker value={date} style={{width:'250px'}} onChange={(e) => {
-                                            if (e) {
-                                                setDate(e)
-                                                setCurrentDay(null)
-                                            } else {
-                                                setDate(e)
-                                                setCurrentDay('day')
-                                            }
+                        {/*<div className={'dashboard-header'}>*/}
+                        {/*    <div className={'d-flex flex-wrap gap-2  align-items-center'}>*/}
+                        {/*        <Segmented options={listDay} value={currentDay} onChange={(e) => Dates(e)}/>*/}
+                        {/*        <div className={'dashboard-buttons'}>*/}
+                        {/*            /!*{*!/*/}
+                        {/*            /!*    listDay.map((item, index) =>*!/*/}
+                        {/*            /!*        <button onClick={() => Dates(item.name)}*!/*/}
+                        {/*            /!*                className={`dashboard-buttons-item ${item.name === currentDay && 'dashboard-buttons-item-active'}`}>{item.value}</button>*!/*/}
+                        {/*            /!*    )*!/*/}
+                        {/*            /!*}*!/*/}
+                        {/*        </div>*/}
+                        {/*        <div className={'dashboard-datepicker'}>*/}
+                        {/*            <Space direction="vertical" style={{height: '20px'}} color={'#071A33'} size={0}>*/}
+                        {/*                <RangePicker value={date} style={{width:'250px'}} onChange={(e) => {*/}
+                        {/*                    if (e) {*/}
+                        {/*                        setDate(e)*/}
+                        {/*                        setCurrentDay(null)*/}
+                        {/*                    } else {*/}
+                        {/*                        setDate(e)*/}
+                        {/*                        setCurrentDay('day')*/}
+                        {/*                    }*/}
 
-                                        }} bordered={false}/>
-                                    </Space>
-                                </div>
-                                <Select
-                                    suffixIcon={<Image preview={false} src={arrowDown}/>}
-                                    className={'dashboard-select'}
-                                    style={{width: 170, height: 44}}
-                                    defaultValue={filialSelect[0]}
-                                    onChange={branchonchange}
-                                    options={filialSelect}
-                                />
-                                <button className={'dashboard-day-button'}>Bugun</button>
-                            </div>
-                        </div>
-                        <div className={'d-flex flex-wrap  justify-content-between  align-items-center gap-3'}>
+                        {/*                }} bordered={false}/>*/}
+                        {/*            </Space>*/}
+                        {/*        </div>*/}
+                        {/*        <Select*/}
+                        {/*            suffixIcon={<Image preview={false} src={arrowDown}/>}*/}
+                        {/*            className={'dashboard-select'}*/}
+                        {/*            style={{width: 170, height: 44}}*/}
+                        {/*            defaultValue={filialSelect[0]}*/}
+                        {/*            onChange={branchonchange}*/}
+                        {/*            options={filialSelect}*/}
+                        {/*        />*/}
+                        {/*        <button className={'dashboard-day-button'}>Bugun</button>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
+                        <div className={'dashboard-cards'}>
                             {
                                 cards.map(item =>
                                     <Card title={item.title} img={item.img} percent={item.percent} sum={item.sum}/>

@@ -97,7 +97,30 @@
 .profile-items:hover .profile-items-icon path {
     stroke: #1AA6E1;
 }
-
+.main-header-body{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap:12px
+}
+.main-header-text{
+    margin: 0;
+    color: #4E5D78;
+    font-family: 'Inter',sans-serif;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.main-header-this-day{
+    margin: 0;
+    color: #8A94A6;
+    font-family: 'Inter',sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+}
 .drop-down{
     position: relative;
     display: flex;
@@ -146,197 +169,21 @@
     width: 100%;
     transition: all 0.3s ease;
 }
+.lang-list-items{
+    display:flex;
+    align-items: center;
+    padding:3px;
+    gap:12px;
+}
 .lang-list-item{
     display:flex;
     align-items: center;
-    padding: 6px 18px;
+    padding: 6px 15px;
     gap:12px;
+    width: 100%;
+    border-radius: 8px;
 }
 .lang-list-item:hover{
-    background-color: rgba(255,255,255,0.211)
-}
-.headerBox{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #FFFF;
-    border: 1px solid #E3E6EB;
-    padding: 0px 32px 0px 24px;
-    }
-.headerBox .dashbortButton .im1{
-    cursor: pointer;
-    margin-top: 12px;
-}
-.imgUserBox{
-    display: flex;
-    gap: 20px;
-}
-.w{
-    width: 65px;
-    cursor: pointer;
-    height: 9vh;
-    transform: translateX(-20px);
-    transition: 0.2s all ease-in;
-}
-.w:hover{
-    width: 65px;
-    transform: translateX(-20px);
-    background: #d5d5de;
-    
-}
+    background: #dcdcdc;
 
-.dashbortButton{
-    transform: translateX(20px);
-}
-
-.headerBox .two{
-    display: flex;
-    align-items: center;
-    justify-content: end;
-}
-.headerBox .two .img2img3 .im2{
-    width: 18px;
-    height: 20px;
-    cursor: pointer;
-}
-.headerBox .two .img2img3 .notificBox{
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 27px;
-    cursor: pointer;
-}
-.headerBox .two .img2img3 .notificatNum{
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    left: 11px;
-    top: -3px;
-    background: #EE5D50;
-    border-radius: 50%;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    color: #FFFF;
-}
-.headerBox .two .img2img3 .notificatNum p{
-    font-size: 10px;
-}
-
-.headerBox .two .img2img3{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.headerBox .two .imgUserBox{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 16px;
-}
-.imgUserBox .imgUser{
-
-}
-.headerBox .two .imgUserBox select{
-    width: 16px;
-    height: 16px;
-    background: transparent;
-    border: 0;
-    outline: none;
-    font-size: 20px;
-    cursor: pointer;
-}
-.headerBox .two .imgUserBox .imgUser{
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: gray;
-    margin: 12px 4px 12px 0px;
-}
-.imgUserBox .iiii{
-    width: 48px;
-    height: 48px;
-    display: flex;
-    justify-content:center;
-    align-items: center;
-    border-radius: 50%;
-    overflow: hidden;
-}
-.margintop{
-    margin-top: 66px;
-}
-.d{
-    width: 100%;
-    height: 50px;
-    top: 0;
-    align-items: center;
-}
-.headerBox .two .img2img3 .notificBox .im3{
-    margin-right: 24px;
-}
-.padding-10{
-    padding: 0 10px !important;
-}
-.homepage2 .padding-10{
-    padding: 0 1.2rem !important;
-}
-.notification-btn{
-    border-radius: 15px;
-    padding:15px;
-    background-color: rgba(75, 210, 247, 0.41) !important;
-}
-.notification-date{
-    font-size: 12px;
-}
-.notification-icon{
-    cursor: pointer;
-    color: red;
-    width: 50px;
-    height: 40px;
-    animation-name: notification;
-    animation-duration: 0.7s;
-    animation-direction: alternate-reverse;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease;
-}
-.notification-text{
-    font-size: 14px;
-    font-weight: bold;
-}
-.notification-icon2{
-    color: green;
-    width: 50px;
-    height: 40px;
-}
-.notification-icon3{
-    cursor: pointer;
-    color: #072ce6;
-    width: 50px;
-    height: 40px;
-}
-@keyframes notification {
-    from{
-        color: transparent;
-    }
-    to{
-        color: red;
-    }
-}
-@media  (max-width:425.9px) {
-    .headerBox .two .img2img3 .im2{
-        display: none;
-    } 
-}
-
-@media (min-width: 426px) and (max-width: 768.9px) {
-    .headerBox .two .img2img3 .im2{
-        display: none;
-    } 
-}
-
-@media screen and (max-width: 768px) {
-    .headerBox .two .img2img3 .im2{
-        display: none;
-    }
 }
