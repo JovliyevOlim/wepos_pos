@@ -144,7 +144,7 @@ export function prettify(num) {
 
     const [wholeNumber, part] = num.toString().split('.');
     const regExp = /(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g;
-    const formattedNumber = wholeNumber.toString().replace(regExp, '$1 ') + (part ? `.${part}` : '');
+    const formattedNumber = wholeNumber.toString().replace(regExp, '$1.') + (part ? `.${part}` : '');
 
     return formattedNumber
 }
