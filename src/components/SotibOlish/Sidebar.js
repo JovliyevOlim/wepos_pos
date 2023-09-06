@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
-import Icon, {
-    HomeOutlined,
-} from '@ant-design/icons';
+import Icon from '@ant-design/icons';
 import './sidebar.css'
 import {Breadcrumb, Button, Layout, Menu, theme} from 'antd';
 import {Route, Switch, useHistory} from "react-router-dom";
@@ -22,7 +20,7 @@ import {
     OutlayIcon,
     ProductIcon,
     PurchaseIcon, ReportIcon, SettingIcon,
-    SuperAdmin, SuperAdminIcon,
+    SuperAdminIcon,
     TradeIcon,
     UsersIcon
 } from "../Svg/svg";
@@ -38,6 +36,8 @@ const Sidebar = ({users}) => {
     const [collapsed, setCollapsed] = useState(false);
     const rootSubmenuKeys = ['/main/dashboard', '/main/superadmin', '/main/balance', 'user', 'customers', 'products', 'purchase', 'trades', 'outlay', 'reports', 'setting'];
     const [openKeys, setOpenKeys] = useState(['/main/dashboard']);
+    const screenWidth = window.innerWidth
+    const screenWidthTrue = screenWidth < 768
     const onOpenChange = (keys) => {
         const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
         if (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
@@ -59,7 +59,7 @@ const Sidebar = ({users}) => {
         {
             label: 'Bosh sahifa',
             key: '/main/dashboard',
-            check: true,
+            check: users.getInfo || users.getInfoAdmin,
             icon: <Icon component={MainMenu}/>,
         },
         {
@@ -74,68 +74,117 @@ const Sidebar = ({users}) => {
             icon: <Icon component={Kassa}/>,
             check: users.getBalance || users.getBalanceAdmin,
             children: [
-                {label: 'Kassa holati', key: '/main/balanceTable', check: true},
-                {label: 'Kassadagi o\'zgarishlar', key: '/main/balanceHistory', check: true},
+                {label: 'Kassa holati', key: '/main/balanceTable', check: users.getBalance || users.getBalanceAdmin},
+                {
+                    label: 'Kassadagi o\'zgarishlar',
+                    key: '/main/balanceHistory',
+                    check: users.getBalance || users.getBalanceAdmin
+                },
             ].filter(item => item.check === true)
         },
         {
-            label: 'Hodimlar', key: 'user', check: true, icon: <Icon component={UsersIcon}/>,
+            label: 'Hodimlar', key: 'user', check: users.addUser || users.getUserAdmin || users.getUser ||
+                users.addRole || users.getRole, icon: <Icon component={UsersIcon}/>,
             children: [
-                {label: 'Hodimlar', key: '/main/user', check: true},
-                {label: 'Lavozimlar', key: '/main/role', check: true},
+                {label: 'Hodimlar', key: '/main/user', check: users.addUser || users.getUserAdmin || users.getUser},
+                {label: 'Lavozimlar', key: '/main/role', check: users.addRole || users.getRole},
             ].filter(item => item.check === true)
         },
         {
-            label: 'Hamkorlar', key: 'customers', check: true, icon: <Icon component={CustomerIcon}/>,
+            label: 'Hamkorlar',
+            key: 'customers',
+            check: users.addSupplier || users.getSupplier ||
+                users.addCustomer || users.getCustomerAdmin || users.getCustomer,
+            icon: <Icon component={CustomerIcon}/>,
             children: [
-                {label: 'Ta\'minotchilar', key: '/main/supplier', check: true},
-                {label: 'Mijozlar', key: '/main/customer', check: true},
+                {label: 'Ta\'minotchilar', key: '/main/supplier', check: users.addSupplier || users.getSupplier},
+                {
+                    label: 'Mijozlar',
+                    key: '/main/customer',
+                    check: users.addCustomer || users.getCustomerAdmin || users.getCustomer
+                },
             ].filter(item => item.check === true)
         },
         {
             label: 'Xisobotlar',
-            key: 'grp',
+            key: 'grp2',
             check: !collapsed,
             disabled: true,
         },
         {
-            label: 'Mahsulotlar', key: 'products', check: true, icon: <Icon component={ProductIcon}/>,
+            label: 'Mahsulotlar',
+            key: 'products',
+            check: users.getProductAdmin || users.getProduct || users.addProduct || users.productTypeRoles ||
+                users.measurementRoles || users.brandRoles || users.categoryRoles,
+            icon: <Icon component={ProductIcon}/>,
             children: [
-                {label: 'Mahsulotlar', key: '/main/productList', check: true},
-                {label: 'Mahsulot qo\'shish', key: '/main/addProduct', check: true},
-                {label: 'Mahsulot turi', key: '/main/productType', check: true},
-                {label: 'Mahsulot import', key: '/main/importProduct', check: true},
-                {label: 'Bo\'limlar', key: '/main/category', check: true},
-                {label: 'Firmalar', key: '/main/brand', check: true},
-                {label: 'O\'lchov birligi', key: '/main/measurements', check: true},
+                {
+                    label: 'Mahsulotlar',
+                    key: '/main/productList',
+                    check: users.getProductAdmin || users.getProduct || users.addProduct
+                },
+                {label: 'Mahsulot qo\'shish', key: '/main/addProduct', check: users.addProduct},
+                {label: 'Mahsulot turi', key: '/main/productType', check: users.productTypeRoles},
+                {label: 'Mahsulot import', key: '/main/importProduct', check: users.addProduct},
+                {label: 'Bo\'limlar', key: '/main/category', check: users.categoryRoles},
+                {label: 'Firmalar', key: '/main/brand', check: users.brandRoles},
+                {label: 'O\'lchov birligi', key: '/main/measurements', check: users.measurementRoles},
             ].filter(item => item.check === true)
         },
         {
-            label: 'Xarid', key: 'purchase', check: true, icon: <Icon component={PurchaseIcon}/>,
+            label: 'Xarid',
+            key: 'purchase',
+            check: users.getPurchase || users.getPurchaseAdmin || users.addPurchase,
+            icon: <Icon component={PurchaseIcon}/>,
             children: [
-                {label: 'Xaridlar', key: '/main/purchaseList', check: true},
-                {label: 'Xarid qo\'shish', key: '/main/addPurchase', check: true},
+                {
+                    label: 'Xaridlar',
+                    key: '/main/purchaseList',
+                    check: users.getPurchase || users.getPurchaseAdmin || users.addPurchase
+                },
+                {label: 'Xarid qo\'shish', key: '/main/addPurchase', check: users.addPurchase},
             ].filter(item => item.check === true)
         },
         {
-            label: 'Savdo', key: 'trades', check: true, icon: <Icon component={TradeIcon}/>,
+            label: 'Savdo',
+            key: 'trades',
+            check: users.addTrade || users.getTrade || users.getTradeAdmin || users.getLoss || users.getLossAdmin || users.addLoss,
+            icon: <Icon component={TradeIcon}/>,
             children: [
-                {label: 'Savdolar', key: '/main/tradeList', check: true},
-                {label: 'Savdo oynasi', key: '/shopping', check: true},
-                {label: 'Mahsulot yo\'qotish', key: '/main/addLossProducts', check: true},
-                {label: 'Yo\'qotilgan mahsulotlar', key: '/main/lossProducts', check: true},
+                {
+                    label: 'Savdolar',
+                    key: '/main/tradeList',
+                    check: users.addTrade || users.getTradeAdmin || users.getTrade
+                },
+                {label: 'Savdo oynasi', key: '/shopping', check: users.addTrade || users.getTrade},
+                {label: 'Mahsulot yo\'qotish', key: '/main/addLossProducts', check: users.addLoss},
+                {
+                    label: 'Yo\'qotilgan mahsulotlar',
+                    key: '/main/lossProducts',
+                    check: users.getTrade || users.getTradeAdmin
+                },
             ].filter(item => item.check === true)
         },
         {
-            label: 'Xarajatlar', key: 'outlay', check: true, icon: <Icon component={OutlayIcon}/>,
+            label: 'Xarajatlar',
+            key: 'outlay',
+            check: users.addOutlay || users.getOutlay || users.getOutlayAdmin,
+            icon: <Icon component={OutlayIcon}/>,
             children: [
-                {label: 'Xarajatlar', key: '/main/outlayList', check: true},
-                {label: 'Xarajatlar ro\'yhati', key: '/main/addOutlay', check: true},
-                {label: 'Xarajat turi', key: '/main/outlayCategoryList', check: true},
+                {
+                    label: 'Xarajatlar',
+                    key: '/main/outlayList',
+                    check: users.addOutlay || users.getOutlay || users.getOutlayAdmin
+                },
+                {label: 'Xarajatlar ro\'yhati', key: '/main/addOutlay', check: users.addOutlay},
+                {label: 'Xarajat turi', key: '/main/outlayCategoryList', check: users.addOutlay || users.getOutlay},
             ].filter(item => item.check === true)
         },
         {
-            label: 'Xisobotlar', key: 'reports', check: true, icon: <Icon component={ReportIcon}/>,
+            label: 'Xisobotlar',
+            key: 'reports',
+            check: users.getInfo || users.getInfoAdmin,
+            icon: <Icon component={ReportIcon}/>,
             children: [
                 {label: 'Xaridlar xisoboti', key: '/main/purchasesReport', check: true},
                 {label: 'Mijozlar xisoboti', key: '/main/customersReport', check: true},
@@ -148,10 +197,13 @@ const Sidebar = ({users}) => {
             ].filter(item => item.check === true)
         },
         {
-            label: 'Sozlamalar', key: 'setting', check: true, icon: <Icon component={SettingIcon}/>,
+            label: 'Sozlamalar',
+            key: 'setting',
+            check: users.editInvoice || users.editMyBusiness || users.getBranch || users.addBranch,
+            icon: <Icon component={SettingIcon}/>,
             children: [
-                {label: 'Sozlamalar', key: '/main/shopSetting', check: true},
-                {label: 'Filiallar', key: '/main/branches', check: true},
+                {label: 'Sozlamalar', key: '/main/shopSetting', check: users.editMyBusiness || users.editInvoice},
+                {label: 'Filiallar', key: '/main/branches', check: users.addBranch || users.getBranch},
 
             ].filter(item => item.check === true)
         },
@@ -159,17 +211,15 @@ const Sidebar = ({users}) => {
     ].filter(item => item.check === true);
 
 
-    const  screenWidth = window.innerWidth
-    console.log(screenWidth)
-
     return (
         <Layout
             style={{
                 minHeight: '100vh',
             }}
         >
-            <Sider trigger={null} className={'sidebar-scroll'} collapsible
-                   width={250} collapsed={collapsed}>
+            <Sider trigger={null} className={`sidebar-scroll ${screenWidthTrue && (collapsed ? 'd-none' : '')}`}
+                   collapsible
+                   width={screenWidthTrue ? (collapsed ? 0 : '100%') : (collapsed ? 80 : 250)} collapsed={collapsed}>
                 <div className="demo-logo-vertical">
                     {
                         !collapsed && <div className={'d-flex gap-1 align-items-center'}>
@@ -192,20 +242,19 @@ const Sidebar = ({users}) => {
                     />
                 </div>
                 <Menu colorText={'#1AA6E1'} onOpenChange={onOpenChange}
-                      openKeys={openKeys} defaultSelectedKeys={['/main/dashboard']} onClick={(e) => history.push(e.key)}
+                      openKeys={openKeys} defaultSelectedKeys={['/main/dashboard']} onClick={(e) => {
+                    history.push(e.key)
+                    if (screenWidthTrue) {
+                        setCollapsed(!collapsed)
+                    }
+                }}
                       mode="inline" items={items}/>
             </Sider>
             <Layout style={{
-                marginLeft: collapsed ? 80 : 250,
-            }} >
-                <Header
-                    style={{
-                        padding: 32,
-                        // borderBottom: "2px solid #F1F2F3",
-                        background: "#FFF",
-                        height: 103
-                    }}
-                ><MainHeader/>
+                marginLeft: screenWidthTrue ? (collapsed ? 0 : '100%') : (collapsed ? 80 : 250),
+                overflowX: 'hidden',
+            }}>
+                <Header className={'sidebar-header'}><MainHeader setCollapsed={() => setCollapsed(!collapsed)}/>
                 </Header>
                 <Content className={'content'}>
                     <Switch>
@@ -228,7 +277,7 @@ const Sidebar = ({users}) => {
                         textAlign: 'center',
                     }}
                 >
-                    Ant Design ©2023 Created by Ant UED
+                    ©2023 Created by Olim Jovliyev
                 </Footer>
             </Layout>
         </Layout>

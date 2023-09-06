@@ -50,7 +50,12 @@ body::-webkit-scrollbar-track {
     letter-spacing: 0.8px;
     margin: 0;
 }
-
+.sidebar-header{
+    padding: 32px;
+    /*// borderBottom: "2px solid #F1F2F3",*/
+    background: #FFF;
+    height: 103px
+}
 .ant-btn img {
     padding: 10px !important;
 }
@@ -72,6 +77,7 @@ body::-webkit-scrollbar-track {
 .ant-menu-inline .ant-menu-item {
     padding: 11px 10px !important;
     border-radius: 8px !important;
+    margin: 0 !important;
     width: 100% !important;
     display: flex !important;
     align-items: center !important;
@@ -135,8 +141,8 @@ body::-webkit-scrollbar-track {
 }
 
 .ant-menu-inline .ant-menu-item-icon {
-    width: 22px !important;
-    height: 22px !important;
+    width: 18px !important;
+    height: 18px !important;
 }
 .ant-menu-vertical .ant-menu-item-icon {
     padding: 10px 0 0 0 !important;
@@ -155,32 +161,54 @@ body::-webkit-scrollbar-track {
     width: 100% !important;
 }
 
-.svgColor path, .svgColorSubMenu path, .svgFillColorSubMenu ellipse,circle {
-    stroke: #565D6A;
+.svgColor path, .svgColorSubMenu path{
+    stroke: #B0B7C3;
+    fill: #B0B7C3;
 }
 
-.svgFillColorSubMenu path {
-    fill: #565D6A;
-}
+.svgFillColorSubMenu path,ellipse,circle {
+    stroke: #B0B7C3;
+    fill: #B0B7C3;}
 
 .ant-menu-item-selected .svgColor path {
-    stroke: #1AA6E1;
+    stroke: #1777ff;
+    fill: #1777ff;
 }
 
 .ant-menu-submenu-selected .svgColorSubMenu path {
     stroke: #1777ff;
-}
-
-.ant-menu-submenu-selected .svgFillColorSubMenu path {
     fill: #1777ff;
 }
-
-.ant-menu-submenu-selected .svgFillColorSubMenu ellipse, circle {
+.ant-menu-item-selected .svgFillColorSubMenu path,
+.ant-menu-item-selected .svgFillColorSubMenu ellipse,
+.ant-menu-item-selected .svgFillColorSubMenu circle{
     stroke: #1777ff;
-}
-@media (max-width: 425.9px){
+    fill: #1777ff;}
+.ant-menu-submenu-selected .svgFillColorSubMenu path,
+.ant-menu-submenu-selected .svgFillColorSubMenu ellipse,
+.ant-menu-submenu-selected .svgFillColorSubMenu circle{
+    stroke: #1777ff;
+    fill: #1777ff;}
+
+/*.ant-menu-submenu-selected .svgFillColorSubMenu ellipse, circle {*/
+/*    stroke: #1777ff;*/
+/*}*/
+@media screen and (max-width: 329.9px){
     .sidebar-scroll{
         height:100%
+    }
+    .sidebar-header{
+        padding: 10px;
+        height:50px
+    }
+}
+@media (min-width: 330px) and (max-width: 529.9px){
+    .sidebar-scroll{
+        height:100%
+    }
+    .sidebar-header{
+        padding: 16px;
+        height:60px
     }
 }
 @media (min-width: 768px) {

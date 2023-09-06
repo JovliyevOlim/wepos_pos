@@ -237,6 +237,8 @@ function SavdoOynasi({
                     val?.waitingProductDtoList.map(item => {
                         holdOnArray.push({
                             productId: item?.productId,
+                            noChangesPrice: item?.salePrice,
+                            noChangesTotalSalePrice: item?.salePrice * item?.quantity,
                             totalSalePrice: item?.totalPrice,
                             quantity: item?.quantity,
                             name: item?.productName,

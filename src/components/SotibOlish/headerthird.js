@@ -1,10 +1,4 @@
 import React, {lazy, useState} from 'react';
-import {Switch, Route} from "react-router-dom";
-import {connect} from "react-redux";
-import './headerthird.css'
-import RecentActivity from "./header/ViewProfile/RecentActivity";
-import Third from "./ThirdPage/Third";
-import Header from "./header/MainHeader";
 import HodimlarRoyhati from "./Sidebar/Hodimlar/hodimlarRoyxati/HodimlarRoyhati";
 import Lavozimlar from "./Sidebar/Hodimlar/Lavozimlar/Lavozimlar";
 import Taxrirlash from "./Sidebar/Hodimlar/hodimlarRoyxati/Taxrirlash/Taxrirlash";
@@ -29,7 +23,6 @@ import SavdodaTulov from "./Sidebar/Xisobotlar/SavdodaQilinganTulov/SavdodaTulov
 import QoldiqlarXisoboti from "./Sidebar/Xisobotlar/qoldiqlarXisoboti/QoldiqlarXisoboti";
 import Dukon from "./Sidebar/Settings/DukonSozlamalari/Dukon";
 import Bazalar from "./Sidebar/Settings/bazalar/Bazalar";
-import Profil from "./header/Profil";
 import SuperAdmin from "./Sidebar/SUPERADMIN/SuperAdmin";
 import MaxsulotMiqdoriQoldigi from "./Sidebar/Xisobotlar/MahsulotMiqdoriQoldigi/MaxsulotMiqdoriQoldigi";
 import LossProducts from "./Sidebar/Savdo/Yoqotilgan Mahsulotlar/LossProducts";
@@ -37,14 +30,10 @@ import Measurement from "./Sidebar/Maxsulotlar/Measurements/Measurement";
 import BalanceTableAt from "./Sidebar/Balance/BalanceTableAt/BalanceTableAt";
 import BalanceHistory from "./Sidebar/Balance/BalanceHistory/BalanceHistory";
 import SupplierReport from "./Sidebar/Xisobotlar/SupplierReport/SupplierReport";
-import users from "../../reducer/users";
-import ProtectedRoute from "./ThirdPage/ProtectedRoute";
-import Error409 from "../../dashboard/jsx/pages/Error409";
 
 const Taxrirlash2 = lazy(() => import('./Sidebar/Hodimlar/Lavozimlar/Taxrirlash/Taxrirlash'))
 
 const Taxrirlash3 = lazy(() => import('./Sidebar/Maxsulotlar/MahsulotlarRuyxati/Taxrirlash/Taxrirlash'))
-const Sidebar = lazy(() => import("./Sidebar/Sidebar"))
 
 const ShtrixCode = lazy(() => import("./Sidebar/Maxsulotlar/ShtrixCode/ShrtixCode"))
 const XodimlarNazorati = lazy(() => import("./Sidebar/Xisobotlar/XodimlarNazorati/XodimlarNazorati"))
@@ -92,115 +81,3 @@ export const routes = [
     {path: "shopSetting",component:Dukon,permissions:['EDIT_INVOICE','EDIT_MY_BUSINESS']},
     {path: "branches",component:Bazalar,permissions:['ADD_BRANCH','GET_BRANCH']},
 ]
-
-function Headerthird({users}) {
-    const [classheader, setClassheader] = useState('headerthird-active')
-    const [classSidebar, setClassSidebar] = useState('home-sidebar-active')
-
-    function sidebarheader() {
-        if (classheader === 'headerthird-active') {
-            setClassheader('headerthird')
-            setClassSidebar('home-sidebar')
-        } else {
-            setClassheader('headerthird-active')
-            setClassSidebar('home-sidebar-active')
-        }
-    }
-
-
-
-    return (
-        <div className={'home-header'}>
-            <div className={classSidebar}>
-                <Sidebar sidebaractive2={sidebarheader}/>
-            </div>
-            <div className={`${classheader}`}>
-                <div className={'headerthird-item'}>
-                    <div>
-                        <Header sidebarfunc={sidebarheader}/>
-                    </div>
-                    <Switch>
-                        {/*{*/}
-                        {/*    users.isSuperAdmin && <Route path={'/superadmin'} component={SuperAdmin}/>*/}
-                        {/*}*/}
-                        {
-                            routes.map(item=>
-                                <ProtectedRoute path={"/main/"+item.path} component={item.component} roles={item.permissions}/>
-                            )
-                        }
-                        {/*<Route path={'/addUser/:id?'} component={Taxrirlash}/>*/}
-                        {/*<Route path={'/addUser'} component={Taxrirlash}/>*/}
-                        {/*<Route path={'/user'} component={HodimlarRoyhati}/>*/}
-                        {/*<Route path={'/addRole/:id?'} component={Taxrirlash2}/>*/}
-                        {/*<Route path={'/addRole'} component={Taxrirlash2}/>*/}
-                        {/*<Route path={'/role'} component={Lavozimlar}/>*/}
-                        {/*<Route path={'/hodimulush/taxrirlash'} component={Taxrirlash}/>*/}
-
-                        {/*<Route path={'/balanceTable'} component={BalanceTableAt}/>*/}
-                        {/*<Route path={'/balanceHistory'} component={BalanceHistory}/>*/}
-
-
-                        {/*<Route path={'/supplier'} component={Taminotchilar}/>*/}
-                        {/*<Route path={'/customer'} component={Customers}/>*/}
-
-                        {/*<Route path={'/addProduct/:id?'} component={Taxrirlash3}/>*/}
-                        {/*<Route path={'/addProduct'} component={Taxrirlash3}/>*/}
-                        {/*<Route path={'/importProduct'} component={MahsulotImport}/>*/}
-                        {/*<Route path={'/productList'} component={MaxsulotlarRoyxati}/>*/}
-                        {/*<Route path={'/productType'} component={MahsulotTurlari}/>*/}
-                        {/*<Route path={'/category'} component={Bolimlar}/>*/}
-                        {/*<Route path={'/measurements'} component={Measurement}/>*/}
-                        {/*<Route path={'/brand'} component={Firmalar}/>*/}
-
-                        {/*<Route path={'/addPurchase/:id?'} component={Xarid}/>*/}
-                        {/*<Route path={'/addPurchase'} component={Xarid}/>*/}
-                        {/*<Route path={'/purchaseList'} component={HaridlarRoyxati}/>*/}
-
-                        {/*<Route path={'/tradeList'} component={BarchaSavdolar}/>*/}
-                        {/*<Route path={'/addLossProducts/:id?'} component={SavdoQoshish}/>*/}
-                        {/*<Route path={'/addLossProducts'} component={SavdoQoshish}/>*/}
-                        {/*<Route path={'/lossProducts'} component={LossProducts}/>*/}
-
-
-                        {/*<Route path={'/outlayList'} component={XarajatlarRoyxati}/>*/}
-                        {/*<Route path={'/addOutlay/:id?'} component={XarajatQoshish}/>*/}
-                        {/*<Route path={'/addOutlay'} component={XarajatQoshish}/>*/}
-                        {/*<Route path={'/outlayCategoryList'} component={XarajatTurlari}/>*/}
-
-
-                        {/*<Route path={'/lostProductsReport'} component={MaxsulotMiqdoriQoldigi}/>*/}
-                        {/*<Route path={'/tradesReport'} component={SavdodaTulov}/>*/}
-                        {/*<Route path={'/productsReport'} component={MaxsulotXisoboti}/>*/}
-                        {/*<Route path={'/purchasesReport'} component={XaridlarXisoboti}/>*/}
-                        {/*<Route path={'/customersReport'} component={MijozlarXisoboti}/>*/}
-                        {/*<Route path={'/usersReport'} component={XodimlarNazorati}/>*/}
-                        {/*<Route path={'/suppliersReport'} component={SupplierReport}/>*/}
-                        {/*<Route path={'/remainProductReport'} component={QoldiqlarXisoboti}/>*/}
-
-
-                        {/*{*/}
-                        {/*    users.editMyBusiness || users.editInvoice ?*/}
-                        {/*        <Route path={'/shopSetting'} component={Dukon}/> : ''*/}
-                        {/*}*/}
-                        {/*{*/}
-                        {/*    users.addBranch || users.getBranch ?*/}
-                        {/*        <Route path={'/branches'} component={Bazalar}/> : ''*/}
-                        {/*}*/}
-
-
-                        <Route path={'/main/shtrixcode'} component={ShtrixCode}/>
-                        <Route path={'/main/profil/edit'} component={Profil}/>
-                        <Route path={'/main/profil/:id'} component={RecentActivity}/>
-                        <Route path={'/main/profil'} component={RecentActivity}/>
-                        <Route path={'/main/dashboard'} component={Third}/>
-                        <Route path={'*'} component={Error409}/>
-                    </Switch>
-                </div>
-
-            </div>
-        </div>
-
-    );
-}
-
-export default connect((users), {})(Headerthird);
