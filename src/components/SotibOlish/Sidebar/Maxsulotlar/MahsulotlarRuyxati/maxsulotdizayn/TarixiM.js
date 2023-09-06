@@ -77,7 +77,7 @@ function TarixiM({MaxsulotlarRoyxariReducer,row,page,changePage,changeRow,Maxsul
       >
         <Box>
           <Typography gutterBottom variant="h4">
-            {t('Zaxira tarixi')}
+            {t('as.47')}
           </Typography>
 
         </Box>
@@ -89,12 +89,12 @@ function TarixiM({MaxsulotlarRoyxariReducer,row,page,changePage,changeRow,Maxsul
                 <TableHeadWrapper>
                     <TableRow>
                         <TableCell>T/R</TableCell>
-                        <TableCell align="left">Maxsulot</TableCell>
-                        <TableCell align="left">Xodim</TableCell>
-                        <TableCell align="left">Filial</TableCell>
-                        <TableCell align="center">Miqdori</TableCell>
-                        <TableCell align="center">Jarayon</TableCell>
-                        <TableCell align="center">Sana</TableCell>
+                        <TableCell align="left">{t('as.48')}</TableCell>
+                        <TableCell align="left">{t('as.49')}</TableCell>
+                        <TableCell align="left">{t('as.50')}</TableCell>
+                        <TableCell align="center">{t('as.51')}</TableCell>
+                        <TableCell align="center">{t('as.52')}</TableCell>
+                        <TableCell align="center">{t('as.53')}</TableCell>
                     </TableRow>
                 </TableHeadWrapper>
                 <TableBody>
@@ -174,7 +174,7 @@ function TarixiM({MaxsulotlarRoyxariReducer,row,page,changePage,changeRow,Maxsul
             }}
           >
               <TablePagination
-                  labelRowsPerPage={'Qatori'}
+                  labelRowsPerPage={t('as.54')}
                   count={MaxsulotxisobotReducer.productWorked?.totalItem}
                   page={page}
                   onPageChange={changePage}

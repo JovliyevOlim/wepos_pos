@@ -365,17 +365,17 @@ function MaxsulotlarRoyxati({
     return (
         <div>
             <div className="d-flex col-md-12 align-items-center mb-5 justify-content-between">
-                <MainHeaderText text={'Mahsulotlar'}/>
+                <MainHeaderText text={t('as.97')}/>
                 {
                     users.addProduct ?
-                        <ButtonAnt onClick={togglePush} text={'Qo\'shish'} type={'primary'}/> : ''
+                        <ButtonAnt onClick={togglePush} text={t('as.96')} type={'primary'}/> : ''
                 }
             </div>
             <>
                 <CardBody>
                     <div className="col-md-12 d-flex align-items-end row-gap-4 flex-wrap">
                         <div className="col-md-3">
-                            <SelectAnt name={'Filiallar'} onChange={(e) => {
+                            <SelectAnt name={t('as.98')} onChange={(e) => {
                                 setPage(0)
                                 setMainBranchId(e === "" ? null : e)
                             }}
@@ -384,7 +384,7 @@ function MaxsulotlarRoyxati({
                             />
                         </div>
                         <div className="col-md-3">
-                            <SelectAnt name={'Firmalar'} onChange={(e) => {
+                            <SelectAnt name={t('as.99')} onChange={(e) => {
                                 setPage(0)
                                 setbranId(e === "" ? null : e)
                             }}
@@ -393,7 +393,7 @@ function MaxsulotlarRoyxati({
                             />
                         </div>
                         <div className="col-md-3">
-                            <SelectAnt name={'Bo\'limlar'} onChange={(e) => {
+                            <SelectAnt name={t('as.100')} onChange={(e) => {
                                 setPage(0)
                                 setCategoryId(e === "" ? null : e)
                             }}
@@ -402,7 +402,7 @@ function MaxsulotlarRoyxati({
                             />
                         </div>
                         <div className="col-md-3">
-                            <SelectAnt name={'O\'lchov birligi'} onChange={(e) => {
+                            <SelectAnt name={t('as.101')} onChange={(e) => {
                                 setPage(0)
                                 setMeasurementId(e === "" ? null : e)
                             }}
@@ -412,11 +412,11 @@ function MaxsulotlarRoyxati({
                         </div>
                         <div className="col-md-6">
                             <SearchAnt onChange={(e) => setSearch(e.target.value)}
-                                       name={'Mahsulotni nomi yoki barcode yordamida qidirish'}/>
+                                       name={t('as.102')}/>
                         </div>
                         <div className="col-md-3">
                             <ButtonAnt type={'dash'} onClick={getFilesById} bgColor={'green'}
-                                       icon={<FileExcelOutlined/>} text={'Excel faylni yuklash'}/>
+                                       icon={<FileExcelOutlined/>} text={t('as.103')}/>
                         </div>
                     </div>
                 </CardBody>
@@ -425,19 +425,19 @@ function MaxsulotlarRoyxati({
                     <CardBody>
                         <div className="d-flex justify-content-around align-items-center flex-wrap">
                             <Tag className={'productStatistic'} color="red">
-                                <p className={'p-0 m-2'}>Barcha maxsulotlar Olish narxida :</p>
-                                <h5>{MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice} so'm </h5>
+                                <p className={'p-0 m-2'}>{t('as.104')}</p>
+                                <h5>{MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice}{t('as.21')}</h5>
                             </Tag>
                             <Tag className={'productStatistic'} color="geekblue">
-                                <p className={'p-0 m-2'}> Barcha maxsulotlar Sotish narxida :</p>
-                                <h5> {MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice} so'm</h5>
+                                <p className={'p-0 m-2'}> {t('as.105')}</p>
+                                <h5> {MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice}{t('as.21')}</h5>
                             </Tag>
                             <Tag className={'productStatistic'} color="green">
-                                <p className={'p-0 m-2'}>Foyda sumda :</p>
-                                <h5>{MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice-MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice} so'm </h5>
+                                <p className={'p-0 m-2'}>{t('as.106')}</p>
+                                <h5>{MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice-MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice}{t('as.21')}</h5>
                             </Tag>
                             <Tag className={'productStatistic'} color="cyan">
-                                <p className={'p-0 m-2'}>Foyda foizda :</p>
+                                <p className={'p-0 m-2'}>{t('as.107')}</p>
                                 <h5>
                                     {((parseFloat(MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice / MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice) - 1) * 100).toFixed(2)} %
                                 </h5>
@@ -463,8 +463,7 @@ function MaxsulotlarRoyxati({
                                                     deleteMaxsulotRuyxatiByIds(selectedItems)
                                                     setSaveModal(true)
                                                 }}
-                                                        className={'btn btn-danger mt-4 d-flex justify-content-end'}>Belgilanganlarni
-                                                    o'chirish</button>
+                                                        className={'btn btn-danger mt-4 d-flex justify-content-end'}>{t('as.115')}</button>
                                             }
                                             <TableContainer>
                                                 {/*<TableWrapper>*/}
@@ -475,7 +474,7 @@ function MaxsulotlarRoyxati({
                                                             <Tooltip
                                                                 arrow
                                                                 placement="top"
-                                                                title={t('All')}
+                                                                title={t('as.108')}
                                                             >
                                                                 <Checkbox
                                                                     checked={selectedAllUsers}
@@ -485,16 +484,16 @@ function MaxsulotlarRoyxati({
                                                             </Tooltip>
                                                         </TableCell>
 
-                                                        <TableCell align="left">Maxsulotlar</TableCell>
-                                                        <TableCell align="left">Filial</TableCell>
-                                                        <TableCell align="center">Barcode</TableCell>
-                                                        <TableCell align="center">Turi</TableCell>
-                                                        <TableCell align="center">Sotib olish narxi</TableCell>
-                                                        <TableCell align="center">Sotish narxi</TableCell>
-                                                        <TableCell align="center">Optom Sotish narxi</TableCell>
-                                                        <TableCell align="center">Firma</TableCell>
-                                                        <TableCell align="center">{t('Bo`limi')}</TableCell>
-                                                        <TableCell align="center">{t('Actions')}</TableCell>
+                                                        <TableCell align="left">{t('as.109')}</TableCell>
+                                                        <TableCell align="left">{t('as.50')}</TableCell>
+                                                        <TableCell align="center">{t('as.110')}</TableCell>
+                                                        <TableCell align="center">{t('as.111')}</TableCell>
+                                                        <TableCell align="center">{t('as.82')}</TableCell>
+                                                        <TableCell align="center">{t('as.84')}</TableCell>
+                                                        <TableCell align="center">{t('as.70')}</TableCell>
+                                                        <TableCell align="center">{t('as.112')}</TableCell>
+                                                        <TableCell align="center">{t('as.113')}</TableCell>
+                                                        <TableCell align="center">{t('as.6')}</TableCell>
                                                     </TableRow>
                                                 </TableHeadWrapper>
                                                 <TableBody>
@@ -556,7 +555,7 @@ function MaxsulotlarRoyxati({
                                                                                             noWrap
                                                                                 >
                                                                                     <Typography mr={1}>
-                                                                                        {t('Miqdori')}:
+                                                                                        {t('as.51')}:
                                                                                     </Typography>
                                                                                     <Typography>
                                                                                         <Typography>
@@ -594,10 +593,10 @@ function MaxsulotlarRoyxati({
                                                                         {item?.barcode}
                                                                     </TableCell>
                                                                     <TableCell align="center">
-                                                                        {item.many ? 'Turli xil' : 'Bir turli'}
+                                                                        {item.many ? (t('as.63')) : (t('as.62'))}
                                                                         {
                                                                             users.getProductAdmin || users.getProduct ? (
-                                                                                <Tooltip title="Ko'rish" arrow>
+                                                                                <Tooltip title={t('as.114')} arrow>
                                                                                     <IconButtonWrapper
                                                                                         onClick={() => korishsh(item.id)}
                                                                                         sx={{
@@ -629,7 +628,7 @@ function MaxsulotlarRoyxati({
                                                                             variant="h4"
                                                                             color="text.primary"
                                                                         >
-                                                                            {item.buyPrice.toFixed(0)} So'm
+                                                                            {item.buyPrice.toFixed(0)} {t('as.27')}
                                                                         </Typography>
                                                                     </TableCell>
                                                                     <TableCell align="center">
@@ -641,7 +640,7 @@ function MaxsulotlarRoyxati({
                                                                             variant="h4"
                                                                             color="text.primary"
                                                                         >
-                                                                            {item.salePrice.toFixed(0)} So'm
+                                                                            {item.salePrice.toFixed(0)} {t('as.27')}
                                                                         </Typography>
                                                                     </TableCell>
                                                                     <TableCell align="center">
@@ -652,7 +651,7 @@ function MaxsulotlarRoyxati({
                                                                             component="span"
                                                                             variant="h4"
                                                                             color="text.primary">
-                                                                            {item.grossPrice.toFixed(0)} So'm
+                                                                            {item.grossPrice.toFixed(0)} {t('as.27')}
                                                                         </Typography>
                                                                     </TableCell>
                                                                     <TableCell align="center">
@@ -692,7 +691,7 @@ function MaxsulotlarRoyxati({
                                                                         <Box>
                                                                             {
                                                                                 users.editProduct ? (
-                                                                                    <Tooltip title="Taxrirlash" arrow>
+                                                                                    <Tooltip title={t('as.57')} arrow>
                                                                                         <IconButtonWrapper
                                                                                             onClick={() => history.push(`/main/addProduct/${item.id}`)}
                                                                                             sx={{
@@ -714,7 +713,7 @@ function MaxsulotlarRoyxati({
                                                                             }
                                                                             {
                                                                                 users.deleteProduct ? (
-                                                                                    <Tooltip title="O'chirish" arrow>
+                                                                                    <Tooltip title={t('as.116')} arrow>
                                                                                         <IconButtonWrapper
                                                                                             onClick={() => deleteProductById(item.id)}
                                                                                             sx={{

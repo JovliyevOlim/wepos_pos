@@ -42,10 +42,10 @@ function MonthlyGoalsTarget({active,toggle,MaxsulotlarRoyxariReducer}){
           fontSize: `${theme.typography.pxToRem(21)}`
         }}
       >
-        {t('Maxsulotdan qolayotgan daromad')}
+        {t('as.43')}
       </Typography>
       <Typography align="center" variant="subtitle2">
-        {t('Buyerda barcha turlari bilan qo\'shib xiqoblaganda necha foiz daromad olayotganimiz ko\'rsatilgan')}
+        {t('as.44')}
       </Typography>
       <Box
         sx={{
@@ -76,7 +76,7 @@ function MonthlyGoalsTarget({active,toggle,MaxsulotlarRoyxariReducer}){
         }}
       >
         <Typography component="span" align="center" variant="h4">
-          {t('Olinayotgan daromad')}
+          {t('as.45')}
         </Typography>
         <Typography
           component="span"
@@ -90,7 +90,7 @@ function MonthlyGoalsTarget({active,toggle,MaxsulotlarRoyxariReducer}){
             { !many ? profitPercent: FindPercent()} %
         </Typography>
         <Typography component="span" align="center" variant="h4">
-          {t(' foizni tashkil etadi!')}
+          {t('as.46')}
         </Typography>
       </Box>
     </Card>

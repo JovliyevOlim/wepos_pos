@@ -173,7 +173,7 @@ function Block44({active,toggle,MaxsulotlarRoyxariReducer}){
                       color="text.secondary"
                       fontWeight="normal"
                   >
-                    Shtrix kod
+                    {t('as.37')}
                   </Typography>
                   {
                     <Typography gutterBottom variant="h4">
@@ -208,7 +208,7 @@ function Block44({active,toggle,MaxsulotlarRoyxariReducer}){
                       color="text.secondary"
                       fontWeight="normal"
                   >
-                    Toifasi
+                    {t('as.38')}
                   </Typography>
                   <Typography gutterBottom variant="h4"
                               onClick={() => {navigator.clipboard.writeText(this.state.textToCopy)}}
@@ -239,7 +239,7 @@ function Block44({active,toggle,MaxsulotlarRoyxariReducer}){
                       color="text.secondary"
                       fontWeight="normal"
                   >
-                    Brendi
+                    {t('as.39')}
                   </Typography>
                   <Typography gutterBottom variant="h4"
                               onClick={() => {navigator.clipboard.writeText(this.state.textToCopy)}}
@@ -270,7 +270,7 @@ function Block44({active,toggle,MaxsulotlarRoyxariReducer}){
                       color="text.secondary"
                       fontWeight="normal"
                   >
-                    Minimal miqdor
+                    {t('as.40')}
                   </Typography>
                   <Typography gutterBottom variant="h4"
                               onClick={() => {navigator.clipboard.writeText(this.state.textToCopy)}}
@@ -301,7 +301,7 @@ function Block44({active,toggle,MaxsulotlarRoyxariReducer}){
                       color="text.secondary"
                       fontWeight="normal"
                   >
-                    O'lchov birligi
+                    {t('as.41')}
                   </Typography>
                   <Typography gutterBottom variant="h4"
                               onClick={() => {navigator.clipboard.writeText(this.state.textToCopy)}}
@@ -332,7 +332,7 @@ function Block44({active,toggle,MaxsulotlarRoyxariReducer}){
                       color="text.secondary"
                       fontWeight="normal"
                   >
-                    Qaysi filialda
+                    {t('as.42')}
                   </Typography>
                   <Typography gutterBottom variant="h4"
                               onClick={() => {navigator.clipboard.writeText(this.state.textToCopy)}}
