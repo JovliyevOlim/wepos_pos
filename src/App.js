@@ -7,7 +7,6 @@ import './App.css'
 import Sidebar from "./components/SotibOlish/Sidebar";
 
 const Home = lazy(() => import("./components/Hbody/Home"))
-const Headerthird = lazy(() => import("./components/SotibOlish/headerthird"))
 const SavdoOynasi = lazy(() => import("./components/SotibOlish/Sidebar/Savdo/SavdoOynasi/SavdoOynasi"))
 const SecondPage = lazy(() => import("./components/Pricing/SecondPage/SecondPage"))
 const ShopInfo = lazy(() => import("./components/Pricing/ShopInfo/ShopInfo"))
@@ -85,7 +84,6 @@ function App({users, saveusers}) {
                     <Route path={'/tariffs'} component={SecondPage}/>
                     {
                         auth ? <Route path={'/'}>
-                            {/*<Route  path={'/main'} component={Headerthird}/>*/}
                             <Route path={'/main'} component={Sidebar}/>
                             {
                                 users.getTrade || users.editTrade ?

@@ -17,6 +17,9 @@ body {
   width: 100%;
   z-index: 10000;
 }
+a{
+  text-decoration: none;
+}
 @page {
   size: auto;
 }

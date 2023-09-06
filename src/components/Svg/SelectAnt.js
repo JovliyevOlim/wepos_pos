@@ -4,6 +4,7 @@ import './selectAnt.css'
 import arrowDown from "../../img/direction-down 01.svg";
 import {SearchOutlined} from "@ant-design/icons"
 import {camelize} from "../../util";
+import {t} from "i18next";
 const { Search } = Input;
 
 

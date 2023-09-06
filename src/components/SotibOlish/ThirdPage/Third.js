@@ -198,42 +198,42 @@ function Third({
             {
                 users.getInfo || users.getInfoAdmin ?
                     <>
-                        {/*<div className={'dashboard-header'}>*/}
-                        {/*    <div className={'d-flex flex-wrap gap-2  align-items-center'}>*/}
-                        {/*        <Segmented options={listDay} value={currentDay} onChange={(e) => Dates(e)}/>*/}
-                        {/*        <div className={'dashboard-buttons'}>*/}
-                        {/*            /!*{*!/*/}
-                        {/*            /!*    listDay.map((item, index) =>*!/*/}
-                        {/*            /!*        <button onClick={() => Dates(item.name)}*!/*/}
-                        {/*            /!*                className={`dashboard-buttons-item ${item.name === currentDay && 'dashboard-buttons-item-active'}`}>{item.value}</button>*!/*/}
-                        {/*            /!*    )*!/*/}
-                        {/*            /!*}*!/*/}
-                        {/*        </div>*/}
-                        {/*        <div className={'dashboard-datepicker'}>*/}
-                        {/*            <Space direction="vertical" style={{height: '20px'}} color={'#071A33'} size={0}>*/}
-                        {/*                <RangePicker value={date} style={{width:'250px'}} onChange={(e) => {*/}
-                        {/*                    if (e) {*/}
-                        {/*                        setDate(e)*/}
-                        {/*                        setCurrentDay(null)*/}
-                        {/*                    } else {*/}
-                        {/*                        setDate(e)*/}
-                        {/*                        setCurrentDay('day')*/}
-                        {/*                    }*/}
+                        <div className={'dashboard-header'}>
+                            <div className={'d-flex flex-wrap gap-2  align-items-center'}>
+                                <Segmented options={listDay} value={currentDay} onChange={(e) => Dates(e)}/>
+                                <div className={'dashboard-buttons'}>
+                                    {/*{*/}
+                                    {/*    listDay.map((item, index) =>*/}
+                                    {/*        <button onClick={() => Dates(item.name)}*/}
+                                    {/*                className={`dashboard-buttons-item ${item.name === currentDay && 'dashboard-buttons-item-active'}`}>{item.value}</button>*/}
+                                    {/*    )*/}
+                                    {/*}*/}
+                                </div>
+                                <div className={'dashboard-datepicker'}>
+                                    <Space direction="vertical" style={{height: '20px'}} color={'#071A33'} size={0}>
+                                        <RangePicker value={date} style={{width:'250px'}} onChange={(e) => {
+                                            if (e) {
+                                                setDate(e)
+                                                setCurrentDay(null)
+                                            } else {
+                                                setDate(e)
+                                                setCurrentDay('day')
+                                            }
 
-                        {/*                }} bordered={false}/>*/}
-                        {/*            </Space>*/}
-                        {/*        </div>*/}
-                        {/*        <Select*/}
-                        {/*            suffixIcon={<Image preview={false} src={arrowDown}/>}*/}
-                        {/*            className={'dashboard-select'}*/}
-                        {/*            style={{width: 170, height: 44}}*/}
-                        {/*            defaultValue={filialSelect[0]}*/}
-                        {/*            onChange={branchonchange}*/}
-                        {/*            options={filialSelect}*/}
-                        {/*        />*/}
-                        {/*        <button className={'dashboard-day-button'}>Bugun</button>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
+                                        }} bordered={false}/>
+                                    </Space>
+                                </div>
+                                <Select
+                                    suffixIcon={<Image preview={false} src={arrowDown}/>}
+                                    className={'dashboard-select'}
+                                    style={{width: 170, height: 44}}
+                                    defaultValue={filialSelect[0]}
+                                    onChange={branchonchange}
+                                    options={filialSelect}
+                                />
+                                <button className={'dashboard-day-button'}>Bugun</button>
+                            </div>
+                        </div>
                         <div className={'dashboard-cards'}>
                             {
                                 cards.map(item =>

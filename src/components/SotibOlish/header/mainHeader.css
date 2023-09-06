@@ -2,7 +2,7 @@
     position: relative !important;
     display: flex;
     justify-content: space-between;
-    height:40px;
+    align-items: center;
 }
 .main-notification-img{
     cursor: pointer;
@@ -58,15 +58,18 @@
 .main-header-profile{
     z-index: 10000;
     position: absolute;
-    top: 100%;
-    left: 0%;
+    top: 110%;
+    right: -32px;
 }
 .profile-menu{
     background-color: #FFFFFF;
     border: 2px solid #F1F2F3;
     padding: 5px;
-    box-shadow:2px 2px 2px 2px #F1F2F3;
+    /*box-shadow:2px 2px 2px 2px #F1F2F3;*/
     border-bottom-right-radius: 10px;
+}
+.profile-menu a{
+    text-decoration: none !important;
 }
 
 .profile-items{
@@ -75,6 +78,7 @@
     margin:25px 15px ;
     align-items:end;
     background: #FFFFFF;
+    color: #4E5D78;
 }
 
 .profile-items-icon{
@@ -85,10 +89,11 @@
 .profile-items-text{
     padding:0;
     margin:0;
-    font-family:'TTFirsNeue',sans-serif;
+    font-family:'Inter',sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
+
     line-height: 20px; /* 125% */
 }
 .profile-items:hover{
@@ -105,12 +110,11 @@
 }
 .main-header-text{
     margin: 0;
-    color: #4E5D78;
-    font-family: 'Inter',sans-serif;
-    font-size: 26px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap:5px;
+    /*align-items: center;*/
 }
 .main-header-this-day{
     margin: 0;
@@ -156,6 +160,14 @@
     font-weight: 500;
     line-height: normal;
 }
+.selected-langShort-text{
+    color: #4E5D78;
+    font-family: 'Inter',sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
 .lang-list{
     background-color: #FFFFFF;
     position: absolute;
@@ -185,5 +197,119 @@
 }
 .lang-list-item:hover{
     background: #dcdcdc;
+}
+@media screen and (max-width: 329.9px) {
+    .main-header-left{
+        display:inline;
+    }
+    .main-header-left .main-header-body{
+        display: none;
+    }
+    .drop-down {
+        padding: 3px 9px;
+        height: 30px;
+        width: max-content;
+    }
+    .selected-lang-text{
+        display: none;
+    }
+    .lang-list{}
+    .lang-list-items{
+        padding:0;
+        width: max-content;
+    }
+    .lang-list-item{
+        padding: 1px 9px;
+    }
+    .main-header-icon svg{
+        width: 20px;
+        height: 20px;
+    }
+    .main-header-right{
+        column-gap: 10px;
+    }
+    .main-notification-img {
+        width: 16px;
+        height: 16px;
+    }
+    .main-header-img{
+        width: 25px;
+        height: 25px;
+    }
+    .main-header-text-fio {
+        font-size: 10px;
+        line-height: 5px;
+    }
+    .main-header-text-login{
+        margin: 0;
+        font-size: 8px;
+        line-height: 5px;
+    }
+}
+@media (min-width: 330px) and (max-width: 425.9px) {
+    .main-header-left{
+        display:inline;
+    }
+    .main-header-left .main-header-body{
+        display: none;
+    }
+    .drop-down {
+        padding: 5px 10px;
+        height: 35px;
+        width: 110px;
+    }
+    .selected-langShort-text{
+        display: none;
+    }
+    .wrapper{
+        gap: 8px;
+    }
+    .lang-logo{
+        width: 20px;
+        height: 20px;
+    }
+    .selected-lang-text{
+        font-size: 12px;
+        }
+    .lang-list{}
+    .lang-list-items{
+        padding:0;
+        width: max-content;
+    }
+    .lang-list-item{
+        padding: 3px 10px;
+    }
+    .main-header-icon svg{
+        width: 30px;
+        height: 30px;
+    }
+    .main-header-right{
+        column-gap: 10px;
+    }
+    .main-notification-img {
+        width: 16px;
+        height: 16px;
+    }
+    .main-header-img{
+        width: 30px;
+        height: 30px;
+    }
+    .main-header-text-fio {
+        font-size: 10px;
+        line-height: 10px;
+    }
+    .main-header-text-login{
+        margin: 0;
+        font-size: 8px;
+        line-height: 5px;
+    }
+}
 
+@media (min-width: 768px) and (max-width:1600px){
+    .main-header-icon{
+        display:none;
+    }
+    .selected-langShort-text{
+        display: none;
+    }
 }

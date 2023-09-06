@@ -3,7 +3,7 @@ import React, {useState, useEffect} from "react";
 import {connect} from "react-redux";
 import {active} from "../../../reducer/functionreducer";
 import users, {logOutUser} from "../../../reducer/users";
-import {Link,useLocation} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import {useTranslation} from "react-i18next";
 import {BaseUrl} from "../../../middleware";
@@ -28,42 +28,46 @@ import rusLanguage from '../../../img/🇷🇺.svg'
 import arrowDown from "../../../img/direction-down 01.svg";
 
 import Icon from "@ant-design/icons";
-import {EditIcon, LogOutIcon, PersonIcon} from "../../Svg/svg";
+import {BurgerIcon, EditIcon, LogOutIcon, PersonIcon} from "../../Svg/svg";
 import {changeLanguage} from "i18next";
 import {formatDayDashboard} from "../../../util";
+import {Button} from "antd";
+
 function MainHeader({
-                    deleteNotification,
-                    logOutUser,
-                    getNotificationAll,
-                    active,
-                    sidebarfunc,
-                    notificationReducer,
-                    users,
-                    getNotification,
-                    isReadNotification,
-                    deleteAllNotification
-                }) {
+                        deleteNotification,
+                        logOutUser,
+                        getNotificationAll,
+                        active,
+                        sidebarfunc,
+                        notificationReducer,
+                        users,
+                        getNotification,
+                        isReadNotification,
+                        deleteAllNotification,
+                        setCollapsed
+                    }) {
     const location = useLocation()
 
     useEffect(() => {
         getNotification()
-        if (notificationReducer.saveBoolean){
+        if (notificationReducer.saveBoolean) {
             getNotificationAll()
         }
-    }, [notificationReducer.current,location.pathname])
+    }, [notificationReducer.current, location.pathname])
 
     const [activeN, setactiveN] = useState(false)
     const [activeN2, setactiveN2] = useState(false)
     const [exit, setExit] = useState(false)
     const [langShown, setlangShown] = useState(false)
-    const [selectedImg,setselectedImg] = useState(uzLanguage)
-    const [selectedLang,setselectedLang] = useState('Uzbek')
+    const [selectedImg, setselectedImg] = useState(uzLanguage)
+    const [selectedLang, setselectedLang] = useState('Uzbek')
+    const [selectedLangShort, setselectedLangShort] = useState('Uz')
 
 
-    const [languagesList,setLanguagesList] = useState([
-        {id:'uz',name:'Uzbek',img:uzLanguage,active:true},
-        {id:'ki',name:'Крилл',img:uzLanguage,active: false},
-        {id:'ru',name:'Русский',img:rusLanguage,active: false},
+    const [languagesList, setLanguagesList] = useState([
+        {id: 'uz',nameShort:'Uz', name: 'Uzbek', img: uzLanguage, active: true},
+        {id: 'ki',nameShort:'Кр', name: 'Крилл', img: uzLanguage, active: false},
+        {id: 'ru',nameShort:'Ру', name: 'Русский', img: rusLanguage, active: false},
     ])
 
     function out() {
@@ -87,15 +91,15 @@ function MainHeader({
     const {t, i18n} = useTranslation()
 
     function ChangeLanguage(list) {
-        languagesList.map((item,val)=>{
-            if(list.id === item.id){
+        languagesList.map((item, val) => {
+            if (list.id === item.id) {
                 setselectedImg(item.img)
                 setselectedLang(item.name)
+                setselectedLangShort(item.nameShort)
                 i18n.changeLanguage(item.id)
-                localStorage.setItem("i18nextLng",item.id)
+                localStorage.setItem("i18nextLng", item.id)
                 item.active = true
-            }
-            else{
+            } else {
                 item.active = false
             }
         })
@@ -119,7 +123,7 @@ function MainHeader({
     }, [])
 
 
-    function openNotification(){
+    function openNotification() {
         setactiveN(true)
         getNotificationAll()
     }
@@ -149,6 +153,21 @@ function MainHeader({
     return (
         <div className={'main-header'}>
             <div className={'main-header-left'}>
+                <div className="main-header-icon">
+                    <Button
+                        type="text"
+                        icon={<Icon component={BurgerIcon}/>}
+                        onClick={setCollapsed}
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            padding: '10px',
+                            width: 22,
+                            height: 22,
+                        }}
+                    />
+                </div>
                 <div className={'main-header-body'}>
                     <h4 className={'main-header-text'}>Asosiy</h4>
                     <p className={'main-header-this-day'}>Bugun {formatDayDashboard()}</p>
@@ -156,40 +175,46 @@ function MainHeader({
             </div>
             <div className={'main-header-right'}>
                 <div>
-                  <div className="drop-down">
-                      <div className={'wrapper-con'} onClick={()=>setlangShown(true)}>
-                          <div className="wrapper">
-                              <img className={'lang-logo'} src={selectedImg} alt="country"/>
-                              <div className={'selected-lang-text'}>{selectedLang}</div>
-                          </div>
-                          <img src={arrowDown} alt="arrow"/>
-                      </div>
-                      {
-                          langShown && <div className="lang-list">
-                              {
-                                  languagesList.filter(item=>item.active===false).map((lang) =>
-                                      <div className={'lang-list-items'}>
-                                          <div className="lang-list-item" onClick={()=>ChangeLanguage(lang)}>
-                                              <img className={'lang-logo'} src={lang.img} alt="rus"/>
-                                              <div className={'selected-lang-text'}>{lang.name}</div>
-                                          </div>
-                                      </div>
-                                  )
-                              }
+                    <div className="drop-down">
+                        <div className={'wrapper-con'} onClick={() => setlangShown(prevState => !prevState)}>
+                            <div className="wrapper">
+                                <img className={'lang-logo'} src={selectedImg} alt="country"/>
+                                <div className={'selected-lang-text'}>{selectedLang}</div>
+                                <div className={'selected-langShort-text'}>{selectedLangShort}</div>
+                            </div>
+                            <img src={arrowDown} alt="arrow"/>
+                        </div>
+                        {
+                            langShown && <div className="lang-list">
+                                {
+                                    languagesList.filter(item => item.active === false).map((lang) =>
+                                        <div className={'lang-list-items'}>
+                                            <div className="lang-list-item" onClick={() => ChangeLanguage(lang)}>
+                                                <img className={'lang-logo'} src={lang.img} alt="rus"/>
+                                                <div className={'selected-lang-text'}>{lang.name}</div>
+                                                <div className={'selected-langShort-text'}>{lang.nameShort}</div>
+                                            </div>
+                                        </div>
+                                    )
+                                }
 
-                          </div>
-                      }
+                            </div>
+                        }
 
-                  </div>
+                    </div>
                 </div>
                 <div>
                     <div className={'main-notification-img'} onClick={openNotification}>
-                        <img className={'img-fluid'} src={notificationReducer.notificationCount > 0 ? notificationActive:notification}  alt="notification"/>
+                        <img className={'img-fluid'}
+                             src={notificationReducer.notificationCount > 0 ? notificationActive : notification}
+                             alt="notification"/>
                     </div>
                 </div>
-                <div className={'d-flex align-items-center'} style={{columnGap:'12px'}}>
+                <div className={'d-flex align-items-center'} style={{columnGap: '12px'}}>
                     <div className={'main-header-img'} onClick={out}>
-                        <img className={'img-fluid'} src={users.users?.photoId ? `${BaseUrl}/attachment/download/${users.users?.photoId}`: avatar} alt="avatar"/>
+                        <img className={'img-fluid'}
+                             src={users.users?.photoId ? `${BaseUrl}/attachment/download/${users.users?.photoId}` : avatar}
+                             alt="avatar"/>
                     </div>
                     <div className={'main-header-text'}>
                         <h6 className={'main-header-text-fio'}>{users.users?.fio}</h6>
@@ -203,7 +228,7 @@ function MainHeader({
                         <div className={'profile-menu'}>
                             <Link to={`/main/profil`}>
                                 <div onClick={out} className={'profile-items'}>
-                                    <Icon component={PersonIcon} />
+                                    <Icon component={PersonIcon}/>
                                     <p className={'profile-items-text'}>Mening Profilim</p>
                                 </div>
                             </Link>
@@ -232,8 +257,8 @@ function MainHeader({
                     {
                         notificationReducer.notifications.length > 0 ?
                             notificationReducer.notifications.map(item =>
-                                <div  style={{width: '100%'}}
-                                        className={'notification-btn mb-2 '}>
+                                <div style={{width: '100%'}}
+                                     className={'notification-btn mb-2 '}>
                                     <div>
                                         <p className={'p-0 m-0 notification-text'}>{item.description}</p>
                                     </div>
@@ -242,10 +267,12 @@ function MainHeader({
                                         <div className={'d-flex gap-2 justify-content-between align-items-center'}>
                                             {
                                                 !item.read ?
-                                                    <MdOutlineFiberNew onClick={()=>isRead(item.id)} className={'notification-icon'}/> :
+                                                    <MdOutlineFiberNew onClick={() => isRead(item.id)}
+                                                                       className={'notification-icon'}/> :
                                                     <BsCheckAll className={'notification-icon2'}/>
                                             }
-                                            <DeleteForeverIcon onClick={()=>deleteNotification(item.id)} className={'notification-icon3'}/>
+                                            <DeleteForeverIcon onClick={() => deleteNotification(item.id)}
+                                                               className={'notification-icon3'}/>
                                         </div>
                                     </div>
                                 </div>
