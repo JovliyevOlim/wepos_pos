@@ -110,10 +110,10 @@ function Bolimlar({
     return (
         <div>
                 <div  className="col-md-12 d-flex justify-content-between align-items-center mb-5">
-                    <MainHeaderText text={'Bo\'limlar'}/>
+                    <MainHeaderText text={t('as.1')}/>
                     {
                         users.categoryRoles ?
-                            <ButtonAnt onClick={toggle} type={'primary'} text={'Qo\'shish'}/> : ''
+                            <ButtonAnt onClick={toggle} type={'primary'} text={t('ol.2')}/> : ''
                     }
                 </div>
 
@@ -125,10 +125,10 @@ function Bolimlar({
                             <div>
                                 <div className="izlashBL">
                                     <div>
-                                        <button><img src={Excel} alt=""/> Export Excel</button>
+                                        <button><img src={Excel} alt=""/> {t('as.2')}</button>
                                     </div>
                                     <div className="izlashBox2">
-                                        <input type="text" placeholder='Izlash...'/>
+                                        <input type="text" placeholder={t('as.3')}/>
                                     </div>
                                 </div>
                                 {
@@ -138,9 +138,9 @@ function Bolimlar({
                                             <thead>
                                             <tr>
                                                 <th>T/R</th>
-                                                <th>Nomi</th>
-                                                <th>Eslatma</th>
-                                                <th>Amallar</th>
+                                                <th>{t('as.4')}</th>
+                                                <th>{t('as.5')}</th>
+                                                <th>{t('as.6')}</th>
                                             </tr>
                                             </thead>
 
@@ -191,8 +191,8 @@ function Bolimlar({
                         <ModalBody>
                             <label htmlFor={'bnomi'}>{t('Sections.9')}</label>
                             <input type="text" className={'form-control '}
-                                   {...register('name', {required:{value:true,message:"Bo'lim nomini kiriting"}})}
-                                   placeholder={"Bo'lim nomi"}
+                                   {...register('name', {required:{value:true,message:(t('as.7'))}})}
+                                   placeholder={t('as.8')}
                                    id={'bnomi'}/>
                             {
                                 errors.name && <div>

@@ -45,10 +45,10 @@ function MahsulotImport({users, saveProductByExcelFile, MaxsulotlarRoyxariReduce
                 })
                 setSaveBoolean(true)
             } else {
-                toast.warning('Filial Tanlang')
+                toast.warning(t('as.11'))
             }
         } else {
-            toast.warning('Excel fayl tanlang')
+            toast.warning(t('as.12'))
         }
 
     }
@@ -63,15 +63,15 @@ function MahsulotImport({users, saveProductByExcelFile, MaxsulotlarRoyxariReduce
     return (
         <div>
             <div className="mb-4 d-flex justify-content-between align-items-center">
-                <MainHeaderText text={'Mahsulotni excel orqali qo\'shish'}/>
+                <MainHeaderText text={t('as.13')}/>
                 <a href={Example} download>
-                    <ButtonAnt type={'primary'} text={' Tayyor shablonni yuklash'} icon={<CloudDownloadOutlined className={'excel-import-icon'}/>}/>
+                    <ButtonAnt type={'primary'} text={t('as.14')} icon={<CloudDownloadOutlined className={'excel-import-icon'}/>}/>
                 </a>
             </div>
             <CardBody>
                 <div className="col-md-12 mb-4 gap-2 d-flex align-items-end ">
                     <div className="col-md-3">
-                        <SelectAnt name={"Filiallar"} all={'Filial tanlang'} permission={true} selectList={users.branches} onChange={(e) => setbranch(e === '' ? null : e)} />
+                        <SelectAnt name={t('ol.3')} all={t('ol.49')} permission={true} selectList={users.branches} onChange={(e) => setbranch(e === '' ? null : e)} />
                     </div>
                     <div className="col-md-3">
                         <form>
@@ -86,7 +86,7 @@ function MahsulotImport({users, saveProductByExcelFile, MaxsulotlarRoyxariReduce
                                 listType="name"
                                 maxCount={1}
                             >
-                                <ButtonAnt icon={<UploadOutlined/>} type={'primary'} text={'Import qilinadigan faylni tanlang !'}/>
+                                <ButtonAnt icon={<UploadOutlined/>} type={'primary'} text={t('as.15')}/>
                             </Upload>
                         </form>
                     </div>

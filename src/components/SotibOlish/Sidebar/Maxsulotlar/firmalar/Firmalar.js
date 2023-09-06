@@ -117,10 +117,10 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
     return (
         <div >
             <div className="col-md-12 d-flex justify-content-between align-items-center">
-                <MainHeaderText text={'Firmalar'}/>
+                <MainHeaderText text={t('as.9')}/>
                 {
                     users.brandRoles ?
-                        <ButtonAnt type={'primary'} text={'Qo\'shish'} onClick={toggle}/>: ''
+                        <ButtonAnt type={'primary'} text={t('ol.2')} onClick={toggle}/>: ''
                 }
             </div>
             <div className="rowStyleFR">
@@ -134,7 +134,7 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
                                         <tr>
                                             <th>T/R</th>
                                             <th>{t('Firms.1')}</th>
-                                            <th>Amallar</th>
+                                            <th>{t('as.6')}</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -187,7 +187,7 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
                                className={'form-control'}/>
                         {
                             isCheck && !name &&  <div>
-                                <p className={'text-danger text-center m-0 p-0'}>Brand nomini kiriting</p>
+                                <p className={'text-danger text-center m-0 p-0'}>{t('as.10')}</p>
                             </div>
                         }
                     </ModalBody>

@@ -90,7 +90,7 @@ function Block6({
       <CardHeader
         subheader={
             <Typography variant="subtitle2" textAlign="center">
-              {t('Ushbu maxsulot turlari')}
+              {t('as.31')}
             </Typography>
         }
       />
@@ -167,7 +167,7 @@ function Block6({
                                 size="small"
                             >
                                 <Typography>
-                                    Qolgan miqdor:
+                                    {t('as.32')}
                                 </Typography>
                                 <Typography>
                                     <b>{item.amount} {item.measurementName}</b>
@@ -184,16 +184,16 @@ function Block6({
                     }}
                   >
                       <Box display={'flex'} flexDirection={'column'} gap={1}>
-                          <Label color="error">Olish Narxi: {item.buyPrice} so'm</Label>
-                          <Label color="primary">Sotish Narxi: {item.salePrice} so'm</Label>
-                          <Label color="success">Optom Narxi: {item.grossPrice} so'm</Label>
+                          <Label color="error"> {t('as.33')} {item.buyPrice} {t('as.21')}</Label>
+                          <Label color="primary">{t('as.34')} {item.salePrice} {t('as.21')}</Label>
+                          <Label color="success"> {t('as.35')} {item.grossPrice} {t('as.21')}</Label>
                       </Box>
                   </Box>
                 </ListItem>
                 <Divider />
               </Fragment>
             )) :<Typography  textAlign={'center'}>
-                    <b>Mahsulot bir turli</b>
+                    <b>{t('as.36')}</b>
                 </Typography>}
           </ListWrapper>
         </Scrollbar>

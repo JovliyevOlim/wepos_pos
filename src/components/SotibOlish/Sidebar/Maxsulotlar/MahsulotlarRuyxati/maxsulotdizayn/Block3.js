@@ -129,14 +129,14 @@ function Block3({MaxsulotlarRoyxariReducer}) {
                                 lineHeight: 1.5
                             }}
                         >
-                            MAXSULOT HAQIDA MALUMOT
+                            {t('as.25')}
                         </Typography>
                         <Label style={{background: "#deffd2", padding: "5px", borderRadius: "5%"}} color="primary">
-                            Narxi:
+                           {t('as.26')}
                             {
                                 !many ?
-                                    <b>{salePrice} So'm </b>
-                                    : <b>{FindPercent()} So'm </b>
+                                    <b>{salePrice} {t('as.27')} </b>
+                                    : <b>{FindPercent()} {t('as.27')} </b>
 
                             }
 
@@ -172,7 +172,7 @@ function Block3({MaxsulotlarRoyxariReducer}) {
                                 <Text color="warning">
                                     <MonetizationOnTwoToneIcon/>
                                 </Text>
-                                <Typography variant="subtitle2">O'rtacha kunlik sotuv</Typography>
+                                <Typography variant="subtitle2">{t('as.28')}</Typography>
                                 <Typography
                                     variant="h5">{average} {measurementName}</Typography>
 
@@ -186,9 +186,9 @@ function Block3({MaxsulotlarRoyxariReducer}) {
                                 <Text color="success">
                                     <PersonTwoToneIcon/>
                                 </Text>
-                                <Typography variant="subtitle2">{t('Zahira qanchaga yetadi')}</Typography>
+                                <Typography variant="subtitle2">{t('as.29')}</Typography>
                                 <Typography
-                                    variant="h5">{day} kunga</Typography>
+                                    variant="h5">{day} {t('as.30')}</Typography>
 
                             </Box>
                         </Box>

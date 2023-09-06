@@ -83,7 +83,7 @@ function Block1({active,toggle,MaxsulotlarRoyxariReducer}){
                   color: `${theme.colors.alpha.trueWhite[70]}`
                 }}
               >
-                {t('Bazada qolgan miqdori')}
+                {t('as.16')}
               </Typography>
               <Typography
                 variant="h3"
@@ -132,7 +132,7 @@ function Block1({active,toggle,MaxsulotlarRoyxariReducer}){
                   color: `${theme.colors.alpha.trueWhite[70]}`
                 }}
               >
-                {t('Sotilgan miqdori')}
+                {t('as.17')}
               </Typography>
               <Typography
                 variant="h3"
@@ -180,7 +180,7 @@ function Block1({active,toggle,MaxsulotlarRoyxariReducer}){
                   color: `${theme.colors.alpha.trueWhite[70]}`
                 }}
               >
-                {t('Harid qilingan miqdori')}
+                {t('as.18')}
               </Typography>
               <Typography
                 variant="h3"
@@ -228,7 +228,7 @@ function Block1({active,toggle,MaxsulotlarRoyxariReducer}){
                   color: `${theme.colors.alpha.trueWhite[70]}`
                 }}
               >
-                {t('Yo\'qotilgan miqdori')}
+                {t('as.19')}
               </Typography>
               <Typography
                 variant="h3"
@@ -281,8 +281,8 @@ function Block1({active,toggle,MaxsulotlarRoyxariReducer}){
                 <Text color="warning">
                   <MonetizationOnTwoToneIcon />
                 </Text>
-                <Typography variant="subtitle2">{t('Qolgan maxsulot olish narxida')}</Typography>
-                  <Typography variant="h5">{buyPrice} so'm</Typography>
+                <Typography variant="subtitle2">{t('as.20')}</Typography>
+                  <Typography variant="h5">{buyPrice} {t('as.21')}</Typography>
 
               </Box>
               <Box
@@ -294,8 +294,8 @@ function Block1({active,toggle,MaxsulotlarRoyxariReducer}){
                 <Text color="success">
                   <PersonTwoToneIcon />
                 </Text>
-                <Typography variant="subtitle2">{t('Qolgan maxsulot sotish narxida')}</Typography>
-                  <Typography variant="h5">{salePrice} so'm</Typography>
+                <Typography variant="subtitle2">{t('as.22')}</Typography>
+                  <Typography variant="h5">{salePrice} {t('as.21')}</Typography>
 
               </Box>
             </Box>
@@ -316,8 +316,8 @@ function Block1({active,toggle,MaxsulotlarRoyxariReducer}){
                       <Text color="warning">
                           <MonetizationOnTwoToneIcon />
                       </Text>
-                      <Typography variant="subtitle2">{t('Sotilgan miqdor summasi')}</Typography>
-                      <Typography variant="h5">{tradePrice} so'm</Typography>
+                      <Typography variant="subtitle2">{t('as.23')}</Typography>
+                      <Typography variant="h5">{tradePrice} {t('as.21')}</Typography>
 
                   </Box>
                   <Box
@@ -329,8 +329,8 @@ function Block1({active,toggle,MaxsulotlarRoyxariReducer}){
                       <Text color="success">
                           <PersonTwoToneIcon />
                       </Text>
-                      <Typography variant="subtitle2">{t('Umumiy daromad summasi')}</Typography>
-                      <Typography variant="h5">{profit} so'm</Typography>
+                      <Typography variant="subtitle2">{t('as.24')}</Typography>
+                      <Typography variant="h5">{profit} {t('as.21')}</Typography>
 
                   </Box>
               </Box>

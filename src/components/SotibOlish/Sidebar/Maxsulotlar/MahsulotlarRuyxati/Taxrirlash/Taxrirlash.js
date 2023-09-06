@@ -318,7 +318,7 @@ function Taxrirlash({
 
     function addElseProductType(e) {
         if (e.target.value === 'all') {
-            toast.warning('Bu Mahsulot turini tanlang')
+            toast.warning(t('as.55'))
             setAddButton(false)
         } else {
             console.log(form)
@@ -331,7 +331,7 @@ function Taxrirlash({
                     setForm(b)
                 } else {
                     setAddButton(false)
-                    toast.error('Bu Mahsulot turi formada bor!')
+                    toast.error(t('as.56'))
                 }
 
             } else {
@@ -538,13 +538,13 @@ function Taxrirlash({
 
     return (<div className={'mt-5 contanerT'}>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <h4 className={'text-center'}>{match.params.id ? "Taxrirlash" : 'Maxsulot qo\'shish'}</h4>
+                <h4 className={'text-center'}>{match.params.id ? (t('as.57')) : (t('as.58'))}</h4>
                 <div className="row p-md-3 ">
                     <div className="col-md-4 mt-2">
                         <label htmlFor={'name'}>{t('ProductEdit.2')}</label>
                         <input type="text"
-                               {...register('name', {required: {value: true, message: 'Maxsulot nomimi kiriting'}})}
-                               placeholder={'Maxsulot nomi'}
+                               {...register('name', {required: {value: true, message:(t('as.59'))}})}
+                               placeholder={t('as.60')}
                                id={'name'} className={'form-control '}/>
                         {
                             errors.name &&
@@ -554,10 +554,10 @@ function Taxrirlash({
                         }
                     </div>
                     <div className="col-md-4 mt-2">
-                        <label htmlFor="">Mahsulot turi</label>
+                        <label htmlFor="">{t('as.61')}</label>
                         <select name="type" className={'form-control'} value={changedtype} onChange={changeType}>
-                            <option value="SINGLE">Bir turli</option>
-                            <option value="MANY">Turli xil</option>
+                            <option value="SINGLE">{t('as.62')}</option>
+                            <option value="MANY">{t('as.63')}</option>
                         </select>
                     </div>
                     {
@@ -565,8 +565,8 @@ function Taxrirlash({
                         <div className="col-md-4 mt-2">
                             <label htmlFor={'barcode'}>{t('ProductEdit.5')}</label>
                             <input type="text" id={'barcode'}
-                                   {...register('barcode', {required: {value: true, message: 'Shtrix kodni kiriting'}})}
-                                   placeholder={'Shtrix kod'}
+                                   {...register('barcode', {required: {value: true, message: (t('as.64')) }})}
+                                   placeholder={t('as.65')}
                                    className={'form-control'}/>
                             {
                                 errors.barcode &&
@@ -589,7 +589,7 @@ function Taxrirlash({
                         {
                             isCheck && input.bazalar.length === 0 &&
                             <div>
-                                <p className={'text-center text-danger p-0 m-0'}>Filia tanlang</p>
+                                <p className={'text-center text-danger p-0 m-0'}>{t('as.66')}</p>
                             </div>
                         }
                     </div>
@@ -619,7 +619,7 @@ function Taxrirlash({
                                     {...register('brandId', {required: false})}
                                     id={'firma'}
                                     className={'form-control'}>
-                                <option value={''}>Tanlang</option>
+                                <option value={''}>{t('as.67')}</option>
                                 {FirmaReducer.firmalar ? FirmaReducer.firmalar.map(item => <option key={item.id}
                                                                                                    value={item.id}>{item.name}</option>) : ''}
                             </select>
@@ -640,7 +640,7 @@ function Taxrirlash({
                                         required: false
                                     })}
                                     id={'bol'}>
-                                <option value={''}>Tanlang</option>
+                                <option value={''}>{t('as.67')}</option>
                                 {BolimReducer.bolimlar ? BolimReducer.bolimlar.map(item => <option key={item.id}
                                                                                                    value={item.id}>{item.name}</option>) : ''}
                             </select>
@@ -660,10 +660,10 @@ function Taxrirlash({
                                {...register('minQuantity', {
                                    required: {
                                        value: true,
-                                       message: 'Ogohlantirish miqdorini kiriting'
+                                       message: (t('as.68'))
                                    }
                                })}
-                               placeholder={'Ogohlantirish miqdori'}
+                               placeholder={t('as.69')}
                                className={'form-control'} id={'minQuantity'}/>
                         {
                             errors.minQuantity &&
@@ -706,7 +706,7 @@ function Taxrirlash({
                                     <th>{t('ProductEdit.17')}(%)</th>
                                     <th>{t('ProductList.11')}</th>
                                     <th>{t('ProductList.12')}</th>
-                                    <th>Optom Sotish Narxi</th>
+                                    <th>{t('as.70')}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -714,12 +714,12 @@ function Taxrirlash({
                                     <td>
                                         <input type="number" id={'foy'}
                                                {...register("profitPercent", {
-                                                   required: {value: true, message: 'Foizni kiriting!'},
+                                                   required: {value: true, message: (t('as.71'))},
                                                    onChange: (e) => {
                                                        setValue('salePrice', (parseFloat(e.target.value * getValues('buyPrice') / 100 + parseFloat(getValues('buyPrice')))).toFixed(2))
                                                    }
                                                })}
-                                               placeholder={'Foiz'}
+                                               placeholder={t('as.72')}
                                                className='taxrirlashInputValudetion form-control'/>
                                         {
                                             errors.profitPercent && !getValues('profitPercent') &&
@@ -730,12 +730,12 @@ function Taxrirlash({
                                     <td>
                                         <input type="number" step="any" id='sotishNarxi'
                                                {...register("buyPrice", {
-                                                   required: {value: true, message: 'Narxni kiriting!'},
+                                                   required: {value: true, message: (t('as.73'))},
                                                    onChange: (e) => {
                                                        setValue('salePrice', (parseFloat(e.target.value * getValues('profitPercent') / 100 + parseFloat(e.target.value))).toFixed(2))
                                                    }
                                                })}
-                                               placeholder={'Sotib olish narxi'}
+                                               placeholder={t('as.74')}
                                                className='taxrirlashInputValudetion form-control'/>
                                         {
                                             errors.buyPrice && !getValues('buyPrice') &&
@@ -748,12 +748,12 @@ function Taxrirlash({
                                         <input type="number" step="any" id='sotibOlishNarxi'
                                                className={'form-control'}
                                                {...register('salePrice', {
-                                                   required: {value: true, message: 'Narxni kiriting!'},
+                                                   required: {value: true, message: (t('as.73'))},
                                                    onChange: (e) => {
                                                        setValue('profitPercent', Math.round(parseFloat(e.target.value / getValues('buyPrice') - 1) * 100))
                                                    }
                                                })}
-                                               placeholder={'Sotish narxi'}
+                                               placeholder={t('as.75')}
                                         />
                                         {
                                             errors.salePrice && !getValues('salePrice') &&
@@ -767,11 +767,11 @@ function Taxrirlash({
                                                {...register('grossPrice', {
                                                    required: {
                                                        value: true,
-                                                       message: 'Narxni kiriting!'
+                                                       message: (t('as.73'))
                                                    }
                                                })}
 
-                                               placeholder={'Optom Narxi'}
+                                               placeholder={t('as.76')}
                                         />
                                         {
                                             errors.grossPrice &&
@@ -790,14 +790,14 @@ function Taxrirlash({
                     {changedtype === 'MANY' ? <div>
 
                         <div className={'d-flex align-items-center'}>
-                            <h4>Tavar turini qo'shish:* </h4>
+                            <h4>{t('as.77')} </h4>
                         </div>
                         <div className="col-md-12 table-responsive">
                             <table className={'table'}>
                                 <thead>
                                 <tr>
-                                    <th>Variatsiya</th>
-                                    <th>Tavar turining razmeri</th>
+                                    <th>{t('as.78')}</th>
+                                    <th>{t('as.79')}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -809,7 +809,7 @@ function Taxrirlash({
                                                 onChange={(e) => changeVariant(e)}
                                                 disabled={match.params.id && changedtype === 'MANY'}
                                         >
-                                            <option value={null}>Tanlang</option>
+                                            <option value={null}>{t('as.67')}</option>
                                             {changedtype === 'MANY' ? MahsulotTurlariReducer?.productType?.map(item =>
                                                 <option key={item.id}
                                                         value={item.id}>{item.name}</option>) : ''}
@@ -819,13 +819,13 @@ function Taxrirlash({
                                         <table className={'table table-bordered'}>
                                             <thead>
                                             <tr className={'bg-primary'}>
-                                                <th className={'table-text-add-product'}>Shtrix kodi</th>
-                                                <th className={'table-text-add-product'}>Hajmi</th>
-                                                <th className={'table-text-add-product'}>Sotib olish narxi</th>
-                                                <th className={'table-text-add-product'}>Foyda(%)</th>
-                                                <th className={'table-text-add-product'}>Sotish Narxi</th>
-                                                <th className={'table-text-add-product'}>Optom Sotish narx</th>
-                                                <th className={'table-text-add-product'}>Maxsulot turining rasmi</th>
+                                                <th className={'table-text-add-product'}>{t('as.80')}</th>
+                                                <th className={'table-text-add-product'}>{t('as.81')}</th>
+                                                <th className={'table-text-add-product'}>{t('as.82')}</th>
+                                                <th className={'table-text-add-product'}>{t('as.83')}(%)</th>
+                                                <th className={'table-text-add-product'}>{t('as.84')}</th>
+                                                <th className={'table-text-add-product'}>{t('as.85')}</th>
+                                                <th className={'table-text-add-product'}>{t('as.86')}</th>
                                                 <th className={'table-text-add-product'}>
                                                     <button onClick={addProductType} type={'button'}
                                                             className={'btn btn-success'}>+
@@ -855,7 +855,7 @@ function Taxrirlash({
                                                                        onChange={(e) => changeTypeForm(e, index)}
                                                                        value={val.buyPrice} name={'buyPrice'}
                                                                        required
-                                                                       placeholder={'Sotib olish narxi'}
+                                                                       placeholder={t('as.82')}
                                                                        type="number"/>
                                                             </div>
                                                             {index === 0 ? <div>
@@ -863,7 +863,7 @@ function Taxrirlash({
                                                                     onClick={() => AllChange(index, 'buyPrice')}
                                                                     type={'button'}
                                                                     className={'p-1 btn btn-primary rounded-0'}
-                                                                    data-tip="Hammasida qo'llash"
+                                                                    data-tip={t('as.88')}
                                                                 ><BsCheckAll/></button>
                                                                 <ReactTooltip/>
                                                             </div> : ''}
@@ -877,14 +877,15 @@ function Taxrirlash({
                                                                    name={'profitPercent'}
                                                                    required
                                                                    value={val.profitPercent}
-                                                                   placeholder={'foyda'} type="number"/>
+                                                                   placeholder={t('as.87')} 
+                                                                   type="number"/>
 
                                                             {index === 0 ? <div>
                                                                 <button
                                                                     onClick={() => AllChange(index, 'profitPercent')}
                                                                     type={'button'}
                                                                     className={'p-1 btn btn-primary rounded-0'}
-                                                                    data-tip="Hammasida qo'llash"
+                                                                    data-tip={t('as.88')}
                                                                 ><BsCheckAll/></button>
                                                                 <ReactTooltip/>
                                                             </div> : ''}
@@ -897,7 +898,7 @@ function Taxrirlash({
                                                             <input className={'manytype-input'}
                                                                    onChange={(e) => changeTypeForm(e, index)}
                                                                    name={'salePrice'} required value={val.salePrice}
-                                                                   placeholder={'sotish narxi'} type="number"/>
+                                                                   placeholder={t('as.75')} type="number"/>
                                                         </div>
                                                     </td>
                                                     <td>
@@ -905,14 +906,14 @@ function Taxrirlash({
                                                             <input className={'manytype-input'}
                                                                    onChange={(e) => changeTypeForm(e, index)}
                                                                    name={'grossPrice'} value={val.grossPrice}
-                                                                   placeholder={'optom sotish narxi'} required
+                                                                   placeholder={t('as.70')} required
                                                                    type="number"/>
                                                             {index === 0 ? <div>
                                                                 <button
                                                                     onClick={() => AllChange(index, 'grossPrice')}
                                                                     type={'button'}
                                                                     className={'p-1 btn btn-primary rounded-0'}
-                                                                    data-tip="Hammasida qo'llash"
+                                                                    data-tip={t('as.88')}
                                                                 ><BsCheckAll/></button>
                                                                 <ReactTooltip/>
                                                             </div> : ''}
@@ -983,11 +984,11 @@ function Taxrirlash({
                                className={'form-control'}
                                value={measurementName}
                                onChange={(e) => setMeasurementName(e.target.value)}
-                               placeholder="O'lchov birligi nomini kiriting..."/>
+                               placeholder={t('as.89')}/>
                         {
                             isCheck && !measurementName &&
                             <div>
-                                <p className={'text-danger text-center m-0 p-0'}>Ma'lumotni kiriting!</p>
+                                <p className={'text-danger text-center m-0 p-0'}>{t('as.90')}</p>
                             </div>
                         }
                     </ModalBody>
@@ -1007,11 +1008,11 @@ function Taxrirlash({
                     <ModalBody>
                         <label htmlFor={'categoryName'}>{t('ProductEdit.4')}</label>
                         <input type="text" id={'categoryName'} className={'form-control'}
-                               placeholder={'Bo\'lim nomi'}
+                               placeholder={t('as.91')}
                                {...registerCategory('name', {
                                    required: {
                                        value: true,
-                                       message: "Bo'lim nomini kiriting!"
+                                       message: (t('as.92'))
                                    }
                                })}/>
                         {
@@ -1022,7 +1023,7 @@ function Taxrirlash({
                         }
                         <label htmlFor={'categoryDescription'}>{t('ProductEdit.4')}</label>
                         <input type="text" id={'categoryDescription'} className={'form-control'}
-                               placeholder={'Tavsifi'}
+                               placeholder={t('as.93')}
                                {...registerCategory('description')}/>
                     </ModalBody>
                     <ModalFooter>
@@ -1045,7 +1046,7 @@ function Taxrirlash({
                     {
                         isCheck && !brandName &&
                         <div>
-                            <p className={'text-danger text-center p-0 m-0'}>Ma'lumotni kiriting !</p>
+                            <p className={'text-danger text-center p-0 m-0'}>{t('as.90')}</p>
                         </div>
                     }
                 </ModalBody>
@@ -1056,7 +1057,7 @@ function Taxrirlash({
             </Modal>
             <Modal isOpen={typeDataListActive} toggle={() => setTypeDateListActive(prev => !prev)}>
                 <ModalHeader>
-                    <h4>Turini qo'shish</h4>
+                    <h4>{t('as.94')}</h4>
                 </ModalHeader>
                 <ModalBody>
                     {typeDataList &&
@@ -1065,7 +1066,7 @@ function Taxrirlash({
                                 <h4>Turi nomi: {item?.name}</h4>
                                 <select name="" id="" className={'form-control'} value={typeData?.id}
                                         onChange={(e) => addElseProductType(e)}>
-                                    <option value="all">Tanlang</option>
+                                    <option value="all">{t('as.67')}</option>
                                     {
                                         item?.values?.map(val =>
                                             <option key={item?.id} value={val?.id}>{val?.name}</option>
@@ -1077,10 +1078,10 @@ function Taxrirlash({
                     }
                 </ModalBody>
                 <ModalFooter>
-                    <button className={'btn btn-danger'} onClick={() => setTypeDateListActive(prev => !prev)}>Chiqish
+                    <button className={'btn btn-danger'} onClick={() => setTypeDateListActive(prev => !prev)}>{t('as.95')}
                     </button>
                     {
-                        addButton ? <button className={"btn btn-primary"} onClick={addTypeToForm}>Qo'shish</button> : ''
+                        addButton ? <button className={"btn btn-primary"} onClick={addTypeToForm}>{t('as.96')}</button> : ''
                     }
                 </ModalFooter>
             </Modal>
