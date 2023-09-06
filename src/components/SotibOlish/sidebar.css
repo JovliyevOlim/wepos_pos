@@ -201,8 +201,12 @@ body::-webkit-scrollbar-track {
         padding: 10px;
         height:50px
     }
+    .content {
+        padding: 1rem;
+        background: #FDFDFD;
+    }
 }
-@media (min-width: 330px) and (max-width: 529.9px){
+@media (min-width: 330px) and (max-width: 425.9px){
     .sidebar-scroll{
         height:100%
     }
@@ -210,11 +214,21 @@ body::-webkit-scrollbar-track {
         padding: 16px;
         height:60px
     }
+    .content {
+        padding: 1rem;
+        background: #FDFDFD;
+    }
 }
+@media (min-width: 426px) and (max-width: 767.9px){
+    .content {
+        padding: 1.5rem;
+        background: #FDFDFD;
+    }
+}
+
 @media (min-width: 768px) {
     .content {
         padding: 1.5rem;
         background: #FDFDFD;
-        overflow: hidden;
     }
 }

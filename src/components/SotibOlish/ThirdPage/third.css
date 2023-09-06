@@ -13,10 +13,10 @@
 }
 .dashboard-cards{
     display: flex;
-    align-items: center;
-    justify-content: start;
+    align-items: stretch;
+    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 25px;
 }
 
 .ant-segmented-group{
@@ -40,7 +40,7 @@
     line-height: 16px !important;
 }
 .ant-segmented .ant-segmented-item-label{
-    min-height: 1;
+    min-height: 1px;
     line-height: 1;
 }
 .ant-segmented-item-selected{
@@ -104,5 +104,52 @@
 @media (min-width: 1024px) and (max-width:1439.9px){
     .dashboard-header-body{
         display: none;
+    }
+}
+@media screen and (max-width: 329.9px){
+    .dashboard{
+        padding: 16px;
+        gap: 16px;
+    }
+    .dashboard-cards{
+        gap:15px;
+    }
+}
+@media (min-width: 330px) and (max-width: 425.9px){
+    .dashboard{
+        padding: 20px;
+        gap: 20px;
+    }
+    .dashboard-cards{
+        gap:20px;
+    }
+}
+@media (min-width: 426px) and (max-width: 767.9px){
+    .dashboard{
+        padding: 20px;
+        gap: 20px;
+    }
+    .dashboard-cards{
+        gap:18px;
+    }
+}
+@media (min-width: 768px) and (max-width:1023.9px){
+    .dashboard{
+        padding: 20px;
+        gap: 20px;
+    }
+    .dashboard-cards{
+        justify-content: space-between;
+        gap:18px;
+    }
+}
+@media (min-width: 1024px) and (max-width:1300px){
+    .dashboard{
+        padding: 20px;
+        gap: 20px;
+    }
+    .dashboard-cards{
+        justify-content: space-between;
+        gap:18px;
     }
 }

@@ -36,8 +36,16 @@ const Sidebar = ({users}) => {
     const [collapsed, setCollapsed] = useState(false);
     const rootSubmenuKeys = ['/main/dashboard', '/main/superadmin', '/main/balance', 'user', 'customers', 'products', 'purchase', 'trades', 'outlay', 'reports', 'setting'];
     const [openKeys, setOpenKeys] = useState(['/main/dashboard']);
-    const screenWidth = window.innerWidth
-    const screenWidthTrue = screenWidth < 768
+
+
+    const [screenWidthTrue,setScreenWidthTrue] = useState(false)
+    window.addEventListener("resize", function () {
+        const screenWidth = window.innerWidth
+        console.log(screenWidth)
+        setScreenWidthTrue(screenWidth < 768)
+    });
+
+
     const onOpenChange = (keys) => {
         const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
         if (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
