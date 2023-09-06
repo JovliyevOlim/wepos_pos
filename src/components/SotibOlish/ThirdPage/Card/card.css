@@ -60,9 +60,28 @@
     opacity: 0.8;
     margin: 0;
 }
+@media screen and (max-width: 600.9px){
+   .dashboard-card{
+       width: 100%;
+       padding: 1.1rem !important;
+   }
+}
+@media (min-width: 601px) and (max-width: 767.9px){
+    .dashboard-card{
+        width: 47%;
+        padding: 1.2rem !important;
+    }
+}
 
-@media (min-width: 1024px) and (max-width:1439.9px){
- .dashboard-card{
-     width: 48%;
- }
+@media (min-width: 768px) and (max-width:1023.9px){
+    .dashboard-card{
+        width: 47%;
+        padding: 1.2rem !important;
+    }
+}
+@media (min-width: 1024px) and (max-width:1300px){
+    .dashboard-card{
+        width: 31%;
+        padding: 1.2rem !important;
+    }
 }
