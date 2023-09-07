@@ -2,7 +2,6 @@ import React from 'react';
 import {Image, Select, Input, Space, Button} from 'antd';
 import './selectAnt.css'
 import arrowDown from "../../img/direction-down 01.svg";
-import {SearchOutlined} from "@ant-design/icons"
 import {camelize} from "../../util";
 import {t} from "i18next";
 const { Search } = Input;
@@ -52,14 +51,13 @@ export function SearchAnt({name,onChange}) {
     );
 }
 
-export function InputAnt({name,onChange}) {
+export function InputAnt({name,type,items}) {
 
-    const onSearch = (value) => console.log(value);
 
     return (
         <>
-            <h5 className={'selectLabel'}>{name}:</h5>
-            <Input rootClassName={'input-ant'} placeholder={t('ol.24')} />
+            <label htmlFor={name} className={'selectLabel'}>{name}:</label>
+            <Input rootClassName={'input-ant'} id={name} type={type} {...items}/>
         </>
     );
 }

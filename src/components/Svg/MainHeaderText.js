@@ -7,3 +7,10 @@ function MainHeaderText({text}) {
 }
 
 export default MainHeaderText;
+
+
+export function AddOrEditText({text}) {
+    return (
+        <div className={'AddOrEditText'}>{text}</div>
+    );
+}

@@ -24,7 +24,6 @@ import {
     TradeIcon,
     UsersIcon
 } from "../Svg/svg";
-import Hamkorlar from "./Sidebar/Hamkorlar/Hamkorlar";
 import MainHeader from "./header/MainHeader";
 
 const {Header, Content, Footer, Sider} = Layout;
@@ -41,7 +40,6 @@ const Sidebar = ({users}) => {
     const [screenWidthTrue,setScreenWidthTrue] = useState(false)
     window.addEventListener("resize", function () {
         const screenWidth = window.innerWidth
-        console.log(screenWidth)
         setScreenWidthTrue(screenWidth < 768)
     });
 
