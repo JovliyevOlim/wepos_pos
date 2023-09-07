@@ -11,16 +11,16 @@ import users from "../../../../../reducer/users";
                 <div className="dashboardBox">
                     {
                         users.editMyBusiness &&
-                        <Link to={'/main/shopSetting/1'}><button className={'btn btn-outline-primary form-control mt-2'}>Biznes</button></Link>
+                        <Link to={'/main/shopSetting/1'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('set.27')}</button></Link>
                     }
                     {
                         users.editMyBusiness  ?
-                            <Link to={'/main/shopSetting/3'}><button className={'btn btn-outline-primary form-control mt-2'}>Savdo</button></Link>
+                            <Link to={'/main/shopSetting/3'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('set.28')}</button></Link>
                          :''
                     }
                     {
                         users.editInvoice ?
-                        <Link to={'/main/shopSetting/4'}><button className={'btn btn-outline-primary form-control mt-2'}>Chek</button></Link>
+                        <Link to={'/main/shopSetting/4'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('set.29')}</button></Link>
                                 :''
                     }
                 </div>
