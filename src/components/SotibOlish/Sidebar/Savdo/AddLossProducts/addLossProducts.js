@@ -38,11 +38,11 @@ function AddLossProducts({
 
     function pushesh(val) {
         if (val.amount == 0) {
-            toast.warning('Mahsulot bazada qolmagan!')
+            toast.warning(t('mah.20'))
         } else {
             let isProduct = arr1.some(item => item.productId === val.id)
             if (isProduct) {
-                toast.success('Mahsulot jadvalda bor')
+                toast.success(t('mah.21'))
             }
             else {
                 arr1.push({
@@ -117,7 +117,7 @@ function AddLossProducts({
     function onSubmitTrade(data) {
         if (arr1.length > 0) {
             if (checkedWarning) {
-                toast.warning('Yetarli miqdor omborda yo\'q')
+                toast.warning(t('mah.22'))
             } else {
                 saveLossProduct({
                     ...data,
@@ -127,7 +127,7 @@ function AddLossProducts({
                 setSaveModal(true)
             }
         } else {
-            toast.error('Mahsulot tanlang')
+            toast.error(t('mah.23'))
         }
     }
 
@@ -161,7 +161,7 @@ function AddLossProducts({
                 <form onSubmit={handleSubmit(onSubmitTrade)}>
                     <h5 className="mt-1 text-center mb-3">
                         {
-                            match.params.id ? "Taxrirlash" : 'Yo\'qotilgan Mahsulot'
+                            match.params.id ? (t('mah.24')) : (t('mah.25'))
                         }
                     </h5>
                     <div className="col-md-12 d-flex ">
@@ -186,7 +186,7 @@ function AddLossProducts({
                                     setSearch(e.target.value)
                                     setIsView(true)
                                 }}
-                                       className={'form-control'} placeholder={'Mahsulot nomi / shtrix kodini '}/>
+                                       className={'form-control'} placeholder={t('mah.26')}/>
                                 {
                                     isView && MaxsulotlarRoyxariReducer.productSearch.length > 0 ?
                                         <div className={'combo-trade-array position-absolute z-index'}>
@@ -253,7 +253,7 @@ function AddLossProducts({
                             </table>
                             <div className={'d-flex justify-content-around'}>
                                 <div><h4>{t('Trade.15')} : {totalQuantity}</h4></div>
-                                <div><h4>{t('Trade.14')}: {totalSum} so'm</h4></div>
+                                <div><h4>{t('Trade.14')}: {totalSum} {t('mah.27')}</h4></div>
                             </div>
                         </div>
                     </div>

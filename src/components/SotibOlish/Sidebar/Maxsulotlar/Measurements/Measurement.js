@@ -115,9 +115,9 @@ function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement
     return (
         <div >
             <div className="col-md-12 d-flex justify-content-between align-items-center">
-                <MainHeaderText text={'O\'lchov birliklari'}/>
+                <MainHeaderText text={t('mah.3')}/>
                 {
-                    users.measurementRoles && <ButtonAnt onClick={() => setAddMeasureActive(true)} type={'primary'} text={'Qo\'shish'} />
+                    users.measurementRoles && <ButtonAnt onClick={() => setAddMeasureActive(true)} type={'primary'} text={t('as.96')} />
                 }
 
             </div>
@@ -133,8 +133,8 @@ function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement
                                         <thead>
                                         <tr>
                                             <th>T/R</th>
-                                            <th>Nomi</th>
-                                            <th>Amallar</th>
+                                            <th>{t('as.4')}</th>
+                                            <th>{t('as.6')}</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -175,17 +175,17 @@ function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement
                 <Modal isOpen={addMeasureActive} toggle={toggle}>
                     <ModalHeader>
                         {
-                            editId ? 'Taxrirlash' : ' Qo\'shish'
+                            editId ? (t('Roles.42')) : (t('as.96'))
                         }
                     </ModalHeader>
                     <ModalBody>
-                        <label htmlFor={'name'}>O'lchov birligi</label>
-                        <input value={name} placeholder={"O'lchov birligi"}
+                        <label htmlFor={'name'}>{t('as.41')}</label>
+                        <input value={name} placeholder={t('as.41')}
                                onChange={(e) => setName(e.target.value)} type="text" id={'name'}
                                className={'form-control'}/>
                         {
                             isCheck && !name && <div>
-                                <p className={"text-danger text-center m-0 p-0"}>O'lchov birligini kiriting</p>
+                                <p className={"text-danger text-center m-0 p-0"}>{t('as.89')}</p>
                             </div>
                         }
                     </ModalBody>

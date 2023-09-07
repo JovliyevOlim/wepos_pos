@@ -105,7 +105,7 @@ function LossProducts({
     return (
         <div className="col-md-12 mt-2 mb-4 mt-4 ">
             <div className="textHeader">
-                <h2>Yoqotilgan mahsulotlar</h2>
+                <h2>{t('mah.111')}</h2>
             </div>
 
 
@@ -120,7 +120,7 @@ function LossProducts({
                                         id="">
                                     {
                                         users.getLossAdmin &&
-                                        <option value={''}>Barchasi</option>
+                                        <option value={''}>{t('mah.28')}</option>
                                     }
                                     {
                                         users.branches?.map(item => <option value={item.id}>{item.name}</option>)
@@ -132,7 +132,7 @@ function LossProducts({
                                 <select name="" className={'form-control'} value={userId}
                                         onChange={(e) => setUserId(e.target.value === "" ? null : e.target.value)}
                                         id="">
-                                    <option value={''}>Barchasi</option>
+                                    <option value={''}>{t('mah.28')}</option>
                                     {
                                         XodimReducer.usersFiltering?.map(item => <option
                                             value={item.id}>{item.fio}</option>)
@@ -156,11 +156,11 @@ function LossProducts({
                                             <thead>
                                             <tr>
                                                 <th>T/R</th>
-                                                <th>Xodim</th>
-                                                <th>Filial</th>
-                                                <th>Summa</th>
-                                                <th>Sana</th>
-                                                <th>Amallar</th>
+                                                <th>{t('mah.115')}</th>
+                                                <th>{t('mah.114')}</th>
+                                                <th>{t('mah.113')}</th>
+                                                <th>{t('mah.112')}</th>
+                                                <th>{t('as.6')}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -169,7 +169,7 @@ function LossProducts({
                                                     <td>{index + 1}</td>
                                                     <td>{item?.userFio}</td>
                                                     <td>{item?.branchName}</td>
-                                                    <td>{item?.totalPrice} So'm</td>
+                                                    <td>{item?.totalPrice} {t('mah.39')}</td>
                                                     <td>{moment(new Date(item?.createdAt)).format('LLLL')}</td>
                                                     <td>
                                                         <button className='korish' onClick={() => getOneById(item.id)}>
@@ -221,7 +221,7 @@ function LossProducts({
             <Modal isOpen={viewOneLoss} toggle={() => setViewOneLoss(!viewOneLoss)}>
                 <ModalHeader>
                     <h4>
-                        Ma'lumotlarni korish
+                       {t('mah.116')}
                     </h4>
                 </ModalHeader>
                 <ModalBody>
@@ -232,18 +232,17 @@ function LossProducts({
                                 <div>
                                     <div>
                                         <div>
-                                            <p className={'p-0 m-0'}>Filial: <strong>{item?.branchName}</strong></p>
-                                            <p className={'p-0 m-0'}>Xodim: <strong>{item?.userFio}</strong></p>
-                                            <p className={'p-0 m-0'}>Yo'qotilgan
-                                                Summa: <strong>{item?.totalPrice} so'm</strong></p>
+                                            <p className={'p-0 m-0'}>{t('mah.117')} <strong>{item?.branchName}</strong></p>
+                                            <p className={'p-0 m-0'}>{t('mah.118')} <strong>{item?.userFio}</strong></p>
+                                            <p className={'p-0 m-0'}>{t('mah.119')} <strong>{item?.totalPrice} {t('mah.27')}</strong></p>
                                         </div>
                                     </div>
                                     <table className={'table table-bordered'}>
                                         <thead>
                                         <tr>
-                                            <th>Mahsulot</th>
-                                            <th>Miqdori</th>
-                                            <th>Jami summa</th>
+                                            <th>{t('mah.57')}</th>
+                                            <th>{t('mah.58')}</th>
+                                            <th>{t('mah.61')}</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -252,7 +251,7 @@ function LossProducts({
                                                 <tr>
                                                     <th>{item.productName}</th>
                                                     <th>{item.quantity} {item.measurementName}</th>
-                                                    <th>{item.price} so'm</th>
+                                                    <th>{item.price} {t('mah.27')}</th>
                                                 </tr>
                                             )
                                         }
@@ -265,7 +264,7 @@ function LossProducts({
                     }
                 </ModalBody>
                 <ModalFooter>
-                    <button className={'btn btn-danger'} onClick={() => setViewOneLoss(!viewOneLoss)}>Chiqish</button>
+                    <button className={'btn btn-danger'} onClick={() => setViewOneLoss(!viewOneLoss)}>{t('mah.108')}</button>
                 </ModalFooter>
             </Modal>
 
