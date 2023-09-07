@@ -5,8 +5,12 @@ import Chek from "./chek/Chek";
 import Business from "./business/Business";
 import {connect} from "react-redux";
 import users from "../../../../../reducer/users";
+import {useTranslation} from "react-i18next";
+
  function Dukon({users}) {
-    return (
+     const {t} = useTranslation()
+
+     return (
         <div className={'containerSet'}>
                 <div className="dashboardBox">
                     {

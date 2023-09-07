@@ -7,6 +7,8 @@ import photoreducer,{savephoto,clearPhotoId,deletePhoto} from "../../../../../..
 import checkReducer,{getInvoice,editInvoice} from "../../../../../../reducer/checkReducer";
 import users from "../../../../../../reducer/users";
 import Imagecom from "../../../../../Imagecom";
+import {useTranslation} from "react-i18next";
+
 function Chek({savephoto,photoreducer,checkReducer,getInvoice,editInvoice,users,deletePhoto}){
 
     const [name,setName] = useState('')
@@ -14,6 +16,8 @@ function Chek({savephoto,photoreducer,checkReducer,getInvoice,editInvoice,users,
     const [chekFooter,setFooter] = useState('')
     const [photo,setPhoto] = useState(null)
     const [branch,setbranch] = useState(null)
+    const {t} = useTranslation()
+
 
     useEffect(()=>{
         getInvoice(users.branchId)
