@@ -183,8 +183,8 @@ function MahsulotTurlari({
     return (
         <div>
             <div className="col-md-12 d-flex align-items-center justify-content-between">
-                <MainHeaderText text={'Mahsulot turlari'}/>
-                <ButtonAnt onClick={toggle} type={'primary'} text={'Qo\'shish'}/>
+                <MainHeaderText text={t('ProductType.1')}/>
+                <ButtonAnt onClick={toggle} type={'primary'} text={t('Employ.4')}/>
             </div>
 
             <div className="rowStyleBL">
@@ -200,7 +200,7 @@ function MahsulotTurlari({
                                                 <th>T/R</th>
                                                 <th>{t('ProductType.1')}</th>
                                                 <th>{t('ProductType.2')}</th>
-                                                <th>Amallar</th>
+                                                <th>{t('as.6')}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -251,10 +251,10 @@ function MahsulotTurlari({
 
                 <Modal isOpen={active} toggle={toggle}>
                     <ModalHeader>
-                        Mahsulot turini qo'shish
+                        {t('mah.1')}
                     </ModalHeader>
                     <ModalBody>
-                        <label htmlFor="xl">Tur nomi ( Qizil / oq / XL / XXL . . .)</label>
+                        <label htmlFor="xl">{t('mah.2')}</label>
                         <input value={typeName} onChange={(e) => setTypeName(e.target.value)} type="text"
                                className={'form-control'}
                                id={'xl'}/>

@@ -219,18 +219,18 @@ function BarchaSavdolar({
                                         onChange={(e) => setMainBranch(e.target.value === "" ? null : e.target.value)}
                                         id="">
                                     {
-                                        users.getTradeAdmin ? <option value="">Barchasi</option> : null
+                                        users.getTradeAdmin ? <option value="">{t('mah.28')}</option> : null
                                     } {
                                     users.branches?.map(item => <option value={item.id}>{item.name}</option>)
                                 }
                                 </select>
                             </div>
                             <div className="col-md-3">
-                                <h6>Mijozlar:</h6>
+                                <h6>{t('mah.29')}</h6>
                                 <select name="" className={'form-control'} value={customerId}
                                         onChange={(e) => setCustomerId(e.target.value === "" ? null : e.target.value)}
                                         id="">
-                                    <option value="">Barchasi</option>
+                                    <option value="">{t('mah.28')}</option>
                                     {
                                         CustomerReducer.customersTrade?.map(item => <option
                                             value={item.id}>{item.name}</option>)
@@ -238,11 +238,11 @@ function BarchaSavdolar({
                                 </select>
                             </div>
                             <div className="col-md-3">
-                                <h6>Xodimlar:</h6>
+                                <h6>{t('mah.30')}</h6>
                                 <select name="" className={'form-control'} value={userId}
                                         onChange={(e) => setUserId(e.target.value === "" ? null : e.target.value)}
                                         id="">
-                                    <option value="">Barchasi</option>
+                                    <option value="">{t('mah.28')}</option>
                                     {
                                         XodimReducer.usersFiltering?.map(item => <option
                                             value={item.id}>{item?.fio}</option>)
@@ -250,20 +250,20 @@ function BarchaSavdolar({
                                 </select>
                             </div>
                             <div className="col-md-3">
-                                <h6>To'lov Holati:</h6>
+                                <h6>{t('mah.31')}</h6>
                                 <select name="" className={'form-control'} value={paymentStatus}
                                         onChange={(e) => setPaymentStatus(e.target.value === "" ? null : e.target.value)}
                                         id="">
-                                    <option value="">Barchasi</option>
-                                    <option value={'TOLANGAN'}>To'langan</option>
-                                    <option value={'QISMAN_TOLANGAN'}>Qisman to'langan</option>
-                                    <option value={'TOLANMAGAN'}>To'lanmagan</option>
+                                    <option value="">{t('mah.28')}</option>
+                                    <option value={'TOLANGAN'}>{t('mah.32')}</option>
+                                    <option value={'QISMAN_TOLANGAN'}>{t('mah.33')}</option>
+                                    <option value={'TOLANMAGAN'}>{t('mah.34')}</option>
                                 </select>
                             </div>
 
                             <div className="col-md-12">
-                                <h6>Savdo raqami bilan izlash:</h6>
-                                <input type="text" value={search} placeholder="Savdo raqamini kiriting..."
+                                <h6>{t('mah.36')}</h6>
+                                <input type="text" value={search} placeholder={t('mah.35')}
                                        onChange={(e) => setSearch(e.target.value === '' ? null : e.target.value)}
                                        className={'form-control'} min={0}/>
                             </div>
@@ -294,14 +294,14 @@ function BarchaSavdolar({
                                                 <th>{t('Trade.4')}</th>
                                                 <th>{t('Trade.5')}</th>
                                                 <th>{t('Pagination.10')}</th>
-                                                <th>Xodim</th>
+                                                <th>{t('mah.37')}</th>
                                                 <th>{t('ProductList.8')}</th>
                                                 <th>{t('Purchase.4')}</th>
                                                 {/*<th>{t('Purchase.26')}</th>*/}
                                                 <th>{t('Purchase.22')}</th>
                                                 <th>{t('Trade.6')}</th>
                                                 <th>{t('Supplier.8')}</th>
-                                                <th>Amallar</th>
+                                                <th>{t('mah.38')}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -318,13 +318,13 @@ function BarchaSavdolar({
                                                     {/*<td>{item?.paymentGetDtoList?.map((item, index) =>*/}
                                                     {/*    <p>{item?.paymentMethodName}</p>)}</td>*/}
                                                     <td>
-                                                        {item?.totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} So'm
+                                                        {item?.totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} {t('mah.39')}
                                                     </td>
                                                     <td>
-                                                        {item?.paidSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} So'm
+                                                        {item?.paidSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} {t('mah.39')}
                                                     </td>
                                                     <td>
-                                                        {item?.debtSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} So'm
+                                                        {item?.debtSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} {t('mah.39')}
 
                                                     </td>
                                                     <td>
@@ -350,7 +350,7 @@ function BarchaSavdolar({
                                                                     <Link
                                                                         to={'/repeatProducts/' + item?.id + "/" + item?.id}>
                                                                         <button className='taxrirlash'><img src={Edit}
-                                                                                                            alt=""/>Qaytarish
+                                                                                                            alt=""/>{t('mah.40')}
                                                                         </button>
                                                                     </Link> : ''
                                                             }
@@ -430,7 +430,7 @@ function BarchaSavdolar({
                     </div>
                     <div className={'d-flex justify-content-between align-items-center'}>
                         <h4 style={{fontSize: 12, fontWeight: 600}}>
-                            Savdo raqami:
+                            {t('mah.41')}
                         </h4>
                         <h4 style={{fontSize: 12, fontWeight: 600}}>
                             {
@@ -439,7 +439,7 @@ function BarchaSavdolar({
                         </h4>
                     </div>
                     <div className={'d-flex align-items-center justify-content-between'}>
-                        <h4 style={{fontSize: 12, fontWeight: 600}}>Mijoz: </h4>
+                        <h4 style={{fontSize: 12, fontWeight: 600}}>{t('mah.42')} </h4>
                         <h5 style={{fontSize: 12, fontWeight: 600}}> {SavdoQoshishReducer?.trade?.customer?.name}</h5>
                     </div>
                     <div style={{borderBottom: "1px dashed #000"}}></div>
@@ -457,9 +457,9 @@ function BarchaSavdolar({
                                         fontWeight: 600,
                                         lineHeight: 1
                                     }}>{item.subMeasurement ? (item?.productTypePrice ? item?.productTypePrice?.product?.measurement.value : item?.product?.measurement.value) * item.tradedQuantity : item.tradedQuantity} {item.subMeasurement ? (item?.productTypePrice ? item?.productTypePrice?.product?.measurement?.subMeasurement?.name : item?.product?.measurement?.subMeasurement?.name) : item?.productTypePrice ? item?.productTypePrice?.product?.measurement.name : item?.product?.measurement.name} *
-                                        {(item.totalSalePrice / item.tradedQuantity)} So'm</h4>
+                                        {(item.totalSalePrice / item.tradedQuantity)} {t('mah.39')}</h4>
                                     <h4 style={{fontSize: 12, fontWeight: 600, lineHeight: 1}}>
-                                        = {item.totalSalePrice}So'm
+                                        = {item.totalSalePrice}{t('mah.39')}
                                     </h4>
                                 </div>
                             </div>)
@@ -469,11 +469,11 @@ function BarchaSavdolar({
                     <div className={'d-flex'}>
                         <div style={{width: "100%"}}>
                             <div className={"d-flex justify-content-between"}>
-                                <h4 style={{fontSize: 14, fontWeight: 800}}>Jami: </h4>
+                                <h4 style={{fontSize: 14, fontWeight: 800}}>{t('mah.43')} </h4>
                                 <h4 style={{
                                     fontSize: 14,
                                     fontWeight: 800
-                                }}>{SavdoQoshishReducer?.trade?.totalSum} So'm</h4>
+                                }}>{SavdoQoshishReducer?.trade?.totalSum} {t('mah.39')}</h4>
                             </div>
                             {
                                 SavdoQoshishReducer.paymentDtoList ?
@@ -485,34 +485,34 @@ function BarchaSavdolar({
                                             <h4 style={{
                                                 fontSize: 13,
                                                 fontWeight: 600
-                                            }}>{item.paidSum} So'm</h4>
+                                            }}>{item.paidSum} {t('mah.39')}</h4>
                                         </div>
                                     ) : ''
                             }
                             <div className={"d-flex justify-content-between"}>
-                                <h4 style={{fontSize: 13, fontWeight: 600}}>To'langan summa:</h4>
+                                <h4 style={{fontSize: 13, fontWeight: 600}}>{t('mah.44')}</h4>
                                 <h4 style={{
                                     fontSize: 13,
                                     fontWeight: 600
-                                }}>{SavdoQoshishReducer?.trade?.paidSum} So'm</h4>
+                                }}>{SavdoQoshishReducer?.trade?.paidSum} {t('mah.39')}</h4>
                             </div>
                             {
                                 SavdoQoshishReducer?.trade?.customer ?
                                     <div className={"d-flex justify-content-between"}>
-                                        <h4 style={{fontSize: 13, fontWeight: 600}}>Bugungi nasiya: </h4>
+                                        <h4 style={{fontSize: 13, fontWeight: 600}}>{t('mah.45')} </h4>
                                         <h4 style={{fontSize: 13, fontWeight: 600}}>
-                                            {SavdoQoshishReducer?.trade?.debtSum} So'm
+                                            {SavdoQoshishReducer?.trade?.debtSum} {t('mah.39')}
                                         </h4>
                                     </div> : ''
                             }
                             {
                                 SavdoQoshishReducer?.trade?.customer ?
                                     <div className={"d-flex justify-content-between"}>
-                                        <h4 style={{fontSize: 14, fontWeight: 800}}>Umumiy qarz: </h4>
+                                        <h4 style={{fontSize: 14, fontWeight: 800}}>{t('mah.46')} </h4>
                                         <h4 style={{
                                             fontSize: 14,
                                             fontWeight: 800
-                                        }}>{SavdoQoshishReducer.trade?.customer?.debt} So'm</h4>
+                                        }}>{SavdoQoshishReducer.trade?.customer?.debt} {t('mah.39')}</h4>
                                     </div> : ''
                             }
                         </div>
@@ -529,7 +529,7 @@ function BarchaSavdolar({
             <Modal isOpen={isViewTrade} size={'xl'} toggle={() => setIsViewTrade(!isViewTrade)}>
                 <ModalHeader>
                     <h4>
-                        Savdo Ma'lumotlarini Ko'rish
+                       {t('mah.47')}
                     </h4>
                 </ModalHeader>
                 <ModalBody>
@@ -540,28 +540,24 @@ function BarchaSavdolar({
                                     <div>
                                         <div className="col-md-12 ">
                                             <div className="col-md-12 d-flex flex-wrap">
-                                                <div className="col-md-4"><p>Savdo
-                                                    Raqami: <strong> {item?.invoice}</strong></p>
+                                                <div className="col-md-4"><p>{t('mah.48')} <strong> {item?.invoice}</strong></p>
                                                 </div>
-                                                <div className="col-md-4"><p>Savdo
-                                                    Sanasi: <strong> {moment(new Date(item?.createdAt)).format('LLLL')}</strong>
+                                                <div className="col-md-4"><p>{t('mah.49')} <strong> {moment(new Date(item?.createdAt)).format('LLLL')}</strong>
                                                 </p>
                                                 </div>
                                                 <div className="col-md-4">
                                                     {
                                                         item?.paymentGetDtoList.map(item =>
-                                                            <p>To'lov
-                                                                turi: <strong>{camelize(item?.paymentMethodName)}:</strong>  {item?.sum} so'm
+                                                            <p>{t('mah.50')} <strong>{camelize(item?.paymentMethodName)}:</strong>  {item?.sum} so'm
                                                             </p>
                                                         )
                                                     }
 
                                                 </div>
-                                                <div className="col-md-4"><p>To'lov
-                                                    Holati: <strong>{item?.paymentStatus}</strong></p>
+                                                <div className="col-md-4"><p>{t('mah.51')} <strong>{item?.paymentStatus}</strong></p>
                                                 </div>
                                                 <div className="col-md-12">
-                                                    <p>Xodim: <strong>{item?.userFio}</strong></p>
+                                                    <p>{t('mah.52')} <strong>{item?.userFio}</strong></p>
                                                 </div>
                                             </div>
                                             <div className="col-md-12 d-flex flex-wrap">
@@ -569,7 +565,7 @@ function BarchaSavdolar({
                                                     {
                                                         item?.customerName &&
                                                         <div>
-                                                            <p>Mijoz: <strong>{item?.customerName}</strong></p>
+                                                            <p>{t('mah.42')} <strong>{item?.customerName}</strong></p>
                                                         </div>
                                                     }
                                                 </div>
@@ -577,22 +573,20 @@ function BarchaSavdolar({
                                                     {
                                                         item?.customerPhoneNumber &&
                                                         <div>
-                                                            <p>Telefon
-                                                                raqami: <strong>{item?.customerPhoneNumber}</strong></p>
+                                                            <p>{t('mah.53')} <strong>{item?.customerPhoneNumber}</strong></p>
                                                         </div>
                                                     }
                                                 </div>
                                                 <div className="col-md-5">
-                                                    <p className={''}>Jami Summa: <strong>{item?.totalSum} So'm</strong>
+                                                    <p className={''}>{t('mah.54')} <strong>{item?.totalSum} {t('mah.39')}</strong>
                                                     </p>
                                                 </div>
                                                 <div className="col-md-5">
-                                                    <p className={''}>To'langan
-                                                        Summa: <strong>{item?.paidSum} So'm</strong>
+                                                    <p className={''}>{t('mah.55')} <strong>{item?.paidSum} {t('mah.39')}</strong>
                                                     </p>
                                                 </div>
                                                 <div className="col-md-5">
-                                                    <p className={''}>Qarz: <strong>{item.debtSum} So'm</strong>
+                                                    <p className={''}>{t('mah.56')} <strong>{item.debtSum} {t('mah.39')}</strong>
                                                     </p>
                                                 </div>
 
@@ -604,11 +598,11 @@ function BarchaSavdolar({
                                             <thead>
                                             <tr>
                                                 <th>Tr</th>
-                                                <th>Mahsulot</th>
-                                                <th>Miqdori</th>
-                                                <th>Qaytarilgan miqdor</th>
-                                                <th>Foyda</th>
-                                                <th>Jami summa</th>
+                                                <th>{t('mah.57')}</th>
+                                                <th>{t('mah.58')}</th>
+                                                <th>{t('mah.59')}</th>
+                                                <th>{t('mah.60')}</th>
+                                                <th>{t('mah.61')}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -620,7 +614,7 @@ function BarchaSavdolar({
                                                         <th>{item.quantity} {item.measurementName}</th>
                                                         <th>{item?.backing} {item.measurementName}</th>
                                                         <th>
-                                                            {item?.profit} So'm
+                                                            {item?.profit} {t('mah.39')}
                                                         </th>
                                                         <th>
                                                             {item?.totalSalePrice}
@@ -640,7 +634,7 @@ function BarchaSavdolar({
                     }
                 </ModalBody>
                 <ModalFooter>
-                    <button className={'btn btn-danger'} onClick={() => setIsViewTrade(!isViewTrade)}>Chiqish
+                    <button className={'btn btn-danger'} onClick={() => setIsViewTrade(!isViewTrade)}>{t('mah.62')}
                     </button>
                 </ModalFooter>
             </Modal>
@@ -654,13 +648,13 @@ function BarchaSavdolar({
                             <input type="radio" name='money' value={"true"} checked={backing === "true"} onChange={(e)=>{
                                 setBacking(e.target.value);
                             }} className={'mx-2'} style={{transform:'scale(1.5)'}}/>
-                            <label htmlFor="" className={'p-0 m-0'}>Pulni Mijozga qaytarish</label>
+                            <label htmlFor="" className={'p-0 m-0'}>{t('mah.63')}</label>
                         </div>
                         <div className={'d-flex align-items-center m-3'}>
                             <input type="radio" name='money'  value={"false"} checked={backing === "false"}  onChange={(e)=>{
                                 setBacking(e.target.value);
                             }}  className={'mx-2'} style={{transform:'scale(1.5)'}}/>
-                            <label htmlFor="" className={'p-0 m-0'}>Pulni Mijozni hisobiga o'tkazish</label>
+                            <label htmlFor="" className={'p-0 m-0'}>{t('mah.64')}</label>
                         </div>
                     </div>
             </AgreeModal>

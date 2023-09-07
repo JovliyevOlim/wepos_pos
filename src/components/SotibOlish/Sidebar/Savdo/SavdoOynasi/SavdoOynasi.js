@@ -227,7 +227,7 @@ function SavdoOynasi({
             holdOnReducer.holdOn.filter(val => {
                 if (id == val.id) {
                     let holdOnArray = []
-                    changeGrossPriceType(val.gross ? 'OPTOM' : 'DONA')
+                    changeGrossPriceType(val.gross ? (t('mah.65')) : (t('mah.66')))
                     setUserHoldOn(val.userId)
                     setushlanumber(val.id)
                     setjamixisob(val.totalSum)
@@ -251,7 +251,7 @@ function SavdoOynasi({
                         })
                     })
                     setarr1(holdOnArray)
-                    toast.warning('Mahsulot Savdo bo`limida')
+                    toast.warning(t('mah.67'))
                 }
             })
             toggle()
@@ -301,7 +301,7 @@ function SavdoOynasi({
 
     function pushesh(val) {
         if (val.amount <= 0 && checkMinusShop) {
-            toast.warning('Mahsulot bazada qolmagan!')
+            toast.warning(t('mah.68'))
         } else {
             let someProduct = arr1.some(item => item.productId === val.id)
             if (someProduct) {
@@ -587,7 +587,7 @@ function SavdoOynasi({
         setEnterPaidSum(paySum)
         setTradeDebt((totalsum - paySum) === null ? 0 : (totalsum - paySum))
         if (jamixisob !== paySum) {
-            toast.warning('To\'lovni to\'liq kiriting')
+            toast.warning(t('mah.69'))
         } else {
             saqla(payForm, paySum, jamixisob, 'TOLANGAN')
             setSaveModal(true)
@@ -648,7 +648,7 @@ function SavdoOynasi({
 
     function toggle() {
         if (!holdOnReducer.holdOn) {
-            toast.info("Ma'lumot yo'q")
+            toast.info(t('mah.70'))
         } else {
             setActiveHoldOn(!activeHoldOn)
         }
@@ -787,7 +787,7 @@ function SavdoOynasi({
                     paidSum,
                 } = SavdoQoshishReducer.tradeOne
                 let editArray = []
-                changeGrossPriceType(gross ? 'OPTOM' : 'DONA')
+                changeGrossPriceType(gross ? (t('mah.65')) : (t('mah.66')))
                 setMainBranchId(branchId)
                 setCustomer(SavdoQoshishReducer.tradeOne?.customerId)
                 setCustomerPercent(SavdoQoshishReducer.tradeOne?.customerPercent)
@@ -814,14 +814,14 @@ function SavdoOynasi({
                 )
                 if (SavdoQoshishReducer.tradeOne?.paymentDtoList) {
                     if (SavdoQoshishReducer.tradeOne.paymentDtoList.length > 1) {
-                        setEditActiveButton('turli')
+                        setEditActiveButton(t('mah.71'))
                         let editFormPay = []
                         SavdoQoshishReducer.tradeOne.paymentDtoList.map(item => {
                             editFormPay.push({...item, edit: false})
                         })
                         setPayForm(editFormPay)
                     } else if (debtSum > 0) {
-                        setEditActiveButton('qarz')
+                        setEditActiveButton(t('mah.72'))
                         setEnterPaidSum(paidSum)
                         setPayMethodId(SavdoQoshishReducer.tradeOne.paymentDtoList[0].paymentMethodId)
                     } else {
@@ -926,8 +926,8 @@ function SavdoOynasi({
 
     const CustomerOptions = CustomerReducer.customersTrade.length > 0 ? [{
         value: "ALL",
-        label: "Mijozni tanglang",
-        search: "Mijozni tanglang",
+        label: (t('mah.73')),
+        search: (t('mah.73')),
         phoneNumber: null,
     }, ...CustomerReducer.customersTrade.map((item) => ({
         label: item.debt > 0 ? <span style={{color: "red"}} key={item.name}>{`${item.name} (${item.debt})`}</span> :
@@ -937,8 +937,8 @@ function SavdoOynasi({
         phoneNumber: item.phoneNumber,
     }))] : [{
         value: "ALL",
-        label: "Mijozni tanglang",
-        search: "Mijozni tanglang",
+        label: (t('mah.73')),
+        search: (t('mah.73')),
         phoneNumber: null,
     }]
 
@@ -986,7 +986,7 @@ function SavdoOynasi({
                 </div>
                 <div className={'d-flex justify-content-between align-items-center'}>
                     <h4 style={{fontSize: 12, fontWeight: 600}}>
-                        Savdo raqami:
+                       {t('mah.41')}
                     </h4>
                     <h4 style={{fontSize: 12, fontWeight: 600}}>
                         {
@@ -995,7 +995,7 @@ function SavdoOynasi({
                     </h4>
                 </div>
                 <div className={'d-flex align-items-center justify-content-between'}>
-                    <h4 style={{fontSize: 12, fontWeight: 600}}>Mijoz: </h4>
+                    <h4 style={{fontSize: 12, fontWeight: 600}}>{t('mah.42')} </h4>
                     {
                         CustomerReducer.customersTrade ?
                             CustomerReducer.customersTrade.filter(val => {
@@ -1019,9 +1019,9 @@ function SavdoOynasi({
                                     fontWeight: 600,
                                     lineHeight: 1
                                 }}>
-                                    {item.quantity} {item.measurementName} * {item.price} So'm</h4>
+                                    {item.quantity} {item.measurementName} * {item.price} {t('mah.39')}</h4>
                                 <h4 style={{fontSize: 12, fontWeight: 600, lineHeight: 1}}>
-                                    = {parseFloat(item.totalSalePrice).toFixed(0)} So'm
+                                    = {parseFloat(item.totalSalePrice).toFixed(0)} {t('mah.39')}
                                 </h4>
                             </div>
                         </div>)
@@ -1032,11 +1032,11 @@ function SavdoOynasi({
 
                     <div style={{width: "100%"}}>
                         <div className={"d-flex justify-content-between"}>
-                            <h4 style={{fontSize: 14, fontWeight: 800}}>Jami: </h4>
+                            <h4 style={{fontSize: 14, fontWeight: 800}}>{t('mah.43')} </h4>
                             <h4 style={{
                                 fontSize: 14,
                                 fontWeight: 800
-                            }}>{jamixisob} So'm</h4>
+                            }}>{jamixisob} {t('mah.39')}</h4>
                         </div>
 
                         {
@@ -1046,35 +1046,35 @@ function SavdoOynasi({
                                     <h4 style={{
                                         fontSize: 13,
                                         fontWeight: 600
-                                    }}>{item.sum} So'm</h4>
+                                    }}>{item.sum} {t('mah.39')}</h4>
                                 </div>
                             )
                         }
                         <div className={"d-flex justify-content-between"}>
-                            <h4 style={{fontSize: 13, fontWeight: 600}}>To'langan summa:</h4>
+                            <h4 style={{fontSize: 13, fontWeight: 600}}>{t('mah.44')}</h4>
                             <h4 style={{
                                 fontSize: 13,
                                 fontWeight: 600
                             }}>
-                                {jamixisob - tradeDebt} So'm</h4>
+                                {jamixisob - tradeDebt} {t('mah.39')}</h4>
                         </div>
                         {
                             customer ?
                                 <div className={"d-flex justify-content-between"}>
-                                    <h4 style={{fontSize: 14}}>Bugungi nasiya: </h4>
+                                    <h4 style={{fontSize: 14}}>{t('mah.45')} </h4>
                                     <h4 style={{
                                         fontSize: 14,
-                                    }}>{tradeDebt} So'm</h4>
+                                    }}>{tradeDebt} {t('mah.39')}</h4>
                                 </div> : ''
                         }
                         {
                             customer ?
                                 <div className={"d-flex justify-content-between"}>
-                                    <h4 style={{fontSize: 14, fontWeight: 800}}>Umumiy qarz: </h4>
+                                    <h4 style={{fontSize: 14, fontWeight: 800}}>{t('mah.46')} </h4>
                                     <h4 style={{
                                         fontSize: 14,
                                         fontWeight: 800
-                                    }}>{SavdoQoshishReducer.treadeId?.customerDebt} So'm</h4>
+                                    }}>{SavdoQoshishReducer.treadeId?.customerDebt} {t('mah.39')}</h4>
                                 </div> : ''
                         }
 
@@ -1109,11 +1109,11 @@ function SavdoOynasi({
 
                         {
                             (tradeIdForEdit) && match.params.remainId ? <h5>
-                                    <h5 className={'ms-5 align-items-center'}>Mahsulot Qaytarish</h5>
+                                    <h5 className={'ms-5 align-items-center'}>{t('mah.74')}</h5>
                                 </h5> :
                                 tradeIdForEdit ?
-                                    <h5 className={'ms-5 align-items-center'}>Savdo Tahrirlanmoqda</h5> :
-                                    <h5 className={'ms-5 align-items-center'}>Savdo</h5>
+                                    <h5 className={'ms-5 align-items-center'}>{t('mah.75')}</h5> :
+                                    <h5 className={'ms-5 align-items-center'}>{t('mah.76')}</h5>
                         }
                         <div>
                             <input type="date" value={thisDay} onChange={(e) => setThisDay(e.target.value)}
@@ -1124,12 +1124,12 @@ function SavdoOynasi({
                         <select className={'sss2'} value={grossPriceTypeString}
                                 onChange={(e) => changeGrossPriceType(e.target.value)}
                                 id={'grossPriceType'} disabled={tradeIdForEdit ? true : IsGross}>
-                            <option value={'DONA'}>dona</option>
-                            <option value={'OPTOM'}>optom</option>
+                            <option value={'DONA'}>{t('mah.77')}</option>
+                            <option value={'OPTOM'}>{t('mah.78')}</option>
                         </select>
                         {tradeIdForEdit  ? "" :
                             <button className={'btn'} onClick={toggle} style={{lineHeight: '12px'}}
-                                    data-tip="Bu menuda mijoz savdolari vaqtinchalik saqlanadi">{t('Trade.21')}</button>
+                                    data-tip={t('mah.79')}>{t('Trade.21')}</button>
                         }
 
                         <ReactTooltip/>
@@ -1137,7 +1137,7 @@ function SavdoOynasi({
                         {
                             users.getTrade &&
                             <button className={'btn btn-primary'} onClick={toggle4} style={{lineHeight: '12px'}}
-                            >Oxirgi savdolar
+                            >{t('mah.80')}
                             </button>
                         }
 
@@ -1161,7 +1161,7 @@ function SavdoOynasi({
                                                 CustomerOptions.filter(option =>
                                                     option.value === customer)
                                             }
-                                            placeholder={"Mijozni tanlang..."}
+                                            placeholder={t('mah.81')}
                                             options={CustomerOptions}
                                             onChange={selectCustomer}
                                             filterOption={(option, searchText) => {
@@ -1184,7 +1184,7 @@ function SavdoOynasi({
                                                    value={search}
                                                    onChange={mahsulotnomi}
                                                    autoFocus={true}
-                                                   placeholder={'Product Name / Shtrix code'}/>
+                                                   placeholder={t('mah.82')}/>
                                             {
                                                 MaxsulotlarRoyxariReducer.productSearch.length > 0 && isViewSearchProduct &&
                                                 <div className={'combo-trade-array position-absolute z-index'}
@@ -1193,7 +1193,7 @@ function SavdoOynasi({
                                                         MaxsulotlarRoyxariReducer.productSearch.map(item =>
                                                             <button key={item.id} onClick={() => pushesh(item)}>
                                                                 <p className={'p-0 m-0'}>{item.name} ({item.barcode})</p>
-                                                                <p className={'p-0 m-0'}>Miqdori: {item.amount} {item.measurementName}</p>
+                                                                <p className={'p-0 m-0'}>{t('mah.83')} {item.amount} {item.measurementName}</p>
                                                             </button>
                                                         )
                                                     }
@@ -1261,14 +1261,13 @@ function SavdoOynasi({
                                                         </div>
                                                         <div className="col-md-10"> {
                                                             item?.active ?
-                                                                <p className={'text-danger text-center fw-2 p-0 m-0'}>Omborda {item?.amount} {item?.measurementName} mahsulot
-                                                                    bor ! </p> : ''
+                                                                <p className={'text-danger text-center fw-2 p-0 m-0'}>{t('mah.84')} {item?.amount} {item?.measurementName} {t('mah.85')} </p> : ''
                                                         }</div>
                                                     </td>
                                                     <td>
                                                         {
                                                             item?.noChangesPrice !== item?.price &&
-                                                            <del>{parseFloat(item?.noChangesPrice).toFixed(0)} So'm</del>
+                                                            <del>{parseFloat(item?.noChangesPrice).toFixed(0)} {t('mah.39')}</del>
                                                         }
                                                         <InputNumber
                                                             value={item?.price}
@@ -1287,10 +1286,10 @@ function SavdoOynasi({
 
                                                         {
                                                             item?.noChangesPrice !== item?.price &&
-                                                            <del>{parseFloat(item?.noChangesTotalSalePrice).toFixed(0)} So'm</del>
+                                                            <del>{parseFloat(item?.noChangesTotalSalePrice).toFixed(0)} {t('mah.39')}</del>
                                                         }
                                                         <br/>
-                                                        <p>                                                        {parseFloat(item?.totalSalePrice).toFixed(0)} So'm
+                                                        <p>                                                        {parseFloat(item?.totalSalePrice).toFixed(0)} {t('mah.39')}
                                                         </p>
                                                     </td>
                                                     <td>
@@ -1311,11 +1310,11 @@ function SavdoOynasi({
                             <div>
                                 {
                                     tradeIdForEdit || match.params.remainId ?
-                                        <h6>Eski to'lov: {noChangesPaidSum} so'm</h6> : ''
+                                        <h6>{t('mah.86')} {noChangesPaidSum} {t('mah.27')}</h6> : ''
                                 }
                                 <h6>{t('Trade.14')}: {
                                     jamixisob
-                                } So'm</h6>
+                                } {t('mah.39')}</h6>
 
                             </div>
                         </div>
@@ -1339,7 +1338,7 @@ function SavdoOynasi({
                                             BolimReducer.bolimlar.map(item =>
                                                 <option value={item.id}>{item.name}</option>)
                                         }
-                                        <option value={users.businessId}>--- Kategoriyalar</option>
+                                        <option value={users.businessId}>--- {t('mah.87')}</option>
                                     </select>
                                 }
                                 <div className={'maxsulotImgBlock'}>
@@ -1358,7 +1357,7 @@ function SavdoOynasi({
                                                                 : <Imagecom id={item.photoId}/>
                                                         }
                                                         <h6>{item.name}</h6>
-                                                        <p className={'fw-bold'}>{!grossPriceType ? item.salePrice : item.grossPrice} So'm</p>
+                                                        <p className={'fw-bold'}>{!grossPriceType ? item.salePrice : item.grossPrice} {t('mah.39')}</p>
                                                     </button>
                                                 </div>) : <div>
                                                     <h4 className={'text-center'}>{MaxsulotlarRoyxariReducer.message}</h4>
@@ -1387,11 +1386,11 @@ function SavdoOynasi({
                     {
                         tradeIdForEdit ? editActiveButton === "turli" ? "" :
                                 <button onClick={customer ? qarz : () => {
-                                    toast.error('Mijoz tanlanmagan !')
+                                    toast.error(t('mah.88'))
                                 }
                                 } className={'col-sm-6 col-md-2 p-3 btn btn-info'}>{t('Trade.45')}</button>
                             : <button onClick={customer ? qarz : () => {
-                                toast.error('Mijoz tanlanmagan !')
+                                toast.error(t('mah.88'))
                             }
                             } className={'col-sm-6 col-md-2 p-3 btn btn-info'}>{t('Trade.45')}</button>
                     }
@@ -1415,7 +1414,7 @@ function SavdoOynasi({
                     }
                     {
                         !tradeIdForEdit &&
-                        <button onClick={clear} className={'btn btn-danger p-2 col-md-2'}>Tozalash</button>
+                        <button onClick={clear} className={'btn btn-danger p-2 col-md-2'}>{t('mah.89')}</button>
                     }
                 </div>
             </div>
@@ -1431,7 +1430,7 @@ function SavdoOynasi({
                             <th>{t('Trade.18')}</th>
                             <th>{t('Trade.12')}</th>
                             <th>{t('Trade.14')}</th>
-                            <th className={'text-center'}>Amallar</th>
+                            <th className={'text-center'}>{t('as.6')}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -1476,10 +1475,10 @@ function SavdoOynasi({
                         {t('CustomAll.4')}
                     </ModalHeader>
                     <ModalBody>
-                        <label htmlFor={'nomi'}>Mijoz qo'shish</label>
+                        <label htmlFor={'nomi'}>{t('mah.90')}</label>
                         <input
                             id={'nomi'} type="text"
-                            placeholder={'Mijoz ismi'}
+                            placeholder={t('mah.91')}
                             className={'form-control mt-1'}
                             onChange={(e) => dispatch(
                                 {
@@ -1489,34 +1488,33 @@ function SavdoOynasi({
                             )}
                         />
                         {IsCheck && !state.name && <p
-                            className={'text-danger text-center p-0 m-0'}>Ismni kiriting !</p>}
+                            className={'text-danger text-center p-0 m-0'}>{t('mah.92')}</p>}
                         <label className={'mt-1'} htmlFor={'filial'}>{t('CustomAll.5')}</label>
                         <Select
                             required={true}
                             onChange={(e) => dispatch({type: 'branchId', payload: e.value})}
-                            placeholder={"Filialni tanlang..."}
+                            placeholder={t('mah.93')}
                             options={users.branches.map(item => ({label: item.name, value: item.id}))}
                             isClearable={true}
                         />
                         {IsCheck && !state.branchId && <p
-                            className={'text-danger text-center p-0 m-0'}>Filialni tanglang</p>}
+                            className={'text-danger text-center p-0 m-0'}>{t('mah.94')}</p>}
                         <label className={'mt-1'} htmlFor={'tel'}>{t('Buttons.14')}</label>
                         <PhoneInput
-                            placeholder="Enter phone number"
+                            placeholder={t('mah.95')}
                             className={'form-control'}
                             onChange={(e) => dispatch({type: 'phoneNumber', payload: e})}/>
                         {IsCheck && !state.phoneNumber && <p
-                            className={'text-danger text-center p-0 m-0'}>Telefon raqamni
-                            kiriting</p>}
+                            className={'text-danger text-center p-0 m-0'}>{t('mah.95')}</p>}
                         <label htmlFor={'foizda'}>{t('Buttons.15')}</label>
                         <input type="text"
                                onChange={(e) => dispatch({type: 'percent', payload: e.target.value})}
-                               placeholder={'Foiz'}
+                               placeholder={t('mah.96')}
                                defaultValue={''}
                                className={'form-control mt-1'}
                                id={'foizda'}/>
                         {IsCheck && !state.percent && <p
-                            className={'text-danger text-center p-0 m-0'}>Foizni kiriting</p>}
+                            className={'text-danger text-center p-0 m-0'}>{t('mah.97')}</p>}
                     </ModalBody>
                     <ModalFooter>
                         <button className={'btn btn-danger'} type={"button"}
@@ -1531,14 +1529,14 @@ function SavdoOynasi({
 
                     <h3><strong>{t('Trade.39')}:</strong> {
                         jamixisob}</h3>
-                    <h4 className={'text-error'}>Faqat So'mda kiriting !</h4>
+                    <h4 className={'text-error'}>{t('mah.98')}</h4>
                 </ModalHeader>
                 <ModalBody>
                     {
                         payForm.map((item, index) =>
                             <div key={index} className={'d-flex justify-content-around align-items-end mb-2'}>
                                 <div className={'col-md-4'}>
-                                    <label htmlFor={'turi'}>To'lov turi</label>
+                                    <label htmlFor={'turi'}>{t('mah.99')}</label>
                                     <select className={'form-control'} name={'paymentMethodId'}
                                             value={item.paymentMethodId}
                                             onChange={(e) => changePayForm(e, index)}
@@ -1553,7 +1551,7 @@ function SavdoOynasi({
                                     </select>
                                 </div>
                                 <div className={'col-md-4'}>
-                                    <label htmlFor={'miqdor'}>To'lov summasi</label>
+                                    <label htmlFor={'miqdor'}>{t('mah.100')}</label>
                                     <input type="number" value={item.sum} placeholder={'0'}
                                            name={'sum'} onChange={(e) => changePayForm(e, index)}
                                            className={'form-control'}/>
@@ -1562,7 +1560,7 @@ function SavdoOynasi({
                                     item.edit && <div className="col-md-3">
                                         <label htmlFor=""></label>
                                         <button onClick={() => deletePayForm(index)}
-                                                className={'btn btn-danger mt-2'}>Delete
+                                                className={'btn btn-danger mt-2'}>{t('mah.101')}
                                         </button>
                                     </div>
                                 }
@@ -1579,10 +1577,9 @@ function SavdoOynasi({
 
                     </div>
                     <div>
-                        <p>Jami
-                            Summa: {jamixisob} so'm </p>
-                        <p>To'langan Summa :{payTotalSum} so'm</p>
-                        <p>Qarz: {jamixisob - parseFloat(payTotalSum)} so'm</p>
+                        <p>{t('mah.102')} {jamixisob} {t('mah.27')} </p>
+                        <p>{t('mah.103')} {payTotalSum} {t('mah.27')}</p>
+                        <p>{t('mah.104')} {jamixisob - parseFloat(payTotalSum)} {t('mah.27')}</p>
                     </div>
                 </ModalBody>
                 <ModalFooter>
@@ -1643,12 +1640,12 @@ function SavdoOynasi({
                     {t('Trade.45')}
                 </ModalHeader>
                 <ModalBody>
-                    <h3><strong>{t('Purchase.22')}:</strong> {jamixisob} So'm
+                    <h3><strong>{t('Purchase.22')}:</strong> {jamixisob} {t('mah.39')}
                     </h3>
-                    <h4 className={'text-error'}>Faqat So'mda kiriting !</h4>
+                    <h4 className={'text-error'}>{t('mah.105')}</h4>
                     <div className={'col-md-12 d-flex align-items-end justify-content-between'}>
                         <div className={'col-md-6'}>
-                            <label htmlFor={'rrr'}>Qarz :{jamixisob - enterPaidSum} so'm </label>
+                            <label htmlFor={'rrr'}>{t('mah.104')} {jamixisob - enterPaidSum} {t('mah.27')} </label>
 
                             <input type="number" ref={debtRef} className={'form-control'} id={'rrr'}
                                    value={enterPaidSum} onChange={(e) => {
@@ -1674,12 +1671,12 @@ function SavdoOynasi({
                             </select>
                         </div>
                     </div>
-                    <p data-tip="Avans berishingiz shart emas (To'lov qilinmasa hammasi qarz sifatida yoziladi)"
-                       className={'btn btn-outline-primary mt-2 form-control'}>BATAFSIL</p>
+                    <p data-tip={t('mah.106')}
+                       className={'btn btn-outline-primary mt-2 form-control'}>{t('mah.107')}</p>
                     <ReactTooltip/>
                 </ModalBody>
                 <ModalFooter>
-                    <button type={'button'} onClick={qarz} className={'btn btn-danger'}>Chiqish</button>
+                    <button type={'button'} onClick={qarz} className={'btn btn-danger'}>{t('mah.108')}</button>
                     <button onClick={saveTradeByDebt} className={'btn btn-success'}>
                         {t('Buttons.6')}
                     </button>
@@ -1692,7 +1689,7 @@ function SavdoOynasi({
                 <ModalBody>
                     <div className={'col-md-12 '}>
                         <div className="col-md-12">
-                            <label htmlFor="tradeId">Savdo raqami bo'yicha qidirish</label>
+                            <label htmlFor="tradeId">{t('mah.109')}</label>
                             <input type="text" value={tradeIdSearch} onChange={(e) => setTradeIdSearch(e.target.value)}
                                    id={'tradeId'} className={'form-control'}/>
                         </div>
@@ -1709,9 +1706,9 @@ function SavdoOynasi({
                                                         <tr>
                                                             <th>T/R</th>
                                                             <th>{t('Trade.4')}</th>
-                                                            <th>Chek raqami</th>
+                                                            <th>{t('mah.110')}</th>
                                                             <th>{t('Pagination.10')}</th>
-                                                            <th>Amallar</th>
+                                                            <th>{t('as.6')}</th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
