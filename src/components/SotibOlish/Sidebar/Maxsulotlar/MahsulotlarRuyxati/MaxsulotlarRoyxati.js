@@ -374,7 +374,7 @@ function MaxsulotlarRoyxati({
             <>
                 <CardBody>
                     <div className="col-md-12 d-flex align-items-end row-gap-4 flex-wrap">
-                        <div className="col-md-3">
+                        <div className="col-12 col-sm-6 p-sm-2 col-md-6 col-lg-3">
                             <SelectAnt name={t('as.98')} onChange={(e) => {
                                 setPage(0)
                                 setMainBranchId(e === "" ? null : e)
@@ -383,7 +383,7 @@ function MaxsulotlarRoyxati({
                                        selectList={users.branches}
                             />
                         </div>
-                        <div className="col-md-3">
+                        <div className="col-12 col-sm-6 p-sm-2 col-md-6 col-lg-3">
                             <SelectAnt name={t('as.99')} onChange={(e) => {
                                 setPage(0)
                                 setbranId(e === "" ? null : e)
@@ -392,7 +392,7 @@ function MaxsulotlarRoyxati({
                                        selectList={FirmaReducer.firmalar}
                             />
                         </div>
-                        <div className="col-md-3">
+                        <div className="col-12 col-sm-6 p-sm-2 col-md-6 col-lg-3">
                             <SelectAnt name={t('as.100')} onChange={(e) => {
                                 setPage(0)
                                 setCategoryId(e === "" ? null : e)
@@ -401,7 +401,7 @@ function MaxsulotlarRoyxati({
                                        selectList={BolimReducer.bolimlar}
                             />
                         </div>
-                        <div className="col-md-3">
+                        <div className="col-12 col-sm-6 p-sm-2 col-md-6 col-lg-3">
                             <SelectAnt name={t('as.101')} onChange={(e) => {
                                 setPage(0)
                                 setMeasurementId(e === "" ? null : e)
@@ -410,11 +410,11 @@ function MaxsulotlarRoyxati({
                                        selectList={MeasurementReducer.measurements}
                             />
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-12 col-sm-6 p-sm-2 col-md-6 col-lg-6">
                             <SearchAnt onChange={(e) => setSearch(e.target.value)}
                                        name={t('as.102')}/>
                         </div>
-                        <div className="col-md-3">
+                        <div className="col-12 col-sm-6 p-sm-2 col-md-6 col-lg-3">
                             <ButtonAnt type={'dash'} onClick={getFilesById} bgColor={'green'}
                                        icon={<FileExcelOutlined/>} text={t('as.103')}/>
                         </div>
@@ -423,7 +423,7 @@ function MaxsulotlarRoyxati({
                 {
                     MaxsulotlarRoyxariReducer.productTableSearch?.profitDto &&
                     <CardBody>
-                        <div className="d-flex justify-content-around align-items-center flex-wrap">
+                        <div className="col-md-12 d-flex justify-content-around align-items-center flex-wrap">
                             <Tag className={'productStatistic'} color="red">
                                 <p className={'p-0 m-2'}>{t('as.104')}</p>
                                 <h5>{MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice}{t('as.21')}</h5>

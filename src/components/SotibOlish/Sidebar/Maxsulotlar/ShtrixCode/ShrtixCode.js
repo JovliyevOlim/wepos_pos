@@ -7,6 +7,7 @@ import XaridReducer, { getXaridProductType } from "../../Haridlar/reducer/XaridR
 import Barcode from "react-barcode";
 import { useReactToPrint } from "react-to-print";
 import "./shtrixcode.css"
+import {useTranslation} from "react-i18next";
 
 const ShtrixCode = ({ XaridReducer, users, getXaridProductType }) => {
 
@@ -28,6 +29,8 @@ const ShtrixCode = ({ XaridReducer, users, getXaridProductType }) => {
         top: 20
     })
     const componentRef = useRef();
+    const {t} = useTranslation()
+
 
     useEffect(() => {
         getXaridProductType(mainBranchId ? mainBranchId : users.branchId)
