@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react'
 import {connect} from "react-redux";
 import allbusinessreducer, {changeBusinessMinus, getOneBusiness,editMyBusiness} from "../../../SUPERADMIN/reducers/allbusinessreducer";
 import users from "../../../../../../reducer/users";
+import {useTranslation} from "react-i18next";
 
 function Business({changeBusinessMinus, users, getOneBusiness, allbusinessreducer,editMyBusiness}) {
 
@@ -10,6 +11,8 @@ function Business({changeBusinessMinus, users, getOneBusiness, allbusinessreduce
     const [businessName, setBusinessName] = useState('')
     const [businessDescription, setBusinessDescription] = useState('')
     const [editActive, setEditActive] = useState(false)
+    const {t} = useTranslation()
+
 
     useEffect(() => {
         getOneBusiness(users.businessId)

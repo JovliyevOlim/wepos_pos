@@ -4,10 +4,12 @@ import {connect} from "react-redux";
 import allbusinessreducer,{changeBusinessMinus,getOneBusiness} from "../../../SUPERADMIN/reducers/allbusinessreducer";
 import users from "../../../../../../reducer/users";
 import {toast} from "react-toastify";
+import {useTranslation} from "react-i18next";
 
 function BusinessSetting({changeBusinessMinus,users,getOneBusiness,allbusinessreducer}){
 
 
+    const {t} = useTranslation()
 
     const [saleMinus,setSaleMinus] = useState(false)
     const [changeProductPrice, setChangeProductPrice] = useState(false)

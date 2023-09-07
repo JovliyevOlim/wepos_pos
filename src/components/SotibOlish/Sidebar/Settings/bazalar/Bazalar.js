@@ -11,6 +11,7 @@ import Loading from "../../../../Loading";
 import ModalLoading from "../../../../ModalLoading";
 import formatDate from "../../../../../util";
 import AgreeModal from "../../../../AgreeModal";
+import {useTranslation} from "react-i18next";
 
 function Bazalar({
                      branchreducer,
@@ -28,6 +29,7 @@ function Bazalar({
     const {register, reset, setValue, handleSubmit, formState: {errors}, resetField} = useForm();
     const [editID, setEditID] = useState(null)
     const [loading, setLoading] = useState(false)
+    const {t} = useTranslation()
 
 
     function toggle() {
