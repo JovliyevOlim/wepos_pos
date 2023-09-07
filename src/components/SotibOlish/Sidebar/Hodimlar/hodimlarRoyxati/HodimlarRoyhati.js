@@ -1,5 +1,4 @@
 import './HodimlarRoyhati.css';
-import Excel from '../../../../../img/Excel.png';
 import {Link} from 'react-router-dom';
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
@@ -12,20 +11,13 @@ import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
 import {
     Avatar,
-    Box, Card, Checkbox,
-    Divider,
-    FormControl,
-    Grid,
+    Box, Card,
     IconButton,
-    InputAdornment,
-    InputLabel,
-    MenuItem,
-    Select, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow,
-    TextField, Tooltip, Typography
+     Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow,
+     Tooltip, Typography
 } from "@mui/material";
 import ModalLoading from "../../../../ModalLoading";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
-import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
 import LaunchTwoToneIcon from "@mui/icons-material/LaunchTwoTone";
 import EditIcon from '@mui/icons-material/Edit';
 import Label from './Label'
@@ -149,7 +141,7 @@ function HodimlarRoyhati({
 
     return (
         <>
-                <div className="d-flex justify-content-between align-items-center mb-5">
+                <div className="d-flex justify-content-between align-items-center">
                     <MainHeaderText  text={t('ol.9')}/>
                     {
                         users.addUser ?
@@ -161,21 +153,21 @@ function HodimlarRoyhati({
                 {
                     users.getUser || users.getUserAdmin ?
                         <CardBody>
-                            <div className="col-md-12 d-flex flex-wrap  align-items-center">
-                                <div className="col-md-3">
+                            <div className="col-md-12 gap-2 gap-sm-0 d-flex flex-wrap  align-items-center">
+                                <div className="col-12  col-sm-6 col-md-6 col-lg-3 p-sm-2">
                                     <SelectAnt name={t('ol.3')}
                                                onChange={(e) => setMainBranchId(e === "" ? null : e)}
                                                selectList={users.branches} permission={users.getBalanceAdmin}/>
                                 </div>
                                 {
                                     users.getRole &&
-                                    <div className="col-md-3">
+                                    <div className="col-12 col-sm-6  col-md-6 col-lg-3 p-sm-2">
                                         <SelectAnt name={t('ol.3')}
                                                    onChange={(e) => setRoleId(e)}
                                                    selectList={LavozimReducer.roles} permission={users.getBalanceAdmin}/>
                                     </div>
                                 }
-                                <div className="col-md-6">
+                                <div className="col-12 col-sm-12  col-md-12 col-lg-6 p-sm-2">
                                     <SearchAnt name={t('ol.73')} onChange={handleQueryChange}/>
                                 </div>
                             </div>

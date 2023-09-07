@@ -45,3 +45,20 @@ input[type=number] {
 input{
     outline: none;
 }
+.global-label{
+    color: #071A33;
+    font-family: 'Inter',sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-bottom: 10px;
+}
+.global-input{
+
+}
+.PhoneInputInput {
+    flex: 1 1;
+    min-width: 0;
+    border: none;
+}

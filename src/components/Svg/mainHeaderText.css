@@ -6,3 +6,31 @@
     font-weight: 600;
     line-height: normal;
 }
+.AddOrEditText{
+    color: #3e495f;
+    font-family: 'Inter',sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+@media screen and (max-width: 329.9px){
+   .mainHeaderText{
+       font-size: 18px;
+   }
+    .AddOrEditText{
+        font-size: 16px;
+    }
+}
+@media (min-width: 330px) and (max-width: 425.9px){
+
+}
+@media (min-width: 426px) and (max-width: 767.9px){
+
+}
+@media (min-width: 768px) and (max-width:1023.9px){
+
+}
+@media (min-width: 1024px) and (max-width:1300px){
+
+}

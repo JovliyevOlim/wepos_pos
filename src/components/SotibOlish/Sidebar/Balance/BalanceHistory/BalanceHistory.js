@@ -114,23 +114,23 @@ function BalanceHistory({
             {
                 users.getBalance || users.getBalanceAdmin ?
                     <CardBody>
-                        <div className="col-md-12 d-flex flex-wrap">
-                            <div className="col-md-3">
+                        <div className="col-md-12 gap-2 gap-sm-0 d-flex flex-wrap">
+                            <div className="col-12 col-sm-6 col-md-6 col-lg-3 p-sm-2">
                                 <SelectAnt name={t('bal.2')}
                                            onChange={(e) => setMainBranchId(e === "" ? null : e)}
                                            selectList={users.branches} permission={users.getBalanceAdmin}/>
                             </div>
-                            <div className="col-md-3">
+                            <div className="col-12 col-sm-6 col-md-6 col-lg-3 p-sm-2">
                                 <SelectAnt name={t('bal.3')}
                                            onChange={(e) => setPaymentMethodId(e === "" ? null : e)}
                                            selectList={PayReducer?.paymethod} permission={true}/>
                             </div>
-                            <div className="col-md-3">
+                            <div className="col-12 col-sm-6 col-md-6 col-lg-3 p-sm-2">
                                 <SelectAnt name={t('bal.4')}
                                            onChange={(e) => setUserId(e === "" ? null : e)}
                                            selectList={XodimReducer.usersFiltering.map((item) => ({id: item.id, name: item.fio}))} permission={true}/>
                             </div>
-                            <div className="col-md-3">
+                            <div className="col-12 col-sm-6 col-md-6 col-lg-3 p-sm-2">
                                 <SelectAnt name={t('bal.5')}
                                            onChange={changePlus}
                                            selectList={[{id:'true',name:'Kirimlar'},{id:'false',name:'Chiqimlar'}]} permission={true}/>

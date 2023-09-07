@@ -23,12 +23,10 @@ import {
     TableRow,
     TextField, Tooltip
 } from "@mui/material";
-import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
 import Label from "../../Hodimlar/hodimlarRoyxati/Label";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
-import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import CustomerReducer, {
     getCustomers,
     getCustomersByBranch,
@@ -45,7 +43,7 @@ import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import {camelize} from "../../../../../util";
 import allbusinessreducer, {getOneBusiness} from "../../SUPERADMIN/reducers/allbusinessreducer";
-import MainHeaderText from "../../../../Svg/MainHeaderText";
+import MainHeaderText, {AddOrEditText} from "../../../../Svg/MainHeaderText";
 import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../Svg/SelectAnt";
 import CardBody from "../../../../Svg/CardBody";
 
@@ -294,11 +292,11 @@ function Customers({
             {
                 users.getCustomerAdmin || users.getCustomer ?
                     <CardBody>
-                        <div className="col-md-12 d-flex align-items-center flex-wrap">
-                            <div className={'col-md-3'}>
+                        <div className="col-md-12 gap-2 d-flex align-items-center flex-wrap">
+                            <div className={'col-12 col-sm-3 col-md-3'}>
                                 <SelectAnt name={t('bal.2')} onChange={(e) => setMainBranchId(e)} permission={users.getCustomerAdmin} selectList={users?.branches}/>
                             </div>
-                            <div className={'col-md-6'}>
+                            <div className={'col-12 col-sm-6 col-md-6'}>
                                 <SearchAnt name={t('bal.22')} onChange={(e) => setSearch(e.target.value)}/>
                             </div>
                         </div>
@@ -485,157 +483,153 @@ function Customers({
                         }
 
 
-                        <Modal size={'xl'} isOpen={active} toggle={toggle}>
-                            <form onSubmit={handleSubmit(onSubmit)}>
-                                <ModalHeader>
-                                    {
-                                        editId ? (t('bal.28')) : (t('bal.21'))
-                                    }
-                                </ModalHeader>
-                                <ModalBody>
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                            <label htmlFor={'nomi'}>{t('Buttons.13')}</label>
-                                            <input
-                                                {...register('name', {
-                                                    required: {
-                                                        value: true,
-                                                        message: (t('bal.32'))
-                                                    }
-                                                })}
-                                                placeholder={t('bal.33')}
-                                                defaultValue={''}
-                                                id={'nomi'} type="text"
-                                                className={'form-control'}/>
-                                            {
-                                                errors.name &&
-                                                <p className={'text-danger text-center p-0 m-0'}>{t('bal.32')}</p>
-                                            }
-                                        </div>
-                                        <div className="col-md-6">
-                                            <label className={'mt-1'} htmlFor={'filial'}>{t('CustomAll.5')}</label>
-                                            <select className={'form-control'}
-                                                    disabled={editId}  {...register('branchId', {
-                                                required: {
-                                                    value: true,
-                                                    message: (t('bal.34'))
-                                                }
-                                            })}>
-                                                <option value="">{t('bal.35')}</option>
-                                                {
-                                                    users?.branches.map(item =>
-                                                        <option value={item.id} key={item.id}>{item.name}</option>
-                                                    )
-                                                }
-                                            </select>
-                                            {
-                                                errors.branchId &&
-                                                <p className={'text-danger text-center p-0 m-0'}>{t('bal.34')}</p>
-                                            }
-                                        </div>
-                                        <div className="col-md-6">
-                                            <label className={'mt-1'} htmlFor={'tel'}>{t('Buttons.14')}</label>
-                                            <PhoneInput
-                                                placeholder={t('bal.36')}
-                                                value={phoneNumber}
-                                                className={'form-control'}
-                                                onChange={setPhoneNumber}/>
-                                            {isCheck && !phoneNumber && <p
-                                                className={'text-danger text-center p-0 m-0'}>{t('bal.36')}</p>}
-                                        </div>
-
-                                        <div className="col-md-6">
-                                            <label className={'mt-1'} htmlFor="">{t('bal.26')}</label>
-                                            <input type="number" {...register('percent',
-                                                {
-                                                    required: {
-                                                        value: allbusinessreducer.onebusiness?.customer,
-                                                        message: (t('bal.37'))
-                                                    }, 
-                                                    min: {value: 0, message: (t('bal.38'))},
-                                                    max: {value: 50, message: (t('bal.39'))},
-                                                })}
-                                                   placeholder={t('bal.26')}
-                                                   defaultValue={'0'}
-                                                   disabled={!allbusinessreducer.onebusiness?.customer}
-                                                   className={'form-control'}/>
-                                            {
-                                                errors.percent && errors.percent.type === "required" &&
-                                                <p className={'text-danger text-center p-0 m-0'}>{errors.percent.message}</p>
-                                            }
-                                            {
-                                                errors.percent && errors.percent.type === "min" &&
-                                                <p className={'text-danger text-center p-0 m-0'}>{errors.percent.message}</p>
-                                            }
-                                            {
-                                                errors.percent && errors.percent.type === "max" &&
-                                                <p className={'text-danger text-center p-0 m-0'}>{errors.percent.message}</p>
-                                            }
-                                        </div>
-                                    </div>
-                                </ModalBody>
-                                <ModalFooter>
-                                    <button className={'btn btn-danger'} type={"button"}
-                                            onClick={toggle}>{t('Buttons.7')}</button>
-                                    <button className={'btn btn-success'} type={"submit"}>{t('Buttons.6')}</button>
-                                </ModalFooter>
-
-                            </form>
-
-                        </Modal>
-
-                        <Modal isOpen={debtActive} toggle={toggle2}>
-                            <form onSubmit={handleSubmit1(onSubmitDebt)}>
-                                <ModalHeader>
-                                    {
-                                        customerGetPay ? (t('bal.40')) : (t('bal.41'))
-                                    }
-                                </ModalHeader>
-                                <ModalBody>
-                                    <div className="row">
-                                        <div className="col-md-12">
-                                            <label
-                                                htmlFor={'l'}>{t('bal.42')}</label>
-                                            <input type="number" min={0}
-                                                   {...register1('sum', {required: true})}
-                                                   placeholder={errors1.sum ? errors1.sum?.type === "required" && (t('bal.43')) : (t('bal.42'))}
-                                                   className={'form-control'}
-                                            />
-                                        </div>
-                                        <div className="col-md-12">
-                                            <label
-                                                htmlFor=""> {t('Hamkorlar.tu')}
-                                            </label>
-                                            <select className={'form-control'}
-                                                    {...register1('paymentMethodId', {required: true})}>
-                                                <option
-                                                    value="all">{t('Hamkorlar.tanlash')}
-                                                </option>
-                                                {
-                                                    PayReducer.paymethod ?
-                                                        PayReducer.paymethod.map((item) =>
-                                                            <option
-                                                                value={item.id}
-                                                                key={item.id}>{camelize(item.name)}</option>) : 'not found'
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                </ModalBody>
-                                <ModalFooter>
-                                    <button type="button"
-                                            className={'btn btn-danger'}
-                                            onClick={toggle2}>{t('Buttons.7')}</button>
-                                    <button type={'submit'} className={'btn btn-success'}>{t('Buttons.6')}</button>
-                                </ModalFooter>
-                            </form>
-
-                        </Modal>
 
                     </div>
                     : ''
             }
+            <Modal size={'md'} isOpen={active} toggle={toggle}>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <ModalHeader>
+                        <AddOrEditText text={editId ? (t('bal.28')) : (t('bal.21'))}/>
+                    </ModalHeader>
+                    <ModalBody>
+                        <div className="col-md-12 gap-2 gap-sm-0 d-flex flex-wrap">
+                            <div className="col-12 p-sm-2 col-sm-6  col-md-6">
+                                <label className={'global-label'} htmlFor={'nomi'}>{t('Buttons.13')}</label>
+                                <input
+                                    {...register('name', {
+                                        required: {
+                                            value: true,
+                                            message: (t('bal.32'))
+                                        }
+                                    })}
+                                    placeholder={t('bal.33')}
+                                    defaultValue={''}
+                                    id={'nomi'} type="text"
+                                    className={'form-control'}/>
+                                {
+                                    errors.name &&
+                                    <p className={'text-danger text-center p-0 m-0'}>{t('bal.32')}</p>
+                                }
+                            </div>
+                            <div className="col-12 p-sm-2 col-sm-6  col-md-6">
+                                <label className={'global-label'} htmlFor={'filial'}>{t('CustomAll.5')}</label>
+                                <select className={'form-control'}
+                                        disabled={editId}  {...register('branchId', {
+                                    required: {
+                                        value: true,
+                                        message: (t('bal.34'))
+                                    }
+                                })}>
+                                    <option value="">{t('bal.35')}</option>
+                                    {
+                                        users?.branches.map(item =>
+                                            <option value={item.id} key={item.id}>{item.name}</option>
+                                        )
+                                    }
+                                </select>
+                                {
+                                    errors.branchId &&
+                                    <p className={'text-danger text-center p-0 m-0'}>{t('bal.34')}</p>
+                                }
+                            </div>
+                            <div className="col-12 p-sm-2 col-sm-6  col-md-6"  >
+                                <label className={'global-label'} htmlFor={'tel'}>{t('Buttons.14')}</label>
+                                <PhoneInput
+                                    placeholder={t('bal.36')}
+                                    value={phoneNumber}
+                                    className={'form-control'}
+                                    style={{display: 'flex'}}
+                                    onChange={setPhoneNumber}/>
+                                {isCheck && !phoneNumber && <p
+                                    className={'text-danger text-center p-0 m-0'}>{t('bal.36')}</p>}
+                            </div>
+                            <div className="col-12 p-sm-2 col-sm-6  col-md-6">
+                                <label className={'global-label'} htmlFor="">{t('bal.26')}</label>
+                                <input type="number" {...register('percent',
+                                    {
+                                        required: {
+                                            value: allbusinessreducer.onebusiness?.customer,
+                                            message: (t('bal.37'))
+                                        },
+                                        min: {value: 0, message: (t('bal.38'))},
+                                        max: {value: 50, message: (t('bal.39'))},
+                                    })}
+                                       placeholder={t('bal.26')}
+                                       defaultValue={'0'}
+                                       disabled={!allbusinessreducer.onebusiness?.customer}
+                                       className={'form-control'}/>
+                                {
+                                    errors.percent && errors.percent.type === "required" &&
+                                    <p className={'text-danger text-center p-0 m-0'}>{errors.percent.message}</p>
+                                }
+                                {
+                                    errors.percent && errors.percent.type === "min" &&
+                                    <p className={'text-danger text-center p-0 m-0'}>{errors.percent.message}</p>
+                                }
+                                {
+                                    errors.percent && errors.percent.type === "max" &&
+                                    <p className={'text-danger text-center p-0 m-0'}>{errors.percent.message}</p>
+                                }
+                            </div>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter>
+                        <button className={'btn btn-danger'} type={"button"}
+                                onClick={toggle}>{t('Buttons.7')}</button>
+                        <button className={'btn btn-success'} type={"submit"}>{t('Buttons.6')}</button>
+                    </ModalFooter>
+
+                </form>
+
+            </Modal>
+
+            <Modal isOpen={debtActive} toggle={toggle2}>
+                <form onSubmit={handleSubmit1(onSubmitDebt)}>
+                    <ModalHeader>
+                        <AddOrEditText text={customerGetPay ? (t('bal.40')) : (t('bal.41'))}/>
+                    </ModalHeader>
+                    <ModalBody>
+                        <div className="col-md-12 gap-2 gap-sm-0 d-flex flex-wrap">
+                            <div className="col-12 p-sm-2 col-sm-6 col-md-12">
+                                <label className={'global-label'} htmlFor={'l'}>{t('bal.42')}</label>
+                                <input type="number" min={0}
+                                       {...register1('sum', {required: true})}
+                                       placeholder={errors1.sum ? errors1.sum?.type === "required" && (t('bal.43')) : (t('bal.42'))}
+                                       className={'form-control'}
+                                />
+                            </div>
+                            <div className="col-12 p-sm-2 col-sm-6 col-md-12">
+                                <label
+                                    htmlFor="" className={'global-label'}> {t('Hamkorlar.tu')}
+                                </label>
+                                <select className={'form-control'}
+                                        {...register1('paymentMethodId', {required: true})}>
+                                    <option
+                                        value="all">{t('Hamkorlar.tanlash')}
+                                    </option>
+                                    {
+                                        PayReducer.paymethod ?
+                                            PayReducer.paymethod.map((item) =>
+                                                <option
+                                                    value={item.id}
+                                                    key={item.id}>{camelize(item.name)}</option>) : 'not found'
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                    </ModalBody>
+                    <ModalFooter>
+                        <button type="button"
+                                className={'btn btn-danger'}
+                                onClick={toggle2}>{t('Buttons.7')}</button>
+                        <button type={'submit'} className={'btn btn-success'}>{t('Buttons.6')}</button>
+                    </ModalFooter>
+                </form>
+
+            </Modal>
+
             <ModalLoading isOpen={saveModal}/>
             <AgreeModal deleteFunc={deleteFunc} deletemodal={deletemodal}
                         deleteModaltoggle={() => setdeletemodal(prevState => !prevState)}/>

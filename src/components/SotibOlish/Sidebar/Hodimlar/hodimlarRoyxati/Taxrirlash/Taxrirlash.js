@@ -16,6 +16,7 @@ import ModalLoading from "../../../../../ModalLoading";
 import people from '../../../../../../img/person.png'
 import {BaseUrl} from "../../../../../../middleware";
 import {toast} from "react-toastify";
+import CardBody from "../../../../../Svg/CardBody";
 
 function Taxrirlash({
                         getLavozim,
@@ -165,127 +166,131 @@ function Taxrirlash({
 
 
     return (
-        <div className={' ht'}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <h5 className={'text-center mt-4'}>{t('Employ.13')}</h5>
-                <div className="row">
-                    <div className="col-md-4 d-flex flex-column justify-content-center">
-                        <img src={photoId ? `${BaseUrl}/attachment/download/${photoId}` : people}
-                             style={{width: "70%", margin: "0 auto", borderRadius: "30%"}}/>
-                        <div className={'d-flex justify-content-center mt-2'}>
-                            <input type="file" id={'file'} value={''} onChange={onSelectImage}
-                                   style={{display: 'none'}}/>
-                            <label htmlFor={'file'}>
-                                <div type={'button'} className={'btn btn-success'}>{t('ol.62')}</div>
-                            </label>
+        <div>
+            <CardBody>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <h5 className={'text-center mt-4'}>{t('Employ.13')}</h5>
+                    <div className="row">
+                        <div className="col-md-4 d-flex flex-column justify-content-center">
+                            <img src={photoId ? `${BaseUrl}/attachment/download/${photoId}` : people}
+                                 style={{width: "70%", margin: "0 auto", borderRadius: "30%"}}/>
+                            <div className={'d-flex justify-content-center mt-2'}>
+                                <input type="file" id={'file'} value={''} onChange={onSelectImage}
+                                       style={{display: 'none'}}/>
+                                <label htmlFor={'file'}>
+                                    <div type={'button'} className={'btn btn-success'}>{t('ol.62')}</div>
+                                </label>
+                            </div>
                         </div>
-                    </div>
-                    <div className={'col-md-8 d-flex flex-wrap'}>
-                        <div className="col-md-12">
-                            <label htmlFor={'fio'}>F.I.O</label>
-                            <input type="text" id={'fio'}
-                                   {...register('fio', {required: {value: true, message: (t('ol.63'))}})}
-                                   placeholder={'F.I.O'}
-                                   defaultValue={''}
-                                   className={'form-control'}/>
-                            {
-                                errors.fio &&
-                                <p className={'text-danger text-center m-0 p-0'}>{errors.fio.message}</p>
-                            }
-                        </div>
-
-                        <div className="col-md-6">
-                            <label htmlFor={'username'}>{t('Employ.7')}</label>
-                            <input type="text" id={'username'}
-                                   {...register('username', {required: {value: true, message: (t('ol.64'))}})}
-                                   placeholder={t('ol.65')}
-                                   className={'form-control'}/>
-                            {
-                                errors.username &&
-                                <p className={'text-danger text-center m-0 p-0'}>{errors.username.message}</p>
-                            }
-                        </div>
-                        <div className="col-md-6">
-                            <label htmlFor="phoneNumber">{t('ol.66')}</label>
-                            <Input
-                                placeholder={t('ol.59')}
-                                value={phoneNumber}
-                                className={'form-control'}
-                                onChange={setPhoneNumber}/>
-                            {isCheck && !phoneNumber && <p
-                                className={'text-danger text-center p-0 m-0'}>{t('ol.58')}</p>}
-                        </div>
-                        <div className="col-md-6">
-                            <label htmlFor={'roleId'} className={'mt-3'}>{t('Employ.18')}</label>
-                            <select id={'roleId'}
-                                    {...register('roleId', {required: {value: false, message: (t('ol.67'))}})}
-                                    defaultValue={''}
-                                    className={'form-control'}>
+                        <div className={'col-md-8 d-flex flex-wrap'}>
+                            <div className="col-md-12">
+                            </div>
+                            <div className="col-md-12">
+                                <label htmlFor={'fio'}>F.I.O</label>
+                                <input type="text" id={'fio'}
+                                       {...register('fio', {required: {value: true, message: (t('ol.63'))}})}
+                                       placeholder={'F.I.O'}
+                                       defaultValue={''}
+                                       className={'form-control'}/>
                                 {
-                                    LavozimReducer.roles.length > 0 ?
-                                        LavozimReducer.roles.map((item, index) =>
-                                            <option value={item.id}>{item.name}</option>) : ''
+                                    errors.fio &&
+                                    <p className={'text-danger text-center m-0 p-0'}>{errors.fio.message}</p>
                                 }
-                            </select>
-                            {
-                                errors.roleId &&
-                                <p className={'text-danger text-center m-0 p-0'}>{errors.roleId.message}</p>
-                            }
-                        </div>
-                        <div className="col-md-6">
-                            <label className={'mt-3 text-center'}>{t('Employ.19')}</label>
-                            <Select options={branchreducer.branches} isMulti={true}
-                                    value={input.selectvalue}
-                                    {...register('branches', {required: {value: false, message: (t('ol.67'))}})}
-                                    class={'form-control'} onChange={changeselect}/>
-                            {isCheck && input.branchid?.length === 0 && <p
-                                className={'text-danger text-center p-0 m-0'}>{t('ol.68')}</p>}
-                        </div>
-                        <div className="col-md-6 ">
-                            <label htmlFor={'password'} className={'mt-3'}>{t('Employ.16')}</label>
-                            <input type="text"
-                                   {...register("password",
-                                       {
+                            </div>
+
+                            <div className="col-md-6">
+                                <label htmlFor={'username'}>{t('Employ.7')}</label>
+                                <input type="text" id={'username'}
+                                       {...register('username', {required: {value: true, message: (t('ol.64'))}})}
+                                       placeholder={t('ol.65')}
+                                       className={'form-control'}/>
+                                {
+                                    errors.username &&
+                                    <p className={'text-danger text-center m-0 p-0'}>{errors.username.message}</p>
+                                }
+                            </div>
+                            <div className="col-md-6">
+                                <label htmlFor="phoneNumber">{t('ol.66')}</label>
+                                <Input
+                                    placeholder={t('ol.59')}
+                                    value={phoneNumber}
+                                    className={'form-control'}
+                                    onChange={setPhoneNumber}/>
+                                {isCheck && !phoneNumber && <p
+                                    className={'text-danger text-center p-0 m-0'}>{t('ol.58')}</p>}
+                            </div>
+                            <div className="col-md-6">
+                                <label htmlFor={'roleId'} className={'mt-3'}>{t('Employ.18')}</label>
+                                <select id={'roleId'}
+                                        {...register('roleId', {required: {value: false, message: (t('ol.67'))}})}
+                                        defaultValue={''}
+                                        className={'form-control'}>
+                                    {
+                                        LavozimReducer.roles.length > 0 ?
+                                            LavozimReducer.roles.map((item, index) =>
+                                                <option value={item.id}>{item.name}</option>) : ''
+                                    }
+                                </select>
+                                {
+                                    errors.roleId &&
+                                    <p className={'text-danger text-center m-0 p-0'}>{errors.roleId.message}</p>
+                                }
+                            </div>
+                            <div className="col-md-6">
+                                <label className={'mt-3 text-center'}>{t('Employ.19')}</label>
+                                <Select options={branchreducer.branches} isMulti={true}
+                                        value={input.selectvalue}
+                                        {...register('branches', {required: {value: false, message: (t('ol.67'))}})}
+                                        class={'form-control'} onChange={changeselect}/>
+                                {isCheck && input.branchid?.length === 0 && <p
+                                    className={'text-danger text-center p-0 m-0'}>{t('ol.68')}</p>}
+                            </div>
+                            <div className="col-md-6 ">
+                                <label htmlFor={'password'} className={'mt-3'}>{t('Employ.16')}</label>
+                                <input type="text"
+                                       {...register("password",
+                                           {
+                                               required: {
+                                                   value: match.params.id ? false : true,
+                                                   message: (t('ol.69'))
+                                               },
+                                               minLength: {value: 5, message: (t('ol.70'))}
+                                           })}
+                                       placeholder={t('ol.71')}
+                                       defaultValue={''}
+                                       className={'form-control'} id={'password'}/>
+                                {
+                                    errors.password && errors.password.type === "required" &&
+                                    <p className={'text-danger text-center m-0 p-0'}>{errors.password.message}</p>
+                                }
+                                {
+                                    errors.password && errors.password.type === "minLength" &&
+                                    <p className={'text-danger text-center m-0 p-0'}>{errors.password.message}</p>
+                                }
+                            </div>
+                            <div className="col-md-6 ">
+                                <label htmlFor={'confirmPassword'} className={'mt-3'}>{t('Employ.16')}</label>
+                                <input type="text"
+                                       {...register("confirmPassword", {
                                            required: {
                                                value: match.params.id ? false : true,
                                                message: (t('ol.69'))
-                                           },
-                                           minLength: {value: 5, message: (t('ol.70'))}
+                                           }
                                        })}
-                                   placeholder={t('ol.71')}
-                                   defaultValue={''}
-                                   className={'form-control'} id={'password'}/>
-                            {
-                                errors.password && errors.password.type === "required" &&
-                                <p className={'text-danger text-center m-0 p-0'}>{errors.password.message}</p>
-                            }
-                            {
-                                errors.password && errors.password.type === "minLength" &&
-                                <p className={'text-danger text-center m-0 p-0'}>{errors.password.message}</p>
-                            }
-                        </div>
-                        <div className="col-md-6 ">
-                            <label htmlFor={'confirmPassword'} className={'mt-3'}>{t('Employ.16')}</label>
-                            <input type="text"
-                                   {...register("confirmPassword", {
-                                       required: {
-                                           value: match.params.id ? false : true,
-                                           message: (t('ol.69'))
-                                       }
-                                   })}
-                                   placeholder={t('ol.72')}
-                                   defaultValue={''}
-                                   className={'form-control'} id={'confirmPassword'}/>
-                            {
-                                errors.confirmPassword &&
-                                <p className={'text-danger text-center m-0 p-0'}>{errors.confirmPassword.message}</p>
-                            }
+                                       placeholder={t('ol.72')}
+                                       defaultValue={''}
+                                       className={'form-control'} id={'confirmPassword'}/>
+                                {
+                                    errors.confirmPassword &&
+                                    <p className={'text-danger text-center m-0 p-0'}>{errors.confirmPassword.message}</p>
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
-                <button type={"submit"}
-                        className={'btn mt-3 form-control btn-primary btnSaqlash'}>{t('Buttons.6')}</button>
-            </form>
+                    <button type={"submit"}
+                            className={'btn mt-3 form-control btn-primary btnSaqlash'}>{t('Buttons.6')}</button>
+                </form>
+            </CardBody>
             <ModalLoading isOpen={saveModal}/>
         </div>
     )

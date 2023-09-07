@@ -1,7 +1,46 @@
 .filter{
-    border-radius: 12px;
+    border-radius: 15px;
     border: 3px solid #F1F2F3;
     background:  #FFF;
     padding:2rem 1rem;
     margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+@media screen and (max-width: 329.9px){
+    .filter{
+        padding:1rem;
+        margin-top: 1rem;
+    }
+}
+@media (min-width: 330px) and (max-width: 425.9px){
+    .filter{
+        padding:1rem;
+        margin-top: 1rem;
+    }
+}
+@media (min-width: 426px) and (max-width: 767.9px){
+    .filter{
+        padding:1rem;
+        margin-top: 1rem;
+    }
+}
+@media (min-width: 768px) and (max-width:1023.9px){
+    .dashboard{
+        padding: 20px;
+        gap: 20px;
+    }
+    .dashboard-cards{
+        justify-content: space-between;
+        gap:18px;
+    }
+}
+@media (min-width: 1024px) and (max-width:1300px){
+    .dashboard{
+        padding: 20px;
+        gap: 20px;
+    }
+    .dashboard-cards{
+        justify-content: space-between;
+        gap:18px;
+    }
 }
