@@ -72,7 +72,7 @@ function Chek({savephoto,photoreducer,checkReducer,getInvoice,editInvoice,users,
 
     return(
         <div className={'aloqaCont'}>
-             <h3 className='text-center pb-3'>Chek sozlamalari</h3>
+             <h3 className='text-center pb-3'>{t('set.23')}</h3>
                 <div className={'row'}>
                     <div className="col-md-12">
 
@@ -80,7 +80,7 @@ function Chek({savephoto,photoreducer,checkReducer,getInvoice,editInvoice,users,
                                 users.branches  ?
                                     users.branches.length > 1 ?
                                         <div className={'col-md-6 col-sm-12'}>
-                                        <h4>Filial</h4>
+                                        <h4>{t('set.24')}</h4>
                                         <select onChange={selectBranch} value={branch} className={'form-control'}>
                                             {
                                                         users.branches.map(item=>
@@ -115,7 +115,7 @@ function Chek({savephoto,photoreducer,checkReducer,getInvoice,editInvoice,users,
                     </div>
 
                         <div className="col-sm-12  mb-2">
-                            <h4>Chekni boshida chiqadigan matn:</h4>
+                            <h4>{t('set.25')}</h4>
                                     <Editor
                                         initialValue={chekHead}
                                         onChange={onChangeHeadText}
@@ -123,7 +123,7 @@ function Chek({savephoto,photoreducer,checkReducer,getInvoice,editInvoice,users,
                                     />
                         </div>
                     <div className="col-sm-12  mb-2">
-                        <h4>Chek ostidagi matn:</h4>
+                        <h4>{t('set.26')}</h4>
                         <Editor
                             initialValue={chekFooter}
                             onChange={onChangeFooterText}/>
@@ -134,7 +134,7 @@ function Chek({savephoto,photoreducer,checkReducer,getInvoice,editInvoice,users,
                     </div>
                 </div>
                 <div className={'d-flex justify-content-end'}>
-                    <button onClick={onSubmit2} className={'btn btn-primary'} >Save</button>
+                    <button onClick={onSubmit2} className={'btn btn-primary'} >{t('set.11')}</button>
                 </div>
         </div>
     )

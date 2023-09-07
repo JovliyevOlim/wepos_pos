@@ -39,7 +39,7 @@ function BusinessSetting({changeBusinessMinus,users,getOneBusiness,allbusinessre
             })
         }
         else{
-            toast.warning('Kamida 1 kiritilsin!')
+            toast.warning(t('set.16'))
         }
 
     }
@@ -49,36 +49,36 @@ function BusinessSetting({changeBusinessMinus,users,getOneBusiness,allbusinessre
 
     return(
         <div className={'MaxsulotCont'}>
-             <h3 className='text-center pb-3'>Sozlamalar</h3>
+             <h3 className='text-center pb-3'>{t('set.17')}</h3>
 
             <div className="row mb-4">
                 <div className='col-12 mb-3 d-flex align-items-center  col-sm-12'>
-                    <label htmlFor={'a'} className={'me-5'} style={{fontSize:'20px'}}>Mahsulotni minusga sotish:</label>
+                    <label htmlFor={'a'} className={'me-5'} style={{fontSize:'20px'}}>{t('set.18')}</label>
                     <input type="checkbox"  checked={saleMinus}
                            onChange={(e)=>setSaleMinus(e.target.checked)} style={{transform:'scale(2)'}}  id={'a'}/>
                 </div>
                 <div className='col-12 mb-3 d-flex align-items-center  col-sm-12'>
-                    <label htmlFor={'a'} className={'me-5'} style={{fontSize:'20px'}}>Mahsulotni narxini o'zgartirib sotish:</label>
+                    <label htmlFor={'a'} className={'me-5'} style={{fontSize:'20px'}}>{t('set.19')}</label>
                     <input type="checkbox"  checked={changeProductPrice}
                            onChange={(e)=>setChangeProductPrice(e.target.checked)} style={{transform:'scale(2)'}}  id={'a'}/>
                 </div>
                 <div className='col-12 mb-3 d-flex align-items-center  col-sm-12'>
-                    <label htmlFor={'a'} className={'me-5'} style={{fontSize:'20px'}}>Mijozga chegirma foiz berish:</label>
+                    <label htmlFor={'a'} className={'me-5'} style={{fontSize:'20px'}}>{t('set.20')}</label>
                     <input type="checkbox"  checked={customerPercent}
                            onChange={(e)=>setCustomerPercent(e.target.checked)} style={{transform:'scale(2)'}}  id={'a'}/>
                 </div>
                 <div className='col-12 mb-3 d-flex align-items-center  col-sm-12'>
-                    <label htmlFor={'a'} className={'me-5'} style={{fontSize:'20px'}}>Optomga sotish:</label>
+                    <label htmlFor={'a'} className={'me-5'} style={{fontSize:'20px'}}>{t('set.21')}</label>
                     <input type="checkbox"  checked={gross}
                            onChange={(e)=>setGross(e.target.checked)} style={{transform:'scale(2)'}}  id={'a'}/>
                 </div>
                 <div className='col-12 mb-3 d-flex align-items-center  col-sm-12'>
-                    <label htmlFor={'deleteDay'} className={'me-5'} style={{fontSize:'20px'}}>Savdo yoki Xaridni o'chirish va taxrirlash kuni:</label>
+                    <label htmlFor={'deleteDay'} className={'me-5'} style={{fontSize:'20px'}}>{t('set.22')}</label>
                     <input type="number" value={deleteDay}  size={'20'} className={'form-control'}
                            onChange={(e)=>setDeleteDay(e.target.value)}  id={'deleteDay'}/>
                 </div>
             </div>
-            <div className={'d-flex justify-content-center'} onClick={saveChangeBusiness}><button className={'btn btn-success'}>Saqlash</button></div>
+            <div className={'d-flex justify-content-center'} onClick={saveChangeBusiness}><button className={'btn btn-success'}>{t('set.11')}</button></div>
         </div>
     )
 }

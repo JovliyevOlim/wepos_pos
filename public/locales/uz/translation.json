@@ -833,7 +833,7 @@
     "teln": "Tel:",
     "thm": "Taminotchi haqida malumot",
     "tsy": "Tayyor shablonni yuklash",
-    "tu": "Tulov ususli"
+    "tu": "To'lov usuli"
   },
   "bal": {
     "1": "Kassadagi o'zgarishlar",
@@ -1232,5 +1232,36 @@
   "97": "Foizni kiriting",
   "98": "Faqat So'mda kiriting !",
   "99": "To'lov turi"
+},
+"set": {
+  "1": "boshqaruvi",
+  "10": "Chiqish",
+  "11": "Saqlash",
+  "12": "Biznes ma'lumotlari",
+  "13": "Biznes nomi:",
+  "14": "Tavsifi:",
+  "15": "Tahrirlash",
+  "16": "Kamida 1 kiritilsin!",
+  "17": "Sozlamalar",
+  "18": "Mahsulotni minusga sotish:",
+  "19": "Mahsulotni narxini o'zgartirib sotish:",
+  "2": "Sizning bazalaringiz",
+  "20": "Mijozga chegirma foiz berish:",
+  "21": "Optomga sotish:",
+  "22": "Savdo yoki Xaridni o'chirish va taxrirlash kuni:",
+  "23": "Chek sozlamalari",
+  "24": "Filial",
+  "25": "Chekni boshida chiqadigan matn:",
+  "26": "Chek ostidagi matn:",
+  "27": "Biznes",
+  "28": "Savdo",
+  "29": "Chek",
+  "3": "+Qo'shish",
+  "4": "Izlash...",
+  "5": "Nomi",
+  "6": "Yaratilgan vaqti",
+  "7": "Bazani o'chirish",
+  "8": "Filial nomini kiriting",
+  "9": "Filial nomi"
 }
 }

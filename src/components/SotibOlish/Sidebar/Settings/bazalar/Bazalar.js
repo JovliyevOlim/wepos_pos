@@ -125,14 +125,14 @@ function Bazalar({
         <div>
             <div className="col-md-12 mt-4 mb-4">
                 <div className="textHeaderBaza">
-                    <h2>Bazalar</h2>
-                    <p> boshqaruvi</p>
+                    <h2>{t('Sidebar.41')}</h2>
+                    <p> {t('set.1')}</p>
                 </div>
                 <div className="rowStyleBaza">
                     <div className="qoshish">
-                        <h5>Sizning bazalaringiz</h5>
+                        <h5>{t('set.2')}</h5>
                         {
-                            users.addBranch && <button onClick={toggle} className='btn btn-primary'>+Qo'shish</button>
+                            users.addBranch && <button onClick={toggle} className='btn btn-primary'>{t('set.3')}</button>
                         }
                     </div>
 
@@ -143,16 +143,16 @@ function Bazalar({
                                 <div>
                                     <div className="izlashBaza">
                                         <input value={search} onChange={(e) => setSearch(e.target.value)} type="text"
-                                               placeholder='Izlash...'/>
+                                               placeholder={t('set.4')}/>
                                     </div>
                                     <div className="table-responsive">
                                         <table className='table table-striped table-bordered mt-4'>
                                             <thead>
                                             <tr>
-                                                <th>Nomi</th>
+                                                <th>{t('set.5')}</th>
                                                 {/*<th>Hudud</th>*/}
-                                                <th>Yaratilgan vaqti</th>
-                                                <th>Amallar</th>
+                                                <th>{t('set.6')}</th>
+                                                <th>{t('as.6')}</th>
                                             </tr>
                                             </thead>
 
@@ -177,15 +177,14 @@ function Bazalar({
                                                                     <button
                                                                         onClick={() => editBranchById(item.id)}
                                                                         className='taxrirlash'><img
-                                                                        src={Edit} alt=""/>Taxrirlash
+                                                                        src={Edit} alt=""/>{t('Roles.42')}
                                                                     </button>
                                                                 }
                                                                 {
                                                                     users.deleteBranch &&
                                                                     <button className='ochirish'
                                                                             onClick={() => deleteBranchById(item.id)}>
-                                                                        <img src={Delete} alt=""/>Bazani
-                                                                        o'chirish
+                                                                        <img src={Delete} alt=""/>{t('set.7')}
                                                                     </button>
                                                                 }
                                                             </td>
@@ -205,25 +204,25 @@ function Bazalar({
                     <form action="" onSubmit={handleSubmit(onSubmit)}>
                         <ModalHeader>
                             {
-                                editID ? 'Taxrirlash' : "Qo'shish"
+                                editID ? (t('mah.24')) : (t('as.96'))
                             }
                         </ModalHeader>
                         <ModalBody>
                             <div className="row">
                                 <div className="col-md-12 d-flex flex-wrap p-0">
                                     <div className="col-md-6">
-                                        <label htmlFor={'nomi'}>Nomi</label>
+                                        <label htmlFor={'nomi'}>{t('as.4')}</label>
                                         <input {...register('name', {required: true})}
-                                               placeholder={errors.name ? errors.name.type === 'required' && 'Filial nomini kiriting' : 'Filial nomi'}
+                                               placeholder={errors.name ? errors.name.type === 'required' && (t('set.8')) : (t('set.9'))}
                                                type="text" className={'form-control mb-3'} id={'nomi'}/>
                                     </div>
                                 </div>
                             </div>
                         </ModalBody>
                         <ModalFooter>
-                            <button type={'button'} className={'btn btn-danger'} onClick={toggle}>Chiqish
+                            <button type={'button'} className={'btn btn-danger'} onClick={toggle}>{t('set.10')}
                             </button>
-                            <button type={'submit'} className={'btn btn-success'}>Saqlash</button>
+                            <button type={'submit'} className={'btn btn-success'}>{t('set.11')}</button>
 
                         </ModalFooter>
                     </form>

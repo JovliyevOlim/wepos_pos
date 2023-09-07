@@ -34,22 +34,22 @@ function Business({changeBusinessMinus, users, getOneBusiness, allbusinessreduce
 
     return (
         <div className={'MaxsulotCont'}>
-            <h3 className='text-center pb-3'>Biznes ma'lumotlari</h3>
+            <h3 className='text-center pb-3'>{t('set.12')}</h3>
             <div className={'col-md-12 d-flex align-items-end'}>
                 <div className={'col-md-4'}>
-                    <label>Biznes nomi:</label>
+                    <label>{t('set.13')}</label>
                     <input type="text" disabled={!editActive} value={businessName} onChange={(e) => setBusinessName(e.target.value)}
                            className={'form-control'}/>
                 </div>
                 <div className={'col-md-4'}>
-                    <label>Tavsifi:</label>
+                    <label>{t('set.14')}</label>
                     <input type="text" value={businessDescription} disabled={!editActive}
                            onChange={(e) => setBusinessDescription(e.target.value)} className={'form-control'}/>
                 </div>
                 <div className={'col-md-4'}>
                     {
-                        editActive ? <button onClick={editMyBusinessById} className={'btn btn-success'}>Saqlash</button>
-                            : <button onClick={()=>setEditActive(prevState => !prevState)} className={'btn btn-primary'}>Tahrirlash</button>
+                        editActive ? <button onClick={editMyBusinessById} className={'btn btn-success'}>{t('set.11')}</button>
+                            : <button onClick={()=>setEditActive(prevState => !prevState)} className={'btn btn-primary'}>{t('set.15')}</button>
 
                     }
                 </div>
