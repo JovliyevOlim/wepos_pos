@@ -76,12 +76,12 @@ export function ButtonAnt({onClick,icon,type,text,bgColor}) {
     );
 }
 
-export function TableButton({onClick,icon,type,danger}) {
+export function TableButton({onClick,icon,type,danger,title}) {
 
 
     return (
         <>
-            <Tooltip title="prompt text" color={'blue'} key={'blue'}>
+            <Tooltip title={title} color={'blue'} key={'blue'}>
                 <Button type={type} onClick={onClick}  shape="round" icon={icon} size={'large'} danger={danger} />
             </Tooltip>
 
