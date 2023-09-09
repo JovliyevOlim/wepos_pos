@@ -12,8 +12,8 @@ import {Modal, ModalBody, ModalFooter} from "reactstrap";
 import Loading from "../../../../Loading";
 import AgreeModal from "../../../../AgreeModal";
 import ModalLoading from "../../../../ModalLoading";
-import MainHeaderText from "../../../../Svg/MainHeaderText";
-import {ButtonAnt} from "../../../../Svg/SelectAnt";
+import MainHeaderText from "../../../../Components/MainHeaderText";
+import {ButtonAnt} from "../../../../Components/SelectAnt";
 
 function Lavozimlar({getLavozim, users, deleteLavozim, LavozimReducer}) {
 

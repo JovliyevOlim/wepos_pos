@@ -18,9 +18,9 @@ import CustomerReducer, {
 import PayReducer, {getPay} from "../../../../../reducer/PayReducer";
 import moment from "moment";
 import 'moment/locale/uz-latn'
-import MainHeaderText from "../../../../Svg/MainHeaderText";
-import CardBody from "../../../../Svg/CardBody";
-import SelectAnt from "../../../../Svg/SelectAnt";
+import MainHeaderText from "../../../../Components/MainHeaderText";
+import CardBody from "../../../../Components/CardBody";
+import SelectAnt from "../../../../Components/SelectAnt";
 function MijozlarXisoboti({
                               users, CustomerReducer, getCustomersForTrade, getCustomersForTradeBusiness,
                               MijozHisobotiReducer, getCustomerReportByBusiness, getCustomerReportByBranch,

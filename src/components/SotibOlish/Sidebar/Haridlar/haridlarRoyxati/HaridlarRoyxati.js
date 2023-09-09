@@ -23,9 +23,9 @@ import AgreeModal from "../../../../AgreeModal";
 import XodimReducer, {getUserForFiltering, getUserForFilteringBusiness} from "../../Hodimlar/reducer/XodimReducer";
 import moment from "moment";
 import 'moment/locale/uz-latn'
-import MainHeaderText from "../../../../Svg/MainHeaderText";
-import SelectAnt, {ButtonAnt} from "../../../../Svg/SelectAnt";
-import CardBody from "../../../../Svg/CardBody";
+import MainHeaderText from "../../../../Components/MainHeaderText";
+import SelectAnt, {ButtonAnt} from "../../../../Components/SelectAnt";
+import CardBody from "../../../../Components/CardBody";
 
 function HaridlarRoyxati({
                              getAllSupplier,

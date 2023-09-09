@@ -1,6 +1,8 @@
 import React from 'react';
 import './card.css';
 import {prettify} from "../../../../util";
+import CountUp from 'react-countup';
+const formatter = (value) => <CountUp  end={value} separator="." />;
 
 function Card({title,img,sum,percent}) {
     return (
@@ -20,7 +22,7 @@ function Card({title,img,sum,percent}) {
                 </div>
             </div>
             <div>
-                <h2 className={'dashboard-card-body-text'}>{prettify(sum)} so'm</h2>
+                <h2 className={'dashboard-card-body-text'}>{formatter(sum)} so'm</h2>
             </div>
             <div className={'dashboard-card-footer'}>
                 <h4 className={'dashboard-card-footer-text'}>{title}</h4>

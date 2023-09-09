@@ -15,8 +15,8 @@ import users from "../../../../../reducer/users";
 import Loading from "../../../../Loading";
 import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
-import MainHeaderText from "../../../../Svg/MainHeaderText";
-import {ButtonAnt} from "../../../../Svg/SelectAnt";
+import MainHeaderText, {AddOrEditText} from "../../../../Components/MainHeaderText";
+import {ButtonAnt} from "../../../../Components/SelectAnt";
 
 function MahsulotTurlari({
                              saveProductType,
@@ -249,53 +249,55 @@ function MahsulotTurlari({
                 }
 
 
-                <Modal isOpen={active} toggle={toggle}>
-                    <ModalHeader>
-                        {t('mah.1')}
-                    </ModalHeader>
-                    <ModalBody>
-                        <label htmlFor="xl">{t('mah.2')}</label>
-                        <input value={typeName} onChange={(e) => setTypeName(e.target.value)} type="text"
-                               className={'form-control'}
-                               id={'xl'}/>
 
-                        <div className={'mt-1'}>
-                            {
-                                valueList.map((data, index) => {
-                                    return (
-                                        data.delete === false ?
-                                            <div className={'d-flex'}>
-                                                <input value={data.name} className={'form-control mt-2'} type="text"
-                                                       onChange={e => handleChange(e, index)}/>
-                                                {
-                                                    index === 0 ? <button onClick={handleAdd}
-                                                                          className={'btn mt-2 mr-1 btnLeft btn-primary'}>+</button>
-                                                        :
-                                                        <button className={'btn mt-2 btnLeft mr-1 btn-danger'}
-                                                                onClick={() => handleDelete(index,data?.id ? data?.id : null)}>x
-                                                        </button>
-                                                }
-
-                                            </div> : ''
-                                    )
-                                })
-
-                            }
-                        </div>
-
-                    </ModalBody>
-                    <ModalFooter>
-                        <button className={'btn btn-danger'}
-                                onClick={() => setActive(prevState => !prevState)}>{t('Buttons.7')}</button>
-                        <button className={'btn btn-success'} onClick={save}>{t('Buttons.6')}</button>
-                    </ModalFooter>
-                </Modal>
-
-                <ModalLoading isOpen={saveModal}/>
-                <AgreeModal deleteModaltoggle={() => setdeletemodal(prevState => !prevState)} deleteFunc={deleteFunc}
-                            deletemodal={deletemodal}/>
             </div>
-        </div>)
+            <Modal isOpen={active} toggle={toggle}>
+                <ModalHeader>
+                    <AddOrEditText text={t('mah.1')}/>
+                </ModalHeader>
+                <ModalBody>
+                    <label className={'global-label'} htmlFor="xl">{t('mah.2')}</label>
+                    <input value={typeName} onChange={(e) => setTypeName(e.target.value)} type="text"
+                           className={'form-control'} placeholder={'Turni nomi'}
+                           id={'xl'}/>
+
+                    <div className={'mt-1'}>
+                        {
+                            valueList.map((data, index) => {
+                                return (
+                                    data.delete === false ?
+                                        <div className={'d-flex'}>
+                                            <input value={data.name} placeholder={`Tur ${index+1}`} className={'form-control mt-2'} type="text"
+                                                   onChange={e => handleChange(e, index)}/>
+                                            {
+                                                index === 0 ? <button onClick={handleAdd}
+                                                                      className={'btn mt-2 mr-1 btnLeft btn-primary'}>+</button>
+                                                    :
+                                                    <button className={'btn mt-2 btnLeft mr-1 btn-danger'}
+                                                            onClick={() => handleDelete(index,data?.id ? data?.id : null)}>x
+                                                    </button>
+                                            }
+
+                                        </div> : ''
+                                )
+                            })
+
+                        }
+                    </div>
+
+                </ModalBody>
+                <ModalFooter>
+                    <button className={'btn btn-danger'}
+                            onClick={() => setActive(prevState => !prevState)}>{t('Buttons.7')}</button>
+                    <button className={'btn btn-success'} onClick={save}>{t('Buttons.6')}</button>
+                </ModalFooter>
+            </Modal>
+
+            <ModalLoading isOpen={saveModal}/>
+            <AgreeModal deleteModaltoggle={() => setdeletemodal(prevState => !prevState)} deleteFunc={deleteFunc}
+                        deletemodal={deletemodal}/>
+        </div>
+    )
 }
 
 export default connect((MahsulotTurlariReducer, users), {

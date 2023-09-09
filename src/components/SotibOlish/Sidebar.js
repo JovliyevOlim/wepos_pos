@@ -23,7 +23,7 @@ import {
     SuperAdminIcon,
     TradeIcon,
     UsersIcon
-} from "../Svg/svg";
+} from "../Components/svg";
 import MainHeader from "./header/MainHeader";
 
 const {Header, Content, Footer, Sider} = Layout;

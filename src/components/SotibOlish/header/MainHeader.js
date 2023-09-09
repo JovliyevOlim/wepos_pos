@@ -19,7 +19,6 @@ import {BsCheckAll} from 'react-icons/bs'
 import ModalLoading from "../../ModalLoading";
 import moment from "moment";
 import 'moment/locale/uz-latn'
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import avatar from "../../../img/defaul-user-profile.svg"
 import notificationActive from '../../../img/notification-active.svg'
 import notification from '../../../img/notification.svg'
@@ -27,8 +26,8 @@ import uzLanguage from '../../../img/🇺🇿.svg'
 import rusLanguage from '../../../img/🇷🇺.svg'
 import arrowDown from "../../../img/direction-down 01.svg";
 
-import Icon from "@ant-design/icons";
-import {BurgerIcon, EditIcon, LogOutIcon, PersonIcon} from "../../Svg/svg";
+import Icon ,{DeleteOutlined} from "@ant-design/icons";
+import {BurgerIcon, EditIcon, LogOutIcon, PersonIcon} from "../../Components/svg";
 import {changeLanguage} from "i18next";
 import {formatDayDashboard} from "../../../util";
 import {Button} from "antd";
@@ -37,8 +36,6 @@ function MainHeader({
                         deleteNotification,
                         logOutUser,
                         getNotificationAll,
-                        active,
-                        sidebarfunc,
                         notificationReducer,
                         users,
                         getNotification,
@@ -82,10 +79,7 @@ function MainHeader({
         setactiveN2(!activeN2)
     }
 
-    function sidebar() {
-        active(false)
-        sidebarfunc()
-    }
+
 
 
     const {t, i18n} = useTranslation()
@@ -112,9 +106,7 @@ function MainHeader({
         isReadNotification(id)
     }
 
-    function deleteNotificationById(id) {
-        deleteNotification(id)
-    }
+
 
     useEffect(() => {
         // const storageLanguage = localStorage.getItem("i18nextLng")
@@ -128,9 +120,7 @@ function MainHeader({
         getNotificationAll()
     }
 
-    function DeleteAll() {
-        deleteNotification()
-    }
+
 
     function closeModal() {
         toggle3()
@@ -206,7 +196,7 @@ function MainHeader({
                 <div>
                     <div className={'main-notification-img'} onClick={openNotification}>
                         <img className={'img-fluid'}
-                             src={notificationReducer.notificationCount > 0 ? notificationActive : notification}
+                             src={notificationReducer.notificationCount ? notificationActive : notification}
                              alt="notification"/>
                     </div>
                 </div>
@@ -271,7 +261,7 @@ function MainHeader({
                                                                        className={'notification-icon'}/> :
                                                     <BsCheckAll className={'notification-icon2'}/>
                                             }
-                                            <DeleteForeverIcon onClick={() => deleteNotification(item.id)}
+                                            <DeleteOutlined onClick={() => deleteNotification(item.id)}
                                                                className={'notification-icon3'}/>
                                         </div>
                                     </div>

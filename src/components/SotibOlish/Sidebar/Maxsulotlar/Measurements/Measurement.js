@@ -18,8 +18,8 @@ import MeasurementReducer, {
     editMeasurement
 } from "../../../../../reducer/MeasurementReducer";
 import AgreeModal from "../../../../AgreeModal";
-import MainHeaderText from "../../../../Svg/MainHeaderText";
-import {ButtonAnt} from "../../../../Svg/SelectAnt";
+import MainHeaderText from "../../../../Components/MainHeaderText";
+import {ButtonAnt} from "../../../../Components/SelectAnt";
 
 function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement, deleteMeasurement, editMeasurement}) {
 

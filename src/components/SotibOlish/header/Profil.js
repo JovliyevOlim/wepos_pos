@@ -5,12 +5,9 @@ import photoreducer, {savephoto, clearPhotoId, deletePhoto} from "../../../reduc
 import users, {editMyProfile, getSelfInfo} from "../../../reducer/users";
 import {useTranslation} from "react-i18next";
 import {Link, useHistory} from "react-router-dom";
-import Imagecom from "../../Imagecom";
 import {BaseUrl} from "../../../middleware";
-import profil from '../../../img/person-default.png'
 import {toast} from "react-toastify";
 import people from "../../../img/person-default.png";
-import Select from "react-select";
 import ModalLoading from "../../ModalLoading";
 import {useForm} from "react-hook-form";
 

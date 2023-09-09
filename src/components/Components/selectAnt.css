@@ -1,12 +1,18 @@
-.ant-select{
-    height:44px !important;
+.ant-select {
+    height: 44px !important;
     background: #F5F6F6 !important;
     border-radius: 8px !important;
     display: flex !important;
     align-items: center !important;
 }
-.ant-select-selector{
-    font-family: "Inter" ,sans-serif !important;
+
+.ant-select-selection-search-input {
+    font-size: 16px !important;
+    height: 100% !important;
+}
+
+.ant-select-selector {
+    font-family: "Inter", sans-serif !important;
     padding: 9px 18px !important;
     color: #071A33 !important;
     font-size: 14px !important;
@@ -15,33 +21,36 @@
     height: 100% !important;
     line-height: 20px !important;
     background: transparent !important;
-    border: none!important;
+    border: none !important;
     outline: none !important;
 }
-.ant-select-selection-item{
-    display:flex !important;
+
+.ant-select-selection-item {
+    display: flex !important;
     text-align: start !important;
     justify-content: center !important;
     align-items: center !important;
 }
-.selectLabel{
+
+.selectLabel {
     color: #071A33;
-    font-family: 'Inter',sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     margin-bottom: 10px;
 }
-.search-ant-group{
-    height:44px;
+
+.search-ant-group {
+    height: 44px;
     background: #F5F6F6;
     border-radius: 8px;
     display: flex;
     justify-content: start;
-    align-items:center;
+    align-items: center;
     gap: 10px;
-    font-family: "Inter" ,sans-serif !important;
+    font-family: "Inter", sans-serif !important;
     padding: 9px 18px !important;
     color: #071A33 !important;
     font-size: 14px !important;
@@ -49,13 +58,15 @@
     font-weight: 500 !important;
     line-height: 20px !important;
 }
-.ant-input-search{
-    height:44px !important;
+
+.ant-input-search {
+    height: 44px !important;
     background: #F5F6F6 !important;
     border-radius: 8px !important;
 }
-.input-ant{
-    font-family: "Inter" ,sans-serif !important;
+
+.input-ant {
+    font-family: "Inter", sans-serif !important;
     padding: 7px 9px !important;
     color: #071A33 !important;
     font-size: 14px !important;
@@ -63,8 +74,9 @@
     font-weight: 500 !important;
     line-height: 20px !important;
 }
-.ant-input-search input{
-    font-family: "Inter" ,sans-serif !important;
+
+.ant-input-search input {
+    font-family: "Inter", sans-serif !important;
     padding: 7px 9px !important;
     color: #071A33 !important;
     font-size: 14px !important;
@@ -72,26 +84,34 @@
     font-weight: 500 !important;
     line-height: 20px !important;
 }
-.ant-input-clear-icon svg{
-    width:20px!important;
-    height:20px !important;
+
+.ant-input-clear-icon svg {
+    width: 20px !important;
+    height: 20px !important;
 }
-.ant-input-search-button{
-    height:43px !important;
+
+.ant-input-search-button {
+    height: 43px !important;
 }
-.ant-input-search-button svg{
-    width:20px!important;
-    height:20px !important;
+
+.ant-input-search-button svg {
+    width: 20px !important;
+    height: 20px !important;
 }
-.button-ant{
+
+.button-ant {
     display: flex !important;
     align-items: center !important;
-    font-family: "Inter" ,sans-serif !important;
+    font-family: "Inter", sans-serif !important;
     padding: 20px 20px !important;
     font-size: 14px !important;
     font-style: normal !important;
     font-weight: 500 !important;
     line-height: 20px !important;
-    border-radius:10px !important;
+    border-radius: 10px !important;
     color: #FFFFFF;
+}
+
+.ant-table-wrapper table {
+    width: max-content !important;
 }

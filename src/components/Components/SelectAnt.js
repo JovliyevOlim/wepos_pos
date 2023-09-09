@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Select, Input, Space, Button} from 'antd';
+import {Image, Select, Input, Space, Button,Tooltip} from 'antd';
 import './selectAnt.css'
 import arrowDown from "../../img/direction-down 01.svg";
 import {camelize} from "../../util";
@@ -76,3 +76,15 @@ export function ButtonAnt({onClick,icon,type,text,bgColor}) {
     );
 }
 
+export function TableButton({onClick,icon,type,danger}) {
+
+
+    return (
+        <>
+            <Tooltip title="prompt text" color={'blue'} key={'blue'}>
+                <Button type={type} onClick={onClick}  shape="round" icon={icon} size={'large'} danger={danger} />
+            </Tooltip>
+
+        </>
+    );
+}

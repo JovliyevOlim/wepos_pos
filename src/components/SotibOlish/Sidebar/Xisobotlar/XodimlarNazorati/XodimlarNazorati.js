@@ -8,9 +8,9 @@ import {IconButton, TablePagination} from "@mui/material";
 import UserHistoryReducer,{getUserHistoryByBranch,getUserHistoryByBusiness} from "../reducer/UserHistoryReducer";
 import moment from "moment";
 import 'moment/locale/uz-latn'
-import MainHeaderText from "../../../../Svg/MainHeaderText";
-import CardBody from "../../../../Svg/CardBody";
-import SelectAnt from "../../../../Svg/SelectAnt";
+import MainHeaderText from "../../../../Components/MainHeaderText";
+import CardBody from "../../../../Components/CardBody";
+import SelectAnt from "../../../../Components/SelectAnt";
 function XodimlarNazorati({users, XodimReducer, getUserForFiltering, getUserForFilteringBusiness,
                               UserHistoryReducer,getUserHistoryByBranch,getUserHistoryByBusiness
                           }) {

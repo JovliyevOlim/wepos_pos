@@ -4,15 +4,15 @@ import {connect} from "react-redux";
 import users from "../../../../../reducer/users";
 import MaxsulotlarRoyxariReducer, {saveProductByExcelFile} from "../reducer/MaxsulotlarRoyxariReducer";
 import Example from "../../../../../file/shablonProducts.xlsx"
-import img from '../../../../../img/Jami2.svg'
 import ModalLoading from "../../../../ModalLoading";
 import {toast} from "react-toastify";
 import {useHistory} from "react-router-dom";
-import CardBody from "../../../../Svg/CardBody";
-import MainHeaderText from "../../../../Svg/MainHeaderText";
-import SelectAnt, {ButtonAnt} from "../../../../Svg/SelectAnt";
+import CardBody from "../../../../Components/CardBody";
+import MainHeaderText from "../../../../Components/MainHeaderText";
+import SelectAnt, {ButtonAnt} from "../../../../Components/SelectAnt";
 import {CloudDownloadOutlined, UploadOutlined} from "@ant-design/icons";
 import {Upload} from "antd";
+import {useTranslation} from "react-i18next";
 
 
 function MahsulotImport({users, saveProductByExcelFile, MaxsulotlarRoyxariReducer}) {
@@ -22,6 +22,7 @@ function MahsulotImport({users, saveProductByExcelFile, MaxsulotlarRoyxariReduce
     const [saveBoolean, setSaveBoolean] = useState(false)
     const [file, setfile] = useState(null)
     const history = useHistory()
+    const {t} = useTranslation()
 
 
 
@@ -62,25 +63,25 @@ function MahsulotImport({users, saveProductByExcelFile, MaxsulotlarRoyxariReduce
 
     return (
         <div>
-            <div className="mb-4 d-flex justify-content-between align-items-center">
+            <div className="d-flex flex-wrap justify-content-between align-items-end">
                 <MainHeaderText text={t('as.13')}/>
-                <a href={Example} download>
+                <a href={Example} download style={{marginTop:'20px'}}>
                     <ButtonAnt type={'primary'} text={t('as.14')} icon={<CloudDownloadOutlined className={'excel-import-icon'}/>}/>
                 </a>
             </div>
             <CardBody>
-                <div className="col-md-12 mb-4 gap-2 d-flex align-items-end ">
-                    <div className="col-md-3">
+                <div className="col-md-12 mb-4 gap-2 gap-sm-0 d-flex flex-wrap align-items-end ">
+                    <div className="col-12 col-sm-6  p-sm-2 col-md-6 col-lg-4">
                         <SelectAnt name={t('ol.3')} all={t('ol.49')} permission={true} selectList={users.branches} onChange={(e) => setbranch(e === '' ? null : e)} />
                     </div>
-                    <div className="col-md-3">
-                        <form>
+                    <div className="col-12 col-sm-6 p-sm-2  col-md-6">
                             <Upload
                                 customRequest={async (options) => {
                                     const { onSuccess, file } = options;
                                     setfile(file)
                                     onSuccess(file);
                                 }}
+                                style={{width: '100%'}}
                                 defaultFileList={file}
                                 onRemove={()=>setfile([])}
                                 listType="name"
@@ -88,7 +89,6 @@ function MahsulotImport({users, saveProductByExcelFile, MaxsulotlarRoyxariReduce
                             >
                                 <ButtonAnt icon={<UploadOutlined/>} type={'primary'} text={t('as.15')}/>
                             </Upload>
-                        </form>
                     </div>
                 </div>
                 <div className="col-md-12 d-flex align-items-center justify-content-end">

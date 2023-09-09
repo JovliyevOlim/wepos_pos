@@ -116,10 +116,6 @@ function Home({saveusers, users, changeerror,rememberMe}) {
                                 <p className={'p'}>
                                     {t('Welcome.4')}
                                 </p>
-
-
-
-
                             </div>
                             <div className={`kirish-input`}>
                                 <input onChange={login} value={inputlogin} type="text" className={'form-control login'}
@@ -158,9 +154,9 @@ function Home({saveusers, users, changeerror,rememberMe}) {
                         </div>
                     </div>
                 </div>
-                <div className={'mt-5'}>
-                    <Bottom/>
-                </div>
+                {/*<div className={'mt-5'}>*/}
+                {/*    <Bottom/>*/}
+                {/*</div>*/}
             </div>
         </div>
     )

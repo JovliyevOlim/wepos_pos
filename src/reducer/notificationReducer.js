@@ -5,7 +5,7 @@ import {toast} from "react-toastify";
 export const slice = createSlice({
     name: 'notification',
     initialState: {
-        notificationCount: 0,
+        notificationCount: false,
         notifications: [],
         current: false,
         message: '',

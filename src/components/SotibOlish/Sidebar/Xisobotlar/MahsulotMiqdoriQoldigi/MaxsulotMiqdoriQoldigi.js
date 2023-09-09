@@ -10,9 +10,9 @@ import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 import MaxsulotxisobotReducer,{getLossProductByBusiness,getLossProductByBranch} from "../reducer/MaxsulotxisobotReducer";
 import moment from "moment";
 import 'moment/locale/uz-latn'
-import MainHeaderText from "../../../../Svg/MainHeaderText";
-import CardBody from "../../../../Svg/CardBody";
-import SelectAnt, {SearchAnt} from "../../../../Svg/SelectAnt";
+import MainHeaderText from "../../../../Components/MainHeaderText";
+import CardBody from "../../../../Components/CardBody";
+import SelectAnt, {SearchAnt} from "../../../../Components/SelectAnt";
 function MaxsulotMiqdoriQoldigi({
                                     users, XodimReducer, getUserForFiltering, getUserForFilteringBusiness,
                                     MaxsulotxisobotReducer,getLossProductByBusiness,getLossProductByBranch,

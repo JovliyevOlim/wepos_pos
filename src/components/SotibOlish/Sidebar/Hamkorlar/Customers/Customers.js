@@ -43,9 +43,9 @@ import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import {camelize} from "../../../../../util";
 import allbusinessreducer, {getOneBusiness} from "../../SUPERADMIN/reducers/allbusinessreducer";
-import MainHeaderText, {AddOrEditText} from "../../../../Svg/MainHeaderText";
-import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../Svg/SelectAnt";
-import CardBody from "../../../../Svg/CardBody";
+import MainHeaderText, {AddOrEditText} from "../../../../Components/MainHeaderText";
+import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../Components/SelectAnt";
+import CardBody from "../../../../Components/CardBody";
 
 function Customers({
                        getCustomers,

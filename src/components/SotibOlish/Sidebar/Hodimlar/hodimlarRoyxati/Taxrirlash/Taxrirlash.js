@@ -16,7 +16,7 @@ import ModalLoading from "../../../../../ModalLoading";
 import people from '../../../../../../img/person.png'
 import {BaseUrl} from "../../../../../../middleware";
 import {toast} from "react-toastify";
-import CardBody from "../../../../../Svg/CardBody";
+import CardBody from "../../../../../Components/CardBody";
 
 function Taxrirlash({
                         getLavozim,
