@@ -5,7 +5,6 @@ import users from "../../../../../reducer/users";
 import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
 import XodimReducer, {getUserForFiltering, getUserForFilteringBusiness} from "../../Hodimlar/reducer/XodimReducer";
-import {IconButton, TablePagination} from "@mui/material";
 import PayReducer, {getPay} from "../../../../../reducer/PayReducer";
 import balanceReducer, {
     getBalanceHistoryByBranch,
@@ -13,9 +12,10 @@ import balanceReducer, {
 } from "../../../../../reducer/balanceReducer";
 import moment from "moment";
 import 'moment/locale/uz-latn'
-import MainHeaderText from "../../../../Svg/MainHeaderText";
-import CardBody from "../../../../Svg/CardBody";
-import SelectAnt from "../../../../Svg/SelectAnt";
+import MainHeaderText from "../../../../Components/MainHeaderText";
+import CardBody from "../../../../Components/CardBody";
+import SelectAnt from "../../../../Components/SelectAnt";
+import {Pagination} from "antd";
 
 function BalanceHistory({
                             users,
@@ -55,12 +55,13 @@ function BalanceHistory({
         }
     }
 
-    const handlePageChange = (_event, newPage) => {
-        setPage(newPage);
+    const handlePageChange = (page) => {
+        setPage(page-1);
     };
-    const handleLimitChange = (event) => {
+    const handleLimitChange = (value,size) => {
+        console.log(size)
         setPage(0)
-        setSize(parseInt(event.target.value));
+        setSize(parseInt(size));
     };
 
 
@@ -182,20 +183,25 @@ function BalanceHistory({
                                             }
                                             </tbody>
                                         </table>
-                                        <TablePagination
-                                            component="div"
-                                            count={balanceReducer.balanceHistory?.totalItem}
-                                            onPageChange={handlePageChange}
-                                            onRowsPerPageChange={handleLimitChange}
-                                            page={page}
-                                            rowsPerPageOptions={[5, 10, 15]}
-                                            rowsPerPage={size}
-                                        />
+                                        <div className={'d-flex justify-content-end'}>
+                                            <Pagination
+                                                total={balanceReducer.balanceHistory?.totalItem}
+                                                showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
+                                                pageSize={size}
+                                                showSizeChanger
+                                                onShowSizeChange={handleLimitChange}
+                                                pageSizeOptions={[5, 10, 15]}
+                                                current={page+1}
+                                                onChange={handlePageChange}
+                                            />
+                                        </div>
+
                                     </div> : <div>
                                         <h4 className={'text-center'}>{balanceReducer.message}</h4>
                                     </div> :
                                 <Loading/> : ''
                     }
+
                 </div>
             </div>
         </div>

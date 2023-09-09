@@ -3,6 +3,7 @@
     height: 24px !important;
 }
 .ant-upload{
+    width: 100%;
     display: flex !important;
     align-items: center !important;
     flex-wrap: wrap !important;

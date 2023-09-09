@@ -1,4 +1,4 @@
-import './HodimlarRoyhati.css';
+    import './HodimlarRoyhati.css';
 import {Link} from 'react-router-dom';
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
@@ -9,25 +9,63 @@ import XodimReducer, {
 } from "../reducer/XodimReducer";
 import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
-import {
-    Avatar,
-    Box, Card,
-    IconButton,
-     Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow,
-     Tooltip, Typography
-} from "@mui/material";
+
 import ModalLoading from "../../../../ModalLoading";
-import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
-import LaunchTwoToneIcon from "@mui/icons-material/LaunchTwoTone";
-import EditIcon from '@mui/icons-material/Edit';
-import Label from './Label'
 import {BaseUrl} from "../../../../../middleware";
 import photoreducer, {savephoto} from "../../../../../reducer/photoreducer";
 import AgreeModal from "../../../../AgreeModal";
 import LavozimReducer, {getLavozim} from "../reducer/LavozimReducer";
-import MainHeaderText from "../../../../Svg/MainHeaderText";
-import CardBody from "../../../../Svg/CardBody";
-import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../Svg/SelectAnt";
+import MainHeaderText from "../../../../Components/MainHeaderText";
+import CardBody from "../../../../Components/CardBody";
+import SelectAnt, {ButtonAnt, SearchAnt, TableButton} from "../../../../Components/SelectAnt";
+import CommonTable from "../../../../Components/CommonTable";
+import {Avatar} from "antd";
+
+    // <TableCell align="center">
+    //     <Tooltip title={t("Ko'rish")} arrow>
+    //         <Link to={'/main/profil/' + user.id}>
+    //             <IconButton
+    //                 color="primary"
+    //             >
+    //                 <LaunchTwoToneIcon
+    //                     fontSize="small"/>
+    //             </IconButton>
+    //         </Link>
+    //     </Tooltip>
+    //     {
+    //         users.editUser ?
+    //             <Tooltip title={t('ol.78')} arrow>
+    //                 <Link
+    //                     to={'/main/addUser/' + user.id}>
+    //                     <IconButton
+    //                         color="primary"
+    //                     >
+    //                         <EditIcon fontSize="small"/>
+    //                     </IconButton>
+    //                 </Link>
+    //             </Tooltip> : ''
+    //     }
+    //     {
+    //         users.deleteUser ?
+    //             <Tooltip title={t('ol.79')} arrow>
+    //                 <IconButton
+    //                     onClick={() => deleteUserById(user.id)}
+    //                     color="primary"
+    //                 >
+    //                     <DeleteTwoToneIcon
+    //                         fontSize="small"/>
+    //                 </IconButton>
+    //             </Tooltip> : ''
+    //     }
+    // </TableCell>
+
+    // <TableCell>{t('ol.74')}</TableCell>
+    // <TableCell>{t('ol.75')}</TableCell>
+    // <TableCell>{t('ol.76')}</TableCell>
+    // <TableCell>{t('ol.77')}</TableCell>
+    // <TableCell align="center">{t('ol.20')}</TableCell>
+
+
 
 function HodimlarRoyhati({
                              getXodim,
@@ -46,6 +84,60 @@ function HodimlarRoyhati({
     const [deleteModal, setDeleteModal] = useState(false)
     const [deleteId, setDeleteId] = useState(null)
 
+    const columns = [
+        {
+            title: '№',
+            dataIndex: 'index',
+            rowScope: 'row',
+            width: 20,
+        },
+        {
+            title: t('ol.74'),
+            width: 50,
+            dataIndex: 'username',
+            key: 'username',
+        },
+        {
+            title: t('ol.75'),
+            width: 80,
+            dataIndex: 'fio',
+            key: 'fio',
+            render: (item,values) => <div className={'d-flex gap-2 justify-content-between align-items-center'}>
+                <div>
+                    {
+                        values.photoId ?
+                            <Avatar size="large"  src={`${BaseUrl}/attachment/download/${values?.photoId}`}  className={'d-flex justify-content-center align-items-center'} />
+                            :<Avatar>{item.substring(0,1).toUpperCase()}</Avatar>
+                    }
+                </div>
+                <div>
+                    <p className={'m-0'}>{item}</p>
+                </div>
+            </div>,
+        },
+        {
+            title: t('ol.76'),
+            dataIndex: 'roleName',
+            key: 'roleName',
+            width: 50,
+        },
+        {
+            title: t('ol.77'),
+            dataIndex: 'phoneNumber',
+            key: 'phoneNumber',
+            width: 100,
+        },
+        {
+            title: t('ol.20'),
+            key: 'operation',
+            width: 150,
+            render:()=> <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
+                    <TableButton/>
+            </div>,
+        },
+    ];
+
+
     function deleteUserById(id) {
         setDeleteModal(true)
         setDeleteId(id)
@@ -61,34 +153,16 @@ function HodimlarRoyhati({
     const [limit, setLimit] = useState(5);
     const [query, setQuery] = useState(null)
 
-    const handlePageChange = (_event, newPage) => {
-        setPage(newPage);
+    const handlePageChange = (newPage) => {
+        setPage(newPage-1)
     };
-    const handleLimitChange = (event) => {
+    const handleLimitChange = (event,size) => {
         setPage(0)
-        setLimit(parseInt(event.target.value));
+        setLimit(parseInt(size));
     };
     const handleQueryChange = (event) => {
         setQuery(event.target.value);
     };
-
-    const [selectedItems, setSelectedUsers] = useState([]);
-    const selectedSomeUsers =
-        selectedItems.length > 0 && selectedItems.length < XodimReducer.xodimlar.length;
-    const selectedAllUsers = selectedItems.length === XodimReducer.xodimlar?.length;
-    const handleSelectAllUsers = (event) => {
-        setSelectedUsers(event.target.checked ? XodimReducer.xodimlar.map((user) => user.id) : []);
-    };
-    const handleSelectOneInvoice = (event, invoiceId) => {
-        if (!selectedItems.includes(invoiceId)) {
-            setSelectedUsers((prevSelected) => [...prevSelected, invoiceId]);
-        } else {
-            setSelectedUsers((prevSelected) =>
-                prevSelected.filter((id) => id !== invoiceId)
-            );
-        }
-    };
-
 
     useEffect(() => {
         if (XodimReducer.saveUserBool) {
@@ -178,149 +252,16 @@ function HodimlarRoyhati({
                     users.getUserAdmin || users.getUser ?
                         loading ?
                             XodimReducer.users?.list?.length > 0 ?
-                                <div>
-                                    <Card>
-                                        <>
-                                            <TableContainer>
-                                                <Table>
-                                                    <TableHead>
-                                                        <TableRow>
-                                                            <TableCell>Tr</TableCell>
-                                                            {/*<TableCell>*/}
-                                                            {/*    <Tooltip*/}
-                                                            {/*        arrow*/}
-                                                            {/*        placement="top"*/}
-                                                            {/*        title={t('All')}*/}
-                                                            {/*    >*/}
-                                                            {/*        <Checkbox*/}
-                                                            {/*            checked={selectedAllUsers}*/}
-                                                            {/*            indeterminate={selectedSomeUsers}*/}
-                                                            {/*            onChange={handleSelectAllUsers}*/}
-                                                            {/*        />*/}
-                                                            {/*    </Tooltip>*/}
-                                                            {/*</TableCell>*/}
-                                                            <TableCell>{t('ol.74')}</TableCell>
-                                                            <TableCell>{t('ol.75')}</TableCell>
-                                                            <TableCell>{t('ol.76')}</TableCell>
-                                                            <TableCell>{t('ol.77')}</TableCell>
-                                                            <TableCell align="center">{t('ol.20')}</TableCell>
-                                                        </TableRow>
-                                                    </TableHead>
-                                                    <TableBody>
-                                                        {XodimReducer.users?.list?.map((user, index) => {
-                                                            const isInvoiceSelected = selectedItems.includes(
-                                                                user.id
-                                                            );
-                                                            return (
-                                                                <TableRow selected={isInvoiceSelected} hover
-                                                                          key={user.id}>
-                                                                    <TableCell>
-                                                                        <Typography variant="h5">
-                                                                            {index + 1}
-                                                                        </Typography>
-                                                                    </TableCell>
-                                                                    {/*<TableCell>*/}
-                                                                    {/*    <Checkbox*/}
-                                                                    {/*        checked={isInvoiceSelected}*/}
-                                                                    {/*        // indeterminate={selectedSomeUsers}*/}
-                                                                    {/*        onChange={(e) =>*/}
-                                                                    {/*            handleSelectOneInvoice(e, user.id)*/}
-                                                                    {/*        }*/}
-                                                                    {/*        value={isInvoiceSelected}*/}
-                                                                    {/*    />*/}
-                                                                    {/*</TableCell>*/}
-                                                                    <TableCell>
-                                                                        <Typography variant="h5">
-                                                                            {user.username}
-                                                                        </Typography>
-                                                                    </TableCell>
-                                                                    <TableCell>
-                                                                        <Box display="flex" alignItems="center">
-                                                                            <Avatar
-                                                                                sx={{
-                                                                                    mr: 1
-                                                                                }}
-                                                                                src={user?.photoId
-                                                                                    ? `${BaseUrl}/attachment/download/${user?.photoId
-                                                                                    }` : ''}
-                                                                            />
-                                                                            <Box>
-                                                                                <Typography noWrap variant="subtitle2">
-                                                                                    {user.fio}
-                                                                                </Typography>
-                                                                            </Box>
-                                                                        </Box>
-                                                                    </TableCell>
-                                                                    <TableCell>
-                                                                        <Label
-                                                                            color={user.roleName === 'Admin' ? 'error' : user.roleName === 'Manager' ? 'info' :
-                                                                                user.roleName === 'Employee' ? 'warning' : 'secondary'
-                                                                            }>{user.roleName}</Label>
-                                                                    </TableCell>
-                                                                    <TableCell>{user.phoneNumber}</TableCell>
-                                                                    <TableCell align="center">
-                                                                        <Tooltip title={t("Ko'rish")} arrow>
-                                                                            <Link to={'/main/profil/' + user.id}>
-                                                                                <IconButton
-                                                                                    color="primary"
-                                                                                >
-                                                                                    <LaunchTwoToneIcon
-                                                                                        fontSize="small"/>
-                                                                                </IconButton>
-                                                                            </Link>
-                                                                        </Tooltip>
-                                                                        {
-                                                                            users.editUser ?
-                                                                                <Tooltip title={t('ol.78')} arrow>
-                                                                                    <Link
-                                                                                        to={'/main/addUser/' + user.id}>
-                                                                                        <IconButton
-                                                                                            color="primary"
-                                                                                        >
-                                                                                            <EditIcon fontSize="small"/>
-                                                                                        </IconButton>
-                                                                                    </Link>
-                                                                                </Tooltip> : ''
-                                                                        }
-                                                                        {
-                                                                            users.deleteUser ?
-                                                                                <Tooltip title={t('ol.79')} arrow>
-                                                                                    <IconButton
-                                                                                        onClick={() => deleteUserById(user.id)}
-                                                                                        color="primary"
-                                                                                    >
-                                                                                        <DeleteTwoToneIcon
-                                                                                            fontSize="small"/>
-                                                                                    </IconButton>
-                                                                                </Tooltip> : ''
-                                                                        }
-                                                                    </TableCell>
-                                                                </TableRow>
-                                                            );
-                                                        })}
-                                                    </TableBody>
-                                                </Table>
-                                            </TableContainer>
-
-                                            <Box p={2}>
-                                                <TablePagination
-                                                    component="div"
-                                                    count={XodimReducer.users?.totalItem}
-                                                    onPageChange={handlePageChange}
-                                                    onRowsPerPageChange={handleLimitChange}
-                                                    page={page}
-                                                    rowsPerPageOptions={[5, 10, 15]}
-                                                    rowsPerPage={limit}
-                                                />
-                                            </Box>
-
-                                        </>
-                                    </Card>
-                                </div> : <div className={'border border-2'}>
+                                <CardBody>
+                                    <CommonTable data={XodimReducer.users?.list?.map((item,index)=>{
+                                        return  {...item,index:index + 1+(page*limit)}
+                                    })} columns={columns} total={XodimReducer.users?.totalItem}
+                                                 page={page} size={limit} handlePageChange={handlePageChange} handleLimitChange={handleLimitChange}
+                                    />
+                                </CardBody> : <div className={'border border-2'}>
                                     <h4 className={'text-center'}>{XodimReducer.message}</h4>
                                 </div>
                             : <Loading/> : ''
-
                 }
 
             <ModalLoading isOpen={saveModal}/>

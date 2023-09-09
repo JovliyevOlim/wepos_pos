@@ -6,9 +6,9 @@ import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
 import {Typography} from 'antd';
 import balanceReducer, {getBalanceByBranch, getBalanceByBusiness,changeBalance} from "../../../../../reducer/balanceReducer";
-import MainHeaderText from "../../../../Svg/MainHeaderText";
-import CardBody from "../../../../Svg/CardBody";
-import SelectAnt from "../../../../Svg/SelectAnt";
+import MainHeaderText from "../../../../Components/MainHeaderText";
+import CardBody from "../../../../Components/CardBody";
+import SelectAnt from "../../../../Components/SelectAnt";
 import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 
 const {Title} = Typography;

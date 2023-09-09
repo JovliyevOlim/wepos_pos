@@ -24,9 +24,9 @@ import {TablePagination} from "@mui/material";
 import AgreeModal from "../../../../AgreeModal";
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
-import MainHeaderText, {AddOrEditText} from "../../../../Svg/MainHeaderText";
-import {ButtonAnt, SearchAnt} from "../../../../Svg/SelectAnt";
-import CardBody from "../../../../Svg/CardBody";
+import MainHeaderText, {AddOrEditText} from "../../../../Components/MainHeaderText";
+import {ButtonAnt, SearchAnt} from "../../../../Components/SelectAnt";
+import CardBody from "../../../../Components/CardBody";
 import {camelize} from "../../../../../util";
 
 function Taminotchilar({

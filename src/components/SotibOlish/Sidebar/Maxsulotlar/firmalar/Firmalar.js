@@ -12,8 +12,8 @@ import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
 import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
-import MainHeaderText from "../../../../Svg/MainHeaderText";
-import {ButtonAnt} from "../../../../Svg/SelectAnt";
+import MainHeaderText from "../../../../Components/MainHeaderText";
+import {ButtonAnt} from "../../../../Components/SelectAnt";
 
 function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma, FirmaReducer,}) {
 

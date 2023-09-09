@@ -1,5 +1,4 @@
 import './secondPage.css'
-import Logo from "../../../img/LOGO.png";
 import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import Header from "../../header/Header";

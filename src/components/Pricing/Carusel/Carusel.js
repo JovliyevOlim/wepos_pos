@@ -163,13 +163,4 @@ function Carusel({getTariffChoose, tariffReducer, saveinfo, shopreducer, saveiD}
     );
 }
 
-const rootElement = document.getElementById("root");
-// const root = ReactDOMClient.createRoot(rootElement);
-
-// root.render(
-//     <StrictMode>
-//         <App />
-//     </StrictMode>
-// );
-
 export default connect((tariffReducer, shopreducer), {getTariffChoose, saveinfo, saveiD})(Carusel)

@@ -36,9 +36,9 @@ import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
 import MeasurementReducer, {getMeasurement} from "../../../../../reducer/MeasurementReducer";
 import axios from "axios";
-import MainHeaderText from "../../../../Svg/MainHeaderText";
-import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../Svg/SelectAnt";
-import CardBody from "../../../../Svg/CardBody";
+import MainHeaderText from "../../../../Components/MainHeaderText";
+import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../Components/SelectAnt";
+import CardBody from "../../../../Components/CardBody";
 import {FileExcelOutlined} from "@ant-design/icons";
 import {Tag} from "antd";
 
@@ -423,25 +423,29 @@ function MaxsulotlarRoyxati({
                 {
                     MaxsulotlarRoyxariReducer.productTableSearch?.profitDto &&
                     <CardBody>
-                        <div className="col-md-12 d-flex justify-content-around align-items-center flex-wrap">
-                            <Tag className={'productStatistic'} color="red">
+                        <div className="col-md-12 gap-2 gap-sm-0 d-flex flex-wrap align-items-center flex-wrap">
+                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-4"><Tag className={'productStatistic'} color="red">
                                 <p className={'p-0 m-2'}>{t('as.104')}</p>
                                 <h5>{MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice}{t('as.21')}</h5>
                             </Tag>
-                            <Tag className={'productStatistic'} color="geekblue">
+                            </div>
+                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-4"><Tag className={'productStatistic'} color="geekblue">
                                 <p className={'p-0 m-2'}> {t('as.105')}</p>
                                 <h5> {MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice}{t('as.21')}</h5>
                             </Tag>
-                            <Tag className={'productStatistic'} color="green">
+                            </div>
+                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-2"><Tag className={'productStatistic'} color="green">
                                 <p className={'p-0 m-2'}>{t('as.106')}</p>
-                                <h5>{MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice-MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice}{t('as.21')}</h5>
+                                <h5>{MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice - MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice}{t('as.21')}</h5>
                             </Tag>
-                            <Tag className={'productStatistic'} color="cyan">
+                            </div>
+                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-2"><Tag className={'productStatistic'} color="cyan">
                                 <p className={'p-0 m-2'}>{t('as.107')}</p>
                                 <h5>
                                     {((parseFloat(MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice / MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice) - 1) * 100).toFixed(2)} %
                                 </h5>
                             </Tag>
+                            </div>
                         </div>
                     </CardBody>
                 }
@@ -454,317 +458,317 @@ function MaxsulotlarRoyxati({
 
                         <>{
 
-                                loading ?
-                                    MaxsulotlarRoyxariReducer.productTableSearch?.list?.length > 0 ?
-                                        <Box pb={3}>
-                                            {
-                                                selectedItems.length > 0 &&
-                                                <button onClick={() => {
-                                                    deleteMaxsulotRuyxatiByIds(selectedItems)
-                                                    setSaveModal(true)
-                                                }}
-                                                        className={'btn btn-danger mt-4 d-flex justify-content-end'}>{t('as.115')}</button>
-                                            }
-                                            <TableContainer>
-                                                {/*<TableWrapper>*/}
-                                                <TableHeadWrapper>
-                                                    <TableRow>
-                                                        <TableCell>T/R</TableCell>
-                                                        <TableCell>
-                                                            <Tooltip
-                                                                arrow
-                                                                placement="top"
-                                                                title={t('as.108')}
-                                                            >
-                                                                <Checkbox
-                                                                    checked={selectedAllUsers}
-                                                                    indeterminate={selectedSomeUsers}
-                                                                    onChange={handleSelectAllUsers}
-                                                                />
-                                                            </Tooltip>
-                                                        </TableCell>
+                            loading ?
+                                MaxsulotlarRoyxariReducer.productTableSearch?.list?.length > 0 ?
+                                    <Box pb={3}>
+                                        {
+                                            selectedItems.length > 0 &&
+                                            <button onClick={() => {
+                                                deleteMaxsulotRuyxatiByIds(selectedItems)
+                                                setSaveModal(true)
+                                            }}
+                                                    className={'btn btn-danger mt-4 d-flex justify-content-end'}>{t('as.115')}</button>
+                                        }
+                                        <TableContainer>
+                                            {/*<TableWrapper>*/}
+                                            <TableHeadWrapper>
+                                                <TableRow>
+                                                    <TableCell>T/R</TableCell>
+                                                    <TableCell>
+                                                        <Tooltip
+                                                            arrow
+                                                            placement="top"
+                                                            title={t('as.108')}
+                                                        >
+                                                            <Checkbox
+                                                                checked={selectedAllUsers}
+                                                                indeterminate={selectedSomeUsers}
+                                                                onChange={handleSelectAllUsers}
+                                                            />
+                                                        </Tooltip>
+                                                    </TableCell>
 
-                                                        <TableCell align="left">{t('as.109')}</TableCell>
-                                                        <TableCell align="left">{t('as.50')}</TableCell>
-                                                        <TableCell align="center">{t('as.110')}</TableCell>
-                                                        <TableCell align="center">{t('as.111')}</TableCell>
-                                                        <TableCell align="center">{t('as.82')}</TableCell>
-                                                        <TableCell align="center">{t('as.84')}</TableCell>
-                                                        <TableCell align="center">{t('as.70')}</TableCell>
-                                                        <TableCell align="center">{t('as.112')}</TableCell>
-                                                        <TableCell align="center">{t('as.113')}</TableCell>
-                                                        <TableCell align="center">{t('as.6')}</TableCell>
-                                                    </TableRow>
-                                                </TableHeadWrapper>
-                                                <TableBody>
-                                                    {
-                                                        MaxsulotlarRoyxariReducer.productTableSearch?.list.map((item, index) => {
-                                                            const isInvoiceSelected = selectedItems.includes(
-                                                                item.id
-                                                            );
-                                                            return (
-                                                                <TableRow key={item.id}>
-                                                                    <TableCell>
-                                                                        <Box>
-                                                                            <Typography
-                                                                                variant="h4">#{(page * rowsPerPage) + index + 1}</Typography>
-                                                                        </Box>
-                                                                    </TableCell>
+                                                    <TableCell align="left">{t('as.109')}</TableCell>
+                                                    <TableCell align="left">{t('as.50')}</TableCell>
+                                                    <TableCell align="center">{t('as.110')}</TableCell>
+                                                    <TableCell align="center">{t('as.111')}</TableCell>
+                                                    <TableCell align="center">{t('as.82')}</TableCell>
+                                                    <TableCell align="center">{t('as.84')}</TableCell>
+                                                    <TableCell align="center">{t('as.70')}</TableCell>
+                                                    <TableCell align="center">{t('as.112')}</TableCell>
+                                                    <TableCell align="center">{t('as.113')}</TableCell>
+                                                    <TableCell align="center">{t('as.6')}</TableCell>
+                                                </TableRow>
+                                            </TableHeadWrapper>
+                                            <TableBody>
+                                                {
+                                                    MaxsulotlarRoyxariReducer.productTableSearch?.list.map((item, index) => {
+                                                        const isInvoiceSelected = selectedItems.includes(
+                                                            item.id
+                                                        );
+                                                        return (
+                                                            <TableRow key={item.id}>
+                                                                <TableCell>
+                                                                    <Box>
+                                                                        <Typography
+                                                                            variant="h4">#{(page * rowsPerPage) + index + 1}</Typography>
+                                                                    </Box>
+                                                                </TableCell>
 
-                                                                    <TableCell>
-                                                                        <Checkbox
-                                                                            checked={isInvoiceSelected}
-                                                                            // indeterminate={selectedSomeUsers}
-                                                                            onChange={(e) =>
-                                                                                handleSelectOneInvoice(e, item.id)
-                                                                            }
-                                                                            value={isInvoiceSelected}
+                                                                <TableCell>
+                                                                    <Checkbox
+                                                                        checked={isInvoiceSelected}
+                                                                        // indeterminate={selectedSomeUsers}
+                                                                        onChange={(e) =>
+                                                                            handleSelectOneInvoice(e, item.id)
+                                                                        }
+                                                                        value={isInvoiceSelected}
+                                                                    />
+                                                                </TableCell>
+
+                                                                <TableCell>
+                                                                    <Box display="flex" alignItems="center">
+                                                                        <Avatar
+                                                                            variant="square"
+                                                                            sx={{
+                                                                                height: 'auto',
+                                                                                width: 80
+                                                                            }}
+                                                                            src={item.photoId ? `${BaseUrl}/attachment/download/${item.photoId}` : ''}
                                                                         />
-                                                                    </TableCell>
-
-                                                                    <TableCell>
-                                                                        <Box display="flex" alignItems="center">
-                                                                            <Avatar
-                                                                                variant="square"
+                                                                        <Box pl={1}>
+                                                                            <Typography
+                                                                                color="text.primary"
+                                                                                underline="none"
+                                                                                width={180}
+                                                                                variant="h5"
                                                                                 sx={{
-                                                                                    height: 'auto',
-                                                                                    width: 80
-                                                                                }}
-                                                                                src={item.photoId ? `${BaseUrl}/attachment/download/${item.photoId}` : ''}
-                                                                            />
-                                                                            <Box pl={1}>
-                                                                                <Typography
-                                                                                    color="text.primary"
-                                                                                    underline="none"
-                                                                                    width={180}
-                                                                                    variant="h5"
-                                                                                    sx={{
-                                                                                        '&:hover': {
-                                                                                            color: `${theme.colors.primary.main}`
+                                                                                    '&:hover': {
+                                                                                        color: `${theme.colors.primary.main}`
 
+                                                                                    }
+                                                                                }}
+                                                                            >
+                                                                                {item.name}
+                                                                            </Typography>
+                                                                            <Typography variant="subtitle2"
+                                                                                        display={'flex'}
+                                                                                        justifyContent={'space-between'}
+                                                                                        alignItems="center"
+                                                                                        mt={1}
+                                                                                        noWrap
+                                                                            >
+                                                                                <Typography mr={1}>
+                                                                                    {t('as.51')}:
+                                                                                </Typography>
+                                                                                <Typography>
+                                                                                    <Typography>
+                                                                                        <div>
+                                                                                            {
+                                                                                                item.amount > item.minQuantity ?
+                                                                                                    <LabelSuccess>
+                                                                                                        <b>{item.amount} </b> {item.measurementName}
+                                                                                                    </LabelSuccess> :
+                                                                                                    item.minQuantity >= item.amount && item.amount > 0 ?
+                                                                                                        <LabelWarning>
+                                                                                                            <b>{item.amount}</b> {item.measurementName}
+                                                                                                        </LabelWarning> :
+                                                                                                        <LabelError>
+                                                                                                            <b>{item.amount}</b> {item.measurementName}
+                                                                                                        </LabelError>
+                                                                                            }
+                                                                                        </div>
+                                                                                    </Typography>
+                                                                                </Typography>
+
+                                                                            </Typography>
+                                                                        </Box>
+                                                                    </Box>
+                                                                </TableCell>
+                                                                <TableCell align={'start'}>{
+                                                                    item.branches ? item.branches.map(i =>
+                                                                        <p className={'p-0 m-0'} style={{
+                                                                            maxWidth: '150px',
+                                                                            minWidth: '80px'
+                                                                        }}>{i}</p>
+                                                                    ) : ''
+                                                                }</TableCell>
+                                                                <TableCell align="center">
+                                                                    {item?.barcode}
+                                                                </TableCell>
+                                                                <TableCell align="center">
+                                                                    {item.many ? (t('as.63')) : (t('as.62'))}
+                                                                    {
+                                                                        users.getProductAdmin || users.getProduct ? (
+                                                                            <Tooltip title={t('as.114')} arrow>
+                                                                                <IconButtonWrapper
+                                                                                    onClick={() => korishsh(item.id)}
+                                                                                    sx={{
+                                                                                        margin: '5px',
+                                                                                        backgroundColor: `${theme.colors.success.lighter}`,
+                                                                                        color: `${theme.colors.success.main}`,
+                                                                                        transition: `${theme.transitions.create(['all'])}`,
+                                                                                        '&:hover': {
+                                                                                            backgroundColor: `${theme.colors.success.main}`,
+                                                                                            color: `${theme.palette.getContrastText(
+                                                                                                theme.colors.success.main
+                                                                                            )}`
                                                                                         }
                                                                                     }}
                                                                                 >
-                                                                                    {item.name}
-                                                                                </Typography>
-                                                                                <Typography variant="subtitle2"
-                                                                                            display={'flex'}
-                                                                                            justifyContent={'space-between'}
-                                                                                            alignItems="center"
-                                                                                            mt={1}
-                                                                                            noWrap
-                                                                                >
-                                                                                    <Typography mr={1}>
-                                                                                        {t('as.51')}:
-                                                                                    </Typography>
-                                                                                    <Typography>
-                                                                                        <Typography>
-                                                                                            <div>
-                                                                                                {
-                                                                                                    item.amount > item.minQuantity ?
-                                                                                                        <LabelSuccess>
-                                                                                                            <b>{item.amount} </b> {item.measurementName}
-                                                                                                        </LabelSuccess> :
-                                                                                                        item.minQuantity >= item.amount && item.amount > 0 ?
-                                                                                                            <LabelWarning>
-                                                                                                                <b>{item.amount}</b> {item.measurementName}
-                                                                                                            </LabelWarning> :
-                                                                                                            <LabelError>
-                                                                                                                <b>{item.amount}</b> {item.measurementName}
-                                                                                                            </LabelError>
-                                                                                                }
-                                                                                            </div>
-                                                                                        </Typography>
-                                                                                    </Typography>
+                                                                                    <VisibilityIcon
+                                                                                        fontSize="small"/>
+                                                                                </IconButtonWrapper>
+                                                                            </Tooltip>) : ''
+                                                                    }
+                                                                </TableCell>
 
-                                                                                </Typography>
-                                                                            </Box>
-                                                                        </Box>
-                                                                    </TableCell>
-                                                                    <TableCell align={'start'}>{
-                                                                        item.branches ? item.branches.map(i =>
-                                                                            <p className={'p-0 m-0'} style={{
-                                                                                maxWidth: '150px',
-                                                                                minWidth: '80px'
-                                                                            }}>{i}</p>
-                                                                        ) : ''
-                                                                    }</TableCell>
-                                                                    <TableCell align="center">
-                                                                        {item?.barcode}
-                                                                    </TableCell>
-                                                                    <TableCell align="center">
-                                                                        {item.many ? (t('as.63')) : (t('as.62'))}
+                                                                <TableCell align="center">
+                                                                    <Typography
+                                                                        sx={{
+                                                                            pr: 0.5
+                                                                        }}
+                                                                        component="span"
+                                                                        variant="h4"
+                                                                        color="text.primary"
+                                                                    >
+                                                                        {item.buyPrice.toFixed(0)} {t('as.27')}
+                                                                    </Typography>
+                                                                </TableCell>
+                                                                <TableCell align="center">
+                                                                    <Typography
+                                                                        sx={{
+                                                                            pr: 0.5
+                                                                        }}
+                                                                        component="span"
+                                                                        variant="h4"
+                                                                        color="text.primary"
+                                                                    >
+                                                                        {item.salePrice.toFixed(0)} {t('as.27')}
+                                                                    </Typography>
+                                                                </TableCell>
+                                                                <TableCell align="center">
+                                                                    <Typography
+                                                                        sx={{
+                                                                            pr: 0.5
+                                                                        }}
+                                                                        component="span"
+                                                                        variant="h4"
+                                                                        color="text.primary">
+                                                                        {item.grossPrice.toFixed(0)} {t('as.27')}
+                                                                    </Typography>
+                                                                </TableCell>
+                                                                <TableCell align="center">
+                                                                    <div>
+                                                                        <Typography
+                                                                            sx={{
+                                                                                pr: 0.5
+                                                                            }}
+                                                                            component="span"
+                                                                            variant="h4"
+                                                                            color="text.primary"
+                                                                        >
+                                                                            {item.brandName}
+                                                                        </Typography>
+                                                                    </div>
+                                                                </TableCell>
+                                                                <TableCell align="center">
+                                                                    <div>
+                                                                        <Typography
+                                                                            sx={{
+                                                                                pr: 0.5
+                                                                            }}
+                                                                            component="span"
+                                                                            variant="h4"
+                                                                            color="text.primary"
+                                                                        >
+                                                                            {item.categoryName}
+                                                                        </Typography>
+                                                                    </div>
+                                                                </TableCell>
+                                                                <TableCell
+                                                                    sx={{
+                                                                        whiteSpace: 'nowrap'
+                                                                    }}
+                                                                    align="right"
+                                                                >
+                                                                    <Box>
                                                                         {
-                                                                            users.getProductAdmin || users.getProduct ? (
-                                                                                <Tooltip title={t('as.114')} arrow>
+                                                                            users.editProduct ? (
+                                                                                <Tooltip title={t('as.57')} arrow>
                                                                                     <IconButtonWrapper
-                                                                                        onClick={() => korishsh(item.id)}
+                                                                                        onClick={() => history.push(`/main/addProduct/${item.id}`)}
                                                                                         sx={{
-                                                                                            margin: '5px',
-                                                                                            backgroundColor: `${theme.colors.success.lighter}`,
-                                                                                            color: `${theme.colors.success.main}`,
+                                                                                            ml: 1,
+                                                                                            backgroundColor: `${theme.colors.primary.lighter}`,
+                                                                                            color: `${theme.colors.primary.main}`,
                                                                                             transition: `${theme.transitions.create(['all'])}`,
                                                                                             '&:hover': {
-                                                                                                backgroundColor: `${theme.colors.success.main}`,
+                                                                                                backgroundColor: `${theme.colors.primary.main}`,
                                                                                                 color: `${theme.palette.getContrastText(
-                                                                                                    theme.colors.success.main
+                                                                                                    theme.colors.primary.main
                                                                                                 )}`
                                                                                             }
                                                                                         }}
                                                                                     >
-                                                                                        <VisibilityIcon
+                                                                                        <EditIcon fontSize="small"/>
+                                                                                    </IconButtonWrapper>
+                                                                                </Tooltip>) : ''
+                                                                        }
+                                                                        {
+                                                                            users.deleteProduct ? (
+                                                                                <Tooltip title={t('as.116')} arrow>
+                                                                                    <IconButtonWrapper
+                                                                                        onClick={() => deleteProductById(item.id)}
+                                                                                        sx={{
+                                                                                            ml: 1,
+                                                                                            backgroundColor: `${theme.colors.error.lighter}`,
+                                                                                            color: `${theme.colors.error.main}`,
+                                                                                            transition: `${theme.transitions.create(['all'])}`,
+                                                                                            '&:hover': {
+                                                                                                backgroundColor: `${theme.colors.error.main}`,
+                                                                                                color: `${theme.palette.getContrastText(
+                                                                                                    theme.colors.error.main
+                                                                                                )}`
+                                                                                            }
+                                                                                        }}
+                                                                                    >
+                                                                                        <DeleteTwoToneIcon
                                                                                             fontSize="small"/>
                                                                                     </IconButtonWrapper>
                                                                                 </Tooltip>) : ''
                                                                         }
-                                                                    </TableCell>
-
-                                                                    <TableCell align="center">
-                                                                        <Typography
-                                                                            sx={{
-                                                                                pr: 0.5
-                                                                            }}
-                                                                            component="span"
-                                                                            variant="h4"
-                                                                            color="text.primary"
-                                                                        >
-                                                                            {item.buyPrice.toFixed(0)} {t('as.27')}
-                                                                        </Typography>
-                                                                    </TableCell>
-                                                                    <TableCell align="center">
-                                                                        <Typography
-                                                                            sx={{
-                                                                                pr: 0.5
-                                                                            }}
-                                                                            component="span"
-                                                                            variant="h4"
-                                                                            color="text.primary"
-                                                                        >
-                                                                            {item.salePrice.toFixed(0)} {t('as.27')}
-                                                                        </Typography>
-                                                                    </TableCell>
-                                                                    <TableCell align="center">
-                                                                        <Typography
-                                                                            sx={{
-                                                                                pr: 0.5
-                                                                            }}
-                                                                            component="span"
-                                                                            variant="h4"
-                                                                            color="text.primary">
-                                                                            {item.grossPrice.toFixed(0)} {t('as.27')}
-                                                                        </Typography>
-                                                                    </TableCell>
-                                                                    <TableCell align="center">
-                                                                        <div>
-                                                                            <Typography
-                                                                                sx={{
-                                                                                    pr: 0.5
-                                                                                }}
-                                                                                component="span"
-                                                                                variant="h4"
-                                                                                color="text.primary"
-                                                                            >
-                                                                                {item.brandName}
-                                                                            </Typography>
-                                                                        </div>
-                                                                    </TableCell>
-                                                                    <TableCell align="center">
-                                                                        <div>
-                                                                            <Typography
-                                                                                sx={{
-                                                                                    pr: 0.5
-                                                                                }}
-                                                                                component="span"
-                                                                                variant="h4"
-                                                                                color="text.primary"
-                                                                            >
-                                                                                {item.categoryName}
-                                                                            </Typography>
-                                                                        </div>
-                                                                    </TableCell>
-                                                                    <TableCell
-                                                                        sx={{
-                                                                            whiteSpace: 'nowrap'
-                                                                        }}
-                                                                        align="right"
-                                                                    >
-                                                                        <Box>
-                                                                            {
-                                                                                users.editProduct ? (
-                                                                                    <Tooltip title={t('as.57')} arrow>
-                                                                                        <IconButtonWrapper
-                                                                                            onClick={() => history.push(`/main/addProduct/${item.id}`)}
-                                                                                            sx={{
-                                                                                                ml: 1,
-                                                                                                backgroundColor: `${theme.colors.primary.lighter}`,
-                                                                                                color: `${theme.colors.primary.main}`,
-                                                                                                transition: `${theme.transitions.create(['all'])}`,
-                                                                                                '&:hover': {
-                                                                                                    backgroundColor: `${theme.colors.primary.main}`,
-                                                                                                    color: `${theme.palette.getContrastText(
-                                                                                                        theme.colors.primary.main
-                                                                                                    )}`
-                                                                                                }
-                                                                                            }}
-                                                                                        >
-                                                                                            <EditIcon fontSize="small"/>
-                                                                                        </IconButtonWrapper>
-                                                                                    </Tooltip>) : ''
-                                                                            }
-                                                                            {
-                                                                                users.deleteProduct ? (
-                                                                                    <Tooltip title={t('as.116')} arrow>
-                                                                                        <IconButtonWrapper
-                                                                                            onClick={() => deleteProductById(item.id)}
-                                                                                            sx={{
-                                                                                                ml: 1,
-                                                                                                backgroundColor: `${theme.colors.error.lighter}`,
-                                                                                                color: `${theme.colors.error.main}`,
-                                                                                                transition: `${theme.transitions.create(['all'])}`,
-                                                                                                '&:hover': {
-                                                                                                    backgroundColor: `${theme.colors.error.main}`,
-                                                                                                    color: `${theme.palette.getContrastText(
-                                                                                                        theme.colors.error.main
-                                                                                                    )}`
-                                                                                                }
-                                                                                            }}
-                                                                                        >
-                                                                                            <DeleteTwoToneIcon
-                                                                                                fontSize="small"/>
-                                                                                        </IconButtonWrapper>
-                                                                                    </Tooltip>) : ''
-                                                                            }
-                                                                        </Box>
-                                                                    </TableCell>
-                                                                </TableRow>
-                                                            )
-                                                        })
-                                                    }
-                                                    <TableRowDivider/>
-                                                </TableBody>
-                                            </TableContainer>
-                                            <Box pt={1} display="flex" justifyContent="space-between">
-                                                <TablePagination
-                                                    component="div"
-                                                    count={MaxsulotlarRoyxariReducer?.productTableSearch?.totalItem}
-                                                    page={page}
-                                                    onPageChange={handleChangePage}
-                                                    rowsPerPage={rowsPerPage}
-                                                    rowsPerPageOptions={[10, 50, 100, 200]}
-                                                    onRowsPerPageChange={handleChangeRowsPerPage}
-                                                />
-                                            </Box>
-                                            {
-                                                active ?
-                                                    <KorishM active={active} toggle={toggle} id={mainBranchId}
-                                                             productId={productId}/> : ''
-                                            }
+                                                                    </Box>
+                                                                </TableCell>
+                                                            </TableRow>
+                                                        )
+                                                    })
+                                                }
+                                                <TableRowDivider/>
+                                            </TableBody>
+                                        </TableContainer>
+                                        <Box pt={1} display="flex" justifyContent="space-between">
+                                            <TablePagination
+                                                component="div"
+                                                count={MaxsulotlarRoyxariReducer?.productTableSearch?.totalItem}
+                                                page={page}
+                                                onPageChange={handleChangePage}
+                                                rowsPerPage={rowsPerPage}
+                                                rowsPerPageOptions={[10, 50, 100, 200]}
+                                                onRowsPerPageChange={handleChangeRowsPerPage}
+                                            />
                                         </Box>
-                                        : <div>
-                                            <h4 className={'fw-bold text-center'}>{MaxsulotlarRoyxariReducer?.message}</h4>
-                                        </div> : <Loading/>
+                                        {
+                                            active ?
+                                                <KorishM active={active} toggle={toggle} id={mainBranchId}
+                                                         productId={productId}/> : ''
+                                        }
+                                    </Box>
+                                    : <div>
+                                        <h4 className={'fw-bold text-center'}>{MaxsulotlarRoyxariReducer?.message}</h4>
+                                    </div> : <Loading/>
 
-                            }
+                        }
                         </>
                     </div> : ''
             }

@@ -2,7 +2,7 @@ import './bottom.css'
 function Bottom() {
     return(
         <div className={`bottom`}>
-            <p>© Optimit. All rights reserved</p>
+            <p>© . All rights reserved</p>
         </div>
     )
 }

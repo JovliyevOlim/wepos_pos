@@ -15,9 +15,9 @@ import TaminotReducer, {getAllSupplier} from "../../Hamkorlar/reducer/TaminotRed
 import SupplierReportReducer, {
     getSupplierReportByBusiness, getSupplierReportByBranch
 } from "../reducer/SupplierReportReducer";
-import MainHeaderText from "../../../../Svg/MainHeaderText";
-import CardBody from "../../../../Svg/CardBody";
-import SelectAnt from "../../../../Svg/SelectAnt";
+import MainHeaderText from "../../../../Components/MainHeaderText";
+import CardBody from "../../../../Components/CardBody";
+import SelectAnt from "../../../../Components/SelectAnt";
 
 function SupplierReport({
                             users,

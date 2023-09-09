@@ -12,8 +12,8 @@ import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
 import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
-import MainHeaderText from "../../../../Svg/MainHeaderText";
-import {ButtonAnt} from "../../../../Svg/SelectAnt";
+import MainHeaderText from "../../../../Components/MainHeaderText";
+import {ButtonAnt} from "../../../../Components/SelectAnt";
 
 function Bolimlar({
                       editBolim,
@@ -123,14 +123,6 @@ function Bolimlar({
                     loading ?
                         BolimReducer.bolimlar.length > 0 ?
                             <div>
-                                <div className="izlashBL">
-                                    <div>
-                                        <button><img src={Excel} alt=""/> {t('as.2')}</button>
-                                    </div>
-                                    <div className="izlashBox2">
-                                        <input type="text" placeholder={t('as.3')}/>
-                                    </div>
-                                </div>
                                 {
                                     <div
                                         className="table-responsive table-wrapper-scroll-y my-custom-scrollbar mb-4">
@@ -183,36 +175,36 @@ function Bolimlar({
                         : <Loading/>}
 
 
-                <Modal isOpen={active} toggle={toggle}>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <ModalHeader>
-                            {t('Sections.8')}
-                        </ModalHeader>
-                        <ModalBody>
-                            <label htmlFor={'bnomi'}>{t('Sections.9')}</label>
-                            <input type="text" className={'form-control '}
-                                   {...register('name', {required:{value:true,message:(t('as.7'))}})}
-                                   placeholder={t('as.8')}
-                                   id={'bnomi'}/>
-                            {
-                                errors.name && <div>
-                                <p className={'text-danger text-center m-0 p-0'}>{errors.name.message}</p>
-                                </div>
-                            }
-                            <label className={'mt-3'} htmlFor={'area'}>{t('Buttons.17')}</label>
-                            <input type="text" {...register('description', {required: false})}
-                                   placeholder={'Description'}
-                                   className={'form-control'} name="description"/>
-                        </ModalBody>
-                        <ModalFooter>
-                            <button className={'btn btn-danger'} onClick={toggle}
-                                    type={"button"}>{t('Buttons.7')}
-                            </button>
-                            <button className={'btn btn-success'} type={"submit"}>{t('Buttons.6')}</button>
-                        </ModalFooter>
-                    </form>
-                </Modal>
             </div>
+            <Modal isOpen={active} toggle={toggle}>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <ModalHeader>
+                        {t('Sections.8')}
+                    </ModalHeader>
+                    <ModalBody>
+                        <label htmlFor={'bnomi'}>{t('Sections.9')}</label>
+                        <input type="text" className={'form-control '}
+                               {...register('name', {required:{value:true,message:(t('as.7'))}})}
+                               placeholder={t('as.8')}
+                               id={'bnomi'}/>
+                        {
+                            errors.name && <div>
+                                <p className={'text-danger text-center m-0 p-0'}>{errors.name.message}</p>
+                            </div>
+                        }
+                        <label className={'mt-3'} htmlFor={'area'}>{t('Buttons.17')}</label>
+                        <input type="text" {...register('description', {required: false})}
+                               placeholder={'Description'}
+                               className={'form-control'} name="description"/>
+                    </ModalBody>
+                    <ModalFooter>
+                        <button className={'btn btn-danger'} onClick={toggle}
+                                type={"button"}>{t('Buttons.7')}
+                        </button>
+                        <button className={'btn btn-success'} type={"submit"}>{t('Buttons.6')}</button>
+                    </ModalFooter>
+                </form>
+            </Modal>
             <ModalLoading isOpen={saveModal}/>
             <AgreeModal deleteModaltoggle={()=>setActive(prevState => !prevState)} deletemodal={deletemodal} deleteFunc={deleteFunc}/>
         </div>
