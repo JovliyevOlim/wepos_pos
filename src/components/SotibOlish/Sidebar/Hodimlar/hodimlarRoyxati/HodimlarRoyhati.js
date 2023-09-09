@@ -59,11 +59,6 @@ import {Avatar} from "antd";
     //     }
     // </TableCell>
 
-    // <TableCell>{t('ol.74')}</TableCell>
-    // <TableCell>{t('ol.75')}</TableCell>
-    // <TableCell>{t('ol.76')}</TableCell>
-    // <TableCell>{t('ol.77')}</TableCell>
-    // <TableCell align="center">{t('ol.20')}</TableCell>
 
 
 
