@@ -26,6 +26,7 @@
     "i18next": "^22.4.9",
     "i18next-browser-languagedetector": "^7.0.1",
     "i18next-http-backend": "^2.1.1",
+    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "nouislider-react": "^3.4.1",
     "p-min-delay": "^4.0.2",
