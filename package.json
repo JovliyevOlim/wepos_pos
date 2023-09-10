@@ -2,6 +2,10 @@
   "name": "www",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "16.x",
+    "npm": "~1.0.20"
+  },
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -69,6 +73,7 @@
   "scripts": {
     "start": "react-scripts  start",
     "build": "react-scripts  build",
+    "build:digitalocean": "npm install --production=false && npm run build && npm ci",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
