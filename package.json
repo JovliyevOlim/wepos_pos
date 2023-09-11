@@ -67,9 +67,8 @@
     "yup": "^1.0.2"
   },
   "scripts": {
-    "start": "react-scripts  start",
-    "build": "react-scripts  build",
-    "build:digitalocean": "npm install --production=false && npm run build && npm ci",
+    "start": "react-scripts  --max-old-space-size=4096  start ",
+    "build": "react-scripts  --max-old-space-size=4096  build ",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
