@@ -67,7 +67,7 @@
     "yup": "^1.0.2"
   },
   "scripts": {
-    "start": "react-scripts  --max-old-space-size=4096  start ",
+    "start": "cross-env NODE_OPTIONS=--trace-deprecation react-scripts  --max-old-space-size=4096  start ",
     "build": "react-scripts  --max-old-space-size=4096  build ",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
