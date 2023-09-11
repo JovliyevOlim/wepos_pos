@@ -67,7 +67,7 @@
     "yup": "^1.0.2"
   },
   "scripts": {
-    "start": "cross-env NODE_OPTIONS=--trace-deprecation react-scripts  --max-old-space-size=4096  start ",
+    "start": " react-scripts  --max-old-space-size=4096  start ",
     "build": "react-scripts  --max-old-space-size=4096  build ",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -93,6 +93,7 @@
   "devDependencies": {
     "@ant-design/icons": "^5.2.5",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "sass": "^1.57.1"
+    "sass": "^1.57.1",
+    "webpack-cli": "^5.1.4"
   }
 }
