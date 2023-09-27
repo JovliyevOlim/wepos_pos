@@ -5,14 +5,13 @@ import MaxsulotlarRoyxariReducer, {getBarcodeAndName} from "../../Maxsulotlar/re
 import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
 import XodimReducer, {getUserForFiltering, getUserForFilteringBusiness} from "../../Hodimlar/reducer/XodimReducer";
-import {IconButton, TablePagination} from "@mui/material";
-import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 import MaxsulotxisobotReducer,{getLossProductByBusiness,getLossProductByBranch} from "../reducer/MaxsulotxisobotReducer";
 import moment from "moment";
 import 'moment/locale/uz-latn'
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import CardBody from "../../../../Components/CardBody";
 import SelectAnt, {SearchAnt} from "../../../../Components/SelectAnt";
+import CommonTable from "../../../../Components/CommonTable";
 function MaxsulotMiqdoriQoldigi({
                                     users, XodimReducer, getUserForFiltering, getUserForFilteringBusiness,
                                     MaxsulotxisobotReducer,getLossProductByBusiness,getLossProductByBranch,
@@ -29,12 +28,59 @@ function MaxsulotMiqdoriQoldigi({
     const [loading, setLoading] = useState(false)
 
 
-    const handlePageChange = (_event, newPage) => {
-        setPage(newPage);
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: 'index',
+            rowScope: 'row',
+            width: '2%',
+        },
+        {
+            title: 'Mahsulotlar',
+            dataIndex: 'productName',
+            key: 'productName'
+        },
+        {
+            title: t('ol.13'),
+            dataIndex: 'branchName',
+            key: 'branchName',
+        },
+        {
+            title: 'Xodim',
+            dataIndex: 'userFio',
+            key: 'userFio',
+        },
+        {
+            title: 'Miqdori',
+            dataIndex: 'quantity',
+            key: 'quantity',
+            render:(item,values)=><p>{item} {values.measurementName}</p>
+        },
+        {
+            title: 'Zarar summasi',
+            dataIndex: 'price',
+            key: 'price',
+            render: (item) => <p className={'m-0'}>{item} so'm</p>
+        },
+        {
+            title: t('ol.11'),
+            dataIndex: 'createdAt',
+            key: 'createdAt',
+            render: (item) => <p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>
+        },
+
+
+
+
+    ];
+
+
+    const handlePageChange = (newPage) => {
+        setPage(newPage-1);
     };
-    const handleLimitChange = (event) => {
+    const handleLimitChange = (event,size) => {
         setPage(0)
-        setSize(parseInt(event.target.value));
+        setSize(size);
     };
 
     function changeSearch(e) {
@@ -56,11 +102,6 @@ function MaxsulotMiqdoriQoldigi({
         setSearch(name)
         setProductId(id)
         setIsView(false)
-    }
-
-    function removeProduct() {
-        setSearch('')
-        setProductId(null)
     }
 
     useEffect(() => {
@@ -113,10 +154,10 @@ function MaxsulotMiqdoriQoldigi({
             </div>
             <CardBody>
                 <div className="col-md-12 d-flex justify-content-start flex-wrap">
-                    <div className="col-md-3">
+                    <div className="col-md-3 p-2">
                         <SelectAnt name={'Filiallar'} selectList={users.branches} permission={users.branches} onChange={(e) => setMainBranchId(e === "" ? null : e)}/>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-3 p-2">
                         <SelectAnt name={'Hodimlar'} selectList={XodimReducer.usersFiltering?.map((item) => ({
                             id: item.id,
                             name: item.fio
@@ -125,7 +166,7 @@ function MaxsulotMiqdoriQoldigi({
                     </div>
                     {
                         mainBranchId &&
-                        <div className="col-md-6">
+                        <div className="col-md-6 p-2">
                             <SearchAnt name={'Mahsulotni qidirish'} onChange={changeSearch}/>
                             {
                                 isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?
@@ -144,54 +185,21 @@ function MaxsulotMiqdoriQoldigi({
                     }
                 </div>
             </CardBody>
-            <div className="rowStyleXH2">
+            <CardBody>
                 <div>
                     {loading ?
                        MaxsulotxisobotReducer.lossProducts?.list?.length > 0 ?
                             <div className="table-responsive mb-4 table-wrapper-scroll-y">
-                                <table className='table table-hover table-primary table-striped table-bordered mt-4 '>
-                                    <thead>
-                                    <tr>
-                                        <th>T/R</th>
-                                        <th>Maxsulotlar</th>
-                                        <th>Filial</th>
-                                        <th>Xodim</th>
-                                        <th>Miqdori</th>
-                                        <th>Zarar summasi</th>
-                                        <th>Sana</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {
-                                       MaxsulotxisobotReducer.lossProducts?.list?.map((item, index) =>
-                                            <tr key={item.id}>
-                                                <td>{index + 1 + (page * size)}</td>
-                                                <td>{item?.productName}</td>
-                                                <td>{item?.branchName}</td>
-                                                <td>{item?.userFio}</td>
-                                                <td>{item?.quantity} {item?.measurementName}</td>
-                                                <td>{item?.price} so'm</td>
-                                                <td>{moment(new Date(item?.createdAt)).format('LLLL')}</td>
-                                            </tr>)
-                                    }
-                                    </tbody>
-                                </table>
-                                <TablePagination
-                                    component="div"
-                                    count={MaxsulotxisobotReducer.lossProducts?.totalItem}
-                                    onPageChange={handlePageChange}
-                                    onRowsPerPageChange={handleLimitChange}
-                                    page={page}
-                                    rowsPerPageOptions={[5, 10, 15]}
-                                    rowsPerPage={size}
-                                />
+                                <CommonTable size={size} page={page} total={MaxsulotxisobotReducer.lossProducts?.totalItem}
+                                             columns={columns} handleLimitChange={handleLimitChange} handlePageChange={handlePageChange}
+                                             data={MaxsulotxisobotReducer.lossProducts?.list} pagination={true}/>
                             </div> : <div>
                                 <h4 className={'text-center'}>{MaxsulotxisobotReducer.message}</h4>
                             </div> :
                         <Loading/>
                     }
                 </div>
-            </div>
+            </CardBody>
         </div>
     )
 }

@@ -1,84 +1,107 @@
 .dashboard{
     border-radius: 24px;
-    background: #c8c9c9;
-    padding: 2rem;
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    /*gap: 32px;*/
 }
 .dashboard-header{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 24px;
 }
 .dashboard-cards{
     display: flex;
     align-items: stretch;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 25px;
+    gap: 24px;
+    margin-bottom:24px
 }
-
+.ant-segmented{
+    padding: 0 !important;
+}
 .ant-segmented-group{
     display: flex !important;
-    padding: 7px 6px !important;
-    gap: 8px !important;
+    padding: 5px 6px !important;
+    gap: 4px !important;
+    height:40px !important;
     border-radius: 8px !important;
-    background: #F5F6F6 !important;
+    background: #FFF !important;
+    box-shadow: 0px 16px 24px 0px rgba(223, 226, 231, 0.22);
 }
 .ant-segmented-item{
-    padding: 7px 40px !important;
+    padding:11px 16px !important;
     background: transparent !important;
     color:  #071A33 !important;
     text-align: center !important;
     height: 30px !important;
+    width: 100px!important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-feature-settings: 'clig' off, 'liga' off !important;
-    font-family: "TTFirsNeue" ,sans-serif !important;
-    font-size: 15px !important;
+    font-family: "Inter" ,sans-serif !important;
+    font-size: clamp(0.625rem, 0.584rem + 0.2344vw, 0.8125rem) !important;
     font-style: normal !important;
-    font-weight: 400 !important;
-    line-height: 16px !important;
+    font-weight: 500 !important;
+    line-height: normal !important;
 }
 .ant-segmented .ant-segmented-item-label{
     min-height: 1px;
     line-height: 1;
 }
 .ant-segmented-item-selected{
-    background: #FFF !important;
-    gap: 8px !important;
     border-radius: 6px !important;
+    background: #FAFBFC !important;
     box-shadow: 0px 0px 4px 0px rgba(150, 166, 194, 0.16) !important;
+    gap: 8px !important;
+    color: #377DFF !important;
+    font-family: 'Inter',sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 142.857% */
+
 }
 .dashboard-datepicker{
-    font-family: "TTFirsNeue" ,sans-serif;
-    border-radius: 8px;
-    background: #F5F6F6;
-    padding: 9px 18px;
-    justify-content: center;
+    font-family: "Inter" ,sans-serif !important;
+    height:40px !important;
+    display: flex;
     align-items: center;
+    justify-content: center;
+    border-radius: 8px !important;
+    background: #FFF !important;
+    box-shadow: 0px 16px 24px 0px rgba(223, 226, 231, 0.22);
+    padding: 8px 10px;
     gap: 12px;
 }
-.ant-select{
-    height:44px !important;
-    background: #F5F6F6 !important;
+.ant-picker-input{
+    width: max-content !important;
+}
+.dashboard-select.ant-select{
+    height:40px !important;
     border-radius: 8px !important;
+    background: #FFF !important;
     display: flex !important;
     align-items: center !important;
+    justify-content: center !important;
 }
-.ant-select-selector{
-    font-family: "TTFirsNeue" ,sans-serif !important;
-    padding: 9px 18px !important;
-    color: #071A33 !important;
+.dashboard-select .ant-select-selector{
+    padding: 8px 4px !important;
+    color: #8A94A6;
+    font-family: 'Inter',sans-serif;
     font-size: 14px !important;
     font-style: normal !important;
     font-weight: 500 !important;
+    line-height: 20px !important; /* 142.857% */
     height: 100% !important;
-    line-height: 20px !important;
     background: transparent !important;
     border: none!important;
     outline: none !important;
 }
-.ant-select-selection-item{
+.dashboard-select .ant-select-selection-item{
+    margin: 0 !important;
     display:flex !important;
     text-align: start !important;
     justify-content: center !important;
@@ -88,31 +111,66 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 14px 20px;
-    gap: 8px;
+    padding: 10px 20px;
+    height: 40px;
+    gap: 12px;
+    border: none;
     border-radius: 8px;
-    background:  #1AA6E1;
-    color:  #FFF;
-    text-align: center;
-    font-family: "TTFirsNeue" ,sans-serif;
-    font-feature-settings: 'clig' off, 'liga' off;
-    font-size: 16px;
+    background:  #FAFBFC;
+    color:  #4E5D78;
+    font-family: 'Inter',sans-serif;
+    font-size: 14px;
     font-style: normal;
     font-weight: 500;
-    line-height: 16px;
+    line-height: 20px; /* 142.857% */
 }
-@media (min-width: 1024px) and (max-width:1439.9px){
-    .dashboard-header-body{
-        display: none;
-    }
+.dashboard-day-button-active{
+    background: #377DFF;
+    color:  #FFF;
 }
+.dashboard-footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 24px;
+    width: 100%;
+}
+.dashboard-footer-trader{
+    width: 40%;
+}
+.dashboard-footer-progress{
+    width: 60%;
+}
+
 @media screen and (max-width: 329.9px){
     .dashboard{
-        padding: 16px;
+        padding: 10px;
         gap: 16px;
     }
     .dashboard-cards{
         gap:15px;
+    }
+    .ant-segmented-group{
+        padding: 0px;
+        gap: 2px !important;
+    }
+    .ant-segmented-item{
+        width: 70px !important;
+        padding:6px 5px !important;
+        height: 30px !important;
+    }
+    .dashboard-footer{
+        gap: 0;
+        flex-direction: column;
+    }
+    .dashboard-footer-trader{
+        width: 100%;
+    }
+    .dashboard-footer-progress{
+        width: 100%;
+    }
+    .dashboard-datepicker{
+        padding: 0;
     }
 }
 @media (min-width: 330px) and (max-width: 425.9px){
@@ -123,6 +181,16 @@
     .dashboard-cards{
         gap:20px;
     }
+    .dashboard-footer{
+        gap: 0;
+        flex-direction: column;
+    }
+    .dashboard-footer-trader{
+        width: 100%;
+    }
+    .dashboard-footer-progress{
+        width: 100%;
+    }
 }
 @media (min-width: 426px) and (max-width: 767.9px){
     .dashboard{
@@ -132,8 +200,18 @@
     .dashboard-cards{
         gap:18px;
     }
+    .dashboard-footer{
+        gap: 0;
+        flex-direction: column;
+    }
+    .dashboard-footer-trader{
+        width: 100%;
+    }
+    .dashboard-footer-progress{
+        width: 100%;
+    }
 }
-@media (min-width: 768px) and (max-width:1023.9px){
+@media (min-width: 768px) and (max-width:1219.9px){
     .dashboard{
         padding: 20px;
         gap: 20px;
@@ -142,14 +220,34 @@
         justify-content: space-between;
         gap:18px;
     }
+    .dashboard-footer{
+        gap: 0;
+        flex-direction: column;
+    }
+    .dashboard-footer-trader{
+        width: 100%;
+    }
+    .dashboard-footer-progress{
+        width: 100%;
+    }
 }
-@media (min-width: 1024px) and (max-width:1300px){
+@media (min-width: 1220px) and (max-width:1439.9px){
     .dashboard{
         padding: 20px;
-        gap: 20px;
+        gap: 24px;
     }
     .dashboard-cards{
         justify-content: space-between;
         gap:18px;
+    }
+    .dashboard-footer{
+        gap: 0;
+        flex-direction: column;
+    }
+    .dashboard-footer-trader{
+        width: 100%;
+    }
+    .dashboard-footer-progress{
+        width: 100%;
     }
 }

@@ -1,5 +1,4 @@
 import ReactTooltip from 'react-tooltip';
-import img6 from '../../../../../img/backward6.png'
 import React, {useEffect, useState, useRef, useReducer} from "react";
 import {connect} from "react-redux";
 import './savdoOynasi.css'
@@ -36,11 +35,28 @@ import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import {InputNumber} from "antd";
 import allbusinessreducer, {getOneBusiness} from "../../SUPERADMIN/reducers/allbusinessreducer";
-import Korish from "../../../../../img/Korish.png";
 import Edit from "../../../../../img/Edit.png";
-import Delete from "../../../../../img/Delete.png";
-import {Box, TablePagination} from "@mui/material";
 import Loading from "../../../../Loading";
+import SelectAnt from "../../../../Components/SelectAnt";
+import kassa from "../../../../../img/money bag coin2.svg"
+import lastTrade from "../../../../../img/shopping basket.svg"
+import back from "../../../../../img/arrow back.svg"
+import searchIcon from "../../../../../img/Search.svg"
+import waiting from "../../../../../img/money bag coinshop.svg"
+import turliTolov from "../../../../../img/card-withdrawshop.svg"
+import debtTrade from "../../../../../img/donate coin.svg"
+import plastik from "../../../../../img/money check.svg"
+import bank from "../../../../../img/bank.svg"
+import naqd from "../../../../../img/money coin.svg"
+import trash from "../../../../../img/Trash.svg"
+import products from "../../../../../img/package box 07shop.svg"
+import minus from "../../../../../img/minus.svg"
+import plus from "../../../../../img/plus.svg"
+import remove from "../../../../../img/remove.svg"
+import {Button, Drawer, Radio, Space} from 'antd';
+import {BaseUrl} from "../../../../../middleware";
+import defaultProduct from '../../../../../img/image 3.jpg'
+
 
 function SavdoOynasi({
                          allbusinessreducer,
@@ -66,8 +82,14 @@ function SavdoOynasi({
                      }) {
     const {t} = useTranslation();
     const history = useHistory();
+    const [open, setOpen] = useState(false);
+    const showDrawer = () => {
+        setOpen(!open);
+    };
     const debtRef = useRef();
     const inputRef = useRef();
+    const [changesId, setChangesId] = useState(null);
+    const [paymentTypeCheck, setPaymentTypeCheck] = useState(null);
     const [mainBranchId, setMainBranchId] = useState(null)
     const [isViewSearchProduct, setIsViewSearchProduct] = useState(false)
     const [thisDay, setThisDay] = useState(formatDateMinus(new Date()))
@@ -119,24 +141,6 @@ function SavdoOynasi({
 
     const [addCustomerActive, setAddCustomerActive] = useState(false)
 
-
-    // useEffect(() => {
-    //     getOneBusiness(users.businessId)
-    // }, [])
-
-    // function ClickSumm() {
-    //     input.qaytim = 50000
-    //     let a = {...input}
-    //     setInput(a)
-    // }
-    //
-    // function qaytimchange(e) {
-    //     input.qaytim = e.target.value
-    //     let a = {...input}
-    //     setInput(a)
-    // }
-
-
     function addCustomerToggle() {
         setAddCustomerActive(!addCustomerActive)
         setIsCheck(false)
@@ -172,11 +176,6 @@ function SavdoOynasi({
     const [ushlanumber, setushlanumber] = useState(null)
     const [qaytim, setQaytim] = useState(false)
 
-
-    function toggleQaytim() {
-        setQaytim(!qaytim)
-
-    }
 
     function toggle8() {
         setushla2(!ushla2)
@@ -219,6 +218,7 @@ function SavdoOynasi({
             setushla2(false)
             setxisob(0)
             setjamixisob(0)
+            setChangesId(null)
         }
     }, [holdOnReducer.current])
 
@@ -300,6 +300,7 @@ function SavdoOynasi({
 
 
     function pushesh(val) {
+        console.log(val)
         if (val.amount <= 0 && checkMinusShop) {
             toast.warning(t('mah.68'))
         } else {
@@ -309,7 +310,8 @@ function SavdoOynasi({
             } else {
                 let mainPriceType = grossPriceType ? val.grossPrice : val.salePrice
                 let mainPrice = mainPriceType - (mainPriceType * customerPercent / 100)
-                arr1.push({
+                setChangesId(val.id)
+                arr1.unshift({
                     productId: val.id,
                     quantity: 1,
                     name: val.name,
@@ -371,10 +373,10 @@ function SavdoOynasi({
         setarr1(a)
     }
 
-    function sMinus(id) {
-        arr1.map((item, index) => {
-            if (index === id) {
-                item.quantity -= 1
+    function sMinus() {
+        arr1.map((item) => {
+            if (item.productId === changesId) {
+                item.quantity = item.quantity === 0 ? 0 : item.quantity-1
                 item.totalSalePrice = item.quantity * item.price
                 item.noChangesTotalSalePrice = item.quantity * item.noChangesPrice
                 item.active = item.quantity > item.amount;
@@ -385,16 +387,19 @@ function SavdoOynasi({
         setarr1(a)
     }
 
-    function deleteM(ind, tradedId) {
-        if (!tradedId) {
+    console.log(arr1)
+
+    function deleteM() {
+        let IsTradeId = arr1.find(item => item.productId === changesId)
+        if (!IsTradeId.id) {
             arr1.map((item, index) => {
-                if (index === ind) {
+                if (changesId === item.productId) {
                     arr1.splice(index, 1)
                 }
             })
         } else {
-            arr1.map((item, index) => {
-                if (index === ind) {
+            arr1.map((item) => {
+                if (changesId === item.productId) {
                     item.delete = true
                 }
             })
@@ -406,12 +411,12 @@ function SavdoOynasi({
     const [customerPercent, setCustomerPercent] = useState(0)
 
     function selectCustomer(e) {
-        setCustomer(e.value === "ALL" ? null : e.value)
-        if (e.value === 'ALL') {
+        setCustomer(e === "" ? null : e)
+        if (e === '') {
             setCustomerPercent(0)
         } else {
             if (CustomerReducer.customersTrade.length > 0) {
-                let customer = CustomerReducer.customersTrade.find(item => item.id === e.value)
+                let customer = CustomerReducer.customersTrade.find(item => item.id === e)
                 setCustomerPercent(customer.percent)
             }
         }
@@ -424,13 +429,12 @@ function SavdoOynasi({
 
     useEffect(() => {
         if (SavdoQoshishReducer.success) {
-            setPrintDisplay('block')
             setTimeout(() => {
                 if (ushlanumber) {
                     deleteHoldOn(ushlanumber)
                 }
-                setushlanumber(null)
                 handlePrint()
+                setushlanumber(null)
                 setarr1([])
                 setTradeDebt(0)
                 setTrader([])
@@ -444,7 +448,7 @@ function SavdoOynasi({
                 setTradeIdForEdit(null)
                 setTradeIdSearch('')
                 setDescriptionHoldOn('')
-                setPrintDisplay('none')
+                setChangesId(null)
                 clearSuccess()
                 if (SavdoQoshishReducer.editBoolean) {
                     history.push('/main/tradeList')
@@ -454,7 +458,6 @@ function SavdoOynasi({
         setSaveModal(false)
     }, [SavdoQoshishReducer.current])
 
-    const [paymentMethodId, setPaymentMethodId] = useState('')
 
     const [traderArray, setTrader] = useState([])
 
@@ -478,66 +481,37 @@ function SavdoOynasi({
     }
 
 
-    // function naqdSotish() {
-    //     let traderArrayDto = makeTraderDto()
-    //     if (match.params.id) {
-    //         editSavdolar({
-    //             id: match.params.id,
-    //             backing: match.params.remainId ? true : false,
-    //             customerId: input.customer,
-    //             userId: userHoldOn ? userHoldOn : users.id,
-    //             dollar: valyuta,
-    //             gross: grossPriceType,
-    //             productTraderDto: traderArrayDto,
-    //             payDate: thisDay,
-    //             branchId: input.branch === null ? users.branchId : input.branch,
-    //             paymentDtoList: payForm,
-    //             debtSum: 0,
-    //             paidSum: jamixisob,
-    //             totalSum: jamixisob,
-    //             // paymentStatusId: tolovreducer.tolovholati[0].id
-    //         })
-    //     } else {
-    //         saveSavdolar({
-    //             backing: false,
-    //             customerId: input.customer,
-    //             userId: userHoldOn ? userHoldOn : users.id,
-    //             dollar: valyuta,
-    //             gross: grossPriceType,
-    //             productTraderDto: traderArrayDto,
-    //             payDate: thisDay,
-    //             branchId: input.branch === null ? users.branchId : input.branch,
-    //             paymentDtoList: payForm,
-    //             debtSum: 0,
-    //             paidSum: jamixisob,
-    //             totalSum: jamixisob,
-    //             // paymentStatusId: tolovreducer.tolovholati[0].id
-    //         })
-    //     }
-    //
-    //     setSaveModal(true)
-    //     setPaymentMethodId('')
-    //     input.qaytim = 0
-    //     let a = {...input}
-    //     setInput(a)
-    //     toggleQaytim()
-    // }
-
-    function saveTrade(id, type) {
+    function saveTrade() {
+        let paymentName = PayReducer.paymethod.find(item => item.id === paymentTypeCheck)
         let a = []
         a.push({
             sum: jamixisob,
-            paymentMethodId: id,
-            paymentMethodName: type,
+            paymentMethodId: paymentTypeCheck,
+            paymentMethodName: paymentName.name,
         })
         setPayForm(a)
-        if (type === "Naqd") {
-            toggleQaytim()
-            setPaymentMethodId(id)
+        saqla(a, jamixisob, jamixisob, 'TOLANGAN')
+        setSaveModal(true)
+
+    }
+
+    function saveAllTrade() {
+        if (arr1.length > 0) {
+            if (paymentTypeCheck) {
+                if (paymentTypeCheck === 'turli') {
+                    payDetails()
+                } else if (paymentTypeCheck === 'qarz') {
+                    qarz()
+                } else {
+                    saveTrade()
+                }
+            } else {
+                toast.warning('To\'lov usulini tanlang')
+            }
         } else {
-            saqla(a, jamixisob, jamixisob, 'TOLANGAN')
-            setSaveModal(true)
+            toast.warning('Maxsulot tanlang')
         }
+
     }
 
     function saqla(a, paidSum, totalSum, paymentStatus) {
@@ -633,17 +607,6 @@ function SavdoOynasi({
             setEnterPaidSum(0)
         }
     }
-
-
-    useEffect(() => {
-        // if (saveCustomer) {
-        //     if (MijozGuruxReducer.mijozgurux) {
-        //         const ArrayLength = MijozGuruxReducer.mijozgurux.length
-        //         selectCustomer({value: MijozGuruxReducer.mijozgurux[ArrayLength - 1].id})
-        //     }
-        //     setSaveCustomer(false)
-        // }
-    }, [])
 
 
     function toggle() {
@@ -761,21 +724,18 @@ function SavdoOynasi({
         }
     }
 
-    const componentRef = useRef();
+    let componentRef = useRef();
     const handlePrint = useReactToPrint({
-        content: () => componentRef.current,
+        content: () => componentRef.current
     });
-    const style = {
-        position: "absolute",
-        top: '400px',
-        right: '500px'
 
-    }
+
+    console.log(componentRef.current)
 
 
     useEffect(() => {
         if (tradeIdForEdit) {
-            console.log('tradeIdFor',tradeIdForEdit)
+            console.log('tradeIdFor', tradeIdForEdit)
             if (SavdoQoshishReducer.tradeOne) {
                 setlastTradeActive(false)
                 const {
@@ -845,7 +805,7 @@ function SavdoOynasi({
 
     useEffect(() => {
         // if (users.getTrade && activeHoldOn) {
-            getHoldOn(mainBranchId ? mainBranchId : users.branchId)
+        getHoldOn(mainBranchId ? mainBranchId : users.branchId)
         // }
     }, [SavdoQoshishReducer.current, holdOnReducer.current, mainBranchId, activeHoldOn])
     useEffect(() => {
@@ -873,7 +833,7 @@ function SavdoOynasi({
     }, [MaxsulotlarRoyxariReducer.getBoolean])
 
     useEffect(() => {
-            setLoadingProduct(false)
+        setLoadingProduct(false)
     }, [])
 
     useEffect(() => {
@@ -924,23 +884,11 @@ function SavdoOynasi({
         }
     }, [])
 
-    const CustomerOptions = CustomerReducer.customersTrade.length > 0 ? [{
-        value: "ALL",
-        label: (t('mah.73')),
-        search: (t('mah.73')),
-        phoneNumber: null,
-    }, ...CustomerReducer.customersTrade.map((item) => ({
-        label: item.debt > 0 ? <span style={{color: "red"}} key={item.name}>{`${item.name} (${item.debt})`}</span> :
-            <span style={{color: "green"}} key={item.name}>{`${item.name} (${item.debt})`}</span>,
-        value: item.id,
-        search: item.name,
-        phoneNumber: item.phoneNumber,
-    }))] : [{
-        value: "ALL",
-        label: (t('mah.73')),
-        search: (t('mah.73')),
-        phoneNumber: null,
-    }]
+    // const CustomerOptions = CustomerReducer.customersTrade.map((item) => ({
+    //     name: item.debt > 0 ? <span style={{color: "red"}} key={item.name}>{`${item.name} (${item.debt})`}</span> :
+    //         <span style={{color: "green"}} key={item.name}>{`${item.name} (${item.debt})`}</span>,
+    //     id: item.id,
+    // }))
 
 
     function camelize(str) {
@@ -949,9 +897,716 @@ function SavdoOynasi({
         }).replace('_', ' ');
     }
 
+    function checkImg(name) {
+        if (name === 'NAQD') {
+            return naqd;
+        } else if (name === 'PLASTIK') {
+            return plastik;
+        } else {
+            return bank
+        }
+    }
+
     return (
-        <div className={"shopping"}>
-            <div style={{display: printDisplay}} className={'shoppingmodal p-2'} ref={componentRef}>
+        <div className={'position-relative'}>
+            <div className={"shopping"}>
+                <div className="shopping-header">
+                    <div className="shopping-header-item">
+                        <h5 className={'shop-header-text'}>Filial</h5>
+                        <div style={{width: '250px'}}>
+                            <SelectAnt disabled={match.params.remainId || tradeIdForEdit ? true : false}
+                                       value={mainBranchId ? mainBranchId : users.branchId} permission={false}
+                                       selectList={users.branches} onChange={(e) => {
+                                setMainBranchId(e)
+                                setarr1([])
+                                setSearch('')
+                                setIsViewSearchProduct(false)
+                            }}/>
+                        </div>
+                        {
+                            (tradeIdForEdit) && match.params.remainId ? <h5>
+                                    <h5 className={'shop-header-text'}>{t('mah.74')}</h5>
+                                </h5> :
+                                tradeIdForEdit ?
+                                    <h5 className={'shop-header-text'}>{t('mah.75')}</h5> :
+                                    <h5 className={'shop-header-text'}>{t('mah.76')}</h5>
+                        }
+                        <input type="date" value={thisDay} className={'shopping-datepicker'}
+                               onChange={(e) => setThisDay(e.target.value)}
+                        />
+                    </div>
+                    <div className="shopping-header-item">
+                        <div style={{width: '150px'}}>
+                            <SelectAnt disabled={tradeIdForEdit ? true : IsGross}
+                                       selectList={[{id: 'DONA', name: 'Dona'}, {id: 'OPTOM', name: 'Optom'}]}
+                                       value={grossPriceTypeString}
+                                       permission={false} onChange={(e) => changeGrossPriceType(e)}/>
+                        </div>
+                        {tradeIdForEdit ? "" :
+                            <button className={'shopping-header-btn'} onClick={toggle}
+                                    data-tip={t('mah.79')}>Kassaga olish <img src={kassa} alt="kassa"/></button>
+                        }
+
+                        <ReactTooltip/>
+
+                        {
+                            users.getTrade &&
+                            <button className={'shopping-header-btn'} onClick={toggle4}
+                            >{t('mah.80')} <img src={lastTrade} alt="lastTrade"/>
+                            </button>
+                        }
+
+                        <Link to={'/main/tradeList'}>
+                            <button className={'shopping-header-btnDanger'} onClick={() => {
+                                savdooynasi()
+                                clear()
+                            }}>
+                                Ortga <img src={back} alt="back"/>
+                            </button>
+                        </Link>
+                    </div>
+                </div>
+                <div className="shopping-body">
+                    <div style={{width: open ? '25%' : '5%'}} className="shopping-body-left">
+                        <div className="shopping-products">
+                            <div style={{justifyContent: open ? 'space-between' : "center"}} className={'d-flex'}>
+                                {
+                                    open && <div style={{width: '60%'}}>
+                                        {
+                                            BolimReducer.bolimlar?.length > 0
+                                            &&
+                                            <SelectAnt value={categoryId} onChange={(e) => setCategoryId(e)}
+                                                       all={'Kategoriya tanlang'}
+                                                       permission={true} selectList={BolimReducer.bolimlar}/>
+                                        }
+                                    </div>
+
+                                }
+                                {
+                                    tradeIdForEdit ? '' :
+                                        <div onClick={showDrawer}
+                                             className={'shopping-left-product-btn'}>
+                                            <img src={products} className={'btn-icon'} alt="waiting"/>
+                                        </div>
+                                }
+                            </div>
+                            {
+                                open && <div className={'shopping-product-list'}>
+                                    {
+
+                                        MaxsulotlarRoyxariReducer.productForShopping.length > 0 ?
+                                            MaxsulotlarRoyxariReducer.productForShopping.map((item, index) => <div
+                                                className={'shop-product-card'}
+                                                key={index} onClick={() => {
+                                                pushesh(item)
+                                            }}>
+                                                {
+                                                    item.photoId === null ?
+                                                        <img className={'shop-product-image'} src={defaultProduct}
+                                                             alt={item.name}/>
+                                                        : <img className={'shop-product-image'}
+                                                               src={`${BaseUrl}/attachment/download/${item.photoId}`}
+                                                               alt="###"/>
+
+                                                }
+                                                <p className={'shop-product-name'}>{item.name}</p>
+                                                <p className={'shop-product-price'}>{!grossPriceType ? item.salePrice : item.grossPrice} {t('mah.39')}</p>
+                                            </div>) : <div>
+                                                <h4 className={'text-center'}>{MaxsulotlarRoyxariReducer.message}</h4>
+                                            </div>
+
+                                    }
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                    <div style={{width: open ? '45%' : '60%'}} className="shopping-body-middle">
+                        <div className="shopping-body-header">
+                            <div style={{width: '250px'}}>
+                                <SelectAnt disabled={tradeIdForEdit ? true : false}
+                                           all={'Mijozni tanlang'}
+                                           selectList={CustomerReducer.customersTrade}
+                                           onChange={selectCustomer}
+                                           permission={true}
+                                />
+                            </div>
+                            {
+                                !tradeIdForEdit && users.addCustomer ?
+                                    <button onClick={addCustomerToggle}
+                                            className={'shopping-plus'}>+
+                                    </button> : ''
+                            }
+                            {
+                                match.params.remainId ? " " :
+                                    <div className="shopping-search">
+                                        <input ref={inputRef} type="text"
+                                               value={search}
+                                               onChange={mahsulotnomi}
+                                               autoFocus={true}
+                                               placeholder={"Maxsulot nomi yoki barcode"}/>
+                                        <img src={searchIcon} alt="search"/>
+                                        {
+                                            MaxsulotlarRoyxariReducer.productSearch.length > 0 && isViewSearchProduct &&
+                                            <div className={'shopping-search-list'}>
+                                                {
+                                                    MaxsulotlarRoyxariReducer.productSearch.map(item =>
+                                                        <button className={'shopping-search-button'} key={item.id}
+                                                                onClick={() => pushesh(item)}>
+                                                            <p className={'p-0 m-0'}>{item.name} ({item.barcode})</p>
+                                                            <p className={'p-0 m-0'}>{t('mah.83')} {item.amount} {item.measurementName}</p>
+                                                        </button>
+                                                    )
+                                                }
+                                            </div>
+                                        }
+                                    </div>
+
+                            }
+                        </div>
+                        <div className="shopping-body-body">
+                            <div className="table-responsive">
+                                <table className={'shopping-table'}>
+                                    <thead>
+                                    <tr>
+                                        <th width={30}>ID</th>
+                                        <th>{t('ProductList.1')}</th>
+                                        <th className={'text-center'}>{t('ProductEdit.7')}</th>
+                                        <th className={'text-center'}>Narxi</th>
+                                        <th className={'text-center'}>Jami</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {
+                                        arr1.map((item, index) =>
+                                                !item.delete
+                                                && (
+                                                    <tr style={{
+                                                        height: '70px',
+                                                        border: item.productId === changesId ? '2px solid red' : 'none',
+                                                        cursor: 'pointer',
+                                                    }}
+                                                        key={item?.id} onClick={() => setChangesId(item.productId)}>
+                                                        <td>{index + 1}</td>
+                                                        <td>{item?.name}</td>
+                                                        <td className={'text-center'}>
+                                                            {
+                                                                item.productId === changesId ?
+                                                                    <div>
+                                                                        <InputNumber
+                                                                            value={item?.quantity}
+                                                                            min={0}
+                                                                            step={'number'}
+                                                                            max={match.params.remainId && item?.noQuantity}
+                                                                            onChange={(e) => {
+                                                                                changeCount(e, index)
+                                                                            }}
+                                                                            className={'shop-change-number'}
+                                                                        />
+                                                                    </div> : item.quantity
+                                                            }
+
+                                                            <div className="col-md-12"> {
+                                                                item?.active ?
+                                                                    <p style={{fontSize: '10px'}}
+                                                                       className={'text-danger text-center p-0 m-0'}><strong
+                                                                        style={{fontSize: '14px'}}> {item?.amount}</strong> {item?.measurementName} bor
+                                                                        ! </p> : ''
+                                                            }</div>
+                                                        </td>
+                                                        <td className={'text-center'}>
+                                                            <div
+                                                                className={'d-flex flex-column justify-content-start align-items-center'}>
+                                                                {
+                                                                    item?.noChangesPrice !== item?.price &&
+                                                                    <del
+                                                                        className={'mb-1 text-danger'}>{parseFloat(item?.noChangesPrice).toFixed(0)} {t('mah.39')}</del>
+                                                                }
+                                                                {
+                                                                    item.productId === changesId ?
+                                                                        <InputNumber
+                                                                            value={item?.price}
+                                                                            min={0}
+                                                                            disabled={IsDiscount}
+                                                                            onChange={(e) =>
+                                                                                handleChangeBuyPrice(e, index)}
+                                                                            className={'shop-change-number'}
+                                                                        /> : item.price
+                                                                }
+
+                                                            </div>
+                                                        </td>
+                                                        <td className={'text-center'}>
+                                                            <div className={'d-flex align-items-center flex-column'}>
+                                                                {
+                                                                    item?.noChangesPrice !== item?.price &&
+                                                                    <del
+                                                                        className={'mt-3 mb-1 text-danger'}>{parseFloat(item?.noChangesTotalSalePrice).toFixed(0)} {t('mah.39')}</del>
+                                                                }
+                                                                <p>                                                        {parseFloat(item?.totalSalePrice).toFixed(0)} {t('mah.39')}
+                                                                </p>
+                                                            </div>
+                                                        </td>
+                                                        {/*<td>*/}
+                                                        {/*    <button*/}
+                                                        {/*        onClick={() => deleteM(index, item.id)}*/}
+                                                        {/*        className={'shopTable-btn shopTable-btn-delete'}>x*/}
+                                                        {/*    </button>*/}
+                                                        {/*</td>*/}
+                                                    </tr>
+                                                )
+                                        )
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div style={{width: open ? '30%' : '35%'}} className="shopping-body-right">
+                        <div className={'button-changes'}>
+                            <div className={'btn-change'} onClick={sMinus}>
+                                <img src={minus} alt="minus"/>
+                                <p className={'btn-change-text'} style={{color: '#FF7272'}}>Kamaytirish</p>
+                            </div>
+                            <div className={'btn-change'} onClick={() => setCount(changesId)}>
+                                <img src={plus} alt="plus"/>
+                                <p className={'btn-change-text'} style={{color: '#377DFF'}}>Qo'shish</p>
+                            </div>
+                            <div className={'btn-change'} onClick={deleteM}>
+                                <img src={remove} alt="remove"/>
+                                <p className={'btn-change-text'} style={{color: '#4E5D78'}}>O'chirish</p>
+                            </div>
+                        </div>
+                        {
+                            tradeIdForEdit ? '' :
+                                <div onClick={toggle8}
+                                     className={'shopping-left-btn'}>
+                                    <img src={waiting} className={'btn-icon'} alt="waiting"/>
+                                    <p className={'m-0'} style={{color: '#FFC040'}}>Ushlab turish</p>
+                                </div>
+                        }
+                        {/*{*/}
+                        {/*    !tradeIdForEdit &&*/}
+                        {/*    <div onClick={clear} className={'shopping-left-btn'}><img src={trash} className={'btn-icon'}*/}
+                        {/*                                                              alt="waiting"/>*/}
+                        {/*        <p className={'m-0'} style={{color: '#4E5D78'}}>Tozalash</p>*/}
+                        {/*    </div>*/}
+                        {/*}*/}
+                        {
+                            tradeIdForEdit ? editActiveButton === "qarz" ? '' :
+                                    <div className={'shopping-left-btn'}
+                                         style={{border: paymentTypeCheck === 'turli' ? '2px solid #38CB89' : 'none'}}
+                                         onClick={() => setPaymentTypeCheck('turli')}><img src={turliTolov}
+                                                                                           className={'btn-icon'}
+                                                                                           alt="waiting"/>
+                                        <p className={'m-0'} style={{color: '#38CB89'}}>Turli to'lov</p></div>
+                                : <div className={'shopping-left-btn'}
+                                       style={{border: paymentTypeCheck === 'turli' ? '2px solid #38CB89' : 'none'}}
+                                       onClick={() => setPaymentTypeCheck('turli')}><img src={turliTolov}
+                                                                                         className={'btn-icon'}
+                                                                                         alt="waiting"/>
+                                    <p className={'m-0'} style={{color: '#38CB89'}}>Turli to'lov</p></div>
+                        }
+                        {
+                            tradeIdForEdit ? editActiveButton === "turli" ? "" :
+                                    <div onClick={customer ? () => setPaymentTypeCheck('qarz')
+                                        : () => {
+                                            toast.error(t('mah.88'))
+                                        }
+                                    } style={{border: paymentTypeCheck === 'qarz' ? '2px solid #FF7272' : 'none'}}
+                                         className={'shopping-left-btn'}><img
+                                        src={debtTrade} className={'btn-icon'}
+                                        alt="waiting"/>
+                                        <p className={'m-0'} style={{color: '#FF7272'}}>Qarzga sotish</p></div>
+                                : <div onClick={customer ? () => setPaymentTypeCheck('qarz') : () => {
+                                    toast.error(t('mah.88'))
+                                }
+                                } style={{border: paymentTypeCheck === 'qarz' ? '2px solid #FF7272' : 'none'}}
+                                       className={'shopping-left-btn'}><img src={debtTrade} className={'btn-icon'}
+                                                                            alt="waiting"/>
+                                    <p className={'m-0'} style={{color: '#FF7272'}}>Qarzga sotish</p></div>
+                        }
+
+                        {
+                            PayReducer.paymethod &&
+                            PayReducer.paymethod.map(item =>
+                                match.params.remainId || tradeIdForEdit ?
+                                    editActiveButton === item.id &&
+                                    <button key={item.id}
+                                            onClick={() => setPaymentTypeCheck(item.id)}
+                                            className={'shopping-left-payment'}
+                                            style={{border: paymentTypeCheck === item.id ? '2px solid #377DFF' : 'none'}}
+                                    >
+                                        <img src={checkImg(item.name)} alt="waiting"/>
+                                        <p className={'m-0'}> {camelize(item.name)}</p>
+                                    </button> : <button key={item.id}
+                                                        style={{border: paymentTypeCheck === item.id ? '2px solid #377DFF' : 'none'}}
+                                                        onClick={() => setPaymentTypeCheck(item.id)}
+                                                        className={'shopping-left-payment'}>
+                                    <img src={checkImg(item.name)} alt="waiting"/>
+                                    <p className={'m-0'}> {camelize(item.name)}</p>
+                                </button>
+                            )
+                        }
+                        {
+                            tradeIdForEdit || match.params.remainId ?
+                                <div className={'shop-totalSum'}>
+                                    <p>{t('mah.86')} </p>
+                                    <p> {noChangesPaidSum} {t('mah.27')}</p>
+                                </div> : ''
+                        }
+                        <div className={'shop-totalSum'}>
+                            <p>{t('Trade.14')}: </p>
+                            <p>{jamixisob} {t('mah.39')}</p>
+                        </div>
+                        <div className={'d-flex justify-content-between align-items-center w-100'}>
+                            <p className='shop-productSum'>{t('Trade.15')}:{xisob}</p>
+                            <div className={'discount-percent'}>
+                                <p>{t('Trade.28')}: {customerPercent} %</p>
+                            </div>
+                        </div>
+                        <button className={'btn-payment'} onClick={saveAllTrade}>
+                            To'lov
+                        </button>
+                    </div>
+                </div>
+
+
+                <Modal isOpen={activeHoldOn} toggle={toggle}>
+                    <ModalHeader>
+                        {t('Trade.21')}
+                    </ModalHeader>
+                    <ModalBody>
+                        <table className={'table'}>
+                            <thead>
+                            <tr>
+                                <th>T/R</th>
+                                <th>{t('Trade.18')}</th>
+                                <th>{t('Trade.12')}</th>
+                                <th>{t('Trade.14')}</th>
+                                <th className={'text-center'}>{t('as.6')}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {
+                                holdOnReducer?.holdOn ?
+                                    holdOnReducer?.holdOn.map((item, index) => <tr key={item.id}>
+                                        <td>{index + 1}</td>
+                                        <td>{item?.description}</td>
+                                        <td>{item?.totalSum} {grossPriceType === "DOLLAR" ? '$' : "so'm"}</td>
+                                        <td>{item?.quantity} </td>
+                                        <td>
+                                            {
+                                                users.editTrade &&
+                                                <button onClick={() => savdooynakochirish(item.id)} className={'kv'}> |
+                                                </button>
+                                            }
+                                            {
+                                                users.deleteTrade &&
+                                                <button onClick={() => deleteHoldOn(item.id)} className={'ocbutton'}>X
+                                                </button>
+                                            }
+
+                                        </td>
+                                    </tr>)
+                                    : <div>
+                                        <h4 className={'text-center'}>{holdOnReducer.message}</h4>
+                                    </div>
+                            }
+                            </tbody>
+                        </table>
+                    </ModalBody>
+                    <ModalFooter>
+                        <button className={'btn btn-danger'}
+                                onClick={() => setActiveHoldOn(false)}>{t('Buttons.7')}</button>
+                    </ModalFooter>
+                </Modal>
+                <Modal isOpen={addCustomerActive} toggle={addCustomerToggle}>
+                    <form>
+                        <ModalHeader>
+                            {t('CustomAll.4')}
+                        </ModalHeader>
+                        <ModalBody>
+                            <label htmlFor={'nomi'}>{t('mah.90')}</label>
+                            <input
+                                id={'nomi'} type="text"
+                                placeholder={t('mah.91')}
+                                className={'form-control mt-1'}
+                                onChange={(e) => dispatch(
+                                    {
+                                        type: 'name',
+                                        payload: e.target.value
+                                    }
+                                )}
+                            />
+                            {IsCheck && !state.name && <p
+                                className={'text-danger text-center p-0 m-0'}>{t('mah.92')}</p>}
+                            <label className={'mt-1'} htmlFor={'filial'}>{t('CustomAll.5')}</label>
+                            <Select
+                                required={true}
+                                onChange={(e) => dispatch({type: 'branchId', payload: e.value})}
+                                placeholder={t('mah.93')}
+                                options={users.branches.map(item => ({label: item.name, value: item.id}))}
+                                isClearable={true}
+                            />
+                            {IsCheck && !state.branchId && <p
+                                className={'text-danger text-center p-0 m-0'}>{t('mah.94')}</p>}
+                            <label className={'mt-1'} htmlFor={'tel'}>{t('Buttons.14')}</label>
+                            <PhoneInput
+                                placeholder={t('mah.95')}
+                                className={'form-control'}
+                                onChange={(e) => dispatch({type: 'phoneNumber', payload: e})}/>
+                            {IsCheck && !state.phoneNumber && <p
+                                className={'text-danger text-center p-0 m-0'}>{t('mah.95')}</p>}
+                            <label htmlFor={'foizda'}>{t('Buttons.15')}</label>
+                            <input type="text"
+                                   onChange={(e) => dispatch({type: 'percent', payload: e.target.value})}
+                                   placeholder={t('mah.96')}
+                                   defaultValue={''}
+                                   className={'form-control mt-1'}
+                                   id={'foizda'}/>
+                            {IsCheck && !state.percent && <p
+                                className={'text-danger text-center p-0 m-0'}>{t('mah.97')}</p>}
+                        </ModalBody>
+                        <ModalFooter>
+                            <button className={'btn btn-danger'} type={"button"}
+                                    onClick={addCustomerToggle}>{t('Buttons.7')}</button>
+                            <button className={'btn btn-success'} type={"button"}
+                                    onClick={addCustomer}>{t('Buttons.6')}</button>
+                        </ModalFooter>
+                    </form>
+                </Modal>
+                <Modal isOpen={turli} toggle={toggle9}>
+                    <ModalHeader>
+
+                        <h3><strong>{t('Trade.39')}:</strong> {
+                            jamixisob}</h3>
+                        <h4 className={'text-error'}>{t('mah.98')}</h4>
+                    </ModalHeader>
+                    <ModalBody>
+                        {
+                            payForm.map((item, index) =>
+                                <div key={index} className={'d-flex justify-content-around align-items-end mb-2'}>
+                                    <div className={'col-md-4'}>
+                                        <label htmlFor={'turi'}>{t('mah.99')}</label>
+                                        <select className={'form-control'} name={'paymentMethodId'}
+                                                value={item.paymentMethodId}
+                                                onChange={(e) => changePayForm(e, index)}
+                                                disabled={!item.edit}
+                                                id={'turi'}>
+                                            {
+                                                PayReducer.paymethod.map(item =>
+                                                    <option key={item.id} value={item.id}
+                                                            disabled={payForm.some(val => val.paymentMethodId === item.id)}
+                                                    >{camelize(item.name)}</option>)
+                                            }
+                                        </select>
+                                    </div>
+                                    <div className={'col-md-4'}>
+                                        <label htmlFor={'miqdor'}>{t('mah.100')}</label>
+                                        <input type="number" value={item.sum} placeholder={'0'}
+                                               name={'sum'} onChange={(e) => changePayForm(e, index)}
+                                               className={'form-control'}/>
+                                    </div>
+                                    {
+                                        item.edit && <div className="col-md-3">
+                                            <label htmlFor=""></label>
+                                            <button onClick={() => deletePayForm(index)}
+                                                    className={'btn btn-danger mt-2'}>{t('mah.101')}
+                                            </button>
+                                        </div>
+                                    }
+
+                                </div>
+                            )
+                        }
+                        <div style={{width: '94%', marginLeft: '3%', marginTop: '15px'}}>
+                            {
+                                payForm.length < 3 && <button className={'btn btn-outline-primary form-control'}
+                                                              onClick={AddPayForm}>Add Pay Method
+                                </button>
+                            }
+
+                        </div>
+                        <div>
+                            <p>{t('mah.102')} {jamixisob} {t('mah.27')} </p>
+                            <p>{t('mah.103')} {payTotalSum} {t('mah.27')}</p>
+                            <p>{t('mah.104')} {jamixisob - parseFloat(payTotalSum)} {t('mah.27')}</p>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter>
+                        <button className={'btn btn-danger'} onClick={toggle9}>{t('Buttons.7')}</button>
+                        <button onClick={saveTradeByDifferentPayment}
+                                className={'btn btn-success m-1'}>
+                            {t('Buttons.6')}
+                        </button>
+                    </ModalFooter>
+                </Modal>
+                {/*<Modal isOpen={qaytim} toggle={toggleQaytim}>*/}
+                {/*    <ModalHeader>*/}
+                {/*        <h6>Qaytim </h6>*/}
+                {/*        <h6>To'lanishi kerak bo'lgan summa: {jamixisob} UZB</h6>*/}
+                {/*    </ModalHeader>*/}
+                {/*    <ModalBody>*/}
+                {/*        <label htmlFor="">Berilgan summani kiriting</label>*/}
+                {/*        <input type="number" className={'form-control'} value={input.qaytim}*/}
+                {/*               onChange={qaytimchange}/>*/}
+                {/*        <button onClick={ClickSumm} className={'btn btn-outline-success mt-2'}>50 000</button>*/}
+                {/*        <button onClick={ClickSumm100} className={'btn btn-outline-success mt-2 ms-2'}>100 000*/}
+                {/*        </button>*/}
+                {/*        <button onClick={ClickSumm150} className={'btn btn-outline-success mt-2 ms-2'}>150 000*/}
+                {/*        </button>*/}
+                {/*        <button onClick={ClickSumm200} className={'btn btn-outline-success mt-2 ms-2'}>200 000*/}
+                {/*        </button>*/}
+                {/*        <button onClick={ClickSumm300} className={'btn btn-outline-success mt-2 ms-2'}>300 000*/}
+                {/*        </button>*/}
+                {/*        <button onClick={ClickSumm400} className={'btn btn-outline-success mt-2 ms-2'}>400 000*/}
+                {/*        </button>*/}
+                {/*        <br/>*/}
+                {/*        <label className={'mt-2'} htmlFor="">Qaytim</label>*/}
+                {/*        <input className={'form-control'} type="number"*/}
+                {/*               value={input.qaytim == 0 || input.qaytim == "" ? 0 : input.qaytim - jamixisob}/>*/}
+                {/*    </ModalBody>*/}
+                {/*    <ModalFooter>*/}
+                {/*        <button onClick={naqdSotish} className={'btn btn-outline-primary'}>Sotish</button>*/}
+                {/*        <button onClick={toggleQaytim} className={'btn btn-outline-primary'}>Chiqish</button>*/}
+                {/*    </ModalFooter>*/}
+                {/*</Modal>*/}
+
+                <Modal isOpen={ushla2} toggle={toggle8}>
+                    <ModalHeader>
+                        {t('Trade.21')}
+                    </ModalHeader>
+                    <ModalBody>
+                        <label htmlFor={'qisqa'}>{t('Trade.18')}</label>
+                        <textarea className={'form-control'} id={'qisqa'} cols="20" rows="3" value={descriptionHoldOn}
+                                  onChange={(e) => setDescriptionHoldOn(e.target.value)}> </textarea>
+                    </ModalBody>
+                    <ModalFooter>
+                        <button onClick={toggle8} className={'btn btn-danger'}>{t('Buttons.7')}</button>
+                        <button onClick={ushla} className={'btn btn-success'}>{t('Buttons.6')} </button>
+                    </ModalFooter>
+                </Modal>
+                <Modal isOpen={activeqarz} toggle={qarz}>
+                    <ModalHeader>
+                        {t('Trade.45')}
+                    </ModalHeader>
+                    <ModalBody>
+                        <h3><strong>{t('Purchase.22')}:</strong> {jamixisob} {t('mah.39')}
+                        </h3>
+                        <h4 className={'text-error'}>{t('mah.105')}</h4>
+                        <div className={'col-md-12 d-flex align-items-end justify-content-between'}>
+                            <div className={'col-md-6'}>
+                                <label htmlFor={'rrr'}>{t('mah.104')} {jamixisob - enterPaidSum} {t('mah.27')} </label>
+
+                                <input type="number" ref={debtRef} className={'form-control'} id={'rrr'}
+                                       value={enterPaidSum} onChange={(e) => {
+                                    if (/^0/.test(e.target.value)) {
+                                        let value = e.target.value.replace(/^0/, "")
+                                        setEnterPaidSum(value)
+                                    } else {
+                                        setEnterPaidSum(e.target.value)
+
+                                    }
+                                }}/>
+                            </div>
+                            <div className={'col-md-6'}>
+                                <select className={'form-control'}
+                                        value={payMethodIds}
+                                        disabled={tradeIdForEdit}
+                                        onChange={(e) => setPayMethodId(e.target.value)}
+                                >
+                                    {PayReducer.paymethod &&
+                                        PayReducer.paymethod.map(item =>
+                                            <option value={item.id} key={item.id}>{camelize(item.name)}</option>)
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <p data-tip={t('mah.106')}
+                           className={'btn btn-outline-primary mt-2 form-control'}>{t('mah.107')}</p>
+                        <ReactTooltip/>
+                    </ModalBody>
+                    <ModalFooter>
+                        <button type={'button'} onClick={qarz} className={'btn btn-danger'}>{t('mah.108')}</button>
+                        <button onClick={saveTradeByDebt} className={'btn btn-success'}>
+                            {t('Buttons.6')}
+                        </button>
+                    </ModalFooter>
+                </Modal>
+                <Modal isOpen={lastTradeActive} toggle={toggle4}>
+                    <ModalHeader>
+                        <p>{t('Trade.26')}</p>
+                    </ModalHeader>
+                    <ModalBody>
+                        <div className={'col-md-12 '}>
+                            <div className="col-md-12">
+                                <label htmlFor="tradeId">{t('mah.109')}</label>
+                                <input type="text" value={tradeIdSearch} onChange={(e) => setTradeIdSearch(e.target.value)}
+                                       id={'tradeId'} className={'form-control'}/>
+                            </div>
+                            <div className={'d-flex justify-content-between mt-2'}>
+                                {
+                                    users.getTrade || users.getTradeAdmin ?
+                                        loading ?
+                                            SavdoQoshishReducer?.trades?.list?.length > 0 ?
+                                                <div>
+                                                    <div className="table-responsive table-wrapper-scroll-y"
+                                                         style={{height: '400px'}}>
+                                                        <table className='table table-striped table-bordered mt-4'>
+                                                            <thead>
+                                                            <tr>
+                                                                <th>T/R</th>
+                                                                <th>{t('Trade.4')}</th>
+                                                                <th>{t('mah.110')}</th>
+                                                                <th>{t('Pagination.10')}</th>
+                                                                <th>{t('as.6')}</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            {
+                                                                SavdoQoshishReducer.trades?.list?.map((item, index) => <tr
+                                                                    key={item?.id}>
+                                                                    <td>{index + 1}</td>
+                                                                    <td>{moment(new Date(item?.createdAt)).format('lll')}</td>
+                                                                    <td className={item.edit && 'bg-warning'}>{item?.invoice}</td>
+                                                                    <td>{item?.customerName}</td>
+                                                                    <td>
+                                                                        <div className={'d-flex'}>
+                                                                            {
+                                                                                users.editTrade && item?.editable ?
+                                                                                    <button
+                                                                                        onClick={() => getTradeByForEdit(item.id)}
+                                                                                        className='taxrirlash'><img
+                                                                                        src={Edit}
+                                                                                        alt=""/> {t('Buttons.1')}
+                                                                                    </button>
+                                                                                    : ''
+                                                                            }
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>)
+                                                            }
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div> :
+                                                <div className={'border border-2'}>
+                                                    <h4 className={'text-center'}>{SavdoQoshishReducer.message}</h4>
+                                                </div> : <Loading/>
+                                        : ''
+                                }
+                            </div>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter>
+                        <button onClick={toggle4}
+                                className={'btn btn-outline-primary'}>{t('Buttons.7')}</button>
+                    </ModalFooter>
+                </Modal>
+                <ModalLoading isOpen={saveModal}/>
+            </div>
+            <div ref={componentRef} className={'p-2 position-absolute w-100'}>
                 <div className={'d-flex justify-content-center align-items-center'}>
                     {
                         checkReducer.check ?
@@ -986,7 +1641,7 @@ function SavdoOynasi({
                 </div>
                 <div className={'d-flex justify-content-between align-items-center'}>
                     <h4 style={{fontSize: 12, fontWeight: 600}}>
-                       {t('mah.41')}
+                        {t('mah.41')}
                     </h4>
                     <h4 style={{fontSize: 12, fontWeight: 600}}>
                         {
@@ -1042,7 +1697,10 @@ function SavdoOynasi({
                         {
                             payForm.map(item =>
                                 <div className={"d-flex justify-content-between"}>
-                                    <h4 style={{fontSize: 13, fontWeight: 600}}>{camelize(item.paymentMethodName)}:</h4>
+                                    <h4 style={{
+                                        fontSize: 13,
+                                        fontWeight: 600
+                                    }}>{camelize(item.paymentMethodName)}:</h4>
                                     <h4 style={{
                                         fontSize: 13,
                                         fontWeight: 600
@@ -1088,672 +1746,6 @@ function SavdoOynasi({
                         : ''
                 }
             </div>
-            <div className={'savdoOynaContainers'}>
-                <div className="savdoNavbar">
-                    <div className="navbarLeft d-flex justify-content-between align-items-center">
-                        <div className={'d-flex align-items-center'}>
-                            <h5 className={'me-4'}>{t('ProductList.8')}</h5>
-                            <select className='bazaSelect1' onChange={(e) => {
-                                setMainBranchId(e.target.value)
-                                setarr1([])
-                            }}
-                                    disabled={match.params.remainId || tradeIdForEdit ? true : false}
-                                    value={mainBranchId}>
-                                {
-                                    users.branches.map(item => <option key={item.id} value={item.id}>
-                                        {item.name}
-                                    </option>)
-                                }
-                            </select>
-                        </div>
-
-                        {
-                            (tradeIdForEdit) && match.params.remainId ? <h5>
-                                    <h5 className={'ms-5 align-items-center'}>{t('mah.74')}</h5>
-                                </h5> :
-                                tradeIdForEdit ?
-                                    <h5 className={'ms-5 align-items-center'}>{t('mah.75')}</h5> :
-                                    <h5 className={'ms-5 align-items-center'}>{t('mah.76')}</h5>
-                        }
-                        <div>
-                            <input type="date" value={thisDay} onChange={(e) => setThisDay(e.target.value)}
-                                   className={'form-control'}/>
-                        </div>
-                    </div>
-                    <div className="navbarRigth d-flex overflow-hidden">
-                        <select className={'sss2'} value={grossPriceTypeString}
-                                onChange={(e) => changeGrossPriceType(e.target.value)}
-                                id={'grossPriceType'} disabled={tradeIdForEdit ? true : IsGross}>
-                            <option value={'DONA'}>{t('mah.77')}</option>
-                            <option value={'OPTOM'}>{t('mah.78')}</option>
-                        </select>
-                        {tradeIdForEdit  ? "" :
-                            <button className={'btn'} onClick={toggle} style={{lineHeight: '12px'}}
-                                    data-tip={t('mah.79')}>{t('Trade.21')}</button>
-                        }
-
-                        <ReactTooltip/>
-
-                        {
-                            users.getTrade &&
-                            <button className={'btn btn-primary'} onClick={toggle4} style={{lineHeight: '12px'}}
-                            >{t('mah.80')}
-                            </button>
-                        }
-
-
-                        <Link to={'/main/dashboard'}><img className='headerImgStyle' src={img6} onClick={() => {
-                            savdooynasi()
-                            clear()
-                        }}
-                                                       alt=""/></Link>
-                    </div>
-                </div>
-                <div className="savdoBlock col-md-12">
-                    <div className="savdoBlockLeft">
-                        <div className="selectBox">
-                            <div className="col-md-12 p-0 d-flex justify-content-between">
-                                <div className="col-md-5 d-flex justify-content-center">
-                                    <div style={{width: 250}}>
-                                        <Select
-                                            isDisabled={tradeIdForEdit ? true : false}
-                                            value={
-                                                CustomerOptions.filter(option =>
-                                                    option.value === customer)
-                                            }
-                                            placeholder={t('mah.81')}
-                                            options={CustomerOptions}
-                                            onChange={selectCustomer}
-                                            filterOption={(option, searchText) => {
-                                                return option.data?.search?.toLowerCase().includes(searchText.toLowerCase()) || option.data?.phoneNumber?.toLowerCase().includes(searchText.toLowerCase());
-                                            }}
-                                        />
-                                    </div>
-                                    {
-                                        !tradeIdForEdit && users.addCustomer ?
-                                            <button onClick={addCustomerToggle}
-                                                    className={'btn btn-outline-primary fw-bold'}>+
-                                            </button> : ''
-                                    }
-
-                                </div>
-                                {
-                                    match.params.remainId ? " " :
-                                        <div className="col-md-7 p-0 position-relative">
-                                            <input ref={inputRef} className="form-control  img-fluid" type="text"
-                                                   value={search}
-                                                   onChange={mahsulotnomi}
-                                                   autoFocus={true}
-                                                   placeholder={t('mah.82')}/>
-                                            {
-                                                MaxsulotlarRoyxariReducer.productSearch.length > 0 && isViewSearchProduct &&
-                                                <div className={'combo-trade-array position-absolute z-index'}
-                                                     style={{maxHeight: 400, overflowY: "scroll"}}>
-                                                    {
-                                                        MaxsulotlarRoyxariReducer.productSearch.map(item =>
-                                                            <button key={item.id} onClick={() => pushesh(item)}>
-                                                                <p className={'p-0 m-0'}>{item.name} ({item.barcode})</p>
-                                                                <p className={'p-0 m-0'}>{t('mah.83')} {item.amount} {item.measurementName}</p>
-                                                            </button>
-                                                        )
-                                                    }
-                                                </div>
-                                            }
-                                        </div>
-
-                                }
-                            </div>
-                        </div>
-                        <div className="table-responsive tbodyY">
-                            <table className={'table '}>
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>{t('ProductList.1')}</th>
-                                    <th className={'text-center'}>{t('ProductEdit.7')}</th>
-                                    <th>{t('Trade.14')}</th>
-                                    <th>. . .</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {
-                                    arr1.map((item, index) =>
-                                            !item.delete
-                                            && (
-                                                <tr
-                                                    key={item?.id}>
-                                                    <td>{index + 1}</td>
-                                                    <td>{item?.name}</td>
-                                                    <td>
-                                                        <div className="p-0 align-items-center d-flex gap-2"
-                                                             style={{width: 'max-content'}}>
-                                                            <div>
-                                                                <button disabled={item?.disabled}
-                                                                        onClick={() => sMinus(index)}
-                                                                        className={'btn btn-outline-danger rounded-circle border-3'}>-
-                                                                </button>
-                                                            </div>
-                                                            <div>
-                                                                <InputNumber
-                                                                    value={item?.quantity}
-                                                                    min={0}
-                                                                    step={'number'}
-                                                                    max={match.params.remainId && item?.noQuantity}
-                                                                    onChange={(e) => {
-                                                                        changeCount(e, index)
-                                                                    }}
-                                                                    style={{
-                                                                        padding: '5px',
-                                                                        border: '1px solid darkred',
-                                                                        width: '100px',
-                                                                    }}
-                                                                />
-                                                            </div>
-                                                            <div>
-                                                                <button
-                                                                    onClick={() => setCount(item?.productId)}
-                                                                    className={'btn btn-outline-primary rounded-circle border-3'}>+
-                                                                </button>
-                                                            </div>
-                                                            <div>
-                                                                <p className={'m-0 p-0 '}>{item?.measurementName}</p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-md-10"> {
-                                                            item?.active ?
-                                                                <p className={'text-danger text-center fw-2 p-0 m-0'}>{t('mah.84')} {item?.amount} {item?.measurementName} {t('mah.85')} </p> : ''
-                                                        }</div>
-                                                    </td>
-                                                    <td>
-                                                        {
-                                                            item?.noChangesPrice !== item?.price &&
-                                                            <del>{parseFloat(item?.noChangesPrice).toFixed(0)} {t('mah.39')}</del>
-                                                        }
-                                                        <InputNumber
-                                                            value={item?.price}
-                                                            min={0}
-                                                            disabled={IsDiscount}
-                                                            onChange={(e) =>
-                                                                handleChangeBuyPrice(e, index)}
-                                                            style={{
-                                                                padding: '5px',
-                                                                border: '1px solid darkred',
-                                                                width: '100px',
-                                                            }}
-                                                        />
-                                                    </td>
-                                                    <td>
-
-                                                        {
-                                                            item?.noChangesPrice !== item?.price &&
-                                                            <del>{parseFloat(item?.noChangesTotalSalePrice).toFixed(0)} {t('mah.39')}</del>
-                                                        }
-                                                        <br/>
-                                                        <p>                                                        {parseFloat(item?.totalSalePrice).toFixed(0)} {t('mah.39')}
-                                                        </p>
-                                                    </td>
-                                                    <td>
-                                                        <button
-                                                            onClick={() => deleteM(index, item.id)}
-                                                            className={'btn btn-outline-dark border-2 rounded-circle'}>x
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            )
-                                    )
-                                }
-                                </tbody>
-                            </table>
-                        </div>
-                        <div className="maxSoniBox">
-                            <h6 className='d-flex align-items-center'>{t('Trade.15')}:{xisob}</h6>
-                            <div>
-                                {
-                                    tradeIdForEdit || match.params.remainId ?
-                                        <h6>{t('mah.86')} {noChangesPaidSum} {t('mah.27')}</h6> : ''
-                                }
-                                <h6>{t('Trade.14')}: {
-                                    jamixisob
-                                } {t('mah.39')}</h6>
-
-                            </div>
-                        </div>
-                        <hr style={{margin: '2px'}}/>
-                        <div className={'chegirmalarBox'}>
-                            <div className='d-flex'>
-                                <p>{t('Trade.28')}:</p>
-                                <img src="" alt=""/>
-                                <p>{customerPercent} %</p>
-                            </div>
-                        </div>
-                    </div>
-                    {
-                        match.params.remainId ? <div className="savdoBlockRigth"></div> :
-                            <div className="savdoBlockRigth">
-                                {
-                                    BolimReducer.bolimlar?.length > 0
-                                    && <select className={'form-control'} value={categoryId}
-                                               onChange={(e) => setCategoryId(e.target.value)} style={{width: '50%'}}>
-                                        {
-                                            BolimReducer.bolimlar.map(item =>
-                                                <option value={item.id}>{item.name}</option>)
-                                        }
-                                        <option value={users.businessId}>--- {t('mah.87')}</option>
-                                    </select>
-                                }
-                                <div className={'maxsulotImgBlock'}>
-                                    {
-                                        loadingProduct ?
-                                            MaxsulotlarRoyxariReducer.productForShopping.length > 0 ?
-                                                MaxsulotlarRoyxariReducer.productForShopping.map((item, index) => <div
-                                                    className={'maxsuImgBox'}
-                                                    key={index}>
-                                                    <button onClick={() => {
-                                                        pushesh(item)
-                                                    }} className={'trade-button'}>
-                                                        {
-                                                            item.photoId === null ?
-                                                                <Imagecom/>
-                                                                : <Imagecom id={item.photoId}/>
-                                                        }
-                                                        <h6>{item.name}</h6>
-                                                        <p className={'fw-bold'}>{!grossPriceType ? item.salePrice : item.grossPrice} {t('mah.39')}</p>
-                                                    </button>
-                                                </div>) : <div>
-                                                    <h4 className={'text-center'}>{MaxsulotlarRoyxariReducer.message}</h4>
-                                                </div>
-                                            : <Loading/>
-                                    }
-                                </div>
-                            </div>
-
-                    }
-                </div>
-                <div className="col-md-12 p-2 py-3 gap-4 d-flex justify-content-center flex-wrap">
-                    {
-                        tradeIdForEdit ? '' :
-                            <button onClick={toggle8}
-                                    className={'col-sm-6  col-md-2 p-3 btn btn-warning'}>{t('Trade.21')}
-                            </button>
-                    }
-                    {
-                        tradeIdForEdit ? editActiveButton === "qarz" ? '' :
-                                <button className={'col-sm-6 col-md-2  p-3 btn btn-primary'}
-                                        onClick={payDetails}>{t('Trade.39')} </button>
-                            : <button className={'col-sm-6 col-md-2 p-3 btn btn-primary'}
-                                      onClick={payDetails}>{t('Trade.39')} </button>
-                    }
-                    {
-                        tradeIdForEdit ? editActiveButton === "turli" ? "" :
-                                <button onClick={customer ? qarz : () => {
-                                    toast.error(t('mah.88'))
-                                }
-                                } className={'col-sm-6 col-md-2 p-3 btn btn-info'}>{t('Trade.45')}</button>
-                            : <button onClick={customer ? qarz : () => {
-                                toast.error(t('mah.88'))
-                            }
-                            } className={'col-sm-6 col-md-2 p-3 btn btn-info'}>{t('Trade.45')}</button>
-                    }
-
-                    {
-                        PayReducer.paymethod &&
-                        PayReducer.paymethod.map(item =>
-                            match.params.remainId || tradeIdForEdit ?
-                                editActiveButton === item.id &&
-                                <button key={item.id} style={{width: 'max-content'}}
-                                        onClick={() => saveTrade(item.id, item.name)}
-                                        className={'btn btn-success col-md-3 p-3 '}>
-                                    {camelize(item.name)}
-                                </button> : <button key={item.id} style={{width: 'max-content'}}
-                                                    onClick={() => saveTrade(item.id, item.name)}
-                                                    className={'btn btn-success p-3  col-md-3'}>
-                                {camelize(item.name)}
-                            </button>
-                        )
-
-                    }
-                    {
-                        !tradeIdForEdit &&
-                        <button onClick={clear} className={'btn btn-danger p-2 col-md-2'}>{t('mah.89')}</button>
-                    }
-                </div>
-            </div>
-            <Modal isOpen={activeHoldOn} toggle={toggle}>
-                <ModalHeader>
-                    {t('Trade.21')}
-                </ModalHeader>
-                <ModalBody>
-                    <table className={'table'}>
-                        <thead>
-                        <tr>
-                            <th>T/R</th>
-                            <th>{t('Trade.18')}</th>
-                            <th>{t('Trade.12')}</th>
-                            <th>{t('Trade.14')}</th>
-                            <th className={'text-center'}>{t('as.6')}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            holdOnReducer?.holdOn ?
-                                holdOnReducer?.holdOn.map((item, index) => <tr key={item.id}>
-                                    <td>{index + 1}</td>
-                                    <td>{item?.description}</td>
-                                    <td>{item?.totalSum} {grossPriceType === "DOLLAR" ? '$' : "so'm"}</td>
-                                    <td>{item?.quantity} </td>
-                                    <td>
-                                        {
-                                            users.editTrade &&
-                                            <button onClick={() => savdooynakochirish(item.id)} className={'kv'}> |
-                                            </button>
-                                        }
-                                        {
-                                            users.deleteTrade &&
-                                            <button onClick={() => deleteHoldOn(item.id)} className={'ocbutton'}>X
-                                            </button>
-                                        }
-
-                                    </td>
-                                </tr>)
-                                : <div>
-                                    <h4 className={'text-center'}>{holdOnReducer.message}</h4>
-                                </div>
-                        }
-                        </tbody>
-                    </table>
-                </ModalBody>
-                <ModalFooter>
-                    <button className={'btn btn-danger'}
-                            onClick={() => setActiveHoldOn(false)}>{t('Buttons.7')}</button>
-                </ModalFooter>
-            </Modal>
-
-
-            <Modal isOpen={addCustomerActive} toggle={addCustomerToggle}>
-                <form>
-                    <ModalHeader>
-                        {t('CustomAll.4')}
-                    </ModalHeader>
-                    <ModalBody>
-                        <label htmlFor={'nomi'}>{t('mah.90')}</label>
-                        <input
-                            id={'nomi'} type="text"
-                            placeholder={t('mah.91')}
-                            className={'form-control mt-1'}
-                            onChange={(e) => dispatch(
-                                {
-                                    type: 'name',
-                                    payload: e.target.value
-                                }
-                            )}
-                        />
-                        {IsCheck && !state.name && <p
-                            className={'text-danger text-center p-0 m-0'}>{t('mah.92')}</p>}
-                        <label className={'mt-1'} htmlFor={'filial'}>{t('CustomAll.5')}</label>
-                        <Select
-                            required={true}
-                            onChange={(e) => dispatch({type: 'branchId', payload: e.value})}
-                            placeholder={t('mah.93')}
-                            options={users.branches.map(item => ({label: item.name, value: item.id}))}
-                            isClearable={true}
-                        />
-                        {IsCheck && !state.branchId && <p
-                            className={'text-danger text-center p-0 m-0'}>{t('mah.94')}</p>}
-                        <label className={'mt-1'} htmlFor={'tel'}>{t('Buttons.14')}</label>
-                        <PhoneInput
-                            placeholder={t('mah.95')}
-                            className={'form-control'}
-                            onChange={(e) => dispatch({type: 'phoneNumber', payload: e})}/>
-                        {IsCheck && !state.phoneNumber && <p
-                            className={'text-danger text-center p-0 m-0'}>{t('mah.95')}</p>}
-                        <label htmlFor={'foizda'}>{t('Buttons.15')}</label>
-                        <input type="text"
-                               onChange={(e) => dispatch({type: 'percent', payload: e.target.value})}
-                               placeholder={t('mah.96')}
-                               defaultValue={''}
-                               className={'form-control mt-1'}
-                               id={'foizda'}/>
-                        {IsCheck && !state.percent && <p
-                            className={'text-danger text-center p-0 m-0'}>{t('mah.97')}</p>}
-                    </ModalBody>
-                    <ModalFooter>
-                        <button className={'btn btn-danger'} type={"button"}
-                                onClick={addCustomerToggle}>{t('Buttons.7')}</button>
-                        <button className={'btn btn-success'} type={"button"}
-                                onClick={addCustomer}>{t('Buttons.6')}</button>
-                    </ModalFooter>
-                </form>
-            </Modal>
-            <Modal isOpen={turli} toggle={toggle9}>
-                <ModalHeader>
-
-                    <h3><strong>{t('Trade.39')}:</strong> {
-                        jamixisob}</h3>
-                    <h4 className={'text-error'}>{t('mah.98')}</h4>
-                </ModalHeader>
-                <ModalBody>
-                    {
-                        payForm.map((item, index) =>
-                            <div key={index} className={'d-flex justify-content-around align-items-end mb-2'}>
-                                <div className={'col-md-4'}>
-                                    <label htmlFor={'turi'}>{t('mah.99')}</label>
-                                    <select className={'form-control'} name={'paymentMethodId'}
-                                            value={item.paymentMethodId}
-                                            onChange={(e) => changePayForm(e, index)}
-                                            disabled={!item.edit}
-                                            id={'turi'}>
-                                        {
-                                            PayReducer.paymethod.map(item =>
-                                                <option key={item.id} value={item.id}
-                                                        disabled={payForm.some(val => val.paymentMethodId === item.id)}
-                                                >{camelize(item.name)}</option>)
-                                        }
-                                    </select>
-                                </div>
-                                <div className={'col-md-4'}>
-                                    <label htmlFor={'miqdor'}>{t('mah.100')}</label>
-                                    <input type="number" value={item.sum} placeholder={'0'}
-                                           name={'sum'} onChange={(e) => changePayForm(e, index)}
-                                           className={'form-control'}/>
-                                </div>
-                                {
-                                    item.edit && <div className="col-md-3">
-                                        <label htmlFor=""></label>
-                                        <button onClick={() => deletePayForm(index)}
-                                                className={'btn btn-danger mt-2'}>{t('mah.101')}
-                                        </button>
-                                    </div>
-                                }
-
-                            </div>
-                        )
-                    }
-                    <div style={{width: '94%', marginLeft: '3%', marginTop: '15px'}}>
-                        {
-                            payForm.length < 3 && <button className={'btn btn-outline-primary form-control'}
-                                                          onClick={AddPayForm}>Add Pay Method
-                            </button>
-                        }
-
-                    </div>
-                    <div>
-                        <p>{t('mah.102')} {jamixisob} {t('mah.27')} </p>
-                        <p>{t('mah.103')} {payTotalSum} {t('mah.27')}</p>
-                        <p>{t('mah.104')} {jamixisob - parseFloat(payTotalSum)} {t('mah.27')}</p>
-                    </div>
-                </ModalBody>
-                <ModalFooter>
-                    <button className={'btn btn-danger'} onClick={toggle9}>{t('Buttons.7')}</button>
-                    <button onClick={saveTradeByDifferentPayment}
-                            className={'btn btn-success m-1'}>
-                        {t('Buttons.6')}
-                    </button>
-                </ModalFooter>
-            </Modal>
-            {/*<Modal isOpen={qaytim} toggle={toggleQaytim}>*/}
-            {/*    <ModalHeader>*/}
-            {/*        <h6>Qaytim </h6>*/}
-            {/*        <h6>To'lanishi kerak bo'lgan summa: {jamixisob} UZB</h6>*/}
-            {/*    </ModalHeader>*/}
-            {/*    <ModalBody>*/}
-            {/*        <label htmlFor="">Berilgan summani kiriting</label>*/}
-            {/*        <input type="number" className={'form-control'} value={input.qaytim}*/}
-            {/*               onChange={qaytimchange}/>*/}
-            {/*        <button onClick={ClickSumm} className={'btn btn-outline-success mt-2'}>50 000</button>*/}
-            {/*        <button onClick={ClickSumm100} className={'btn btn-outline-success mt-2 ms-2'}>100 000*/}
-            {/*        </button>*/}
-            {/*        <button onClick={ClickSumm150} className={'btn btn-outline-success mt-2 ms-2'}>150 000*/}
-            {/*        </button>*/}
-            {/*        <button onClick={ClickSumm200} className={'btn btn-outline-success mt-2 ms-2'}>200 000*/}
-            {/*        </button>*/}
-            {/*        <button onClick={ClickSumm300} className={'btn btn-outline-success mt-2 ms-2'}>300 000*/}
-            {/*        </button>*/}
-            {/*        <button onClick={ClickSumm400} className={'btn btn-outline-success mt-2 ms-2'}>400 000*/}
-            {/*        </button>*/}
-            {/*        <br/>*/}
-            {/*        <label className={'mt-2'} htmlFor="">Qaytim</label>*/}
-            {/*        <input className={'form-control'} type="number"*/}
-            {/*               value={input.qaytim == 0 || input.qaytim == "" ? 0 : input.qaytim - jamixisob}/>*/}
-            {/*    </ModalBody>*/}
-            {/*    <ModalFooter>*/}
-            {/*        <button onClick={naqdSotish} className={'btn btn-outline-primary'}>Sotish</button>*/}
-            {/*        <button onClick={toggleQaytim} className={'btn btn-outline-primary'}>Chiqish</button>*/}
-            {/*    </ModalFooter>*/}
-            {/*</Modal>*/}
-
-            <Modal isOpen={ushla2} toggle={toggle8}>
-                <ModalHeader>
-                    {t('Trade.21')}
-                </ModalHeader>
-                <ModalBody>
-                    <label htmlFor={'qisqa'}>{t('Trade.18')}</label>
-                    <textarea className={'form-control'} id={'qisqa'} cols="20" rows="3" value={descriptionHoldOn}
-                              onChange={(e) => setDescriptionHoldOn(e.target.value)}> </textarea>
-                </ModalBody>
-                <ModalFooter>
-                    <button onClick={toggle8} className={'btn btn-danger'}>{t('Buttons.7')}</button>
-                    <button onClick={ushla} className={'btn btn-success'}>{t('Buttons.6')} </button>
-                </ModalFooter>
-            </Modal>
-            <Modal isOpen={activeqarz} toggle={qarz}>
-                <ModalHeader>
-                    {t('Trade.45')}
-                </ModalHeader>
-                <ModalBody>
-                    <h3><strong>{t('Purchase.22')}:</strong> {jamixisob} {t('mah.39')}
-                    </h3>
-                    <h4 className={'text-error'}>{t('mah.105')}</h4>
-                    <div className={'col-md-12 d-flex align-items-end justify-content-between'}>
-                        <div className={'col-md-6'}>
-                            <label htmlFor={'rrr'}>{t('mah.104')} {jamixisob - enterPaidSum} {t('mah.27')} </label>
-
-                            <input type="number" ref={debtRef} className={'form-control'} id={'rrr'}
-                                   value={enterPaidSum} onChange={(e) => {
-                                if (/^0/.test(e.target.value)) {
-                                    let value = e.target.value.replace(/^0/, "")
-                                    setEnterPaidSum(value)
-                                } else {
-                                    setEnterPaidSum(e.target.value)
-
-                                }
-                            }}/>
-                        </div>
-                        <div className={'col-md-6'}>
-                            <select className={'form-control'}
-                                    value={payMethodIds}
-                                    disabled={tradeIdForEdit}
-                                    onChange={(e) => setPayMethodId(e.target.value)}
-                            >
-                                {PayReducer.paymethod &&
-                                    PayReducer.paymethod.map(item =>
-                                        <option value={item.id} key={item.id}>{camelize(item.name)}</option>)
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    <p data-tip={t('mah.106')}
-                       className={'btn btn-outline-primary mt-2 form-control'}>{t('mah.107')}</p>
-                    <ReactTooltip/>
-                </ModalBody>
-                <ModalFooter>
-                    <button type={'button'} onClick={qarz} className={'btn btn-danger'}>{t('mah.108')}</button>
-                    <button onClick={saveTradeByDebt} className={'btn btn-success'}>
-                        {t('Buttons.6')}
-                    </button>
-                </ModalFooter>
-            </Modal>
-            <Modal isOpen={lastTradeActive} toggle={toggle4}>
-                <ModalHeader>
-                    <p>{t('Trade.26')}</p>
-                </ModalHeader>
-                <ModalBody>
-                    <div className={'col-md-12 '}>
-                        <div className="col-md-12">
-                            <label htmlFor="tradeId">{t('mah.109')}</label>
-                            <input type="text" value={tradeIdSearch} onChange={(e) => setTradeIdSearch(e.target.value)}
-                                   id={'tradeId'} className={'form-control'}/>
-                        </div>
-                        <div className={'d-flex justify-content-between mt-2'}>
-                            {
-                                users.getTrade || users.getTradeAdmin ?
-                                    loading ?
-                                        SavdoQoshishReducer?.trades?.list?.length > 0 ?
-                                            <div>
-                                                <div className="table-responsive table-wrapper-scroll-y"
-                                                     style={{height: '400px'}}>
-                                                    <table className='table table-striped table-bordered mt-4'>
-                                                        <thead>
-                                                        <tr>
-                                                            <th>T/R</th>
-                                                            <th>{t('Trade.4')}</th>
-                                                            <th>{t('mah.110')}</th>
-                                                            <th>{t('Pagination.10')}</th>
-                                                            <th>{t('as.6')}</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        {
-                                                            SavdoQoshishReducer.trades?.list?.map((item, index) => <tr
-                                                                key={item?.id}>
-                                                                <td>{index + 1}</td>
-                                                                <td>{moment(new Date(item?.createdAt)).format('lll')}</td>
-                                                                <td className={item.edit && 'bg-warning'}>{item?.invoice}</td>
-                                                                <td>{item?.customerName}</td>
-                                                                <td>
-                                                                    <div className={'d-flex'}>
-                                                                        {
-                                                                            users.editTrade && item?.editable ?
-                                                                                <button
-                                                                                    onClick={() => getTradeByForEdit(item.id)}
-                                                                                    className='taxrirlash'><img
-                                                                                    src={Edit}
-                                                                                    alt=""/> {t('Buttons.1')}
-                                                                                </button>
-                                                                                : ''
-                                                                        }
-                                                                    </div>
-                                                                </td>
-                                                            </tr>)
-                                                        }
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div> :
-                                            <div className={'border border-2'}>
-                                                <h4 className={'text-center'}>{SavdoQoshishReducer.message}</h4>
-                                            </div> : <Loading/>
-                                    : ''
-                            }
-                        </div>
-                    </div>
-                </ModalBody>
-                <ModalFooter>
-                    <button onClick={toggle4}
-                            className={'btn btn-outline-primary'}>{t('Buttons.7')}</button>
-                </ModalFooter>
-            </Modal>
-
-            <ModalLoading isOpen={saveModal}/>
         </div>
     )
 }

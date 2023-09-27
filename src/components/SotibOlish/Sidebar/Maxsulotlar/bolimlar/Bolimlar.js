@@ -1,6 +1,3 @@
-import Excel from '../../../../../img/Excel.png'
-import Edit from '../../../../../img/Edit.png'
-import Delete from '../../../../../img/Delete.png'
 import './bolimlar.css'
 import {useState, useEffect} from "react";
 import {useForm} from "react-hook-form";
@@ -14,6 +11,9 @@ import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import {ButtonAnt} from "../../../../Components/SelectAnt";
+import CommonTable from "../../../../Components/CommonTable";
+import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import CardBody from "../../../../Components/CardBody";
 
 function Bolimlar({
                       editBolim,
@@ -30,6 +30,48 @@ function Bolimlar({
     const [active, setActive] = useState(false)
     const [editId, setEditId] = useState(null)
 
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: 'index',
+            rowScope: 'row',
+            width: 10,
+        },
+        {
+            title: t('as.4'),
+            width: 50,
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: t('as.5'),
+            dataIndex: 'description',
+            key: 'description',
+            width: 50,
+        },
+        {
+            title: t('ol.20'),
+            key: 'operation',
+            width: 150,
+            render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
+
+                {
+                    users.categoryRoles &&
+                    <ButtonAnt text={t('ol.78')} type={'primary'} onClick={() => {
+                        editBolimF(values.id)
+                    }
+                    } icon={<EditOutlined/>}/>
+                }
+                {
+                    users.categoryRoles && <ButtonAnt text={t('ol.79')} danger={true} type={'primary'} onClick={() => {
+                        deleteCategoryById(values.id)
+                    }
+                    } icon={<DeleteOutlined/>}/>
+                }
+
+            </div>,
+        },
+    ];
 
     function toggle() {
         setActive(!active)
@@ -117,7 +159,7 @@ function Bolimlar({
                     }
                 </div>
 
-            <div className="rowStyleBL">
+            <CardBody>
                 {
 
                     loading ?
@@ -125,46 +167,8 @@ function Bolimlar({
                             <div>
                                 {
                                     <div
-                                        className="table-responsive table-wrapper-scroll-y my-custom-scrollbar mb-4">
-                                        <table className='table table-striped table-bordered mt-4'>
-                                            <thead>
-                                            <tr>
-                                                <th>T/R</th>
-                                                <th>{t('as.4')}</th>
-                                                <th>{t('as.5')}</th>
-                                                <th>{t('as.6')}</th>
-                                            </tr>
-                                            </thead>
-
-                                            <tbody>
-                                            {
-                                                BolimReducer.bolimlar.map((item, index) => <tr key={item.id}>
-                                                        <td>{index + 1}</td>
-                                                        <td>{item.name}</td>
-                                                        <td>{item.description}</td>
-                                                        <td>
-                                                            {users.categoryRoles ?
-                                                                <button onClick={() => editBolimF(item.id)}
-                                                                        className='taxrirlash'><img
-                                                                    src={Edit}
-                                                                    alt=""/> {t('Buttons.1')}
-                                                                </button> : ''}
-                                                            {
-                                                                users.categoryRoles ?
-                                                                    <button className='ochirish'
-                                                                            onClick={() => deleteCategoryById(item.id)}>
-                                                                        <img
-                                                                            src={Delete}
-                                                                            alt=""/> {t('Buttons.3')}
-                                                                    </button> : ''}
-
-                                                        </td>
-                                                    </tr>
-                                                )
-                                            }
-
-                                            </tbody>
-                                        </table>
+                                        className="table-responsive table-wrapper-scroll-y  mb-4">
+                                        <CommonTable data={BolimReducer.bolimlar} columns={columns} page={0} pagination={false} size={BolimReducer.bolimlar?.length}/>
                                     </div>
                                 }
                             </div>
@@ -175,7 +179,7 @@ function Bolimlar({
                         : <Loading/>}
 
 
-            </div>
+            </CardBody>
             <Modal isOpen={active} toggle={toggle}>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <ModalHeader>

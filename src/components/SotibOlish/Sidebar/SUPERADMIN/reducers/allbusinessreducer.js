@@ -141,6 +141,7 @@ export const editBusiness = (data) => apiCall({
     onSuccess: slice.actions.saveFrom.type,
     onFail: slice.actions.saveFrom.type
 });
+
 export const changeBusinessMinus = (data) => apiCall({
     url: '/business/setting',
     method: 'put',

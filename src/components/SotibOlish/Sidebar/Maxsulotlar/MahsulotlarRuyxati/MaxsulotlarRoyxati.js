@@ -415,7 +415,7 @@ function MaxsulotlarRoyxati({
                                        name={t('as.102')}/>
                         </div>
                         <div className="col-12 col-sm-6 p-sm-2 col-md-6 col-lg-3">
-                            <ButtonAnt type={'dash'} onClick={getFilesById} bgColor={'green'}
+                            <ButtonAnt type={'primary'} onClick={getFilesById}  bgColor={'green'}
                                        icon={<FileExcelOutlined/>} text={t('as.103')}/>
                         </div>
                     </div>
@@ -454,12 +454,15 @@ function MaxsulotlarRoyxati({
             {
                 users.getProductAdmin || users.getProduct ?
 
-                    <div className="rowStyleMax colorback">
+                    <CardBody>
 
                         <>{
 
                             loading ?
                                 MaxsulotlarRoyxariReducer.productTableSearch?.list?.length > 0 ?
+                                    // <CommonTable pagination={} data={} handleLimitChange={}
+                                    //              handlePageChange={}
+                                    //              page={} size={} columns={} total={}/>
                                     <Box pb={3}>
                                         {
                                             selectedItems.length > 0 &&
@@ -770,7 +773,7 @@ function MaxsulotlarRoyxati({
 
                         }
                         </>
-                    </div> : ''
+                    </CardBody> : ''
             }
             <ModalLoading isOpen={saveModal}/>
             <AgreeModal deletemodal={deletemodal} deleteModaltoggle={() => setdeletemodal(prevState => !prevState)}

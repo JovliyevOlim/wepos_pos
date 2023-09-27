@@ -25,8 +25,8 @@ import notification from '../../../img/notification.svg'
 import uzLanguage from '../../../img/🇺🇿.svg'
 import rusLanguage from '../../../img/🇷🇺.svg'
 import arrowDown from "../../../img/direction-down 01.svg";
-
-import Icon ,{DeleteOutlined} from "@ant-design/icons";
+import fullScreen from "../../../img/pixel grid-rectangle.svg"
+import Icon, {DeleteOutlined} from "@ant-design/icons";
 import {BurgerIcon, EditIcon, LogOutIcon, PersonIcon} from "../../Components/svg";
 import {changeLanguage} from "i18next";
 import {formatDayDashboard} from "../../../util";
@@ -41,7 +41,8 @@ function MainHeader({
                         getNotification,
                         isReadNotification,
                         deleteAllNotification,
-                        setCollapsed
+                        setCollapsed,
+                        changeScreenFull
                     }) {
     const location = useLocation()
 
@@ -62,9 +63,9 @@ function MainHeader({
 
 
     const [languagesList, setLanguagesList] = useState([
-        {id: 'uz',nameShort:'Uz', name: 'Uzbek', img: uzLanguage, active: true},
-        {id: 'ki',nameShort:'Кр', name: 'Крилл', img: uzLanguage, active: false},
-        {id: 'ru',nameShort:'Ру', name: 'Русский', img: rusLanguage, active: false},
+        {id: 'uz', nameShort: 'Uz', name: 'Uzbek', img: uzLanguage, active: true},
+        {id: 'ki', nameShort: 'Кр', name: 'Крилл', img: uzLanguage, active: false},
+        {id: 'ru', nameShort: 'Ру', name: 'Русский', img: rusLanguage, active: false},
     ])
 
     function out() {
@@ -78,8 +79,6 @@ function MainHeader({
     function toggle3() {
         setactiveN2(!activeN2)
     }
-
-
 
 
     const {t, i18n} = useTranslation()
@@ -107,7 +106,6 @@ function MainHeader({
     }
 
 
-
     useEffect(() => {
         // const storageLanguage = localStorage.getItem("i18nextLng")
         // const list = languagesList.find(item=>item.id === storageLanguage)
@@ -119,7 +117,6 @@ function MainHeader({
         setactiveN(true)
         getNotificationAll()
     }
-
 
 
     function closeModal() {
@@ -158,10 +155,10 @@ function MainHeader({
                         }}
                     />
                 </div>
-                <div className={'main-header-body'}>
-                    <h4 className={'main-header-text'}>Asosiy</h4>
-                    <p className={'main-header-this-day'}>Bugun {formatDayDashboard()}</p>
-                </div>
+                {/*<div className={'main-header-body'}>*/}
+                {/*    <h4 className={'main-header-text'}>Asosiy</h4>*/}
+                {/*    <p className={'main-header-this-day'}>Bugun {formatDayDashboard()}</p>*/}
+                {/*</div>*/}
             </div>
             <div className={'main-header-right'}>
                 <div>
@@ -193,6 +190,13 @@ function MainHeader({
 
                     </div>
                 </div>
+                {/*<div>*/}
+                {/*    <div className={'main-notification-img'} onClick={changeScreenFull}>*/}
+                {/*        <img className={'img-fluid'}*/}
+                {/*             src={fullScreen}*/}
+                {/*             alt="notification"/>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
                 <div>
                     <div className={'main-notification-img'} onClick={openNotification}>
                         <img className={'img-fluid'}
@@ -262,7 +266,7 @@ function MainHeader({
                                                     <BsCheckAll className={'notification-icon2'}/>
                                             }
                                             <DeleteOutlined onClick={() => deleteNotification(item.id)}
-                                                               className={'notification-icon3'}/>
+                                                            className={'notification-icon3'}/>
                                         </div>
                                     </div>
                                 </div>

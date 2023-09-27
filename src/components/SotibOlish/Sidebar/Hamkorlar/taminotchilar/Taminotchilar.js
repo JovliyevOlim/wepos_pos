@@ -1,7 +1,4 @@
 import "./taminotchilar.css"
-import Excel from '../../../../../img/Excel.png'
-import Edit from '../../../../../img/Edit.png'
-import Delete from '../../../../../img/Delete.png'
 import React, {useEffect} from "react";
 import {connect} from "react-redux";
 import TaminotReducer, {
@@ -20,14 +17,18 @@ import Loading from "../../../../Loading";
 import ModalLoading from "../../../../ModalLoading";
 import branchreducer, {getbranch} from "../../../../../reducer/branchreducer";
 import PayReducer, {getPay} from "../../../../../reducer/PayReducer";
-import {TablePagination} from "@mui/material";
 import AgreeModal from "../../../../AgreeModal";
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 import MainHeaderText, {AddOrEditText} from "../../../../Components/MainHeaderText";
-import {ButtonAnt, SearchAnt} from "../../../../Components/SelectAnt";
+import {ButtonAnt, SearchAnt, TableButton} from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
 import {camelize} from "../../../../../util";
+import {DeleteOutlined, DollarOutlined, EditOutlined} from "@ant-design/icons";
+import CommonTable from "../../../../Components/CommonTable";
+import {Space, Typography} from 'antd';
+
+const {Text, Link} = Typography;
 
 function Taminotchilar({
                            getTaminot,
@@ -60,6 +61,61 @@ function Taminotchilar({
     const [name, setName] = useState('')
     const [isCheck, setIsCheck] = useState(false)
     const {t} = useTranslation()
+
+
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: 'index',
+            rowScope: 'row',
+            width: 20,
+        },
+        {
+            title: t('bal.47'),
+            width: 80,
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: t('bal.48'),
+            width: 100,
+            dataIndex: 'phoneNumber',
+            key: 'phoneNumber',
+        },
+        {
+            title: t('bal.25'),
+            width: 100,
+            dataIndex: 'debt',
+            key: 'debt',
+            render: (item) => <div>
+                {
+                    item >= 0 ? <Text type="success" style={{fontWeight: '800'}}>{item} so'm</Text>
+                        : <Text type="danger" style={{fontWeight: '800'}}>{item} so'm</Text>
+                }
+            </div>
+        },
+        {
+            title: t('bal.27'),
+            key: 'operation',
+            width: 200,
+            render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
+                {users.editSupplier &&
+                    <ButtonAnt  type={'primary'} onClick={() => editt(values.id)} text={t('ol.78')}
+                                 icon={<EditOutlined/>}/>
+                }
+
+                <ButtonAnt color={'white'} bgColor={'green'} type={'primary'} text={'Qarz uzish'}
+                             onClick={() => debt2(values.id)}
+                             icon={<DollarOutlined/>}/>
+                {
+                    users.deleteSupplier && <ButtonAnt  danger={true} type={'primary'} text={t('ol.79')}
+                                                        onClick={() => deleteSupplierById(values.id)}
+                                                        icon={<DeleteOutlined/>}/>
+                }
+            </div>,
+
+        },
+    ];
 
 
     function toggle() {
@@ -101,12 +157,12 @@ function Taminotchilar({
     }
 
 
-    const handlePageChange = (_event, newPage) => {
-        setPage(newPage);
+    const handlePageChange = (newPage) => {
+        setPage(newPage - 1);
     };
 
-    const handleLimitChange = (event) => {
-        setLimit(parseInt(event.target.value));
+    const handleLimitChange = (event, size) => {
+        setLimit(parseInt(size));
     };
 
 
@@ -201,7 +257,7 @@ function Taminotchilar({
 
                 {
                     users.addSupplier ?
-                        <ButtonAnt onClick={toggle} text={t('bal.21')} type={'primary'}/> : ''
+                        <ButtonAnt onClick={() => setActive(true)} text={t('bal.21')} type={'primary'}/> : ''
                 }
             </div>
 
@@ -209,104 +265,28 @@ function Taminotchilar({
                 users.getSupplier &&
                 <CardBody>
                     <div className="col-md-12">
-                            <SearchAnt name={t('bal.46')} onChange={(e) => setSearch(e.target.value)}/>
+                        <SearchAnt name={t('bal.46')} onChange={(e) => setSearch(e.target.value)}/>
                     </div>
                 </CardBody>
             }
-            <div className="rowStyleTM">
-
-                {
-                    users.getSupplier ?
-                        loading ?
-                            TaminotReducer.supplier?.list?.length > 0 ?
-                                <div className={'mt-4'}>
-                                    <div className="table-responsive table-wrapper-scroll-y">
-                                        <table
-                                            className='table table-striped table-hover table-condensed  table-bordered mt-4'>
-                                            <thead className={'fix'}>
-                                            <tr>
-                                                <th>T/R</th>
-                                                <th>{t('bal.47')}</th>
-                                                <th>{t('bal.48')}</th>
-                                                <th>{t('bal.25')}</th>
-                                                <th>{t('bal.27')}</th>
-                                            </tr>
-                                            </thead>
-
-                                            <tbody>
-                                            {
-                                                TaminotReducer.supplier?.list.map((item, index) => <tr
-                                                    key={item.id}>
-                                                    <td>{index + 1}</td>
-                                                    <td>{item.name}</td>
-                                                    <td>{item.phoneNumber}</td>
-                                                    <td>
-                                                        {
-                                                            item.debt > 0 ?
-                                                                <div className={'bg-danger form-control'}
-                                                                     style={{width: '100%', height: '100%'}}>
-                                                                    <td>{item.debt}</td>
-                                                                </div> :
-                                                                <div className={'bg-success form-control'}
-                                                                     style={{width: '100%', height: '100%'}}>
-                                                                    <td>{item.debt}</td>
-                                                                </div>
-                                                        }
-                                                    </td>
-
-                                                    <td>
-                                                        {
-                                                            users.editSupplier ?
-                                                                <button onClick={() => editt(item.id)}
-                                                                        className='taxrirlash'><img
-                                                                    src={Edit}
-                                                                    alt=""/> {t('Buttons.1')}
-                                                                </button> : ''
-                                                        }
-
-                                                        {
-
-                                                            users.deleteSupplier ?
-                                                                <button
-                                                                    onClick={() => deleteSupplierById(item.id)}
-                                                                    className='ochirish'><img
-                                                                    src={Delete} alt=""/> {t('Buttons.3')}
-                                                                </button> : ''
-                                                        }
-
-
-                                                        <button className={'btnB2'}
-                                                                onClick={() => debt2(item.id)}>{t('Buttons.11')}</button>
-
-
-                                                    </td>
-
-                                                </tr>)
-                                            }
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-
-
-                                    <TablePagination
-                                        component="div"
-                                        count={TaminotReducer.supplier?.totalItem}
-                                        onPageChange={handlePageChange}
-                                        onRowsPerPageChange={handleLimitChange}
-                                        page={page}
-                                        rowsPerPageOptions={[5, 10, 15]}
-                                        rowsPerPage={limit}
-                                    />
-                                </div>
-                                :
-                                <div>
-                                    <h4 className={'text-center mt-4'}>{TaminotReducer.message}</h4>
-                                </div>
-                            : <Loading/> : ''
-                }
-
-            </div>
+            {
+                users.getSupplier ?
+                    loading ?
+                        TaminotReducer.supplier?.list?.length > 0 ?
+                            <CardBody>
+                                <CommonTable columns={columns} page={page} size={limit}
+                                             handleLimitChange={handleLimitChange}
+                                             handlePageChange={handlePageChange}
+                                             total={TaminotReducer.supplier?.totalItem}
+                                             pagination={true}
+                                             data={TaminotReducer.supplier?.list}/>
+                            </CardBody>
+                            :
+                            <div>
+                                <h4 className={'text-center mt-4'}>{TaminotReducer.message}</h4>
+                            </div>
+                        : <Loading/> : ''
+            }
             <Modal isOpen={qarz} toggle={toggle3}>
                 <form onSubmit={handleSubmit1(onSubmitDebt)}>
                     <ModalHeader>
@@ -394,7 +374,6 @@ function Taminotchilar({
                 </form>
             </Modal>
             <Modal isOpen={active} toggle={toggle}>
-                <form>
                     <ModalHeader>
                         <AddOrEditText text={t('Supplier.4')}/>
                     </ModalHeader>
@@ -415,7 +394,7 @@ function Taminotchilar({
                                         placeholder={t('bal.36')}
                                         value={phoneNumber}
                                         className={'form-control'}
-                                        style={{display:'flex'}}
+                                        style={{display: 'flex'}}
                                         onChange={setPhoneNumber}/>
                                     {isCheck && phoneNumber === "" && <p
                                         className={'text-danger text-center p-0 m-0'}>{t('bal.36')}</p>}
@@ -430,7 +409,6 @@ function Taminotchilar({
                                 type={"button"} onClick={onSubmit}> {t('bal.52')}
                         </button>
                     </ModalFooter>
-                </form>
             </Modal>
             <ModalLoading isOpen={saveModal}/>
             <AgreeModal deleteModaltoggle={() => setdeletemodal(prevState => !prevState)} deleteFunc={deleteFunc}

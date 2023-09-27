@@ -35,16 +35,12 @@ const Sidebar = ({users}) => {
     const [collapsed, setCollapsed] = useState(false);
     const rootSubmenuKeys = ['/main/dashboard', '/main/superadmin', '/main/balance', 'user', 'customers', 'products', 'purchase', 'trades', 'outlay', 'reports', 'setting'];
     const [openKeys, setOpenKeys] = useState(['/main/dashboard']);
+    // const [goFull,setGoFull] = useState(false)
 
-
-    const [screenWidthTrue,setScreenWidthTrue] = useState(false)
-    window.addEventListener("resize", function () {
-        const screenWidth = window.innerWidth
-        setScreenWidthTrue(screenWidth < 768)
-    });
-
-
+    // const screenWidth = window.innerWidth
+        // const screenWidthTrue = screenWidth < 768
     const onOpenChange = (keys) => {
+        console.log(keys)
         const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
         if (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
             setOpenKeys(keys);
@@ -52,6 +48,18 @@ const Sidebar = ({users}) => {
             setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
         }
     };
+    function changeFullScreen(){
+        let e = document.getElementById("fullscreen")
+        if(e.screenfull.isEnabled){
+
+        }
+    }
+
+    const [screenWidthTrue,setScreenWidthTrue] = useState(false)
+    window.addEventListener("resize", function () {
+        const screenWidth = window.innerWidth
+        setScreenWidthTrue(screenWidth < 768)
+    });
     const items = [
         {
             label: 'SuperAdmin',
@@ -182,7 +190,6 @@ const Sidebar = ({users}) => {
                     key: '/main/outlayList',
                     check: users.addOutlay || users.getOutlay || users.getOutlayAdmin
                 },
-                {label: 'Xarajatlar ro\'yhati', key: '/main/addOutlay', check: users.addOutlay},
                 {label: 'Xarajat turi', key: '/main/outlayCategoryList', check: users.addOutlay || users.getOutlay},
             ].filter(item => item.check === true)
         },
@@ -204,14 +211,9 @@ const Sidebar = ({users}) => {
         },
         {
             label: 'Sozlamalar',
-            key: 'setting',
+            key: '/main/shopSetting',
             check: users.editInvoice || users.editMyBusiness || users.getBranch || users.addBranch,
             icon: <Icon component={SettingIcon}/>,
-            children: [
-                {label: 'Sozlamalar', key: '/main/shopSetting', check: users.editMyBusiness || users.editInvoice},
-                {label: 'Filiallar', key: '/main/branches', check: users.addBranch || users.getBranch},
-
-            ].filter(item => item.check === true)
         },
 
     ].filter(item => item.check === true);
@@ -222,6 +224,7 @@ const Sidebar = ({users}) => {
             style={{
                 minHeight: '100vh',
             }}
+            id="fullscreen"
         >
             <Sider trigger={null} className={`sidebar-scroll ${screenWidthTrue && (collapsed ? 'd-none' : '')}`}
                    collapsible
@@ -260,7 +263,7 @@ const Sidebar = ({users}) => {
                 marginLeft: screenWidthTrue ? (collapsed ? 0 : '100%') : (collapsed ? 80 : 250),
                 overflowX: 'hidden',
             }}>
-                <Header className={'sidebar-header'}><MainHeader setCollapsed={() => setCollapsed(!collapsed)}/>
+                <Header className={'sidebar-header'}><MainHeader changeScreenFull={changeFullScreen} setCollapsed={() => setCollapsed(!collapsed)}/>
                 </Header>
                 <Content className={'content'}>
                     <Switch>

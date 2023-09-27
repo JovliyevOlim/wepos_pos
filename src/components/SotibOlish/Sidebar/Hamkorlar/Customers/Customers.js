@@ -1,6 +1,5 @@
 import React from 'react'
 import {useForm} from 'react-hook-form'
-import Excel from '../../../../../img/Excel.png'
 import './Customers.css'
 import {useState, useEffect} from 'react'
 import {connect} from "react-redux";
@@ -10,23 +9,6 @@ import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
 import ModalLoading from "../../../../ModalLoading";
 import PayReducer, {getPay} from "../../../../../reducer/PayReducer";
-import {BaseUrl} from "../../../../../middleware";
-import {
-    Avatar,
-    Box, Checkbox, IconButton,
-    InputAdornment,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead, TablePagination,
-    TableRow,
-    TextField, Tooltip
-} from "@mui/material";
-import Label from "../../Hodimlar/hodimlarRoyxati/Label";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import CustomerReducer, {
     getCustomers,
     getCustomersByBranch,
@@ -44,9 +26,13 @@ import 'react-phone-number-input/style.css'
 import {camelize} from "../../../../../util";
 import allbusinessreducer, {getOneBusiness} from "../../SUPERADMIN/reducers/allbusinessreducer";
 import MainHeaderText, {AddOrEditText} from "../../../../Components/MainHeaderText";
-import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../Components/SelectAnt";
+import SelectAnt, {ButtonAnt, SearchAnt, TableButton} from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
+import CommonTable from "../../../../Components/CommonTable";
+import {DeleteOutlined, DollarOutlined, EditOutlined} from "@ant-design/icons";
+import {Space, Typography} from 'antd';
 
+const {Text, Link} = Typography;
 function Customers({
                        getCustomers,
                        allbusinessreducer, getOneBusiness,
@@ -86,13 +72,81 @@ function Customers({
     const [phoneNumber, setPhoneNumber] = useState('')
     const [isCheck, setIsCheck] = useState(false)
 
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: 'index',
+            rowScope: 'row',
+            width: 20,
+        },
+        {
+            title: t('bal.47'),
+            width: 80,
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: t('bal.48'),
+            width: 100,
+            dataIndex: 'phoneNumber',
+            key: 'phoneNumber',
+        },
+        {
+            title: t('bal.7'),
+            width: 100,
+            dataIndex: 'branchName',
+            key: 'branchName',
+        },
 
-    const handleChangePage = (_event, newPage) => {
-        setPage(newPage);
+        {
+            title: t('bal.25'),
+            width: 150,
+            dataIndex: 'debt',
+            key: 'debt',
+            render: (item) => <div>
+                {
+                    item >= 0 ? <Text type="success" style={{fontWeight: '800'}}>{item} so'm</Text>
+                        : <Text type="danger" style={{fontWeight: '800'}}>{item} so'm</Text>
+                }
+            </div>
+        },
+        {
+            title: t('bal.26'),
+            width: 100,
+            dataIndex: 'percent',
+            key: 'percent',
+        },
+        {
+            title: t('bal.27'),
+            key: 'operation',
+            width: 200,
+            render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
+                {users.editSupplier &&
+                    <ButtonAnt color={'blue'} type={'primary'} onClick={() => editM(values.id)} text={t('ol.78')}
+                                 icon={<EditOutlined/>}/>
+                }
+                {
+                    users.deleteSupplier && <ButtonAnt color={'red'} danger={true} type={'primary'} text={t('ol.79')}
+                                                         onClick={() => deleteCustomerById(values.id)}
+                                                         icon={<DeleteOutlined/>}/>
+                }
+                <ButtonAnt color={'blue'} text={t('bal.31')} type={'primary'} bgColor={'green'}
+                             onClick={() => customerReturnPayFunc(values.id)}
+                             icon={<DollarOutlined/>}/>
+                <ButtonAnt color={'success'}  text={t('bal.30')} type={'primary'} bgColor={'orange'}
+                             onClick={() => customerGetPayFunc(values.id)}
+                             icon={<DollarOutlined/>}/>
+            </div>,
+
+        },
+    ];
+
+    const handleChangePage = (newPage) => {
+        setPage(newPage-1);
     };
-    const handleChangeRowsPerPage = (event) => {
+    const handleChangeRowsPerPage = (event,size) => {
         setPage(0);
-        setRowsPerPage(parseInt(event.target.value, 10));
+        setRowsPerPage(parseInt(size));
     };
 
 
@@ -202,27 +256,6 @@ function Customers({
         }
     }
 
-
-    const [selectedItems, setSelectedUsers] = useState([]);
-    const selectedSomeUsers =
-        selectedItems.length > 0 && selectedItems.length < CustomerReducer.mijozgurux.length;
-    const selectedAllUsers = selectedItems.length === CustomerReducer.mijozgurux?.length;
-
-    const handleSelectAllUsers = (event) => {
-        setSelectedUsers(event.target.checked ? CustomerReducer.mijozgurux.map((user) => user.id) : []);
-    };
-
-    const handleSelectOneInvoice = (event, invoiceId) => {
-        if (!selectedItems.includes(invoiceId)) {
-            setSelectedUsers((prevSelected) => [...prevSelected, invoiceId]);
-        } else {
-            setSelectedUsers((prevSelected) =>
-                prevSelected.filter((id) => id !== invoiceId)
-            );
-        }
-    };
-
-
     useEffect(() => {
         if (CustomerReducer.saveBoolean) {
             setEditId({id: '', customerGroupId: []})
@@ -310,171 +343,10 @@ function Customers({
                         {
                             loading ?
                                 CustomerReducer.customers?.list?.length > 0 ?
-                                    <div>
-                                        <div className="table-responsive table-wrapper-scroll-y">
-
-
-                                            <TableContainer
-                                                className='table table-hover  table-striped table-bordered mt-4'>
-                                                <Table>
-                                                    <TableHead>
-                                                        <TableRow>
-                                                            <TableCell>T/R</TableCell>
-                                                            {/*<TableCell>*/}
-                                                            {/*    <Tooltip*/}
-                                                            {/*        arrow*/}
-                                                            {/*        placement="top"*/}
-                                                            {/*        title={t('All')}*/}
-                                                            {/*    >*/}
-                                                            {/*        <Checkbox*/}
-                                                            {/*            checked={selectedAllUsers}*/}
-                                                            {/*            indeterminate={selectedSomeUsers}*/}
-                                                            {/*            onChange={handleSelectAllUsers}*/}
-                                                            {/*        />*/}
-                                                            {/*    </Tooltip>*/}
-                                                            {/*</TableCell>*/}
-                                                            <TableCell>{t('bal.23')}</TableCell>
-                                                            <TableCell
-                                                                align={'center'}>{t('bal.24')}</TableCell>'
-                                                            <TableCell
-                                                                align={'center'}>{t('bal.7')}</TableCell>
-                                                            <TableCell align={'center'}>{t('bal.25')}</TableCell>
-                                                            <TableCell align={'center'}>{t('bal.26')}</TableCell>
-                                                            <TableCell align={'center'}
-                                                                       className={'text-center'}>{t('bal.27')}</TableCell>
-                                                        </TableRow>
-                                                    </TableHead>
-
-                                                    <TableBody>
-                                                        {
-
-                                                            CustomerReducer.customers?.list.map((item, index) => {
-                                                                const isInvoiceSelected = selectedItems.includes(
-                                                                    item.id
-                                                                );
-                                                                return (
-                                                                    <TableRow key={item.id}>
-                                                                        <TableCell>{index + 1}</TableCell>
-                                                                        {/*<TableCell>*/}
-                                                                        {/*    <Checkbox*/}
-                                                                        {/*        checked={isInvoiceSelected}*/}
-                                                                        {/*        // indeterminate={selectedSomeUsers}*/}
-                                                                        {/*        onChange={(e) =>*/}
-                                                                        {/*            handleSelectOneInvoice(e, item.id)*/}
-                                                                        {/*        }*/}
-                                                                        {/*        value={isInvoiceSelected}*/}
-                                                                        {/*    />*/}
-                                                                        {/*</TableCell>*/}
-                                                                        <TableCell>
-                                                                            <Box display="flex" alignItems="center">
-                                                                                <Avatar
-                                                                                    sx={{
-                                                                                        mr: 1
-                                                                                    }}
-                                                                                    src={item?.photoId
-                                                                                        ? `${BaseUrl}/attachment/download/${item?.photoId
-                                                                                        }` : ''}
-                                                                                />
-                                                                                <Box>
-                                                                                    {item.name}
-                                                                                </Box>
-                                                                            </Box>
-                                                                            {/*{item.name}*/}
-                                                                        </TableCell>
-                                                                        <TableCell
-                                                                            align={'center'}>{item.phoneNumber}</TableCell>
-                                                                        <TableCell
-                                                                            align={'center'}>{item.telegram}</TableCell>
-                                                                        <TableCell
-                                                                            align={'center'}>{item.branchName}</TableCell>
-                                                                        <TableCell align={'center'}>
-                                                                            <Label
-                                                                                color={item.debt == 0 ? 'success' : item.debt <= 0 ? 'warning' : 'error'
-                                                                                }>{item.debt}</Label>
-                                                                        </TableCell>
-
-                                                                        <TableCell
-                                                                            align={'center'}>{item?.percent}</TableCell>
-                                                                        <TableCell align={'center'}>
-                                                                            {/*<Tooltip title={'Info'} arrow>*/}
-                                                                            {/*    <Link*/}
-                                                                            {/*        to={'/mijozProfil/' + item.id}>*/}
-                                                                            {/*        <IconButton color={"primary"}>*/}
-                                                                            {/*            <PermIdentityIcon*/}
-                                                                            {/*                fontSize={"small"}/>*/}
-                                                                            {/*        </IconButton>*/}
-                                                                            {/*    </Link>*/}
-                                                                            {/*</Tooltip>*/}
-
-                                                                            {/*<Tooltip title={'Xabar'} arrow>*/}
-                                                                            {/*    <IconButton color={"primary"}*/}
-                                                                            {/*                onClick={() => sms(item.id)}>*/}
-                                                                            {/*        <ForwardToInboxIcon*/}
-                                                                            {/*            fontSize={"small"}/>*/}
-                                                                            {/*    </IconButton>*/}
-                                                                            {/*</Tooltip>*/}
-                                                                            {
-                                                                                users.editCustomer ?
-                                                                                    <Tooltip title={t('bal.28')}                                                                                             arrow>
-                                                                                        <IconButton
-                                                                                            onClick={() => editM(item.id)}
-                                                                                            color="primary"
-                                                                                        >
-                                                                                            <EditIcon fontSize="small"/>
-                                                                                        </IconButton>
-                                                                                    </Tooltip> : ''
-                                                                            }
-                                                                            {
-                                                                                users.deleteCustomer ?
-                                                                                    <Tooltip title={t('bal.29')}
-                                                                                             arrow>
-                                                                                        <IconButton
-                                                                                            onClick={() => deleteCustomerById(item.id)}
-                                                                                            color="error"
-                                                                                        >
-                                                                                            <DeleteTwoToneIcon
-                                                                                                fontSize="small"/>
-                                                                                        </IconButton>
-                                                                                    </Tooltip> : ''
-                                                                            }
-
-                                                                            <Tooltip title={t('bal.30')} arrow>
-                                                                                <IconButton
-                                                                                    onClick={() => customerGetPayFunc(item.id)}
-                                                                                    color="primary"
-                                                                                >
-                                                                                    <MonetizationOnIcon
-                                                                                        fontSize="small"/>
-                                                                                </IconButton>
-                                                                            </Tooltip>
-                                                                            <Tooltip title={t('bal.31')} arrow>
-                                                                                <IconButton
-                                                                                    onClick={() => customerReturnPayFunc(item.id)}
-                                                                                    color="success"
-                                                                                >
-                                                                                    <MonetizationOnIcon
-                                                                                        fontSize="small"/>
-                                                                                </IconButton>
-                                                                            </Tooltip>
-                                                                        </TableCell>
-                                                                    </TableRow>)
-                                                            })
-                                                        }
-                                                    </TableBody>
-                                                </Table>
-                                            </TableContainer>
-                                        </div>
-                                        <TablePagination
-                                            component="div"
-                                            count={CustomerReducer.customers?.totalItem}
-                                            page={page}
-                                            onPageChange={handleChangePage}
-                                            rowsPerPage={rowsPerPage}
-                                            rowsPerPageOptions={[5, 10, 20]}
-                                            onRowsPerPageChange={handleChangeRowsPerPage}
-                                        />
-
-                                    </div> :
+                                    <CardBody>
+                                        <CommonTable pagination={true} total={CustomerReducer.customers?.totalItem} page={page} size={rowsPerPage} columns={columns} data={CustomerReducer.customers?.list} handlePageChange={handleChangePage} handleLimitChange={handleChangeRowsPerPage}/>
+                                    </CardBody>
+                                   :
                                     <div>
                                         <h4 className={'text-center'}>{CustomerReducer.message}</h4>
                                     </div>

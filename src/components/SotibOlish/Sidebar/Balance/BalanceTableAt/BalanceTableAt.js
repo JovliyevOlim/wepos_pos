@@ -5,15 +5,20 @@ import users from "../../../../../reducer/users";
 import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
 import {Typography} from 'antd';
-import balanceReducer, {getBalanceByBranch, getBalanceByBusiness,changeBalance} from "../../../../../reducer/balanceReducer";
+import balanceReducer, {
+    getBalanceByBranch,
+    getBalanceByBusiness,
+    changeBalance
+} from "../../../../../reducer/balanceReducer";
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import CardBody from "../../../../Components/CardBody";
-import SelectAnt from "../../../../Components/SelectAnt";
+import SelectAnt, {ButtonAnt, TableButton} from "../../../../Components/SelectAnt";
 import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
-
+import './BalanceTableAt.css'
+import CommonTable from "../../../../Components/CommonTable";
 const {Title} = Typography;
 
-function BalanceTableAt({users, balanceReducer, getBalanceByBranch, getBalanceByBusiness,changeBalance}) {
+function BalanceTableAt({users, balanceReducer, getBalanceByBranch, getBalanceByBusiness, changeBalance}) {
     const {t} = useTranslation()
 
 
@@ -22,7 +27,41 @@ function BalanceTableAt({users, balanceReducer, getBalanceByBranch, getBalanceBy
     const [btnValues, setBtnValues] = useState(false)
     const [balanceId, setBalanceId] = useState(null)
     const [openModal, setOpenModal] = useState(false)
-    const [sum,setSum] = useState(0)
+    const [sum, setSum] = useState(0)
+
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: 'index',
+            rowScope: 'row',
+            width: 20,
+        },
+        {
+            title: t('bal.8'),
+            width: 80,
+            dataIndex: 'paymentMethodName',
+            key: 'paymentMethodName',
+            render:(item)=><p className={'m-0'}>{camelize(item)}</p>
+        },
+        {
+            title: t('bal.15'),
+            width: 100,
+            dataIndex: 'sum',
+            key: 'sum',
+            render:(item)=><p className={'m-0'}>{item.toFixed(2)} {t('bal.16')}</p>
+        },
+        {
+            title: t('bal.27'),
+            key: 'operation',
+            width: 200,
+            render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
+                <ButtonAnt danger={true}  type={'primary'} text={'Kassadan pul olish'} onClick={() => changeBalanceOpen(false, values?.id)}/>
+                <ButtonAnt danger={false}  type={'primary'} text={'Kassaga pul qo\'yish'} onClick={() => changeBalanceOpen(true, values?.id)}/>
+            </div>,
+
+        },
+    ];
+
 
 
     useEffect(() => {
@@ -32,7 +71,7 @@ function BalanceTableAt({users, balanceReducer, getBalanceByBranch, getBalanceBy
         } else if (users.getBalance) {
             getBalanceByBranch(mainBranchId ? mainBranchId : users.branchId)
         }
-    }, [mainBranchId,balanceReducer.current])
+    }, [mainBranchId, balanceReducer.current])
 
 
     function toggle() {
@@ -50,23 +89,25 @@ function BalanceTableAt({users, balanceReducer, getBalanceByBranch, getBalanceBy
     }
 
 
-    function saveBalanceChange(){
-            changeBalance({
-                sum,balanceId,plus:btnValues == 'true' ? true : false,
-            })
+    function saveBalanceChange() {
+        changeBalance({
+            sum, balanceId, plus: btnValues,
+        })
     }
+
     function changeBalanceOpen(e, id) {
-        setBtnValues(e.target.value)
+        console.log(e)
+        setBtnValues(e)
         setBalanceId(id)
         setOpenModal(true)
     }
 
-    useEffect(()=>{
-        if (balanceReducer.saveBoolean){
+    useEffect(() => {
+        if (balanceReducer.saveBoolean) {
             setLoading(false)
             toggle()
         }
-    },[balanceReducer.current])
+    }, [balanceReducer.current])
 
     useEffect(() => {
         setTimeout(() => {
@@ -92,72 +133,36 @@ function BalanceTableAt({users, balanceReducer, getBalanceByBranch, getBalanceBy
                 </div>
             </CardBody>
 
-            <div>
-            </div>
-            <div className="rowStyleXH2">
-                <div className={'d-flex col-md-12 flex-wrap'}>
-                    {
-                        users.getBalance ?
-                            loading ?
-                                balanceReducer.balance?.length > 0 ?
-                                    balanceReducer.balance?.map(item =>
-                                        <div className="table-responsive col-md-6 mb-4 table-wrapper-scroll-y">
-                                            <h4>{t('bal.14')} {item[0].branchName}</h4>
-                                            <h4>Jami summa : {totalSum(item)} so'm</h4>
-                                            <table
-                                                className='table table-hover table-primary table-striped table-bordered mt-4 '>
-                                                <thead>
-                                                <tr>
-                                                    <th>T/R</th>
-                                                    <th>{t('bal.8')}</th>
-                                                    <th>{t('bal.15')}</th>
-                                                    <th>Amallar</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                {
-                                                    item?.map((val, index) =>
-                                                        <tr key={val.id}>
-                                                            <td>{index + 1}</td>
-                                                            <td>{camelize(val?.paymentMethodName)}</td>
-                                                            <td>{val?.sum} {t('bal.16')}</td>
-                                                            <td>
-                                                                <div>
-                                                                    <button onClick={(e) => changeBalanceOpen(e, val?.id)}
-                                                                            value={false}
-                                                                            className={'btn btn-danger'}>Kassadan pul
-                                                                        olish
-                                                                    </button>
-                                                                    <button onClick={(e) => changeBalanceOpen(e, val?.id)}
-                                                                            value={true}
-                                                                            className={'btn btn-primary'}>Kassaga pul
-                                                                        qo'yish
-                                                                    </button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>)
-                                                }
-                                                </tbody>
-                                            </table>
-
-                                        </div>
-                                    )
-                                    : <div>
-                                        <h4 className={'text-center'}>{balanceReducer.message}</h4>
-                                    </div> :
-                                <Loading/> : ''
-                    }
+            <div className={'d-flex col-md-12 flex-wrap'}>
+                {
+                    users.getBalance ?
+                        loading ?
+                            balanceReducer.balance?.length > 0 ?
+                                balanceReducer.balance?.map(item =>
+                                    <div className="table-responsive col-lg-12 mb-2 p-2  table-wrapper-scroll-y">
+                                        <CardBody>
+                                            <h4 className={'balanceFilial'}>{t('bal.14')} {item[0].branchName}</h4>
+                                            <h4 className={'balanceFilial'}>Jami summa : {totalSum(item).toFixed(2)} so'm</h4>
+                                            <CommonTable data={item} columns={columns} size={item?.length} page={0} pagination={false}/>
+                                        </CardBody>
+                                    </div>
+                                )
+                                : <div>
+                                    <h4 className={'text-center'}>{balanceReducer.message}</h4>
+                                </div> :
+                            <Loading/> : ''
+                }
 
 
-                </div>
             </div>
             <Modal isOpen={openModal} toggle={() => setOpenModal(!openModal)}>
                 <ModalHeader>
-                    <h4>{btnValues === 'true' ? 'Kassaga pul qo\'yish' : 'Kassadan pul olish'}</h4>
+                    <h4>{btnValues  ? 'Kassaga pul qo\'yish' : 'Kassadan pul olish'}</h4>
                 </ModalHeader>
                 <ModalBody>
                     <label htmlFor="sum">Miqdorni kiriting</label>
-                    <input value={sum} onChange={(e)=>setSum(e.target.value)} type="number" className={'form-control'} defaultValue={0} id={'sum'}/>
+                    <input value={sum} onChange={(e) => setSum(e.target.value)} type="number" className={'form-control'}
+                           defaultValue={0} id={'sum'}/>
                 </ModalBody>
                 <ModalFooter>
                     <button onClick={toggle} className={'btn btn-danger'}>Chiqish</button>
@@ -168,4 +173,8 @@ function BalanceTableAt({users, balanceReducer, getBalanceByBranch, getBalanceBy
     )
 }
 
-export default connect((users, balanceReducer), {getBalanceByBranch, getBalanceByBusiness,changeBalance})(BalanceTableAt)
+export default connect((users, balanceReducer), {
+    getBalanceByBranch,
+    getBalanceByBusiness,
+    changeBalance
+})(BalanceTableAt)

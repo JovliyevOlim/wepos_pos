@@ -1,24 +1,29 @@
 import React from 'react';
-import {Image, Select, Input, Space, Button,Tooltip} from 'antd';
+import {Image, Select, Input, Space, Button, Tooltip} from 'antd';
 import './selectAnt.css'
 import arrowDown from "../../img/direction-down 01.svg";
 import {camelize} from "../../util";
 import {t} from "i18next";
-const { Search } = Input;
+
+const {Search} = Input;
 
 
-function SelectAnt({name,permission,selectList,onChange,all}) {
-    const selectOption = permission ? [{value: '', label:all ? all :(t('ol.21'))},
+function SelectAnt({name, permission, selectList, onChange, all, disabled, value}) {
+    const selectOption = permission ? [{value: '', label: all ? all : (t('ol.21'))},
 
             ...selectList.map((item) => ({value: item.id, label: camelize(item?.name)}))] :
-        selectList.map((item) => ({value: item.id, label:camelize(item?.name)}))
+        selectList.map((item) => ({value: item.id, label: camelize(item?.name)}))
 
     return (
         <>
-            <h5 className={'selectLabel'}>{name}:</h5>
+            {
+                name && <h5 className={'selectLabel'}>{name}</h5>
+            }
             <Select
                 suffixIcon={<Image preview={false} src={arrowDown}/>}
                 showSearch
+                value={value}
+                disabled={disabled ? disabled : false}
                 placeholder={t('ol.22')}
                 optionFilterProp="children"
                 onChange={onChange}
@@ -35,23 +40,22 @@ function SelectAnt({name,permission,selectList,onChange,all}) {
 export default SelectAnt;
 
 
-
-export function SearchAnt({name,onChange}) {
+export function SearchAnt({name, onChange}) {
 
 
     return (
         <>
             <h5 className={'selectLabel'}>{name}:</h5>
-               <Search
-                   placeholder={t('ol.23')}
-                   allowClear
-                   onChange={onChange}
-               />
+            <Search
+                placeholder={t('ol.23')}
+                allowClear
+                onChange={onChange}
+            />
         </>
     );
 }
 
-export function InputAnt({name,type,items}) {
+export function InputAnt({name, type, items}) {
 
 
     return (
@@ -62,27 +66,27 @@ export function InputAnt({name,type,items}) {
     );
 }
 
-export function ButtonAnt({onClick,icon,type,text,bgColor}) {
+export function ButtonAnt({onClick, icon, type, text, bgColor, danger, value}) {
 
 
     return (
         <>
-            <Button onClick={onClick} className={'button-ant'} icon={icon} type={type}
-            style={{
-                backgroundColor:bgColor
-            }}
+            <Button onClick={onClick} className={'button-ant'} icon={icon} danger={danger} type={type}
+                    style={{
+                        backgroundColor: bgColor
+                    }}
             >{text}</Button>
         </>
     );
 }
 
-export function TableButton({onClick,icon,type,danger,title}) {
+export function TableButton({onClick, icon, type, danger, title, color}) {
 
 
     return (
         <>
-            <Tooltip title={title} color={'blue'} key={'blue'}>
-                <Button type={type} onClick={onClick}  shape="round" icon={icon} size={'large'} danger={danger} />
+            <Tooltip title={title} color={color} key={color}>
+                <Button type={type} onClick={onClick} shape="round" icon={icon} size={'large'} danger={danger}/>
             </Tooltip>
 
         </>

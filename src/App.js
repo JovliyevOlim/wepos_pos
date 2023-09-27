@@ -87,11 +87,11 @@ function App({users, saveusers}) {
                             <Route path={'/main'} component={Sidebar}/>
                             {
                                 users.getTrade || users.editTrade ?
-                                    <Route path={'/shopping/:id?'} exact component={SavdoOynasi}/> : ''
+                                    <Route path={'/shopping/:id'} exact  component={SavdoOynasi}/> : ''
                             }
                             {
                                 users.addTrade || users.getTrade ?
-                                    <Route path={'/shopping'} exact component={SavdoOynasi}/> : ''
+                                    <Route path={'/shopping'}exact    component={SavdoOynasi}/> : ''
                             }
                             {
                                 users.addTrade || users.getTrade ?

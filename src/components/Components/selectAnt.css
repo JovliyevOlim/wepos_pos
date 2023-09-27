@@ -1,43 +1,48 @@
 .ant-select {
-    height: 44px !important;
-    background: #F5F6F6 !important;
-    border-radius: 8px !important;
+    height: 48px !important;
+    border-radius: 10px;
+    border: 1px solid #E7E7E7;
+    background: #FAFBFC;
     display: flex !important;
     align-items: center !important;
 }
-
 .ant-select-selection-search-input {
     font-size: 16px !important;
     height: 100% !important;
 }
-
 .ant-select-selector {
+    padding: 10px 18px !important;
     font-family: "Inter", sans-serif !important;
-    padding: 9px 18px !important;
-    color: #071A33 !important;
+    color: #4E5D78 !important;
     font-size: 14px !important;
     font-style: normal !important;
-    font-weight: 500 !important;
+    font-weight: 700 !important;
+    line-height: 24px !important; /* 171.429% */;
     height: 100% !important;
-    line-height: 20px !important;
     background: transparent !important;
     border: none !important;
     outline: none !important;
 }
 
 .ant-select-selection-item {
+    font-family: "Inter", sans-serif !important;
+    color: #4E5D78 !important;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 24px !important; /* 171.429% */;
     display: flex !important;
     text-align: start !important;
-    justify-content: center !important;
+    justify-content: start !important;
     align-items: center !important;
 }
 
 .selectLabel {
     color: #071A33;
     font-family: 'Inter', sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
     line-height: normal;
     margin-bottom: 10px;
 }
@@ -102,16 +107,76 @@
 .button-ant {
     display: flex !important;
     align-items: center !important;
-    font-family: "Inter", sans-serif !important;
-    padding: 20px 20px !important;
-    font-size: 14px !important;
+    font-family: 'Inter',sans-serif;
+    font-size: 13px !important;
     font-style: normal !important;
     font-weight: 500 !important;
     line-height: 20px !important;
-    border-radius: 10px !important;
-    color: #FFFFFF;
+    border-radius: 5px !important;
 }
 
+.ant-table-header{
+    border-radius: 16px !important;
+    background: #FAFBFC !important;
+    color: #4E5D78 !important;
+    font-family: 'Inter',sans-serif !important;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    line-height: 20px !important; /* 142.857% */
+    text-transform: uppercase !important;
+}
+.ant-table-body{
+    border-radius: 16px !important;
+    background: #ffff !important;
+    color: #4E5D78;
+    font-family: 'Inter',sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 142.857% */
+}
 .ant-table-wrapper table {
     width: max-content !important;
+}
+.ant-table.ant-table-bordered > .ant-table-container > .ant-table-content > table > thead > tr > th,
+.ant-table.ant-table-bordered > .ant-table-container > .ant-table-header > table > thead > tr > th,
+.ant-table.ant-table-bordered > .ant-table-container > .ant-table-body > table > thead > tr > th,
+.ant-table.ant-table-bordered > .ant-table-container > .ant-table-summary > table > thead > tr > th,
+.ant-table.ant-table-bordered > .ant-table-container > .ant-table-content > table > tbody > tr > td,
+.ant-table.ant-table-bordered > .ant-table-container > .ant-table-header > table > tbody > tr > td,
+.ant-table.ant-table-bordered > .ant-table-container > .ant-table-body > table > tbody > tr > td,
+.ant-table.ant-table-bordered > .ant-table-container > .ant-table-summary > table > tbody > tr > td,
+.ant-table.ant-table-bordered > .ant-table-container > .ant-table-content > table > tfoot > tr > th,
+.ant-table.ant-table-bordered > .ant-table-container > .ant-table-header > table > tfoot > tr > th,
+.ant-table.ant-table-bordered > .ant-table-container > .ant-table-body > table > tfoot > tr > th,
+.ant-table.ant-table-bordered > .ant-table-container > .ant-table-summary > table > tfoot > tr > th,
+.ant-table.ant-table-bordered > .ant-table-container > .ant-table-content > table > tfoot > tr > td,
+.ant-table.ant-table-bordered > .ant-table-container > .ant-table-header > table > tfoot > tr > td,
+.ant-table.ant-table-bordered > .ant-table-container > .ant-table-body > table > tfoot > tr > td,
+.ant-table.ant-table-bordered
+> .ant-table-container
+> .ant-table-summary
+> table
+> tfoot
+> tr
+> td {
+    padding: 10px 8px;
+}
+
+.ant-table.ant-table-bordered
+> .ant-table-container
+> .ant-table-content
+> table
+> thead
+> tr
+> th {
+    font-weight: 600;
+    color: #4E5D78 !important;
+}
+th,tr{
+    color: #4E5D78 !important;
+}
+:where(.css-dev-only-do-not-override-18iikkb).ant-table-wrapper .ant-table-tbody >tr >th{
+    background-color: transparent
 }

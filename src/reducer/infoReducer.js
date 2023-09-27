@@ -9,7 +9,7 @@ export const slice = createSlice({
         infoObject:{},
         infoObjectPercent:{},
         infoForBusiness: {},
-        infoTradeUser: {},
+        infoTradeUser: [],
         current: false,
         getInfoBool: false,
         saveBranchBool: false,
@@ -40,7 +40,7 @@ export const slice = createSlice({
             if (action.payload.success) {
                 state.infoTradeUser = action.payload.object
             } else {
-                state.infoTradeUser = {}
+                state.infoTradeUser = []
                 state.message = action.payload.message
             }
             state.getInfoBool = !state.getInfoBool

@@ -1,10 +1,10 @@
 .mainHeaderText{
-    color: #4E5D78;
+    color: #323B4B;
     font-family: 'Inter',sans-serif;
     font-size: 24px;
     font-style: normal;
     font-weight: 600;
-    line-height: normal;
+    line-height: 32px; /* 133.333% */
 }
 .AddOrEditText{
     color: #3e495f;

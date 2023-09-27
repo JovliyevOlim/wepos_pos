@@ -1,9 +1,5 @@
-import {Link} from 'react-router-dom'
-import Excel from '../../../../../img/Excel.png'
-import Edit from '../../../../../img/Edit.png'
-import Delete from '../../../../../img/Delete.png'
 import './xarajatTurlari.css'
-import {useState, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import {connect} from "react-redux";
 import XarajatTurlariReducer, {
@@ -11,7 +7,6 @@ import XarajatTurlariReducer, {
     editXarajatlarTurlari,
     getXarajatlarTurlari,
     saveXarajatlarTurlari,
-
 } from "../reducer/XarajatTurlariReducer";
 import branchreducer, {getbranch} from "../../../../../reducer/branchreducer";
 import users from "../../../../../reducer/users";
@@ -20,6 +15,11 @@ import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
 import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
+import MainHeaderText from "../../../../Components/MainHeaderText";
+import {ButtonAnt} from "../../../../Components/SelectAnt";
+import CardBody from "../../../../Components/CardBody";
+import CommonTable from "../../../../Components/CommonTable";
+import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
 
 function XarajatTurlari({
                             getXarajatlarTurlari,
@@ -39,6 +39,43 @@ function XarajatTurlari({
     const [search, setSearch] = useState('')
     const [deletemodal, setdeletemodal] = useState(false)
     const [deleteID, setdeletID] = useState(null)
+
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: 'index',
+            rowScope: 'row',
+            width: '2%',
+        },
+        {
+            title: 'Nomi',
+            dataIndex: 'name',
+            key: 'name',
+            width: '100px'
+        },
+        {
+            title: t('ol.20'),
+            key: 'operation',
+            width: 150,
+            render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
+                {
+                    users.editOutlay &&
+                    <ButtonAnt text={t('ol.78')} type={'primary'} onClick={() => {
+                        edit(values.id)
+                    }
+                    } icon={<EditOutlined/>}/>
+                }
+                {
+                    users.deleteOutlay  && <ButtonAnt text={t('ol.79')} danger={true} type={'primary'} onClick={() => {
+                        deleteOutlayCategoryById(values.id)
+                    }
+                    } icon={<DeleteOutlined/>}/>
+                }
+
+            </div>,
+        },
+    ];
+
 
     function toggle() {
         setActive(!active)
@@ -112,80 +149,29 @@ function XarajatTurlari({
     }, [])
 
     return (
-        <div className="col-md-12 mt-4 mb-4">
-            <div className="textHeaderXRT">
-                <h2>{t('Expenses.3')}</h2>
+        <div>
+            <div className={'d-flex col-md-12 mb-5 align-items-center justify-content-between'}>
+                <MainHeaderText text={t('Expenses.3')}/>
+                {
+                    users.addOutlay ?
+                        <ButtonAnt text={t('ol.2')} type={'primary'} onClick={toggle}/>
+                    : ''
+                }
             </div>
-            <div className="rowStyleXRT ">
-                <div className="qoshish">
-                    <h5>Barcha turlar</h5>
-                    {
-                        users.addOutlay ?
-                            <button onClick={toggle} className='btn btn-primary'>+{t('Buttons.2')}</button>
-                            : ''
-                    }
-                </div>
 
+            <CardBody>
                 {
                     loading ?
                         XarajatTurlariReducer.xarajatturlari?.length>0 ?
-                            <div>
-                                <div className="izlashXRT">
-                                    <div>
-                                        <button><img src={Excel} alt=""/> Export Excel</button>
-                                    </div>
-                                    <div className="izlashBox2">
-                                        <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}
-                                               placeholder='Izlash...'/>
-                                    </div>
+                                <div className="table-responsive table-wrapper-scroll-y  mb-4">
+                                    <CommonTable
+                                    data={XarajatTurlariReducer.xarajatturlari}
+                                    columns={columns}
+                                    pagination={false}
+                                    page={0}
+                                    size={XarajatTurlariReducer.xarajatturlari.length}
+                                    />
                                 </div>
-                                <div className="table-responsive table-wrapper-scroll-y my-custom-scrollbar mb-4">
-                                    <table className='table table-striped table-bordered mt-4'>
-                                        <thead>
-                                        <tr>
-                                            <th>Nomi</th>
-                                            <th>Amallar</th>
-                                        </tr>
-                                        </thead>
-
-                                        <tbody>
-                                        {
-                                            XarajatTurlariReducer.xarajatturlari
-                                                .filter(val => {
-                                                    if (search === '') {
-                                                        return val
-                                                    } else if (val.name.toUpperCase().includes(search.toUpperCase())) {
-                                                        return val
-                                                    }
-
-                                                })
-                                                .map(item => <tr key={item.id}>
-                                                    <td>{item.name}</td>
-                                                    <td>
-                                                        {
-                                                            users.editOutlay ?
-                                                                <button onClick={() => edit(item.id)}
-                                                                        className='taxrirlash'><img
-                                                                    src={Edit} alt=""/> {t('Buttons.1')}
-                                                                </button> : ''
-                                                        }
-                                                        {
-                                                            users.deleteOutlay ?
-                                                                <button
-                                                                    onClick={() => deleteOutlayCategoryById(item.id)}
-                                                                    className='ochirish'><img src={Delete}
-                                                                                              alt=""/> {t('Buttons.3')}
-                                                                </button>
-                                                                : ''
-                                                        }
-                                                    </td>
-                                                </tr>)
-                                        }
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                            </div>
                             : <div>
                                 <h4 className={'text-center'}>{XarajatTurlariReducer.message}</h4>
                             </div>
@@ -208,7 +194,7 @@ function XarajatTurlari({
                     </ModalFooter>
                 </Modal>
 
-            </div>
+            </CardBody>
             <ModalLoading isOpen={saveModal}/>
             <AgreeModal deleteModaltoggle={() => setdeletemodal(prevState => !prevState)} deleteFunc={deleteFunc}
                         deletemodal={deletemodal}/>

@@ -9,21 +9,10 @@ import {useTranslation} from "react-i18next";
 import arrowDown from '../../../img/direction-down 01.svg'
 import Home from "../../../dashboard/jsx/components/Dashboard/Home";
 import 'swiper/css';
-
-import {
-    Avatar,
-    Box, Grid, Typography,
-    useTheme,
-    styled
-} from '@mui/material';
-import axios from "axios";
-
 import infoReducer,
 {getInfoBalanceByBranch, getInfoBalanceByBusiness, getInfoByBranch, getInfoByBusiness, getInfo}
     from "../../../reducer/infoReducer";
-import moment from "moment";
 import 'moment/locale/uz-latn'
-import {formatDayDashboard} from "../../../util";
 import {DatePicker, Space, Select, Image, Segmented} from 'antd';
 import Card from "./Card/Card";
 import kassa from '../../../img/money bag coin.svg'
@@ -37,8 +26,12 @@ import xaridqarz from '../../../img/money minus.svg'
 import mijozolsum from '../../../img/money user.svg'
 import mijozbersum from '../../../img/moeny bag.svg'
 import dillerbersum from '../../../img/card-withdraw.svg'
-import xarajat from '../../../img/bill.svg'
+import xarajat from '../../../img/pie chartcard.svg'
+import calendar from '../../../img/calendar.svg'
 import dayjs from "dayjs";
+import {MinusOutlined} from "@ant-design/icons";
+import ProgressCard from "./Progress/ProgressCard";
+import TopTrader from "./TopTrader/TopTrader";
 import MainHeaderText from "../../Components/MainHeaderText";
 
 const {RangePicker} = DatePicker;
@@ -56,7 +49,6 @@ function Third({
                }) {
     const location = useLocation()
     const history = useHistory()
-    const theme = useTheme();
     const [mainBranchId, setMainBranch] = useState(null)
     const [currentDay, setCurrentDay] = useState('day')
     const [date, setDate] = useState([])
@@ -87,7 +79,6 @@ function Third({
 
 
     const listDay = [
-        {value: 'day', label: 'Kun'},
         {value: 'week', label: 'Hafta'},
         {value: 'month', label: 'Oy'},
         {value: 'year', label: 'Shu yil'},
@@ -194,261 +185,271 @@ function Third({
 
     return (
         <section className={'dashboard'}>
-            <MainHeaderText text={'Bosh sahifa'}/>
+            <div className={'dashboard-header'}>
+                <div className={'d-flex col-md-12 gap-2 gap-lg-0 flex-wrap align-items-end justify-content-between'}>
+                    <div className={'col-12 col-md-3'}>
+                        <MainHeaderText text={'Bosh sahifa'}/>
+                    </div>
+                    <div
+                        className={'col-12 p-0 col-sm-12 col-md-12 col-lg-9 d-flex flex-wrap gap-2 gap-md-3 justify-content-center justify-content-lg-end  p-0   align-items-center'}>
+                        <Segmented options={listDay} value={currentDay} onChange={(e) => Dates(e)}/>
+                        <div className={'dashboard-datepicker'}>
+                            <Space direction="vertical"  color={'#071A33'} size={0}>
+                                <RangePicker
+                                    format={'D MMM YYYY'}
+                                    value={date}
+                                    style={{width: '250px'}}
+                                    suffixIcon={<Image preview={false} src={calendar}/>}
+                                    separator={<MinusOutlined/>}
+                                    placeholder={['Boshlanish sanasi', 'Tugash sanasi']}
+                                    onChange={(e) => {
+                                        if (e) {
+                                            setDate(e)
+                                            setCurrentDay(null)
+                                        } else {
+                                            setDate(e)
+                                            setCurrentDay('day')
+                                        }
+
+                                    }} bordered={false}/>
+                            </Space>
+                        </div>
+                        <Select
+                            suffixIcon={<Image preview={false} src={arrowDown}/>}
+                            className={'dashboard-select'}
+                            style={{width: 160, height: 44}}
+                            defaultValue={filialSelect[0]}
+                            onChange={branchonchange}
+                            options={filialSelect}
+                        />
+                        <button value={'day'}
+                                className={`dashboard-day-button ${currentDay === 'day' ? 'dashboard-day-button-active' : ''}`}
+                                onClick={(e) => Dates(e.target.value)}>Bugun
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             {
                 users.getInfo || users.getInfoAdmin ?
-                    <>
-                        <div className={'dashboard-header'}>
-                            <div className={'d-flex flex-wrap gap-2  align-items-center'}>
-                                <Segmented options={listDay} value={currentDay} onChange={(e) => Dates(e)}/>
-                                <div className={'dashboard-buttons'}>
-                                    {/*{*/}
-                                    {/*    listDay.map((item, index) =>*/}
-                                    {/*        <button onClick={() => Dates(item.name)}*/}
-                                    {/*                className={`dashboard-buttons-item ${item.name === currentDay && 'dashboard-buttons-item-active'}`}>{item.value}</button>*/}
-                                    {/*    )*/}
-                                    {/*}*/}
-                                </div>
-                                <div className={'dashboard-datepicker'}>
-                                    <Space direction="vertical" style={{height: '20px'}} color={'#071A33'} size={0}>
-                                        <RangePicker value={date} style={{width:'250px'}} onChange={(e) => {
-                                            if (e) {
-                                                setDate(e)
-                                                setCurrentDay(null)
-                                            } else {
-                                                setDate(e)
-                                                setCurrentDay('day')
-                                            }
+                    <div className={'dashboard-cards'}>
+                        {
+                            cards.map(item =>
+                                <Card title={item.title} img={item.img} percent={item.percent} sum={item.sum}/>
+                            )
+                        }
 
-                                        }} bordered={false}/>
-                                    </Space>
-                                </div>
-                                <Select
-                                    suffixIcon={<Image preview={false} src={arrowDown}/>}
-                                    className={'dashboard-select'}
-                                    style={{width: 170, height: 44}}
-                                    defaultValue={filialSelect[0]}
-                                    onChange={branchonchange}
-                                    options={filialSelect}
-                                />
-                                <button className={'dashboard-day-button'}>Bugun</button>
-                            </div>
-                        </div>
-                        <div className={'dashboard-cards'}>
-                            {
-                                cards.map(item =>
-                                    <Card title={item.title} img={item.img} percent={item.percent} sum={item.sum}/>
-                                )
-                            }
-
-                        </div>
-
-                        <div className={'d-flex flex-wrap justify-content-between align-items-center'}>
-
-                        </div>
-                        <Home mainBranchId={mainBranchId}/>
-                    </> : ''
+                    </div>
+                    : ''
             }
-            <Grid container spacing={2}>
-                <Grid item xs={6} md={6}>
-                    <Card style={{height: "220px"}}
-                          sx={{
-                              px: 2,
-                              pb: 2,
-                              pt: 2,
-                              background: `${theme.colors.gradients.green2}`,
-                          }}
-                    >
-                        <Box display="flex" alignItems="center">
-                            <Typography
-                                sx={{
-                                    ml: 1.5,
-                                    fontSize: `${theme.typography.pxToRem(18)}`,
-                                    color: `${theme.colors.alpha.trueWhite[100]}`,
-                                    fontWeight: 'bold'
-                                }}
-                                variant="subtitle2"
-                                component="div"
-                            >
-                                <p className={'p-0 m-0'}> Biznes nomi: {name}</p>
-                                <p className={'p-0 m-0'}>Biznes egasi: {userShortDto?.fio}</p>
-                            </Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                            <Typography
-                                sx={{
-                                    ml: 1.5,
-                                    fontSize: `${theme.typography.pxToRem(16)}`,
-                                    color: `${theme.colors.alpha.trueWhite[100]}`,
-                                    fontWeight: 'bold'
-                                }}
-                                variant="subtitle2"
-                                component="div"
-                            >
-                                Telefon raqami: {userShortDto?.phoneNumber}
-                            </Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                            <Typography
-                                sx={{
-                                    ml: 1.5,
-                                    fontSize: `${theme.typography.pxToRem(16)}`,
-                                    color: `${theme.colors.alpha.trueWhite[100]}`,
-                                    fontWeight: 'bold'
-                                }}
-                                variant="subtitle2"
-                                component="div"
-                            >
-                                Hozirgi hisobdagi pul: {balance} (tariff uchun to'lanadigan)
-                            </Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                            <Typography
-                                sx={{
-                                    ml: 1.5,
-                                    fontSize: `${theme.typography.pxToRem(16)}`,
-                                    color: `${theme.colors.alpha.trueWhite[100]}`,
-                                    fontWeight: 'bold'
-                                }}
-                                variant="subtitle2"
-                                component="div"
-                            >
-                                <div className={'d-flex gap-2'}>
-                                    <p className={'m-0 p-0'}> Ishchilar soni: {employeeAmount} ,
-                                    </p>
-                                    <p className={'m-0 p-0'}> Filiallar soni: {branchAmount}
-                                    </p>
-                                </div>
-                            </Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                            <Typography
-                                sx={{
-                                    ml: 1.5,
-                                    fontSize: `${theme.typography.pxToRem(16)}`,
-                                    color: `${theme.colors.alpha.trueWhite[100]}`,
-                                    fontWeight: 'bold'
-                                }}
-                                variant="subtitle2"
-                                component="div"
-                            >
-                                Keyin oy uchun to'lov: {priceMoth} so'm
-                            </Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                            <Typography
-                                sx={{
-                                    ml: 1.5,
-                                    fontSize: `${theme.typography.pxToRem(16)}`,
-                                    color: `${theme.colors.alpha.trueWhite[100]}`,
-                                    fontWeight: 'bold'
-                                }}
-                                variant="subtitle2"
-                                component="div"
-                            >
-                                Boshlangan sanasi: {moment(new Date(startDay)).format('LL')}
-                            </Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                            <Typography
-                                sx={{
-                                    ml: 1.5,
-                                    fontSize: `${theme.typography.pxToRem(16)}`,
-                                    color: `${theme.colors.alpha.trueWhite[100]}`,
-                                    fontWeight: 'bold'
-                                }}
-                                variant="subtitle2"
-                                component="div"
-                            >
-                                Tugash sanasi: {moment(new Date(endDay)).format('LL')}
-                            </Typography>
-                        </Box>
-                    </Card>
-                </Grid>
-                <Grid item xs={6} md={6}>
-                    <Card style={{height: "220px"}}
-                          sx={{
-                              px: 2,
-                              pb: 1,
-                              pt: 2,
-                              background: `${theme.colors.gradients.blue2}`,
-                          }}
-                    >
-                        <Box display="flex" alignItems="center">
-                            <Typography
-                                sx={{
-                                    ml: 1.5,
-                                    fontSize: `${theme.typography.pxToRem(18)}`,
-                                    color: `${theme.colors.alpha.trueWhite[100]}`,
-                                    fontWeight: 'bold'
-                                }}
-                                variant="subtitle2"
-                                component="div"
-                            >
-                                <p className={'p-0 m-0'}> Tariff nomi: {tariffShortDto?.name}</p>
-                                <p className={'p-0 m-0'}>Tariff narxi: {tariffShortDto?.price} so'm</p>
-                            </Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                            <Typography
-                                sx={{
-                                    ml: 1.5,
-                                    fontSize: `${theme.typography.pxToRem(16)}`,
-                                    color: `${theme.colors.alpha.trueWhite[100]}`,
-                                    fontWeight: 'bold'
-                                }}
-                                variant="subtitle2"
-                                component="div"
-                            >
-                                Filialar
-                                soni: {tariffShortDto?.branchAmount === 0 ? 'cheksiz' : tariffShortDto?.branchAmount}
-                            </Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                            <Typography
-                                sx={{
-                                    ml: 1.5,
-                                    fontSize: `${theme.typography.pxToRem(16)}`,
-                                    color: `${theme.colors.alpha.trueWhite[100]}`,
-                                    fontWeight: 'bold'
-                                }}
-                                variant="subtitle2"
-                                component="div"
-                            >
-                                Xodimlar
-                                soni: {tariffShortDto?.employeeAmount === 0 ? 'cheksiz' : tariffShortDto?.employeeAmount}                            </Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                            <Typography
-                                sx={{
-                                    ml: 1.5,
-                                    fontSize: `${theme.typography.pxToRem(16)}`,
-                                    color: `${theme.colors.alpha.trueWhite[100]}`,
-                                    fontWeight: 'bold'
-                                }}
-                                variant="subtitle2"
-                                component="div"
-                            >
-                                Oylik to'lovi: {priceMoth} so'm
-                            </Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                            <Typography
-                                sx={{
-                                    ml: 1.5,
-                                    fontSize: `${theme.typography.pxToRem(16)}`,
-                                    color: `${theme.colors.alpha.trueWhite[100]}`,
-                                    fontWeight: 'bold'
-                                }}
-                                variant="subtitle2"
-                                component="div"
-                            >
-                                Tavsifi: {tariffShortDto?.description}
-                            </Typography>
-                        </Box>
-                    </Card>
-                </Grid>
-            </Grid>
+            <div className={'dashboard-footer'}>
+                <div className="dashboard-footer-trader">
+                    <TopTrader/>
+                </div>
+                <div className="dashboard-footer-progress">
+                    <ProgressCard/>
+                </div>
+            </div>
+            {/*<Grid container spacing={2}>*/}
+            {/*    <Grid item xs={6} md={6}>*/}
+            {/*        <Card style={{height: "220px"}}*/}
+            {/*              sx={{*/}
+            {/*                  px: 2,*/}
+            {/*                  pb: 2,*/}
+            {/*                  pt: 2,*/}
+            {/*                  background: `${theme.colors.gradients.green2}`,*/}
+            {/*              }}*/}
+            {/*        >*/}
+            {/*            <Box display="flex" alignItems="center">*/}
+            {/*                <Typography*/}
+            {/*                    sx={{*/}
+            {/*                        ml: 1.5,*/}
+            {/*                        fontSize: `${theme.typography.pxToRem(18)}`,*/}
+            {/*                        color: `${theme.colors.alpha.trueWhite[100]}`,*/}
+            {/*                        fontWeight: 'bold'*/}
+            {/*                    }}*/}
+            {/*                    variant="subtitle2"*/}
+            {/*                    component="div"*/}
+            {/*                >*/}
+            {/*                    <p className={'p-0 m-0'}> Biznes nomi: {name}</p>*/}
+            {/*                    <p className={'p-0 m-0'}>Biznes egasi: {userShortDto?.fio}</p>*/}
+            {/*                </Typography>*/}
+            {/*            </Box>*/}
+            {/*            <Box display="flex" alignItems="center">*/}
+            {/*                <Typography*/}
+            {/*                    sx={{*/}
+            {/*                        ml: 1.5,*/}
+            {/*                        fontSize: `${theme.typography.pxToRem(16)}`,*/}
+            {/*                        color: `${theme.colors.alpha.trueWhite[100]}`,*/}
+            {/*                        fontWeight: 'bold'*/}
+            {/*                    }}*/}
+            {/*                    variant="subtitle2"*/}
+            {/*                    component="div"*/}
+            {/*                >*/}
+            {/*                    Telefon raqami: {userShortDto?.phoneNumber}*/}
+            {/*                </Typography>*/}
+            {/*            </Box>*/}
+            {/*            <Box display="flex" alignItems="center">*/}
+            {/*                <Typography*/}
+            {/*                    sx={{*/}
+            {/*                        ml: 1.5,*/}
+            {/*                        fontSize: `${theme.typography.pxToRem(16)}`,*/}
+            {/*                        color: `${theme.colors.alpha.trueWhite[100]}`,*/}
+            {/*                        fontWeight: 'bold'*/}
+            {/*                    }}*/}
+            {/*                    variant="subtitle2"*/}
+            {/*                    component="div"*/}
+            {/*                >*/}
+            {/*                    Hozirgi hisobdagi pul: {balance} (tariff uchun to'lanadigan)*/}
+            {/*                </Typography>*/}
+            {/*            </Box>*/}
+            {/*            <Box display="flex" alignItems="center">*/}
+            {/*                <Typography*/}
+            {/*                    sx={{*/}
+            {/*                        ml: 1.5,*/}
+            {/*                        fontSize: `${theme.typography.pxToRem(16)}`,*/}
+            {/*                        color: `${theme.colors.alpha.trueWhite[100]}`,*/}
+            {/*                        fontWeight: 'bold'*/}
+            {/*                    }}*/}
+            {/*                    variant="subtitle2"*/}
+            {/*                    component="div"*/}
+            {/*                >*/}
+            {/*                    <div className={'d-flex gap-2'}>*/}
+            {/*                        <p className={'m-0 p-0'}> Ishchilar soni: {employeeAmount} ,*/}
+            {/*                        </p>*/}
+            {/*                        <p className={'m-0 p-0'}> Filiallar soni: {branchAmount}*/}
+            {/*                        </p>*/}
+            {/*                    </div>*/}
+            {/*                </Typography>*/}
+            {/*            </Box>*/}
+            {/*            <Box display="flex" alignItems="center">*/}
+            {/*                <Typography*/}
+            {/*                    sx={{*/}
+            {/*                        ml: 1.5,*/}
+            {/*                        fontSize: `${theme.typography.pxToRem(16)}`,*/}
+            {/*                        color: `${theme.colors.alpha.trueWhite[100]}`,*/}
+            {/*                        fontWeight: 'bold'*/}
+            {/*                    }}*/}
+            {/*                    variant="subtitle2"*/}
+            {/*                    component="div"*/}
+            {/*                >*/}
+            {/*                    Keyin oy uchun to'lov: {priceMoth} so'm*/}
+            {/*                </Typography>*/}
+            {/*            </Box>*/}
+            {/*            <Box display="flex" alignItems="center">*/}
+            {/*                <Typography*/}
+            {/*                    sx={{*/}
+            {/*                        ml: 1.5,*/}
+            {/*                        fontSize: `${theme.typography.pxToRem(16)}`,*/}
+            {/*                        color: `${theme.colors.alpha.trueWhite[100]}`,*/}
+            {/*                        fontWeight: 'bold'*/}
+            {/*                    }}*/}
+            {/*                    variant="subtitle2"*/}
+            {/*                    component="div"*/}
+            {/*                >*/}
+            {/*                    Boshlangan sanasi: {moment(new Date(startDay)).format('LL')}*/}
+            {/*                </Typography>*/}
+            {/*            </Box>*/}
+            {/*            <Box display="flex" alignItems="center">*/}
+            {/*                <Typography*/}
+            {/*                    sx={{*/}
+            {/*                        ml: 1.5,*/}
+            {/*                        fontSize: `${theme.typography.pxToRem(16)}`,*/}
+            {/*                        color: `${theme.colors.alpha.trueWhite[100]}`,*/}
+            {/*                        fontWeight: 'bold'*/}
+            {/*                    }}*/}
+            {/*                    variant="subtitle2"*/}
+            {/*                    component="div"*/}
+            {/*                >*/}
+            {/*                    Tugash sanasi: {moment(new Date(endDay)).format('LL')}*/}
+            {/*                </Typography>*/}
+            {/*            </Box>*/}
+            {/*        </Card>*/}
+            {/*    </Grid>*/}
+            {/*    <Grid item xs={6} md={6}>*/}
+            {/*        <Card style={{height: "220px"}}*/}
+            {/*              sx={{*/}
+            {/*                  px: 2,*/}
+            {/*                  pb: 1,*/}
+            {/*                  pt: 2,*/}
+            {/*                  background: `${theme.colors.gradients.blue2}`,*/}
+            {/*              }}*/}
+            {/*        >*/}
+            {/*            <Box display="flex" alignItems="center">*/}
+            {/*                <Typography*/}
+            {/*                    sx={{*/}
+            {/*                        ml: 1.5,*/}
+            {/*                        fontSize: `${theme.typography.pxToRem(18)}`,*/}
+            {/*                        color: `${theme.colors.alpha.trueWhite[100]}`,*/}
+            {/*                        fontWeight: 'bold'*/}
+            {/*                    }}*/}
+            {/*                    variant="subtitle2"*/}
+            {/*                    component="div"*/}
+            {/*                >*/}
+            {/*                    <p className={'p-0 m-0'}> Tariff nomi: {tariffShortDto?.name}</p>*/}
+            {/*                    <p className={'p-0 m-0'}>Tariff narxi: {tariffShortDto?.price} so'm</p>*/}
+            {/*                </Typography>*/}
+            {/*            </Box>*/}
+            {/*            <Box display="flex" alignItems="center">*/}
+            {/*                <Typography*/}
+            {/*                    sx={{*/}
+            {/*                        ml: 1.5,*/}
+            {/*                        fontSize: `${theme.typography.pxToRem(16)}`,*/}
+            {/*                        color: `${theme.colors.alpha.trueWhite[100]}`,*/}
+            {/*                        fontWeight: 'bold'*/}
+            {/*                    }}*/}
+            {/*                    variant="subtitle2"*/}
+            {/*                    component="div"*/}
+            {/*                >*/}
+            {/*                    Filialar*/}
+            {/*                    soni: {tariffShortDto?.branchAmount === 0 ? 'cheksiz' : tariffShortDto?.branchAmount}*/}
+            {/*                </Typography>*/}
+            {/*            </Box>*/}
+            {/*            <Box display="flex" alignItems="center">*/}
+            {/*                <Typography*/}
+            {/*                    sx={{*/}
+            {/*                        ml: 1.5,*/}
+            {/*                        fontSize: `${theme.typography.pxToRem(16)}`,*/}
+            {/*                        color: `${theme.colors.alpha.trueWhite[100]}`,*/}
+            {/*                        fontWeight: 'bold'*/}
+            {/*                    }}*/}
+            {/*                    variant="subtitle2"*/}
+            {/*                    component="div"*/}
+            {/*                >*/}
+            {/*                    Xodimlar*/}
+            {/*                    soni: {tariffShortDto?.employeeAmount === 0 ? 'cheksiz' : tariffShortDto?.employeeAmount}                            </Typography>*/}
+            {/*            </Box>*/}
+            {/*            <Box display="flex" alignItems="center">*/}
+            {/*                <Typography*/}
+            {/*                    sx={{*/}
+            {/*                        ml: 1.5,*/}
+            {/*                        fontSize: `${theme.typography.pxToRem(16)}`,*/}
+            {/*                        color: `${theme.colors.alpha.trueWhite[100]}`,*/}
+            {/*                        fontWeight: 'bold'*/}
+            {/*                    }}*/}
+            {/*                    variant="subtitle2"*/}
+            {/*                    component="div"*/}
+            {/*                >*/}
+            {/*                    Oylik to'lovi: {priceMoth} so'm*/}
+            {/*                </Typography>*/}
+            {/*            </Box>*/}
+            {/*            <Box display="flex" alignItems="center">*/}
+            {/*                <Typography*/}
+            {/*                    sx={{*/}
+            {/*                        ml: 1.5,*/}
+            {/*                        fontSize: `${theme.typography.pxToRem(16)}`,*/}
+            {/*                        color: `${theme.colors.alpha.trueWhite[100]}`,*/}
+            {/*                        fontWeight: 'bold'*/}
+            {/*                    }}*/}
+            {/*                    variant="subtitle2"*/}
+            {/*                    component="div"*/}
+            {/*                >*/}
+            {/*                    Tavsifi: {tariffShortDto?.description}*/}
+            {/*                </Typography>*/}
+            {/*            </Box>*/}
+            {/*        </Card>*/}
+            {/*    </Grid>*/}
+            {/*</Grid>*/}
 
         </section>
     );

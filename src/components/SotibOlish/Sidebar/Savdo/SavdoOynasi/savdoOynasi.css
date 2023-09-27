@@ -14,566 +14,432 @@
     border-radius: 8px;
     border: 5px solid #0044FF;
 }
-
-.sss2{
-    padding: 4px;
-    width: 91px;
-    color: grey;
-    cursor: pointer;
-    height: 35px;
-    border-radius: 10px;
+.shopping{
+    position: absolute;
+    z-index: 2;
+    height: 100vh;
 }
-.combo-trade-array{
-    border: 1px solid gray;
-    background-color: #FFFFFF;
+.shopping-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #F3F3F3;
+    background: #FFF;
+    box-shadow: 0px 16px 24px 0px rgba(223, 226, 231, 0.22);
+    height: 100px;
+    padding: 26px 20px;
 }
-.combo-trade-array button{
-    text-align: start;
-    background-color: #ffffff;
-    width: 100%;
-    color: #000000;
-    padding:0 10px;
+.shopping-header-item{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.shopping-header-item:last-child{
+    width: 50%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 14px;
+}
+.shop-header-text{
+    color: #323B4B;
+    font-family: 'Inter',sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px; /* 133.333% */
     margin: 0;
-    border-bottom: 1px solid gray;
 }
-.combo-trade-array button:hover{
-    background-color: #0c50e4;
+.shopping-datepicker{
+    width: 200px;
+    border-radius: 10px;
+    border: 1px solid #E7E7E7;
+    background: #FAFBFC;
+    height: 48px;
+    padding: 10px 18px !important;
+    color: #4E5D78 !important;
+    font-family: 'Inter',sans-serif;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    line-height: 24px !important;
+}
+.shopping-header-btn{
+    width: 180px;
+    height: 48px;
+    border-radius: 10px;
+    border: 1px solid #E7E7E7;
+    background: #FAFBFC;
+    padding: 10px 14px 10px 18px;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    color: #4E5D78;
+    font-family: 'Inter',sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px; /* 171.429% */
+}
+.shopping-header-btnDanger{
+    width: 180px;
+    height: 48px;
+    border-radius: 10px;
+    border: 1px solid red;
+    background: red;
+    padding: 10px 14px 10px 18px;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    color: #FFFFFF;
+    font-family: 'Inter',sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px; /* 171.429% */
+}
+.shopping-body{
+    background: #FAFBFC;
+    padding:18px 20px;
+    display: flex;
+    gap: 24px;
+    justify-content: start;
+    align-items: stretch;
+    height: 85%;
+}
+.shopping-body-left{
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: start;
+    max-height: 100vh;
+    border-radius: 18px;
+    padding: 24px 12px;
+    background: #FFF;
+    box-shadow: 0px 16px 24px 0px rgba(223, 226, 231, 0.22);
+}
+.shopping-body-middle{
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    max-height: 100vh;
+    border-radius: 18px;
+    padding: 24px;
+    background: #FFF;
+    box-shadow: 0px 16px 24px 0px rgba(223, 226, 231, 0.22);
+}
+.shopping-body-right{
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: start;
+    max-height: 100vh;
+    border-radius: 18px;
+    padding: 24px;
+    background: #FFF;
+    box-shadow: 0px 16px 24px 0px rgba(223, 226, 231, 0.22);
+}
+.shopping-body-header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.shopping-plus{
+    border-radius: 10px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    border:none;
+    background: #E7EBF7;
+    color: #377DFF;
+}
+.shopping-search{
+    position: relative;
+    border-radius: 10px;
+    border: 1px solid #E7E7E7;
+    background: #FAFBFC;
+    width: 70%;
+    display: flex;
+}
+.shopping-search input{
+    padding: 10px 14px 10px 18px;
+    border: none;
+    width: 92%;
+    background: transparent;
+    color: #4E5D78;
+    font-family: 'Inter',sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px; /* 171.429% */
+}
+.shopping-search-list{
+    border-radius: 10px;
+    border: 1px solid #E7E7E7;
+    background: #FAFBFC;
+    z-index: 2;
+    position: absolute;
+    max-height: 350px;
+    overflow-y: scroll;
+    top: 100%;
+    width: 100%;
+}
+.shopping-search-button{
+    padding: 5px 14px 5px 18px;
+    background: #FAFBFC;
+    width:100%;
+    text-align: start;
+    border: none;
+    border-bottom: 1px solid gray;
+    color: #4E5D78;
+    font-family: 'Inter',sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px; /* 171.429% */
+}
+.shopping-search-button:hover{
+    background: #377DFF;
     color: #FFFFFF;
 }
-.combo-trade-array button:disabled{
-    color: rgba(128, 128, 128, 0.55);
-}
-.shopping{
+.shopping-body-body{
     width: 100%;
-    position: absolute;
+    height: 100%;
+    overflow-y: scroll;
+    padding: 24px 0;
 }
-.shopping-modal{
+.shopping-table{
     width: 100%;
-    overflow: hidden;
 }
-.hoverimg{
-    transition: 0.4s all;
+.shopping-table tr{
+    color: #4E5D78;
+    font-family: 'Inter',sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 142.857% */
+    text-transform: uppercase;
 }
-.hoverimg:hover{
-    transform: translateY(-6px);
-    opacity: 0.8;
+.shop-change-number{
+    color: #4E5D78;
+    font-family: 'Inter',sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    border-radius: 6px;
+    border: 1px solid #E7E7E7;
+    background: #FAFBFC;
+    width: 80px;
 }
-.savdoOynaContainers{
-    width: 100%;
-    background-color:#e8e3ff;
-    padding: 5px 0 0 0;
-    border-radius: 0;
-    position: absolute;
-    top: 0;
 
-}
-.namepointer{
-    transition: 0.4s all;
+.shopping-left-btn{
     cursor: pointer;
-}
-.namepointer:hover{
-    border-bottom: 5px solid darkblue;
-    color: darkblue;
-    font-size: 17px;
-    transform: translateX(20px);
-    cursor: pointer;
-}
-.liniya{
-    background: black;
-    transform: rotateZ(90deg);
-    margin-top: 3rem;
-    width: 100%;
-    height: 1px;
-}
-.savdoOynaContainers{
-    overflow: hidden;
-}
-.savdoOynaContainers .savdoNavbar{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #FFFFFF;
-    padding: 16px 32px;
-    margin-bottom: 6px;
-
-}
-.savdoOynaContainers .savdoNavbar .navbarLeft h5{
+    width: 31%;
+    height:20%;
+    padding: 10px;
+    border-radius: 12px;
+    background: #FAFBFC;
     text-align: center;
-    margin: 0px 5px ;
+    font-family: 'Inter',sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
 }
 
-.ocbutton{
-    width: 40px;
-    height: 40px;
-    padding: 3px;
-    border-radius: 50%;
-    background: #19196a;
-    color: white;
-    margin-left: 10px;
-    transition: 0.4s all ease-in-out;
-}
-.ocbutton:hover{
-    width: 40px;
-    height: 40px;
-    padding: 3px;
-    border-radius: 3%;
-    background: #870e0e;
-    transform: scale(1.1);
-}.kv{
-    width: 40px;
-    height: 40px;
-    padding: 3px;
-    background: #1b5c2a;
-    color: white;
-    border-radius: 5px;
-    margin-left: 10px;
-    transition: 0.4s all ease-in-out;
-}
-.kv:hover{
-    width: 40px;
-    height: 40px;
-    padding: 3px;
-    border-radius: 50%;
-    background: #870e0e;
-    transform: scale(1.1);
-}
-.savdoOynaContainers .savdoNavbar .navbarRigth{
+
+.shopping-left-payment{
+    width: 31%;
+    padding: 19px 11px;
     display: flex;
-    justify-content: space-around;
-    /*border: 1px solid green;*/
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    width: 450px;
+    gap: 12px;
+    border: none;
+    border-radius: 16px;
+    background: #FAFBFC;
+    color: #377DFF;
+    font-family: 'Inter',sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
 }
-.savdoOynaContainers .savdoNavbar .navbarRigth img{
-    width: 18px;
-    height: 20px;
+.btn-icon{
+    width: 32px;
+    height: 32px;
+}
+.shop-totalSum{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+}
+.shop-totalSum p{
+    color: #377DFF;
+    word-wrap: break-word;
+    font-family: 'Inter',sans-serif;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    margin: 0;
+}
+.shop-productSum{
+    color: #323B4B;
+    font-family: 'Inter',sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px; /* 133.333% */
+    margin: 0;
+}
+.discount-percent{
+    border-radius: 8px;
+    background: #E7EBF7;
+    padding: 10px 16px;
+}
+.discount-percent p{
+    color: #377DFF;
+    font-family: 'Inter',sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 153.846% */
+    margin: 0;
+}
+.btn-payment{
+    border-radius: 16px;
+    background: #377DFF;
+    padding: 19px 11px;
+    width: 100%;
+    color:#FFF;
+    font-family: 'Inter',sans-serif;
+    border: none;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.shopping-products{
+    width: 100%;
+    height: 100%;
+}
+.shopping-product-list{
+    margin-top:24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    gap: 15px;
+    height: 90%;
+    overflow-y: scroll;
+}
+.shopping-left-product-btn{
+    display: flex;
+    width: 48px;
+    height: 48px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    border-radius: 16px;
+    background: #FAFBFC;
+    font-family: 'Inter',sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.shopping-left-product-btn:hover{
+    border:1px solid #1aa6e1;
+}
+.shop-product-card{
     cursor: pointer;
-}
-.savdoOynaContainers .savdoNavbar .navbarRigth button{
-    height: 32px;
-    padding: 0px 16px;
-    background-color: #FFFFFF;
-    border: 1px solid #9FA2B4;
-    box-sizing: border-box;
-    border-radius: 8px;
-    color: #9FA2B4;
-}
-.savdoOynaContainers .savdoNavbar .navbarLeft .bazaSelect1{
-    height: 32px;
-    padding: 0px 16px;
-    background-color: #FFFFFF;
-    border: 1px solid #9FA2B4;
-    box-sizing: border-box;
-    border-radius: 8px;
-    color: #9FA2B4;
-}
-.savdoOynaContainers .savdoBlock{
-    padding: 6px 16px;
+    border-radius: 14px;
+    border: 1px solid #E7E7E7;
+    width: 45.5%;
+    overflow-y: scroll;
     display: flex;
-    justify-content: space-between;
-}
-.savdoOynaContainers .savdoBlock .savdoBlockLeft {
-    background: #FFFFFF;
-    border: 1px solid rgba(159, 162, 180, 0.25);
-    border-radius: 20px;
-    padding: 24px 20px;
-    width: 55%;
-    height: 75vh;
-}
-.savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox{
-    display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    padding: 16px;
+}
+.shop-product-image{
+    max-width: 90px;
+    max-height: 90px;
+    margin-bottom: 26px;
+}
+.shop-product-name{
+    color: #4E5D78;
+    text-align: center;
+    font-family: 'Inter',sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 142.857% */
     margin-bottom: 8px;
 }
-.savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox .addButton{
-    background: #FFFFFF;
-    border: 1px solid #9FA2B4;
-    border-radius: 6px;
-    color: #9FA2B4;
-    height: 32px;
-    width: 50px;
+.shop-product-price{
+    color: #323B4B;
+    text-align: center;
+    font-family: 'Inter',sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px; /* 111.111% */
+    text-transform: uppercase;
 }
-/*.savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox select{*/
-/*    background: #FFFFFF;*/
-/*    border: 1px solid #9FA2B4;*/
-/*    border-radius: 6px;*/
-/*    color: #9FA2B4;*/
-/*    height: 32px;*/
-/*    width: 35%;*/
-/*    padding: 0px 6px;*/
-/*}*/
-/*.savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox input{*/
-/*    background: #FFFFFF;*/
-/*    width: 50%;*/
-/*    padding-left: 4px;*/
-/*    border: 1px solid #9FA2B4;*/
-/*    border-radius: 6px;*/
-/*    color: #9FA2B4;*/
-/*    height: 32px;*/
-/*    padding: 0px 8px;*/
-/*}*/
-.savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox input::placeholder{
-    color: #9FA2B4;
-    opacity: 1;
-}
-
-.savdoOynaContainers .savdoBlock .savdoBlockLeft .maxSoniBox{
+.button-changes{
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
+    align-items: center;
 }
-.savdoOynaContainers .savdoBlock .savdoBlockLeft .chegirmalarBox{
-    display: flex;
-    justify-content: space-between;
-}
-.savdoOynaContainers .savdoBlock .savdoBlockLeft .chegirmalarBox p{
-    margin: 9px 0px 0px 0px;
-}
-
-.tbodyY{
-    height: 50vh;
-    overflow-y: scroll;
-    /* position: relative; */
-}
-.tbodyY thead{
-    position: sticky;
-    top: 0px;
-    background-color: white;
-}
-.savdoOynaContainers .savdoBlock .savdoBlockRigth{
-    background: #FFFFFF;
-    border: 1px solid rgba(159, 162, 180, 0.25);
-    border-radius: 20px;
-    padding: 12px 20px;
-    width: 42%;
-    height: 75vh;
-}
-.toprint{
-    height: 100%;
+.btn-change{
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction:column;
+    border-radius: 12px;
+    background: #FAFBFC;
+    width: 31%;
+    gap: 12px;
+    padding: 10px 8px 5px 8px;
 }
-.savdoOynaContainers .savdoBlock .savdoBlockRigth .bazaBox select{
-    background-color: #FFFFFF;
-    border: 1px solid #9FA2B4;
+.btn-change-icon{
+    font-size: 48px;
+}
+.btn-change-text{
+    text-align: center;
+    font-family: 'Inter',sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px; /* 160% */
+}
+.btn-change:nth-child(1):active{
+    border:1px solid #FF7272;
     box-sizing: border-box;
-    border-radius: 6px;
-    color: #9FA2B4;
-    height: 32px;
 }
-.savdoOynaContainers .savdoBlock .savdoBlockRigth .maxsulotImgBlock{
-    margin-top: 16px;
-    overflow-y: scroll;
-    display: flex;
-    gap:2px;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    height: 60vh;
+.btn-change:nth-child(2):active{
+    border:1px solid #377DFF;
+    box-sizing: border-box;
 }
-.trade-button{
-    background-color: transparent;
-    border-radius:20px
+.btn-change:nth-child(3):active{
+    border:1px solid #4E5D78;
+    box-sizing: border-box;
 }
-.trade-button:hover{
-    transition: all 0.5s ease-in-out;
-    background-color: #f0b800;
-}
-.savdoOynaContainers .savBtnBox{
-    display: flex;
-    margin-bottom: 16px;
-    margin-top: 16px;
-    padding: 6px 16px;
-    overflow: hidden;
-}
-.savdoOynaContainers .savBtnBox {
-    background: transparent;
-
-}
-.savdoOynaContainers .savBtnBox button{
-    width: 10%;
-    height: 56px;
-    border-radius: 4px;
-    padding: 0px 4px;
-    color: #FFFFFF;
-    line-height: 12px;
-}
-
-.savdoOynaContainers .savBtnBox .jamiTolov{
-    background-color: #FFFFFF;
-    height: 36px;
-    padding: 0px 6px;
-    border-radius: 8px;
-    color: black;
-    width: 300px;
-    font-size: 14px;
-    border: 1px solid rgba(37, 37, 37, 0.5);;
-    line-height: 12px;
-}
-
-.savdoOynaContainers .savBtnBox .qchiqish{
-    height: 36px;
-    padding: 0px 4px;
-    border-radius: 8px;
-    font-size: 14px;
-    line-height: 12px;
-    width: 10%;
-}
-.savdoOynaContainers .savdoBlock .savdoBlockRigth .maxsulotImgBlock .maxsuImgBox{
-    width: 24%;
-    cursor: pointer;
-}
-.savdoOynaContainers .savdoBlock .savdoBlockRigth .maxsulotImgBlock .maxsuImgBox img{
-    width: 80%;
-    height: 50%;
-    margin: 4px 10px;
-    justify-content: space-between;
-}
-
-
-.savdoOynaContainers .savdoBlock .savdoBlockRigth .maxsulotImgBlock .maxsuImgBox h6{
-    /* overflow: hidden; */
-    margin: 0px 4px;
-    text-align: center;
-    font-size: 12px;
-    font-family: Golos;
-    color: #000000;
-    
-}
-.savdoOynaContainers .savdoBlock .savdoBlockRigth .maxsulotImgBlock .maxsuImgBox p{
-    text-align: center;
-    font-size: 12px;
-}
-
-.ddd{
-    cursor: pointer;
-}
-
-
-@media (max-width: 425.9px){
-    .savdoOynaContainers{
-        width: 100%;
-
-    }
-    .savdoOynaContainers .savdoNavbar{
-        display: block;
-        justify-content: start;
-    }
-    .savdoOynaContainers .savdoNavbar .navbarRigth{
-        width: 100%;
-        margin-top: 12px;
-    }
-    .savdoOynaContainers .savdoNavbar .navbarRigth .headerImgStyle{
-        width: 30px;
-        height: 30px;
-    }
-    .savdoOynaContainers .savdoNavbar .navbarLeft h5{
-        display: flex;
-        justify-content: start;
-        margin-bottom: 4px;
-    }
-    .savdoOynaContainers .savdoBlock{
-        padding: 4px 10px;
-        display: block;
-    }
-    .tbodyY {
-        height: 50%;
-    }
-
-    .savdoOynaContainers .savdoBlock .savdoBlockLeft{
-        width: 100%;
-        height: 600px;
-        margin-bottom: 24px;
-        padding: 18px 14px;
-    }
-    .savdoOynaContainers .savdoBlock .savdoBlockRigth{
-        width: 100%;
-        height: 600px;
-        padding: 18px 14px;
-
-    }
-    .savdoOynaContainers .savdoNavbar .navbarRigth button{
-        width: 116px;
-        font-size: 12px;
-
-    }
-    .savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox{
-        display: block;
-    }
-    .savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox select{
-        width: 100%;
-        margin-bottom: 12px;
-        font-size: 12px;
-    }
-    .savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox input{
-        width: 80%;
-        font-size: 12px;
-        margin-right: 4px;
-    }
-    .savdoOynaContainers .savdoBlock .savdoBlockLeft .chegirmalarBox{
-        display: block;
-    }
-    .savdoOynaContainers .savBtnBox{
-        display: block;
-        padding: 0 1.2rem;
-    }
-    .savdoOynaContainers .savBtnBox button{
-        width: 47%;
-    }
-    .savdoOynaContainers .savBtnBox .jamiTolov{
-        width: 97%;
-    }
-    .savdoOynaContainers .savBtnBox .qchiqish{
-        width: 97%;
-    }
-    .savdoOynaContainers .savdoBlock .savdoBlockLeft .maxSoniBox{
-        display: block;
-    }
-
-    
-}
-@media (min-width: 426px) and (max-width: 768.9px){
-    .savdoOynaContainers{
-        width: 100%;
-
-    }
-    .savdoOynaContainers .savdoNavbar{
-        display: block;
-        justify-content: start;
-    }
-    .savdoOynaContainers .savdoNavbar .navbarRigth{
-        width: 100%;
-        margin-top: 12px;
-    }
-    .savdoOynaContainers .savdoNavbar .navbarRigth .headerImgStyle{
-        width: 30px;
-        height: 30px;
-    }
-    .savdoOynaContainers .savdoNavbar .navbarLeft h5{
-        display: flex;
-        justify-content: start;
-        margin-bottom: 4px;
-    }
-    .savdoOynaContainers .savdoBlock{
-        padding: 4px 26px;
-        display: block;
-    }
-
-    .tbodyY {
-        height: 60vh;
-    }
-
-    .savdoOynaContainers .savdoBlock .savdoBlockLeft{
-        width: 100%;
-        height: 600px;
-        margin-bottom: 24px;
-        padding: 18px 14px;
-    }
-    .savdoOynaContainers .savdoBlock .savdoBlockRigth{
-        width: 100%;
-        height: 600px;
-        padding: 18px 14px;
-
-    }
-    .savdoOynaContainers .savdoNavbar .navbarRigth button{
-        width: 116px;
-        font-size: 12px;
-
-    }
-    .savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox{
-        display: block;
-    }
-    .savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox select{
-        width: 80%;
-        margin-bottom: 12px;
-        font-size: 12px;
-    }
-    .savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox input{
-        width: 80%;
-        font-size: 12px;
-        margin-right: 8px;
-    }
-    .savdoOynaContainers .savdoBlock .savdoBlockLeft .chegirmalarBox p{
-        font-size: 13px;
-    }
-    .savdoOynaContainers .savBtnBox button{
-        width: 100%;
-    }
-    .savdoOynaContainers .savBtnBox .jamiTolov{
-        width: 100%;
-    }
-    .savdoOynaContainers .savBtnBox .qchiqish{
-        width: 100%;
-    }
-    /* .savdoOynaContainers .savdoBlock .savdoBlockLeft .maxSoniBox{
-        
-    } */
-    .savdoOynaContainers .savdoBlock .savdoBlockRigth .maxsulotImgBlock .maxsuImgBox{
-        width: 60%;
-    }
-
-}
-@media (min-width: 769px) and (max-width: 1024.9px){
-    .savdoOynaContainers{
-        width: 100%;
-    }
-    .savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox{
-        display: block;
-    }
-    /*.savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox select{*/
-    /*    width: 100%;*/
-    /*    margin-bottom: 12px;*/
-    /*    font-size: 12px;*/
-    /*}*/
-    .tbodyY {
-        height: 60%;
-    }
-    /*.savdoOynaContainers .savdoBlock .savdoBlockLeft .selectBox input{*/
-    /*    width: 80%;*/
-    /*    font-size: 12px;*/
-    /*    margin-right: 8px;*/
-    /*}*/
-    .savdoOynaContainers .savdoBlock .savdoBlockLeft .chegirmalarBox p{
-        font-size: 13px;
-    }
-    .savdoOynaContainers .savBtnBox button{
-        width: 100%;
-    }
-    .savdoOynaContainers .savBtnBox .jamiTolov{
-        width: 100%;
-    }
-    .savdoOynaContainers .savBtnBox .qchiqish{
-        width: 100%;
-    }
-    .savdoOynaContainers .savdoBlock .savdoBlockLeft .maxSoniBox{
-        margin-top: 12px;
-    }
-    .savdoOynaContainers .savdoBlock .savdoBlockLeft .maxSoniBox h6{
-        font-size: 12px;
-    }
-    .savdoOynaContainers .savdoBlock .savdoBlockLeft .chegirmalarBox p{
-        font-size: 12px;
-    }
-    .savdoOynaContainers .savdoBlock .savdoBlockRigth .maxsulotImgBlock .maxsuImgBox{
-        width: 80%;
-    }
-    .savdoOynaContainers .savBtnBox button{
-        width: 100%;
-    }
-    .savdoOynaContainers .savBtnBox .jamiTolov{
-        width: 100%;
-    }
-    .savdoOynaContainers .savBtnBox .qchiqish{
-        width: 100%;
-    }
-
-}
-
-@media (min-width: 1025px) and (max-width: 1119.9px){
-    /* .savdoOynaContainers{
-    }
-    .savdoOynaContainers .savBtnBox button{
-    } */
-}
-
