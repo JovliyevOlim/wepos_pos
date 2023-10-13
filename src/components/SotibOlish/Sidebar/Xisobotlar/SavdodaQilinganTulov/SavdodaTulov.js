@@ -1,4 +1,3 @@
-import {Link, Switch, Route} from 'react-router-dom'
 import './savdoqilingantulov.css'
 import React, {useState, useEffect, useRef} from "react";
 import SavdodagiTulovReducer, {getTradeReportByBranch, getTradeReportByBusiness} from '../reducer/SavdodagiTulovReducer'
@@ -11,14 +10,13 @@ import CustomerReducer, {
 } from "../../Hamkorlar/reducer/CustomerReducer";
 import XodimReducer, {getUserForFilteringBusiness, getUserForFiltering} from "../../Hodimlar/reducer/XodimReducer";
 import Loading from "../../../../Loading";
-import {IconButton, TablePagination} from "@mui/material";
 import MaxsulotlarRoyxariReducer, {getBarcodeAndName} from "../../Maxsulotlar/reducer/MaxsulotlarRoyxariReducer";
-import CancelPresentationIcon from '@mui/icons-material/CancelPresentation';
 import moment from "moment";
 import 'moment/locale/uz-latn'
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import CardBody from "../../../../Components/CardBody";
 import SelectAnt, {SearchAnt} from "../../../../Components/SelectAnt";
+import CommonTable from "../../../../Components/CommonTable";
 
 function SavdodaTulov({
                           users,
@@ -47,6 +45,74 @@ function SavdodaTulov({
     const [isView, setIsView] = useState(false)
     const [loading, setLoading] = useState(false)
 
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: 'index',
+            rowScope: 'row',
+            width: '2%',
+        },
+        {
+            title: 'Chek',
+            dataIndex: 'invoice',
+            key: 'invoice',
+            width: '100px'
+        },
+        {
+            title: 'Mahsulot',
+            dataIndex: 'productName',
+            key: 'productName',
+            width: '200px'
+        },
+        {
+            title: t('ol.13'),
+            dataIndex: 'branchName',
+            key: 'branchName',
+            width: '100px'
+        },
+        {
+            title: 'Mijoz',
+            dataIndex: 'customerName',
+            key: 'customerName',
+            width: '100px'
+        },
+        {
+            title: t('ol.11'),
+            dataIndex: 'createdAt',
+            key: 'createdAt',
+            render: (item) => <p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>,
+            width: '100px'
+        },
+        {
+            title: 'Miqdor',
+            dataIndex: 'quantity',
+            key: 'quantity',
+            width: '100px',
+        },
+        {
+            title: 'Qaytgan miqdor',
+            dataIndex: 'backing',
+            key: 'backing',
+            width: '150px'
+        },
+        {
+            title: 'Summa',
+            dataIndex: 'totalSalePrice',
+            key: 'totalSalePrice',
+            width: '150px',
+            render: (item) => <p className={'m-0'}>{item.toFixed(2)} so'm</p>
+        },
+        {
+            title: 'Foyda',
+            dataIndex: 'profit',
+            key: 'profit',
+            width: '150px',
+            render: (item) => <p className={'m-0'}>{item.toFixed(2)} so'm</p>
+
+        },
+    ];
+
+
     function changeSearch(e) {
         setSearch(e.target.value)
         setIsView(true)
@@ -62,12 +128,12 @@ function SavdodaTulov({
         }
     }
 
-    const handlePageChange = (_event, newPage) => {
-        setPage(newPage);
+    const handlePageChange = (newPage) => {
+        setPage(newPage-1);
     };
-    const handleLimitChange = (event) => {
+    const handleLimitChange = (event,size) => {
         setPage(0)
-        setSize(parseInt(event.target.value));
+        setSize(size);
     };
 
     function changeBacking(e) {
@@ -148,21 +214,21 @@ function SavdodaTulov({
             </div>
             <CardBody>
                 <div className="col-md-12 d-flex row-gap-4 flex-wrap">
-                    <div className="col-md-3">
+                    <div className="col-md-3 p-2">
                         <SelectAnt selectList={users?.branches} permission={users.getInfoAdmin} name={'Filiallar'} onChange={(e) => setMainBranchId(e === '' ? null : e)}/>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-3 p-2">
                         <SelectAnt selectList={CustomerReducer.customersTrade} permission={true}
                                    name={'Mijozlar'} onChange={(e) => setCustomerId(e === "" ? null : e)}/>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-3 p-2">
                         <SelectAnt selectList={XodimReducer.usersFiltering?.map((item) => ({
                             id: item.id,
                             name: item.fio
                         }))} permission={true}
                                    name={'Hodimlar'} onChange={(e) => setUserId(e === '' ? null : e)}/>
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-3 p-2">
                         <SelectAnt selectList={[{id:'true',name:'Qaytarilgan'}]} permission={true}
                                    name={'Mahsulotlar'} onChange={changeBacking}/>
                     </div>
@@ -187,60 +253,16 @@ function SavdodaTulov({
                     }
                 </div>
             </CardBody>
-            <div className="rowStyleST2">
+            <CardBody>
                 {
                     loading ?
                         SavdodagiTulovReducer.tradeReports?.list?.length > 0 ?
-                            <div>
                                 <div className="table-responsive">
-                                    <table
-                                        className='table table-hover table-primary table-striped table-bordered mt-4 mb-4 '>
-                                        <thead>
-                                        <tr>
-
-                                            <th>T/R</th>
-                                            <th>Savdo</th>
-                                            <th>Mahsulot</th>
-                                            <th>Filial</th>
-                                            <th>Mijoz</th>
-                                            <th>Xodim</th>
-                                            <th>Sana</th>
-                                            <th>Miqdor</th>
-                                            <th>Qaytgan Miqdor</th>
-                                            <th>Jami Summa</th>
-                                            <th>Foyda</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {
-                                            SavdodagiTulovReducer.tradeReports?.list?.map((item, index) => <tr
-                                                key={item.id}>
-                                                <td>{index + (page * size) + 1}</td>
-                                                <td>{item.invoice}</td>
-                                                <td>{item?.productName}</td>
-                                                <td>{item?.branchName}</td>
-                                                <td>{item?.customerName}</td>
-                                                <td>{item?.userFio}</td>
-                                                <td>{moment(new Date(item?.createdAt)).format('LLLL')}</td>
-                                                <td>{item?.quantity}</td>
-                                                <td>{item?.backing}</td>
-                                                <td>{item?.totalSalePrice} so'm</td>
-                                                <td>{item?.profit} so'm</td>
-                                            </tr>)
-                                        }
-                                        </tbody>
-                                    </table>
-                                    <TablePagination
-                                        component="div"
-                                        count={SavdodagiTulovReducer.tradeReports?.totalItem}
-                                        onPageChange={handlePageChange}
-                                        onRowsPerPageChange={handleLimitChange}
-                                        page={page}
-                                        rowsPerPageOptions={[5, 10, 15]}
-                                        rowsPerPage={size}
-                                    />
+                                    <CommonTable size={size} page={page} total={SavdodagiTulovReducer.tradeReports?.totalItem}
+                                                 handleLimitChange={handleLimitChange} columns={columns} data={SavdodagiTulovReducer.tradeReports?.list}
+                                                 handlePageChange={handlePageChange} pagination={true}/>
                                 </div>
-                            </div> : <div>
+                         : <div>
                                 <h4 className={'text-center'}>{SavdodagiTulovReducer.message}</h4>
                             </div> : <Loading/>
                 }
@@ -327,7 +349,7 @@ function SavdodaTulov({
                 {/*/!*        <button onClick={checktoggle} className={'btn btn-outline-primary'}>Chiqish</button>*!/*/}
                 {/*/!*    </ModalFooter>*!/*/}
                 {/*/!*</Modal>*!/*/}
-            </div>
+            </CardBody>
         </div>
     )
 }

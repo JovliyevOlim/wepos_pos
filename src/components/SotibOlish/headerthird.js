@@ -35,7 +35,7 @@ const Taxrirlash2 = lazy(() => import('./Sidebar/Hodimlar/Lavozimlar/Taxrirlash/
 
 const Taxrirlash3 = lazy(() => import('./Sidebar/Maxsulotlar/MahsulotlarRuyxati/Taxrirlash/Taxrirlash'))
 
-const ShtrixCode = lazy(() => import("./Sidebar/Maxsulotlar/ShtrixCode/ShrtixCode"))
+const ShtrixCode = lazy(() => import("./Sidebar/Settings/DukonSozlamalari/ShtrixCode/ShrtixCode"))
 const XodimlarNazorati = lazy(() => import("./Sidebar/Xisobotlar/XodimlarNazorati/XodimlarNazorati"))
 
 export const routes = [
@@ -58,6 +58,7 @@ export const routes = [
     {path: "category",component:Bolimlar,permissions:['ALL_CATEGORY']},
     {path: "measurements",component:Measurement,permissions:['ALL_MEASUREMENT']},
     {path: "brand",component:Firmalar,permissions:['ALL_BRAND']},
+    {path: "barcode",component:ShtrixCode,permissions:['GET_PRODUCT']},
     {path: "addPurchase/:id?",component:Xarid,permissions:['ADD_PURCHASE','GET_PURCHASE','GET_PURCHASE_ADMIN']},
     {path: "addPurchase",component:Xarid,permissions:['ADD_PURCHASE']},
     {path: "purchaseList",component:HaridlarRoyxati,permissions:['ADD_PURCHASE','GET_PURCHASE','GET_PURCHASE_ADMIN']},

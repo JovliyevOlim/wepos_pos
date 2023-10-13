@@ -4,24 +4,30 @@ import {UserOutlined} from "@ant-design/icons";
 import './selectAnt.css'
 
 
-const CommonTable = ({data,columns,total,size,page,handlePageChange,handleLimitChange}) => (
+
+const CommonTable = ({data,columns,size,page,pagination,total,handleLimitChange,handlePageChange,rowSelection}) => (
     <Table
         columns={columns}
-        dataSource={data}
+        dataSource={data?.map((item, index) => {
+            return {...item, index: index + 1 + (page * size),key:item.id}
+        })}
         scroll={{
             y: 400,
-            x: 500
+            x: 800
         }}
-        pagination={{
+        rowSelection={rowSelection}
+        pagination={pagination && {
             total:total,
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
             pageSize:size,
             showSizeChanger:true,
             onShowSizeChange:handleLimitChange,
-            pageSizeOptions:[5, 10, 15],
+            pageSizeOptions:[5, 10,25,50,100],
             current:page+1,
             onChange:handlePageChange
         }}
     />
 );
 export default CommonTable;
+
+

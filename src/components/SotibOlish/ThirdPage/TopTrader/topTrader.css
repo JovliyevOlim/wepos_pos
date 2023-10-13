@@ -1,0 +1,136 @@
+.top-trader-page{
+    padding: 29px;
+    border-radius: 24px;
+    background: #FFF;
+    width: 100%;
+    height: 450px;
+}
+.top-trader-page-text{
+    color: #4E5D78;
+    font-family: 'Inter',sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px; /* 120% */
+}
+.trader-icon{
+    width:56px;
+    height:56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+}
+.trader-sum{
+    color: #377DFF;
+    font-family: 'Inter',sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px; /* 160% */
+}
+.trader-name{
+    color: #4E5D78;
+    font-family: 'Inter',sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 133.333% */
+}
+.top-trader-sum-mobile{
+    display: none;
+}
+.top-traders{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 80%;
+    overflow-y: scroll;
+}
+.top-traders::-webkit-scrollbar {
+    border-radius: 2px;
+    width: 4px;
+}
+.top-traders::-webkit-scrollbar-thumb {
+    background:  #1AA6E1;
+    border-radius: 8px;
+}
+.top-traders::-webkit-scrollbar-track {
+    background: #ccc;
+}
+@media screen and (max-width:425.6px){
+    .top-trader-page{
+        width: 100%;
+        padding: 16px;
+        height: 400px;
+        margin-bottom: 24px;
+    }
+    .trader-sum-mobile{
+        display: inline;
+        color: #4E5D78;
+        font-family: 'Inter',sans-serif;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 20px;
+    }
+    .trader-sum{
+        display: none;
+    }
+}
+@media (min-width: 426px) and (max-width:767.9px){
+    .top-trader-page{
+        width: 100%;
+        height: 400px;
+        margin-bottom: 24px;
+    }
+    .trader-sum-mobile{
+        display: inline;
+        color: #4E5D78;
+        font-family: 'Inter',sans-serif;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: 20px;
+    }
+    .trader-sum{
+        display: none;
+    }
+}
+@media (min-width: 768px) and (max-width:1023.9px){
+    .top-trader-page{
+        width: 100%;
+        height: 400px;
+        margin-bottom: 24px;
+    }
+    .trader-sum-mobile{
+        display: none
+    }
+    .trader-sum{
+        display: inline;
+    }
+}
+@media (min-width: 1024px) and (max-width:1219.9px){
+    .top-trader-page{
+        height: 400px;
+        margin-bottom: 24px;
+    }
+    .trader-sum-mobile{
+        display: none;
+    }
+    .trader-sum{
+        display: inline;
+    }
+}
+@media (min-width:1219.9px){
+    .top-trader-page{
+        height: 450px;
+        margin-bottom: 24px;
+    }
+    .trader-sum-mobile{
+        display: none;
+    }
+    .trader-sum{
+        display: inline;
+    }
+}

@@ -3,15 +3,22 @@ import Delete from '../../../../../img/Delete.png'
 import './bazalar.css'
 import {Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 import {useForm} from "react-hook-form";
-import {useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {connect} from "react-redux";
 import branchreducer, {getbranch, savebranch, editbranch, deletebranch} from "../../../../../reducer/branchreducer";
-import users,{getSelfInfo} from "../../../../../reducer/users";
+import users, {getSelfInfo} from "../../../../../reducer/users";
 import Loading from "../../../../Loading";
 import ModalLoading from "../../../../ModalLoading";
 import formatDate from "../../../../../util";
 import AgreeModal from "../../../../AgreeModal";
 import {useTranslation} from "react-i18next";
+import MainHeaderText from "../../../../Components/MainHeaderText";
+import {ButtonAnt} from "../../../../Components/SelectAnt";
+import CardBody from "../../../../Components/CardBody";
+import CommonTable from "../../../../Components/CommonTable";
+import moment from "moment";
+import 'moment/locale/uz-latn'
+import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
 
 function Bazalar({
                      branchreducer,
@@ -30,6 +37,42 @@ function Bazalar({
     const [editID, setEditID] = useState(null)
     const [loading, setLoading] = useState(false)
     const {t} = useTranslation()
+    const columns = [
+        {
+            title: t('set.5'),
+            dataIndex: 'name',
+            key: 'name',
+            width: '50px'
+        },
+        {
+            title: t('set.6'),
+            dataIndex: 'createdAt',
+            key: 'createdAt',
+            width: '50px',
+            render:(item)=><p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>
+        },
+        {
+            title: t('ol.20'),
+            key: 'operation',
+            width: 150,
+            render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
+                {
+                    users.editOutlay &&
+                    <ButtonAnt text={t('ol.78')} type={'primary'} onClick={() => {
+                        editBranchById(values.id)
+                    }
+                    } icon={<EditOutlined/>}/>
+                }
+                {
+                    users.deleteOutlay  && <ButtonAnt text={t('ol.79')} danger={true} type={'primary'} onClick={() => {
+                        deleteBranchById(values.id)
+                    }
+                    } icon={<DeleteOutlined/>}/>
+                }
+
+            </div>,
+        },
+    ];
 
 
     function toggle() {
@@ -41,9 +84,9 @@ function Bazalar({
     function editBranchById(id) {
         toggle()
         setEditID(id)
-        branchreducer.branch.map(item =>{
-            if(item.id === id){
-                setValue('name',item.name)
+        branchreducer.branch.map(item => {
+            if (item.id === id) {
+                setValue('name', item.name)
             }
         })
     }
@@ -58,18 +101,17 @@ function Bazalar({
     function editBranchToDB(data) {
         editbranch({
             businessId: users.businessId,
-            id:editID,
+            id: editID,
             name: data.name,
         })
     }
 
 
     useEffect(() => {
-        if (users.getBranch){
+        if (users.getBranch) {
             getbranch(users.businessId)
         }
     }, [branchreducer.current])
-
 
 
     const [deletemodal, setdeletemodal] = useState(false)
@@ -89,7 +131,7 @@ function Bazalar({
 
     function onSubmit(data) {
         if (editID) {
-           editBranchToDB(data)
+            editBranchToDB(data)
         } else {
             saveBranchToDB(data)
         }
@@ -111,127 +153,80 @@ function Bazalar({
     }, [branchreducer.current])
 
 
-
     useEffect(() => {
         setLoading(false)
     }, [])
 
 
     useEffect(() => {
-        setTimeout(()=>{
+        setTimeout(() => {
             setLoading(true)
-        },500)
+        }, 500)
     }, [branchreducer.getBranchBool])
 
     return (
         <div>
-            <div className="col-md-12 mt-4 mb-4">
-                <div className="textHeaderBaza">
-                    <h2>{t('Sidebar.41')}</h2>
-                    <p> {t('set.1')}</p>
-                </div>
-                <div className="rowStyleBaza">
-                    <div className="qoshish">
-                        <h5>{t('set.2')}</h5>
-                        {
-                            users.addBranch && <button onClick={toggle} className='btn btn-primary'>{t('set.3')}</button>
-                        }
-                    </div>
-
-                    {
-                        users.getBranch ?
+            <div className={'d-flex col-md-12 mb-5 align-items-center justify-content-between'}>
+                <MainHeaderText text={'Filiallar'}/>
+                {
+                    users.addBranch ?
+                        <ButtonAnt text={t('ol.2')} type={'primary'} onClick={toggle}/>
+                        : ''
+                }
+            </div>
+            <CardBody>
+                {
+                    users.getBranch ?
                         loading ?
                             branchreducer.branch.length > 0 ?
                                 <div>
-                                    <div className="izlashBaza">
-                                        <input value={search} onChange={(e) => setSearch(e.target.value)} type="text"
-                                               placeholder={t('set.4')}/>
-                                    </div>
+                                    {/*<div className="izlashBaza mb-3">*/}
+                                    {/*    <input value={search} onChange={(e) => setSearch(e.target.value)} type="text"*/}
+                                    {/*           placeholder={t('set.4')}/>*/}
+                                    {/*</div>*/}
                                     <div className="table-responsive">
-                                        <table className='table table-striped table-bordered mt-4'>
-                                            <thead>
-                                            <tr>
-                                                <th>{t('set.5')}</th>
-                                                {/*<th>Hudud</th>*/}
-                                                <th>{t('set.6')}</th>
-                                                <th>{t('as.6')}</th>
-                                            </tr>
-                                            </thead>
-
-                                            <tbody>
-
-                                            {
-                                                branchreducer.branch.filter(val => {
-                                                    if (search === '') {
-                                                        return val
-                                                    } else if (val.name.toUpperCase().includes(search.toUpperCase())) {
-                                                        return val
-                                                    }
-                                                })
-                                                    .map(item =>
-                                                        <tr>
-                                                            <td>{item.name}</td>
-                                                            {/*<td></td>*/}
-                                                            <td>{formatDate(item?.createdAt)}</td>
-                                                            <td>
-                                                                {
-                                                                    users.editBranch &&
-                                                                    <button
-                                                                        onClick={() => editBranchById(item.id)}
-                                                                        className='taxrirlash'><img
-                                                                        src={Edit} alt=""/>{t('Roles.42')}
-                                                                    </button>
-                                                                }
-                                                                {
-                                                                    users.deleteBranch &&
-                                                                    <button className='ochirish'
-                                                                            onClick={() => deleteBranchById(item.id)}>
-                                                                        <img src={Delete} alt=""/>{t('set.7')}
-                                                                    </button>
-                                                                }
-                                                            </td>
-                                                        </tr>
-                                                    )
+                                        <CommonTable pagination={false} data={branchreducer.branch.filter(val => {
+                                            if (search === '') {
+                                                return val
+                                            } else if (val.name.toUpperCase().includes(search.toUpperCase())) {
+                                                return val
                                             }
-                                            </tbody>
-                                        </table>
+                                        })} columns={columns}/>
                                     </div>
                                 </div> : branchreducer.getMessage
                             : <Loading/> : ''
-                    }
-                </div>
-            </div>
-            <div className="col-md-12">
-                <Modal isOpen={active} toggle={toggle}>
-                    <form action="" onSubmit={handleSubmit(onSubmit)}>
-                        <ModalHeader>
-                            {
-                                editID ? (t('mah.24')) : (t('as.96'))
-                            }
-                        </ModalHeader>
-                        <ModalBody>
-                            <div className="row">
-                                <div className="col-md-12 d-flex flex-wrap p-0">
-                                    <div className="col-md-6">
-                                        <label htmlFor={'nomi'}>{t('as.4')}</label>
-                                        <input {...register('name', {required: true})}
-                                               placeholder={errors.name ? errors.name.type === 'required' && (t('set.8')) : (t('set.9'))}
-                                               type="text" className={'form-control mb-3'} id={'nomi'}/>
-                                    </div>
+                }
+            </CardBody>
+            <Modal isOpen={active} toggle={toggle}>
+                <form action="" onSubmit={handleSubmit(onSubmit)}>
+                    <ModalHeader>
+                        {
+                            editID ? (t('mah.24')) : (t('as.96'))
+                        }
+                    </ModalHeader>
+                    <ModalBody>
+                        <div className="row">
+                            <div className="col-md-12 d-flex flex-wrap p-0">
+                                <div className="col-md-6">
+                                    <label htmlFor={'nomi'}>{t('as.4')}</label>
+                                    <input {...register('name', {required: true})}
+                                           placeholder={errors.name ? errors.name.type === 'required' && (t('set.8')) : (t('set.9'))}
+                                           type="text" className={'form-control mb-3'} id={'nomi'}/>
                                 </div>
                             </div>
-                        </ModalBody>
-                        <ModalFooter>
-                            <button type={'button'} className={'btn btn-danger'} onClick={toggle}>{t('set.10')}
-                            </button>
-                            <button type={'submit'} className={'btn btn-success'}>{t('set.11')}</button>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter>
+                        <button type={'button'} className={'btn btn-danger'} onClick={toggle}>{t('set.10')}
+                        </button>
+                        <button type={'submit'} className={'btn btn-success'}>{t('set.11')}</button>
 
-                        </ModalFooter>
-                    </form>
-                </Modal>
-            </div>
+                    </ModalFooter>
+                </form>
+            </Modal>
             <ModalLoading isOpen={saveModal}/>
-            <AgreeModal deletemodal={deletemodal} deleteFunc={deleteFunc} deleteModaltoggle={()=>setdeletemodal(prevState => !prevState)}/>
+            <AgreeModal deletemodal={deletemodal} deleteFunc={deleteFunc}
+                        deleteModaltoggle={() => setdeletemodal(prevState => !prevState)}/>
         </div>
     )
 }

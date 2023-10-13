@@ -1,25 +1,25 @@
 import React from 'react'
 import "./lavozimlar.css"
-import Edit from '../../../../../img/Edit.png'
-import Delete from '../../../../../img/Delete.png'
-import {Link} from 'react-router-dom'
+import {Link,useHistory} from 'react-router-dom'
 import {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import LavozimReducer, {getLavozim, saveLavozim, editLavozim, deleteLavozim} from "../reducer/LavozimReducer";
 import users from "../../../../../reducer/users";
 import {useTranslation} from "react-i18next";
-import {Modal, ModalBody, ModalFooter} from "reactstrap";
 import Loading from "../../../../Loading";
 import AgreeModal from "../../../../AgreeModal";
 import ModalLoading from "../../../../ModalLoading";
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import {ButtonAnt} from "../../../../Components/SelectAnt";
+import CommonTable from "../../../../Components/CommonTable";
+import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
+import CardBody from "../../../../Components/CardBody";
 
 function Lavozimlar({getLavozim, users, deleteLavozim, LavozimReducer}) {
 
 
     const {t} = useTranslation()
-
+    const history = useHistory();
     useEffect(() => {
         if (users.getRole) {
             getLavozim(users.businessId)
@@ -31,6 +31,46 @@ function Lavozimlar({getLavozim, users, deleteLavozim, LavozimReducer}) {
     const [deleteID, setdeletID] = useState(null)
 
     const [loading, setLoading] = useState(false)
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: 'index',
+            rowScope: 'row',
+            width: 20,
+        },
+        {
+            title: t('Roles.1'),
+            width: 50,
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: t('ol.103'),
+            dataIndex: 'description',
+            key: 'description',
+            width: 50,
+        },
+        {
+            title: t('ol.20'),
+            key: 'operation',
+            width: 150,
+            render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
+                {users.editRole &&
+                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
+                        history.push('/main/addRole/' + values.id)
+                    }
+                    } icon={<EditOutlined/>}/>
+                }
+                {
+                    users.deleteRole && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
+                        deleteRoleById(values.id)
+                    }
+                    } icon={<DeleteOutlined/>}/>
+                }
+
+            </div>,
+        },
+    ];
 
     function deleteRoleById(id) {
         setdeletemodal(!deletemodal)
@@ -67,66 +107,26 @@ function Lavozimlar({getLavozim, users, deleteLavozim, LavozimReducer}) {
     return (
         <>
             <div className="d-flex justify-content-between align-items-center">
-                <MainHeaderText text={t('ol.102')}/>
+                <MainHeaderText text={t('sidebar.roles')}/>
                 {
                     users.addRole ? <Link to={'/main/addRole'}>
-                        <ButtonAnt text={t('ol.2')} type={'primary'}/>
+                        <ButtonAnt text={t('button.add')} icon={<PlusOutlined/>} type={'primary'}/>
                     </Link> : ''
                 }
             </div>
-            <div className="rowStyleL">
+            <CardBody>
                 {
                     users.getRole ?
                         loading ?
                             LavozimReducer.roles?.length > 0 ?
-                                <div>
-                                    <div className="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
-                                        <table className='table table-striped table-bordered mt-4'>
-                                            <thead>
-                                            <tr>
-                                                <th>T/R</th>
-                                                <th>{t('Roles.1')}</th>
-                                                <th>{t('ol.103')}</th>
-                                                <th>{t('Buttons.9')}</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {
-                                                LavozimReducer.roles.map((item, index) => <tr key={item.id}>
-                                                    <td>{index + 1}</td>
-                                                    <td>{item.name}</td>
-                                                    <td>{item.description}</td>
-                                                    <td>
-                                                        {
-                                                            users.editRole ?
-                                                                <Link to={'/main/addRole/' + item.id}>
-                                                                    <button className='taxrirlash'><img src={Edit}
-                                                                                                        alt=""/> {t('Buttons.1')}
-                                                                    </button>
-                                                                </Link> : ''
-                                                        }
-                                                        {
-                                                            users.deleteRole ? <button className='ochirish'
-                                                                                       onClick={() => deleteRoleById(item.id)}>
-                                                                <img src={Delete} alt=""/> {t('Buttons.3')}
-                                                            </button> : ''
-                                                        }
-
-                                                    </td>
-                                                </tr>)
-                                            }
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                </div> :
+                                    <CommonTable pagination={false} data={LavozimReducer.roles} columns={columns} size={LavozimReducer.roles?.length} page={0}/>
+                               :
                                 <div>
                                     <h4 className={'text-center'}>{LavozimReducer.message}</h4>
                                 </div>
                             : <Loading/> : ''
                 }
-            </div>
+            </CardBody>
             <AgreeModal deletemodal={deletemodal} deleteFunc={deleteFunc}
                         deleteModaltoggle={() => setdeletemodal(prevState => !prevState)}/>
             <ModalLoading isOpen={saveModal}/>

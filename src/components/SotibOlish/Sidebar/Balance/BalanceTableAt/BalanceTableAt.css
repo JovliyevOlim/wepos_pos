@@ -1,0 +1,8 @@
+.balanceFilial{
+    color: #323B4B;
+    font-family: 'Inter',sans-serif;
+    font-size: clamp(0.875rem, 0.7383rem + 0.7813vw, 1.5rem);
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px; /* 133.333% */
+}

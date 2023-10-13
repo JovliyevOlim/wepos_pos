@@ -1,11 +1,10 @@
 import './maxsulotxisoboti.css'
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import {connect} from 'react-redux'
 import {useTranslation} from "react-i18next";
 import users from "../../../../../reducer/users";
 import XodimReducer, {getUserForFilteringBusiness, getUserForFiltering} from "../../Hodimlar/reducer/XodimReducer";
 import Loading from "../../../../Loading";
-import {IconButton, TablePagination} from "@mui/material";
 import MaxsulotlarRoyxariReducer, {getBarcodeAndName} from "../../Maxsulotlar/reducer/MaxsulotlarRoyxariReducer";
 import MaxsulotxisobotReducer, {
     getProductHistoryByBusiness,
@@ -16,6 +15,7 @@ import 'moment/locale/uz-latn'
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import CardBody from "../../../../Components/CardBody";
 import SelectAnt, {SearchAnt} from "../../../../Components/SelectAnt";
+import CommonTable from "../../../../Components/CommonTable";
 
 function MaxsulotXisoboti({
                               users,
@@ -40,14 +40,63 @@ function MaxsulotXisoboti({
     const [isView, setIsView] = useState(false)
     const [loading, setLoading] = useState(false)
 
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: 'index',
+            rowScope: 'row',
+            width: '2%',
+        },
+        {
+            title: 'Mahsulot',
+            dataIndex: 'productName',
+            key: 'productName',
+        },
+        {
+            title: t('ol.13'),
+            dataIndex: 'branchName',
+            key: 'branchName',
+        },
+        {
+            title: 'Xodim',
+            dataIndex: 'userFio',
+            key: 'userFio',
+        },
+        {
+            title: t('ol.11'),
+            dataIndex: 'createdAt',
+            key: 'createdAt',
+            render: (item) => <p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>
+        },
+        {
+            title: 'Miqdor',
+            dataIndex: 'quantity',
+            key: 'quantity',
+            render: (item, values) => <div>
+                {
+                    values.oldQuantity !== 0 && (
+                        <del>{values.oldQuantity} {values.measurementName}</del>
+                    )
+                }
+                <p>{item} {values.measurementName}</p>
+            </div>
+        },
+        {
+            title: 'Tavsif',
+            dataIndex: 'description',
+            key: 'description',
+            width: '200px'
+        },
+    ];
+
+
     function changeSearch(e) {
         setSearch(e.target.value)
         setIsView(true)
-        if (e.target.value === ''){
+        if (e.target.value === '') {
             setIsView(false)
             setProductId(null)
-        }
-        else{
+        } else {
             getBarcodeAndName({
                 branchId: mainBranchId ? mainBranchId : users.branchId,
                 name: e.target.value
@@ -56,12 +105,12 @@ function MaxsulotXisoboti({
 
     }
 
-    const handlePageChange = (_event, newPage) => {
-        setPage(newPage);
+    const handlePageChange = (newPage) => {
+        setPage(newPage - 1);
     };
-    const handleLimitChange = (event) => {
+    const handleLimitChange = (event, size) => {
         setPage(0)
-        setSize(parseInt(event.target.value));
+        setSize(size);
     };
 
     function selectProduct(id, name) {
@@ -95,7 +144,7 @@ function MaxsulotXisoboti({
                 }
             })
         }
-    }, [page, size, userId, productId,mainBranchId])
+    }, [page, size, userId, productId, mainBranchId])
     useEffect(() => {
         setPage(0)
     }, [size, userId, productId])
@@ -120,18 +169,20 @@ function MaxsulotXisoboti({
 
     return (
         <div>
-            <div  className="col-md-12 d-flex mb-4">
+            <div className="col-md-12 d-flex mb-4">
                 <MainHeaderText text={'Mahsulotlar xisoboti'}/>
             </div>
             <CardBody>
                 <div className="col-md-12 d-flex row-gap-4 flex-wrap">
-                    <div className="col-md-3">
-                        <SelectAnt name={'Filiallar'} onChange={(e) => setMainBranchId(e === '' ? null : e)} permission={users.getInfoAdmin}
-                        selectList={users?.branches}
+                    <div className="col-md-3 p-2">
+                        <SelectAnt name={'Filiallar'} onChange={(e) => setMainBranchId(e === '' ? null : e)}
+                                   permission={users.getInfoAdmin}
+                                   selectList={users?.branches}
                         />
                     </div>
-                    <div className="col-md-3">
-                        <SelectAnt name={'Xodimlar'} onChange={(e) => setUserId(e === '' ? null : e)} permission={users.getInfoAdmin}
+                    <div className="col-md-3 p-2">
+                        <SelectAnt name={'Xodimlar'} onChange={(e) => setUserId(e === '' ? null : e)}
+                                   permission={users.getInfoAdmin}
                                    selectList={XodimReducer.usersFiltering?.map((item) => ({
                                        id: item.id,
                                        name: item.fio
@@ -140,7 +191,7 @@ function MaxsulotXisoboti({
                     </div>
                     {
                         mainBranchId &&
-                        <div className="col-md-6">
+                        <div className="col-md-6 p-2">
                             <SearchAnt name={'Mahsulotni qidirish'} onChange={changeSearch}/>
                             {
                                 isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?
@@ -157,78 +208,27 @@ function MaxsulotXisoboti({
                             }
                         </div>
                     }
-
-                </div>
-                <div className="row cont">
                 </div>
             </CardBody>
 
 
-
-            <div className="rowStyleST2">
-
-                <div className="qoshish mt-4">
-                    <h5>{t('Trade.1')}</h5>
-                </div>
-
+            <CardBody>
                 {
                     loading ?
                         MaxsulotxisobotReducer.productHistory?.list?.length > 0 ?
                             <div>
                                 <div className="table-responsive">
-                                    <table className='table table-hover table-primary table-striped table-bordered mt-4 mb-4 '>
-                                        <thead>
-                                        <tr>
-
-                                            <th>T/R</th>
-                                            <th>Mahsulot</th>
-                                            <th>Filial</th>
-                                            <th>Xodim</th>
-                                            <th>Sana</th>
-                                            <th>Miqdor</th>
-                                            <th>Tavsif</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {
-                                            MaxsulotxisobotReducer.productHistory?.list?.map((item, index) => <tr
-                                                key={item.id}>
-                                                <td>{index + (page * size) + 1}</td>
-                                                <td>{item?.productName}</td>
-                                                <td>{item?.branchName}</td>
-                                                <td>{item?.userFio}</td>
-                                                <td>{moment(new Date(item?.createdAt)).format('LLLL')}</td>
-                                                <td>
-                                                    <div>
-                                                        {
-                                                            item?.oldQuantity !== 0 && (
-                                                                <del>{item.oldQuantity} {item?.measurementName}</del>
-                                                            )
-                                                        }
-                                                        <p>{item?.quantity} {item?.measurementName}</p>
-                                                    </div>
-                                                    </td>
-                                                <td>{item?.description}</td>
-                                            </tr>)
-                                        }
-                                        </tbody>
-                                    </table>
-                                    <TablePagination
-                                        component="div"
-                                        count={MaxsulotxisobotReducer.productHistory?.totalItem}
-                                        onPageChange={handlePageChange}
-                                        onRowsPerPageChange={handleLimitChange}
-                                        page={page}
-                                        rowsPerPageOptions={[5, 10, 15]}
-                                        rowsPerPage={size}
-                                    />
+                                    <CommonTable handlePageChange={handlePageChange} page={page} size={size}
+                                                 pagination={true} data={MaxsulotxisobotReducer.productHistory?.list}
+                                                 handleLimitChange={handleLimitChange} columns={columns}
+                                                 total={MaxsulotxisobotReducer.productHistory?.totalItem}/>
                                 </div>
                             </div> : <div>
                                 <h4 className={'text-center'}>{MaxsulotxisobotReducer.message}</h4>
                             </div> : <Loading/>
                 }
 
-            </div>
+            </CardBody>
         </div>
     )
 }

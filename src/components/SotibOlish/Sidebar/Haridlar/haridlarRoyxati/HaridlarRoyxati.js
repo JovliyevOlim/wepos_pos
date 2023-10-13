@@ -1,7 +1,4 @@
-import {Link} from 'react-router-dom'
-import Edit from '../../../../../img/Edit.png'
-import Delete from '../../../../../img/Delete.png'
-import Korish from '../../../../../img/Korish.png'
+import {Link,useHistory} from 'react-router-dom'
 import './haridlarRoyxati.css'
 import {connect} from "react-redux";
 import React, {useEffect, useState} from "react";
@@ -17,7 +14,6 @@ import users from "../../../../../reducer/users";
 import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
-import {Box, TablePagination} from "@mui/material";
 import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
 import XodimReducer, {getUserForFiltering, getUserForFilteringBusiness} from "../../Hodimlar/reducer/XodimReducer";
@@ -26,6 +22,8 @@ import 'moment/locale/uz-latn'
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import SelectAnt, {ButtonAnt} from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
+import CommonTable from "../../../../Components/CommonTable";
+import {DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined} from "@ant-design/icons";
 
 function HaridlarRoyxati({
                              getAllSupplier,
@@ -42,6 +40,7 @@ function HaridlarRoyxati({
                          }) {
 
     const {t} = useTranslation()
+    const history = useHistory()
     const [mainBranchId, setMainBranchId] = useState(null)
     const [paymentStatus, setPaymentStatus] = useState(null)
     const [supplierId, setSupplierId] = useState(null)
@@ -50,12 +49,106 @@ function HaridlarRoyxati({
     const [limit, setLimit] = useState(5);
     const [saveModal, setSaveModal] = useState(false)
 
-    const handlePageChange = (_event, newPage) => {
-        setPage(newPage);
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: 'index',
+            rowScope: 'row',
+            width: '2%',
+        },
+        {
+            title: t('ol.10'),
+            dataIndex: 'userFio',
+            key: 'userFio',
+        },
+        {
+            title: t('ol.11'),
+            dataIndex: 'createdAt',
+            key: 'createdAt',
+            render:(item)=><p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>
+        },
+        {
+            title: t('ol.12'),
+            dataIndex: 'invoice',
+            key: 'invoice',
+            width:'80px'
+        },
+        {
+            title: t('ol.13'),
+            dataIndex: 'branchName',
+            key: 'branchName',
+        },
+        {
+            title: t('ol.14'),
+            dataIndex: 'supplierName',
+            key: 'supplierName',
+        },
+        {
+            title: t('ol.15'),
+            dataIndex: 'totalSum',
+            key: 'totalSum',
+            render:(item)=><p className={'m-0'}>{item} so'm</p>
+        },
+        {
+            title: t('ol.16'),
+            dataIndex: 'paidSum',
+            key: 'paidSum',
+            render:(item)=><p className={'m-0'}>{item} so'm</p>,
+            width: '100px'
+        },
+        {
+            title: t('ol.17'),
+            dataIndex: 'debtSum',
+            key: 'debtSum',
+            render:(item)=><p className={'m-0'}>{item} so'm</p>
+        },
+        {
+            title: t('ol.18'),
+            dataIndex: 'paymentStatus',
+            key: 'paymentStatus',
+        },
+        {
+            title: t('ol.19'),
+            dataIndex: 'paymentMethodName',
+            key: 'paymentMethodName',
+        },
+        {
+            title: t('ol.20'),
+            key: 'operation',
+            width: 150,
+            render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
+                {
+                    users.getPurchase &&
+                    <ButtonAnt type={'primary'} text={t('button.view')} bgColor={'aqua'} onClick={() => {
+                        getOneById(values.id)
+                    }
+                    } icon={<EyeOutlined/>}/>
+                }
+
+                {
+                    users.editPurchase && values.editable &&
+                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
+                        history.push('/main/addPurchase/' + values.id)
+                    }
+                    } icon={<EditOutlined/>}/>
+                }
+                {
+                    users.deletePurchase  && values.editable && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
+                        deletePurchaseById(values.id)
+                    }
+                    } icon={<DeleteOutlined/>}/>
+                }
+
+            </div>,
+        },
+    ];
+
+    const handlePageChange = (newPage) => {
+        setPage(newPage-1);
     };
-    const handleLimitChange = (event) => {
+    const handleLimitChange = (page,size) => {
         setPage(0)
-        setLimit(parseInt(event.target.value));
+        setLimit(size);
     };
 
     useEffect(() => {
@@ -149,33 +242,32 @@ function HaridlarRoyxati({
     return (
         <div>
             <div className={'d-flex col-md-12 mb-5 align-items-center justify-content-between'}>
-                <MainHeaderText text={t('ol.1')}/>
+                <MainHeaderText text={t('sidebar.purchases')}/>
                 {
-                    users.addTrade ? <Link to={'/main/addPurchase'}>
-                        <ButtonAnt text={t('ol.2')} type={'primary'}/>
+                    users.addPurchase ? <Link to={'/main/addPurchase'}>
+                        <ButtonAnt text={t('button.add')} icon={<PlusOutlined/>} type={'primary'}/>
                     </Link> : ''
                 }
             </div>
-
             {
                 users.getPurchaseAdmin || users.getPurchase ?
                     <CardBody>
-                        <div className="col-md-12 d-flex flex-wrap">
-                            <div className="col-md-3">
+                        <div className="col-md-12 gap-2 gap-sm-0 d-flex flex-wrap">
+                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
                                 <SelectAnt
                                     name={t('ol.3')}
                                     onChange={(e) => setMainBranchId(e === "" ? null : e)}
                                     permission={users.getPurchaseAdmin}
                                     selectList={users.branches}/>
                             </div>
-                            <div className="col-md-3">
+                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
                                 <SelectAnt
                                     name={t('ol.4')}
                                     onChange={(e) => setSupplierId(e === "" ? null : e)}
                                     permission={true}
                                     selectList={TaminotReducer.AllSupplier}/>
                             </div>
-                            <div className="col-md-3">
+                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
                                 <SelectAnt
                                     name={t('ol.5')}
                                     onChange={(e) => setPaymentStatus(e === "" ? null : e)}
@@ -186,7 +278,7 @@ function HaridlarRoyxati({
                                         {id:'QISMAN_TOLANGAN',name:(t('ol.'))},
                                     ]}/>
                             </div>
-                            <div className="col-md-3">
+                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
                                 <SelectAnt
                                     name={t('ol.9')}
                                     onChange={(e) => setUserId(e === "" ? null : e)}
@@ -200,92 +292,34 @@ function HaridlarRoyxati({
                     </CardBody>
                     : ''
             }
-            <div className="rowStyleBH">
+            <CardBody>
                 {
                     users.getPurchaseAdmin || users.getPurchase ?
                         loading ?
                             XaridReducer.purchase?.list?.length > 0 ?
-                                <div>
+                                <CardBody>
                                     <div className="izlashBH">
                                         {/*<div >*/}
                                         {/*    <button><img src={Excel} alt=""/> Export Excel</button>*/}
                                         {/*</div>*/}
                                     </div>
                                     <div className="table-responsive table-wrapper-scroll-y">
-                                        <table className='table table-hover table-striped table-bordered mt-4'>
-                                            <thead>
-                                            <tr>
-                                                <th>T/R</th>
-                                                <th>{t('ol.10')}</th>
-                                                <th>{t('ol.11')}</th>
-                                                <th>{t('ol.12')}</th>
-                                                <th>{t('ol.13')}</th>
-                                                <th>{t('ol.14')}</th>
-                                                <th>{t('ol.15')}</th>
-                                                <th>{t('ol.16')}</th>
-                                                <th>{t('ol.17')}</th>
-                                                <th>{t('ol.18')}</th>
-                                                <th>{t('ol.19')}</th>
-                                                {/*<th>Eslatma</th>*/}
-                                                <th>{t('ol.20')}</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {
-                                                XaridReducer.purchase?.list.map((item, index) => <tr key={index}>
-                                                    <td>{index + 1}</td>
-                                                    <td>{item?.userFio}</td>
-                                                    <td>{moment(new Date(item?.createdAt)).format('LLLL')}</td>
-                                                    <td className={item.edit && 'bg-warning'}>{item?.invoice}</td>
-                                                    <td>{item?.branchName}</td>
-                                                    <td>{item?.supplierName}</td>
-                                                    <td>{item?.totalSum}</td>
-                                                    <td>{item?.paidSum}</td>
-                                                    <td>{item?.debtSum}</td>
-                                                    <td>{item?.paymentStatus}</td>
-                                                    <td>{item?.paymentMethodName}</td>
-                                                    {/*<td>{item?.description}</td>*/}
-                                                    <td>
-                                                        {users.editPurchase && item?.editable ?
-                                                            <Link to={'/main/addPurchase/' + item.id}>
-                                                                <button className='taxrirlash'><img src={Edit}
-                                                                                                    alt=""/> {t('Buttons.1')}
-                                                                </button>
-                                                            </Link> : ''}
-                                                        {users.getPurchase ?
-                                                            <button className='korish'
-                                                                    onClick={() => getOneById(item.id)}><img
-                                                                src={Korish}
-                                                                alt=""/> {t('Buttons.4')}
-                                                            </button>
-                                                            : ''}
-                                                        {users.deletePurchase && item?.editable ?
-                                                            <button className='ochirish'
-                                                                    onClick={() => deletePurchaseById(item.id)}><img
-                                                                src={Delete} alt=""/> {t('Buttons.3')}
-                                                            </button> : ''}
-                                                    </td>
-                                                </tr>)
-                                            }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <Box p={2}>
-                                        <TablePagination
-                                            component="div"
-                                            count={XaridReducer.purchase?.totalItem}
-                                            onPageChange={handlePageChange}
-                                            onRowsPerPageChange={handleLimitChange}
+                                        <CommonTable
+                                            columns={columns}
+                                            size={limit}
                                             page={page}
-                                            rowsPerPageOptions={[5, 10, 15]}
-                                            rowsPerPage={limit}
+                                            pagination={true}
+                                            data={XaridReducer.purchase?.list}
+                                            total={XaridReducer.purchase?.totalItem}
+                                            handleLimitChange={handleLimitChange}
+                                            handlePageChange={handlePageChange}
                                         />
-                                    </Box>
-                                </div> : <div className={'border border-2'}>
+                                    </div>
+                                </CardBody> : <div className={'border border-2'}>
                                     <h4 className={'text-center'}>{XaridReducer.message || 'NOT FOUND'}</h4>
                                 </div> : <Loading/> : ''
                 }
-            </div>
+            </CardBody>
 
 
             <Modal isOpen={viewOnePurchase} size={'xl'} toggle={() => setViewOnePurchase(!viewOnePurchase)}>

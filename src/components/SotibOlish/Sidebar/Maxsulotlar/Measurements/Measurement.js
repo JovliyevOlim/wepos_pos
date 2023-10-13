@@ -1,7 +1,4 @@
 import React from 'react'
-import Excel from '../../../../../img/Excel.png'
-import Edit from '../../../../../img/Edit.png'
-import Delete from '../../../../../img/Delete.png'
 import {useState, useEffect} from "react";
 import {connect} from "react-redux";
 import './measurement.css'
@@ -20,7 +17,9 @@ import MeasurementReducer, {
 import AgreeModal from "../../../../AgreeModal";
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import {ButtonAnt} from "../../../../Components/SelectAnt";
-
+import CommonTable from "../../../../Components/CommonTable";
+import CardBody from "../../../../Components/CardBody";
+import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement, deleteMeasurement, editMeasurement}) {
 
     const {t} = useTranslation()
@@ -31,6 +30,42 @@ function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement
     const [editId, setEditId] = useState(null)
     const [isCheck, setIsCheck] = useState(false)
 
+    const columns = [
+        {
+            title: '№',
+            dataIndex: 'index',
+            rowScope: 'row',
+            width: 20,
+        },
+        {
+            title: t('as.4'),
+            width: 50,
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: t('ol.20'),
+            key: 'operation',
+            width: 150,
+            render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
+
+                {
+                    users.measurementRoles &&
+                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
+                        editB(values.id)
+                    }
+                    } icon={<EditOutlined/>}/>
+                }
+                {
+                    users.measurementRoles && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
+                        deleteMeasureById(values.id)
+                    }
+                    } icon={<DeleteOutlined/>}/>
+                }
+
+            </div>,
+        },
+    ];
 
     function editB(id) {
         setEditId(id)
@@ -115,13 +150,14 @@ function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement
     return (
         <div >
             <div className="col-md-12 d-flex justify-content-between align-items-center">
-                <MainHeaderText text={t('mah.3')}/>
+                <MainHeaderText text={t('sidebar.measurement')}/>
                 {
-                    users.measurementRoles && <ButtonAnt onClick={() => setAddMeasureActive(true)} type={'primary'} text={t('as.96')} />
+                    users.measurementRoles &&
+                    <ButtonAnt onClick={() => setAddMeasureActive(true)} icon={<PlusOutlined />} type={'primary'} text={t('button.add')} />
                 }
 
             </div>
-            <div className="rowStyleFR">
+            <CardBody>
 
                 {
 
@@ -129,42 +165,7 @@ function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement
                         MeasurementReducer.measurements.length > 0 ?
                             <div>
                                 <div className="table-responsive table-wrapper-scroll-y my-custom-scrollbar pb-4">
-                                    <table className='table table-striped table-bordered mt-4'>
-                                        <thead>
-                                        <tr>
-                                            <th>T/R</th>
-                                            <th>{t('as.4')}</th>
-                                            <th>{t('as.6')}</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {
-                                            MeasurementReducer.measurements.map((item, index) => <tr key={item.id}>
-                                                <td>{index + 1}</td>
-                                                <td>{item.name}</td>
-                                                <td>
-                                                    {
-                                                        users.measurementRoles && <button onClick={() => editB(item.id)}
-                                                                                         className='taxrirlash'><img
-                                                            src={Edit} alt=""/> {t('Buttons.1')}
-                                                        </button>
-                                                    }
-                                                    {
-                                                        users.measurementRoles && <button className='ochirish'
-                                                                                           onClick={() => deleteMeasureById(item.id)}>
-                                                            <img
-                                                                src={Delete}
-                                                                alt=""/> {t('Buttons.3')}
-                                                        </button>
-                                                    }
-
-
-                                                </td>
-                                            </tr>)
-                                        }
-
-                                        </tbody>
-                                    </table>
+                                    <CommonTable data={MeasurementReducer.measurements} columns={columns} pagination={false} size={MeasurementReducer.measurements.length} page={0} />
                                 </div>
                             </div> : <div>
                                 <h4 className={'text-center'}>{MeasurementReducer.message}</h4>
@@ -195,7 +196,7 @@ function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement
                     </ModalFooter>
 
                 </Modal>
-            </div>
+            </CardBody>
             <ModalLoading isOpen={activeModal}/>
             <AgreeModal deleteFunc={deleteFunc} deleteModaltoggle={() => setDeleteModal(prevState => !prevState)}
                         deletemodal={deleteModal}/>

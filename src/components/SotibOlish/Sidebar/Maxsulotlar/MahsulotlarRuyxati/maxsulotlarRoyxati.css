@@ -1,7 +1,8 @@
 .productStatistic{
        width:100%;
-       border-radius: 30px;
-       padding: 5px 10px;
+       border-radius: 12px;
+       background: #FAFBFC;
+       padding: 25px;
        text-align: center;
        font-family: "TTFirsNeue" ,sans-serif !important;
        font-size: 15px !important;
@@ -10,8 +11,75 @@
        line-height: 20px !important;
        border-width: 2px !important;
 }
-.productStatistic h5{
+.productStatistic p{
+       color: #323B4B;
+       width: 70%;
+       white-space: break-spaces;
+       text-align: start;
+       font-family: 'Inter',sans-serif;
        font-size: 16px;
+       font-style: normal;
+       font-weight: 400;
+       line-height: 22px; /* 137.5% */
+       margin: 0;
+}
+.productStatistic h5{
+       font-family: 'Inter',sans-serif;
+       font-size: 24px;
+       font-style: normal;
+       font-weight: 800;
+       line-height: normal;
+       margin: 0;
+       text-align: start;
+}
+.productList-Card{
+       border-radius: 10px;
+       border: 1px solid #E2E2E2;
+       width: 56px;
+       height: 56px;
+       padding: 5px;
+}
+.productList-Name{
+       color: #000000;
+       font-family: 'Inter',sans-serif;
+       font-size: 14px;
+       font-style: normal;
+       font-weight: 600;
+       line-height: normal;
+       margin: 0;
+}
+.productList-Quantity{
+       color: #323B4B;
+       font-family: 'Inter',sans-serif;
+       font-size: 14px;
+       font-style: normal;
+       font-weight: 400;
+       line-height: normal;
+       margin: 0;
+}
+.productList-Amount{
+       border-radius: 5px;
+       background: #EEF0FF;
+       color: #377DFF;
+       padding: 3px 6px;
+       font-family: 'Inter',sans-serif;
+       font-size: 13px;
+       font-style: normal;
+       font-weight: 600;
+       line-height: 20px; /* 153.846% */
+}
+.productList-Button{
+       border-radius: 5px;
+       background: #EEF0FF;
+       width:44px;
+       height:44px;
+       padding: 10px;
+       border: none;
+}
+.productList-Button img{
+       width: 22px;
+       height: 22px;
+       margin: auto
 }
 @media (max-width: 768px){
        .productStatistic{

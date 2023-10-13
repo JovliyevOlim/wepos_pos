@@ -1,7 +1,4 @@
 import React from 'react'
-import Excel from '../../../../../img/Excel.png'
-import Edit from '../../../../../img/Edit.png'
-import Delete from '../../../../../img/Delete.png'
 import {useState, useEffect} from "react";
 import {connect} from "react-redux";
 import './firmalar.css'
@@ -14,6 +11,9 @@ import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import {ButtonAnt} from "../../../../Components/SelectAnt";
+import CommonTable from "../../../../Components/CommonTable";
+import CardBody from "../../../../Components/CardBody";
+import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 
 function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma, FirmaReducer,}) {
 
@@ -23,6 +23,43 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
     const [loading, setLoading] = useState(false)
     const [saveModal, setSaveModal] = useState(false)
     const [isCheck, setIsCheck] = useState(false)
+
+    const columns = [
+        {
+            title: 'ID',
+            dataIndex: 'index',
+            rowScope: 'row',
+            width: 20,
+        },
+        {
+            title: t('Firms.1'),
+            width: 50,
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: t('ol.20'),
+            key: 'operation',
+            width: 150,
+            render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
+                {
+                    users.brandRoles &&
+                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
+                      editB(values.id)
+                    }
+                    } icon={<EditOutlined/>}/>
+                }
+                {
+                    users.brandRoles && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
+                        deleteBrandById(values.id)
+                    }
+                    } icon={<DeleteOutlined/>}/>
+                }
+
+            </div>,
+        },
+    ];
+
 
     function editB(id) {
         setActive(true)
@@ -58,12 +95,6 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
             setSaveModal(true)
         }
     }
-
-
-    function deleteF(item) {
-        deleteFirma(item.id)
-    }
-
     const [active, setActive] = useState(false)
 
     function toggle() {
@@ -117,59 +148,19 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
     return (
         <div >
             <div className="col-md-12 d-flex justify-content-between align-items-center">
-                <MainHeaderText text={t('as.9')}/>
+                <MainHeaderText text={t('sidebar.brand')}/>
                 {
                     users.brandRoles ?
-                        <ButtonAnt type={'primary'} text={t('ol.2')} onClick={toggle}/>: ''
+                        <ButtonAnt type={'primary'} icon={<PlusOutlined/>} text={t('button.add')} onClick={toggle}/>: ''
                 }
             </div>
-            <div className="rowStyleFR">
+            <CardBody>
                 {
                     loading ?
                         FirmaReducer.firmalar.length > 0 ?
                             <div>
-                                <div className="table-responsive table-wrapper-scroll-y my-custom-scrollbar pb-4">
-                                    <table className='table table-striped table-bordered mt-4'>
-                                        <thead>
-                                        <tr>
-                                            <th>T/R</th>
-                                            <th>{t('Firms.1')}</th>
-                                            <th>{t('as.6')}</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        {
-                                            FirmaReducer.firmalar.map((item, index) => <tr key={item.id}>
-                                                <td>{index + 1}</td>
-                                                <td>{item.name}</td>
-                                                <td>
-                                                    {
-                                                        users.brandRoles ?
-
-                                                            <button onClick={() => editB(item.id)}
-                                                                    className='taxrirlash'><img
-                                                                src={Edit} alt=""/> {t('Buttons.1')}
-                                                            </button>
-                                                            : ''
-                                                    }
-                                                    {
-                                                        users.brandRoles?
-                                                            <button className='ochirish'
-                                                                    onClick={() => deleteBrandById(item.id)}><img
-                                                                src={Delete}
-                                                                alt=""/> {t('Buttons.3')}
-                                                            </button>
-                                                            : ''
-                                                    }
-                                                </td>
-
-
-                                            </tr>)
-                                        }
-
-                                        </tbody>
-                                    </table>
+                                <div className="table-responsive table-wrapper-scroll-y  pb-4">
+                                    <CommonTable pagination={false} data={FirmaReducer.firmalar} size={FirmaReducer.firmalar.length} page={0} columns={columns}/>
                                 </div>
                             </div> : <div>
                                 <h4 className={'text-center'}>{FirmaReducer.message}</h4>
@@ -197,7 +188,7 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
                     </ModalFooter>
 
                 </Modal>
-            </div>
+            </CardBody>
             <ModalLoading isOpen={saveModal}/>
             <AgreeModal deleteModaltoggle={()=>setdeletemodal(prevState => !prevState)} deleteFunc={deleteFunc} deletemodal={deletemodal}/>
         </div>

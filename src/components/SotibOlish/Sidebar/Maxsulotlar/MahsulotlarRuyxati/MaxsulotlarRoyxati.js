@@ -12,26 +12,9 @@ import FirmaReducer, {getFirma} from "../reducer/FirmaReducer";
 import BolimReducer, {getBolim} from "../reducer/BolimReducer";
 import branchreducer, {getbranch} from "../../../../../reducer/branchreducer";
 import {useTranslation} from "react-i18next";
-import Select from "react-select";
-import {
-    alpha, Avatar, Box, Checkbox,
-    Divider, Grid, IconButton,
-    InputAdornment, styled, Table,
-    TableBody, TableCell,
-    TableContainer, TableHead, TablePagination,
-    TableRow, TextField, Tooltip,
-    Typography, useTheme
-} from "@mui/material";
-import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
 import Loading from "../../../../Loading";
-import LaunchTwoToneIcon from "@mui/icons-material/LaunchTwoTone";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import {BaseUrl} from "../../../../../middleware";
-import Excel from "../../../../../img/Excel.png";
 import KorishM from "./Taxrirlash/Korish";
-import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
 import MeasurementReducer, {getMeasurement} from "../../../../../reducer/MeasurementReducer";
@@ -39,145 +22,18 @@ import axios from "axios";
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
-import {FileExcelOutlined} from "@ant-design/icons";
-import {Tag} from "antd";
-
-const TableWrapper = styled(Table)(
-    ({theme}) => `
-
-    thead tr th {
-        border: 0;
-    }
-
-    tbody tr td {
-        position: relative;
-        border: 0;
-
-        & > div {
-            position: relative;
-            z-index: 5;
-        }
-
-        &::before {
-            position: absolute;
-            left: 0;
-            top: 0;
-            transition: ${theme.transitions.create(['all'])};
-            height: 100%;
-            width: 100%;
-            content: "";
-            background: ${theme.colors.alpha.white[100]};
-            border-top: 1px solid ${theme.colors.alpha.black[10]};
-            border-bottom: 1px solid ${theme.colors.alpha.black[10]};
-            pointer-events: none;
-            z-index: 4;
-        }
-
-        &:first-of-type:before {
-            border-top-left-radius: ${theme.general.borderRadius};
-            border-bottom-left-radius: ${theme.general.borderRadius};
-            border-left: 1px solid ${theme.colors.alpha.black[10]};
-        }
-        
-
-        &:last-child:before {
-            border-top-right-radius: ${theme.general.borderRadius};
-            border-bottom-right-radius: ${theme.general.borderRadius};
-            border-right: 1px solid ${theme.colors.alpha.black[10]};
-        }
-    }
-
-    tbody tr:hover td::before {
-        background: ${alpha(theme.colors.primary.main, 0.02)};
-        border-color: ${alpha(theme.colors.alpha.black[100], 0.25)} !important;
-    }
-
-  `
-);
-
-const TableRowDivider = styled(TableRow)(
-    ({theme}) => `
-    height: ${theme.spacing(2)};
-  `
-);
-
-const LabelSuccess = styled(Box)(
-    ({theme}) => `
-    display: inline-block;
-    background: ${theme.colors.success.lighter};
-    color: ${theme.colors.success.main};
-    text-transform: uppercase;
-    font-size: ${theme.typography.pxToRem(14)};
-    font-weight: bold;
-    padding: ${theme.spacing(1, 1)};
-    border-radius: ${theme.general.borderRadiusSm};
-  `
-);
-
-const LabelError = styled(Box)(
-    ({theme}) => `
-    display: inline-block;
-    background: ${theme.colors.error.lighter};
-    color: ${theme.colors.error.main};
-    text-transform: uppercase;
-    font-size: ${theme.typography.pxToRem(14)};
-    font-weight: bold;
-    padding: ${theme.spacing(1, 1)};
-    border-radius: ${theme.general.borderRadiusSm};
-  `
-);
-
-const LabelWarning = styled(Box)(
-    ({theme}) => `
-    display: inline-block;
-    background: ${theme.colors.warning.lighter};
-    color: ${theme.colors.warning.main};
-    text-transform: uppercase;
-    font-size: ${theme.typography.pxToRem(14)};
-    font-weight: bold;
-    padding: ${theme.spacing(1, 1)};
-    border-radius: ${theme.general.borderRadiusSm};
-  `
-);
-
-const IconButtonWrapper = styled(IconButton)(
-    ({theme}) => `
-    transition: ${theme.transitions.create(['transform', 'background'])};
-    transform: scale(1);
-    transform-origin: center;
-
-    &:hover {
-        transform: scale(1.1);
-    }
-  `
-);
-
-const TableHeadWrapper = styled(TableHead)(
-    ({theme}) => `
-      .MuiTableCell-root {
-          text-transform: none;
-          font-weight: normal;
-          color: ${theme.colors.alpha.black[100]};
-          font-size: ${theme.typography.pxToRem(16)};
-          padding: ${theme.spacing(2)};
-      }
-
-      .MuiTableRow-root {
-          background: transparent;
-      }
-  `
-);
-
-const SearchInputWrapper = styled(TextField)(
-    ({theme}) => `
-    background: ${theme.colors.alpha.white[100]};
-    border-radius: ${theme.general.borderRadius};
-
-    .MuiInputBase-input {
-        font-size: ${theme.typography.pxToRem(16)};
-    }
-  `
-);
+import storeProduct from "../../../../../img/storeProduct.svg"
+import cartProduct from "../../../../../img/cartProduct.svg"
+import moneyBagProduct from "../../../../../img/money bag coinProduct.svg"
+import percentProduct from "../../../../../img/invoice.svg"
+import defaultProduct from "../../../../../img/image 3.jpg"
+import eye from "../../../../../img/eye.svg"
+import edit from "../../../../../img/pencil.svg"
+import trashIcon from "../../../../../img/Trash-danger.svg"
+import {FileExcelOutlined, PlusOutlined} from "@ant-design/icons";
+import {Button, Tag} from "antd";
+import {prettify} from "../../../../../util";
+import CommonTable from "../../../../Components/CommonTable";
 
 function MaxsulotlarRoyxati({
                                 getBolim,
@@ -195,7 +51,6 @@ function MaxsulotlarRoyxati({
                             }) {
 
 
-    const theme = useTheme();
 
     const [loading, setLoading] = useState(false)
     const {t} = useTranslation()
@@ -214,6 +69,127 @@ function MaxsulotlarRoyxati({
 
     const history = useHistory()
 
+
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: 'index',
+            rowScope: 'row',
+            width: '5px',
+        },
+        {
+            title: 'Maxsulotlar',
+            width: '250px',
+            dataIndex: 'name',
+            key: 'name',
+            render: (item, values) =>
+                <div className={'d-flex gap-3 align-items-center'}>
+                    <div className={'productList-Card'}>
+                        <img className={'w-100'}
+                             src={values.photoId ? `${BaseUrl}/attachment/download/${values.photoId}` : defaultProduct}
+                             alt=""/>
+                    </div>
+                    <div className={'d-flex gap-2  justify-content-center align-items-start flex-column'}>
+                        <p className={'productList-Name'}>{item}</p>
+                        <p className={'productList-Quantity'}>Miqdori: <small
+                            style={
+                                values.amount > values.minQuantity ? {backgroundColor: '#EEF0FF', color: '#377DFF'} :
+                                    values.amount >= values.minQuantity ? {
+                                            backgroundColor: '#fff6e8',
+                                            color: '#ffb736'
+                                        } :
+                                        {backgroundColor: '#ffe8ec', color: '#ff1943'}
+                            }
+                            className={'productList-Amount'}>{values.amount} {values.measurementName}</small>
+                        </p>
+                    </div>
+                </div>,
+        },
+        {
+            title: 'Filial',
+            dataIndex: 'branches',
+            key: 'branches',
+            width: 50,
+            render: (item) => <div>
+                {
+                    item.map(name =>
+                        <p>{name}</p>
+                    )}
+            </div>
+        },
+        {
+            title: 'Info',
+            dataIndex: 'info',
+            key: 'info',
+            width: '100px',
+            render: (item, values) => <div>
+                <p className={'m-1'}>{values.barcode}</p>
+                <p className={'m-1'}>{values.many ? (t('as.63')) : (t('as.62'))}</p>
+                <p className={'m-1'}>{values.brandName} {values.categoryName && `,${values.categoryName}`}</p>
+            </div>
+        },
+        {
+            title: 'Sotib olish',
+            dataIndex: 'buyPrice',
+            key: 'buyPrice',
+            width: '100px',
+            render: (item) => <p>{item} so'm</p>
+        },
+        {
+            title: 'Sotish',
+            dataIndex: 'salePrice',
+            key: 'salePrice',
+            render: (item) => <p>{item} so'm</p>,
+            width: '80px'
+        },
+        {
+            title: 'Optom',
+            dataIndex: 'grossPrice',
+            key: 'grossPrice',
+            render: (item) => <p>{item} so'm</p>,
+            width: '80px'
+        },
+        {
+            title: t('ol.20'),
+            key: 'operation',
+            width: 150,
+            render: (item, values) => <div className={'d-flex justify-content-center gap-3 flex-wrap'}>
+
+                {
+                    users.getProduct &&
+                    <button style={{background: '#EEFAE8'}} onClick={() => {
+                        korishsh(item?.id)
+                    }} className={'productList-Button'}><img src={eye} alt="eye"/></button>
+                }
+                {
+                    users.editProduct &&
+                    <button style={{background: '#EEF0FF'}} onClick={() => {
+                        history.push('/main/addProduct/' + values.id)
+                    }
+                    } className={'productList-Button'}><img src={edit} alt="edit"/></button>
+                }
+                {
+                    users.deleteProduct &&
+
+                    <button style={{background: '#FFEDED'}} onClick={() => {
+                        deleteProductById(values.id)
+                    }
+                    } className={'productList-Button'}><img src={trashIcon}
+                                                            alt="delete"/></button>
+                }
+            </div>,
+        },
+    ];
+
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const onSelectChange = (newSelectedRowKeys) => {
+        setSelectedRowKeys(newSelectedRowKeys);
+    };
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange,
+    };
+    const hasSelected = selectedRowKeys.length > 0;
 
     useEffect(() => {
         getFirma(users.businessId)
@@ -282,12 +258,12 @@ function MaxsulotlarRoyxati({
     useEffect(() => {
         setLoading(false)
     }, [])
-    const handleChangePage = (_event, newPage) => {
-        setPage(newPage);
+    const handleChangePage = (newPage) => {
+        setPage(newPage - 1);
     };
-    const handleChangeRowsPerPage = (event) => {
+    const handleChangeRowsPerPage = (event, size) => {
         setPage(0);
-        setRowsPerPage(parseInt(event.target.value, 10));
+        setRowsPerPage(size);
     };
 
 
@@ -295,43 +271,12 @@ function MaxsulotlarRoyxati({
         history.push('/main/addProduct')
     }
 
-    let firm = FirmaReducer.firmalar ? FirmaReducer.firmalar?.map(item => ({value: item.id, label: item.name})) : ''
-    const firmOptions = [{value: "ALL", label: 'Barchasi'}, ...firm]
-    let baza = users.branches ? users.branches?.map(item => ({value: item.id, label: item.name})) : ''
-    const bazaOptions = [{value: "ALL", label: 'Barchasi'}, ...baza]
-    let category = BolimReducer.bolimlar ? BolimReducer.bolimlar?.map(item => ({value: item.id, label: item.name})) : ''
-    const categoryOptions = [{value: "ALL", label: 'Barchasi'}, ...category]
-    let measurement = MeasurementReducer.measurements ? MeasurementReducer.measurements?.map(item => ({
-        value: item.id,
-        label: item.name
-    })) : ''
-    const measurementOptions = [{value: "ALL", label: 'Barchasi'}, ...measurement]
-
-    const [selectedItems, setSelectedUsers] = useState([]);
-    const selectedSomeUsers =
-        selectedItems.length > 0 && selectedItems.length < MaxsulotlarRoyxariReducer.productTableSearch?.list?.length;
-    const selectedAllUsers = selectedItems.length === MaxsulotlarRoyxariReducer.productTableSearch?.list?.length;
-
-    const handleSelectAllUsers = (event) => {
-        setSelectedUsers(event.target.checked ? MaxsulotlarRoyxariReducer.productTableSearch?.list.map((product) => product.id) : []);
-    };
-
-    const handleSelectOneInvoice = (event, invoiceId) => {
-        if (!selectedItems.includes(invoiceId)) {
-            setSelectedUsers((prevSelected) => [...prevSelected, invoiceId]);
-        } else {
-            setSelectedUsers((prevSelected) =>
-                prevSelected.filter((id) => id !== invoiceId)
-            );
-        }
-        console.log(selectedItems)
-    };
 
     const [saveModal, setSaveModal] = useState(false)
 
     useEffect(() => {
         if (MaxsulotlarRoyxariReducer.saveBoolean) {
-            setSelectedUsers([])
+            setSelectedRowKeys([])
             setdeletemodal(false)
             setdeletID(null)
             setLoading(true)
@@ -365,10 +310,10 @@ function MaxsulotlarRoyxati({
     return (
         <div>
             <div className="d-flex col-md-12 align-items-center mb-5 justify-content-between">
-                <MainHeaderText text={t('as.97')}/>
+                <MainHeaderText text={t('sidebar.product')}/>
                 {
                     users.addProduct ?
-                        <ButtonAnt onClick={togglePush} text={t('as.96')} type={'primary'}/> : ''
+                        <ButtonAnt onClick={togglePush} icon={<PlusOutlined/>} text={t('button.add')} type={'primary'}/> : ''
                 }
             </div>
             <>
@@ -415,8 +360,8 @@ function MaxsulotlarRoyxati({
                                        name={t('as.102')}/>
                         </div>
                         <div className="col-12 col-sm-6 p-sm-2 col-md-6 col-lg-3">
-                            <ButtonAnt type={'dash'} onClick={getFilesById} bgColor={'green'}
-                                       icon={<FileExcelOutlined/>} text={t('as.103')}/>
+                            <ButtonAnt type={'primary'} onClick={getFilesById} bgColor={'green'}
+                                       icon={<FileExcelOutlined/>} text={t('button.getExcel')}/>
                         </div>
                     </div>
                 </CardBody>
@@ -424,27 +369,43 @@ function MaxsulotlarRoyxati({
                     MaxsulotlarRoyxariReducer.productTableSearch?.profitDto &&
                     <CardBody>
                         <div className="col-md-12 gap-2 gap-sm-0 d-flex flex-wrap align-items-center flex-wrap">
-                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-4"><Tag className={'productStatistic'} color="red">
-                                <p className={'p-0 m-2'}>{t('as.104')}</p>
-                                <h5>{MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice}{t('as.21')}</h5>
-                            </Tag>
+                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-3">
+                                <Tag className={'productStatistic'} color={'none'}>
+                                    <div className={'d-flex align-items-center gap-1 mb-3'}>
+                                        <img src={storeProduct} alt="store"/>
+                                        <p className={'p-0 m-2'}>{t('as.104')}</p>
+                                    </div>
+                                    <h5 style={{color: '#377DFF'}}>{prettify(MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice)} {t('as.21')}</h5>
+                                </Tag>
                             </div>
-                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-4"><Tag className={'productStatistic'} color="geekblue">
-                                <p className={'p-0 m-2'}> {t('as.105')}</p>
-                                <h5> {MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice}{t('as.21')}</h5>
-                            </Tag>
+                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-3">
+                                <Tag className={'productStatistic'} color="none">
+                                    <div className={'d-flex align-items-center gap-1 mb-3'}>
+                                        <img src={cartProduct} alt="cart"/>
+                                        <p className={'p-0 m-2'}>{t('as.105')}</p>
+                                    </div>
+                                    <h5 style={{color: '#8962F8'}}>{prettify(MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice)} {t('as.21')}</h5>
+                                </Tag>
                             </div>
-                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-2"><Tag className={'productStatistic'} color="green">
-                                <p className={'p-0 m-2'}>{t('as.106')}</p>
-                                <h5>{MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice - MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice}{t('as.21')}</h5>
-                            </Tag>
+                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-3">
+                                <Tag className={'productStatistic'} color="none">
+                                    <div className={'d-flex align-items-center gap-1 mb-3'}>
+                                        <img src={moneyBagProduct} alt="money"/>
+                                        <p className={'p-0 m-2'}>{t('as.106')}</p>
+                                    </div>
+                                    <h5 style={{color: '#38CB89'}}>{prettify(MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice - MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice)} {t('as.21')}</h5>
+                                </Tag>
                             </div>
-                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-2"><Tag className={'productStatistic'} color="cyan">
-                                <p className={'p-0 m-2'}>{t('as.107')}</p>
-                                <h5>
-                                    {((parseFloat(MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice / MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice) - 1) * 100).toFixed(2)} %
-                                </h5>
-                            </Tag>
+                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-3">
+                                <Tag className={'productStatistic'} color="none">
+                                    <div className={'d-flex align-items-center gap-1 mb-3'}>
+                                        <img src={percentProduct} alt="percentProduct"/>
+                                        <p className={'p-0 m-2'}>{t('as.107')}</p>
+                                    </div>
+                                    <h5 style={{color: '#EF8234'}}>
+                                        {prettify(((parseFloat(MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice / MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice) - 1) * 100).toFixed(2))} %
+                                    </h5>
+                                </Tag>
                             </div>
                         </div>
                     </CardBody>
@@ -454,323 +415,53 @@ function MaxsulotlarRoyxati({
             {
                 users.getProductAdmin || users.getProduct ?
 
-                    <div className="rowStyleMax colorback">
-
-                        <>{
-
+                    <CardBody>
+                        {
                             loading ?
                                 MaxsulotlarRoyxariReducer.productTableSearch?.list?.length > 0 ?
-                                    <Box pb={3}>
-                                        {
-                                            selectedItems.length > 0 &&
-                                            <button onClick={() => {
-                                                deleteMaxsulotRuyxatiByIds(selectedItems)
-                                                setSaveModal(true)
+                                    <>
+                                        <div
+                                            style={{
+                                                marginBottom: 16,
                                             }}
-                                                    className={'btn btn-danger mt-4 d-flex justify-content-end'}>{t('as.115')}</button>
-                                        }
-                                        <TableContainer>
-                                            {/*<TableWrapper>*/}
-                                            <TableHeadWrapper>
-                                                <TableRow>
-                                                    <TableCell>T/R</TableCell>
-                                                    <TableCell>
-                                                        <Tooltip
-                                                            arrow
-                                                            placement="top"
-                                                            title={t('as.108')}
-                                                        >
-                                                            <Checkbox
-                                                                checked={selectedAllUsers}
-                                                                indeterminate={selectedSomeUsers}
-                                                                onChange={handleSelectAllUsers}
-                                                            />
-                                                        </Tooltip>
-                                                    </TableCell>
-
-                                                    <TableCell align="left">{t('as.109')}</TableCell>
-                                                    <TableCell align="left">{t('as.50')}</TableCell>
-                                                    <TableCell align="center">{t('as.110')}</TableCell>
-                                                    <TableCell align="center">{t('as.111')}</TableCell>
-                                                    <TableCell align="center">{t('as.82')}</TableCell>
-                                                    <TableCell align="center">{t('as.84')}</TableCell>
-                                                    <TableCell align="center">{t('as.70')}</TableCell>
-                                                    <TableCell align="center">{t('as.112')}</TableCell>
-                                                    <TableCell align="center">{t('as.113')}</TableCell>
-                                                    <TableCell align="center">{t('as.6')}</TableCell>
-                                                </TableRow>
-                                            </TableHeadWrapper>
-                                            <TableBody>
-                                                {
-                                                    MaxsulotlarRoyxariReducer.productTableSearch?.list.map((item, index) => {
-                                                        const isInvoiceSelected = selectedItems.includes(
-                                                            item.id
-                                                        );
-                                                        return (
-                                                            <TableRow key={item.id}>
-                                                                <TableCell>
-                                                                    <Box>
-                                                                        <Typography
-                                                                            variant="h4">#{(page * rowsPerPage) + index + 1}</Typography>
-                                                                    </Box>
-                                                                </TableCell>
-
-                                                                <TableCell>
-                                                                    <Checkbox
-                                                                        checked={isInvoiceSelected}
-                                                                        // indeterminate={selectedSomeUsers}
-                                                                        onChange={(e) =>
-                                                                            handleSelectOneInvoice(e, item.id)
-                                                                        }
-                                                                        value={isInvoiceSelected}
-                                                                    />
-                                                                </TableCell>
-
-                                                                <TableCell>
-                                                                    <Box display="flex" alignItems="center">
-                                                                        <Avatar
-                                                                            variant="square"
-                                                                            sx={{
-                                                                                height: 'auto',
-                                                                                width: 80
-                                                                            }}
-                                                                            src={item.photoId ? `${BaseUrl}/attachment/download/${item.photoId}` : ''}
-                                                                        />
-                                                                        <Box pl={1}>
-                                                                            <Typography
-                                                                                color="text.primary"
-                                                                                underline="none"
-                                                                                width={180}
-                                                                                variant="h5"
-                                                                                sx={{
-                                                                                    '&:hover': {
-                                                                                        color: `${theme.colors.primary.main}`
-
-                                                                                    }
-                                                                                }}
-                                                                            >
-                                                                                {item.name}
-                                                                            </Typography>
-                                                                            <Typography variant="subtitle2"
-                                                                                        display={'flex'}
-                                                                                        justifyContent={'space-between'}
-                                                                                        alignItems="center"
-                                                                                        mt={1}
-                                                                                        noWrap
-                                                                            >
-                                                                                <Typography mr={1}>
-                                                                                    {t('as.51')}:
-                                                                                </Typography>
-                                                                                <Typography>
-                                                                                    <Typography>
-                                                                                        <div>
-                                                                                            {
-                                                                                                item.amount > item.minQuantity ?
-                                                                                                    <LabelSuccess>
-                                                                                                        <b>{item.amount} </b> {item.measurementName}
-                                                                                                    </LabelSuccess> :
-                                                                                                    item.minQuantity >= item.amount && item.amount > 0 ?
-                                                                                                        <LabelWarning>
-                                                                                                            <b>{item.amount}</b> {item.measurementName}
-                                                                                                        </LabelWarning> :
-                                                                                                        <LabelError>
-                                                                                                            <b>{item.amount}</b> {item.measurementName}
-                                                                                                        </LabelError>
-                                                                                            }
-                                                                                        </div>
-                                                                                    </Typography>
-                                                                                </Typography>
-
-                                                                            </Typography>
-                                                                        </Box>
-                                                                    </Box>
-                                                                </TableCell>
-                                                                <TableCell align={'start'}>{
-                                                                    item.branches ? item.branches.map(i =>
-                                                                        <p className={'p-0 m-0'} style={{
-                                                                            maxWidth: '150px',
-                                                                            minWidth: '80px'
-                                                                        }}>{i}</p>
-                                                                    ) : ''
-                                                                }</TableCell>
-                                                                <TableCell align="center">
-                                                                    {item?.barcode}
-                                                                </TableCell>
-                                                                <TableCell align="center">
-                                                                    {item.many ? (t('as.63')) : (t('as.62'))}
-                                                                    {
-                                                                        users.getProductAdmin || users.getProduct ? (
-                                                                            <Tooltip title={t('as.114')} arrow>
-                                                                                <IconButtonWrapper
-                                                                                    onClick={() => korishsh(item.id)}
-                                                                                    sx={{
-                                                                                        margin: '5px',
-                                                                                        backgroundColor: `${theme.colors.success.lighter}`,
-                                                                                        color: `${theme.colors.success.main}`,
-                                                                                        transition: `${theme.transitions.create(['all'])}`,
-                                                                                        '&:hover': {
-                                                                                            backgroundColor: `${theme.colors.success.main}`,
-                                                                                            color: `${theme.palette.getContrastText(
-                                                                                                theme.colors.success.main
-                                                                                            )}`
-                                                                                        }
-                                                                                    }}
-                                                                                >
-                                                                                    <VisibilityIcon
-                                                                                        fontSize="small"/>
-                                                                                </IconButtonWrapper>
-                                                                            </Tooltip>) : ''
-                                                                    }
-                                                                </TableCell>
-
-                                                                <TableCell align="center">
-                                                                    <Typography
-                                                                        sx={{
-                                                                            pr: 0.5
-                                                                        }}
-                                                                        component="span"
-                                                                        variant="h4"
-                                                                        color="text.primary"
-                                                                    >
-                                                                        {item.buyPrice.toFixed(0)} {t('as.27')}
-                                                                    </Typography>
-                                                                </TableCell>
-                                                                <TableCell align="center">
-                                                                    <Typography
-                                                                        sx={{
-                                                                            pr: 0.5
-                                                                        }}
-                                                                        component="span"
-                                                                        variant="h4"
-                                                                        color="text.primary"
-                                                                    >
-                                                                        {item.salePrice.toFixed(0)} {t('as.27')}
-                                                                    </Typography>
-                                                                </TableCell>
-                                                                <TableCell align="center">
-                                                                    <Typography
-                                                                        sx={{
-                                                                            pr: 0.5
-                                                                        }}
-                                                                        component="span"
-                                                                        variant="h4"
-                                                                        color="text.primary">
-                                                                        {item.grossPrice.toFixed(0)} {t('as.27')}
-                                                                    </Typography>
-                                                                </TableCell>
-                                                                <TableCell align="center">
-                                                                    <div>
-                                                                        <Typography
-                                                                            sx={{
-                                                                                pr: 0.5
-                                                                            }}
-                                                                            component="span"
-                                                                            variant="h4"
-                                                                            color="text.primary"
-                                                                        >
-                                                                            {item.brandName}
-                                                                        </Typography>
-                                                                    </div>
-                                                                </TableCell>
-                                                                <TableCell align="center">
-                                                                    <div>
-                                                                        <Typography
-                                                                            sx={{
-                                                                                pr: 0.5
-                                                                            }}
-                                                                            component="span"
-                                                                            variant="h4"
-                                                                            color="text.primary"
-                                                                        >
-                                                                            {item.categoryName}
-                                                                        </Typography>
-                                                                    </div>
-                                                                </TableCell>
-                                                                <TableCell
-                                                                    sx={{
-                                                                        whiteSpace: 'nowrap'
-                                                                    }}
-                                                                    align="right"
-                                                                >
-                                                                    <Box>
-                                                                        {
-                                                                            users.editProduct ? (
-                                                                                <Tooltip title={t('as.57')} arrow>
-                                                                                    <IconButtonWrapper
-                                                                                        onClick={() => history.push(`/main/addProduct/${item.id}`)}
-                                                                                        sx={{
-                                                                                            ml: 1,
-                                                                                            backgroundColor: `${theme.colors.primary.lighter}`,
-                                                                                            color: `${theme.colors.primary.main}`,
-                                                                                            transition: `${theme.transitions.create(['all'])}`,
-                                                                                            '&:hover': {
-                                                                                                backgroundColor: `${theme.colors.primary.main}`,
-                                                                                                color: `${theme.palette.getContrastText(
-                                                                                                    theme.colors.primary.main
-                                                                                                )}`
-                                                                                            }
-                                                                                        }}
-                                                                                    >
-                                                                                        <EditIcon fontSize="small"/>
-                                                                                    </IconButtonWrapper>
-                                                                                </Tooltip>) : ''
-                                                                        }
-                                                                        {
-                                                                            users.deleteProduct ? (
-                                                                                <Tooltip title={t('as.116')} arrow>
-                                                                                    <IconButtonWrapper
-                                                                                        onClick={() => deleteProductById(item.id)}
-                                                                                        sx={{
-                                                                                            ml: 1,
-                                                                                            backgroundColor: `${theme.colors.error.lighter}`,
-                                                                                            color: `${theme.colors.error.main}`,
-                                                                                            transition: `${theme.transitions.create(['all'])}`,
-                                                                                            '&:hover': {
-                                                                                                backgroundColor: `${theme.colors.error.main}`,
-                                                                                                color: `${theme.palette.getContrastText(
-                                                                                                    theme.colors.error.main
-                                                                                                )}`
-                                                                                            }
-                                                                                        }}
-                                                                                    >
-                                                                                        <DeleteTwoToneIcon
-                                                                                            fontSize="small"/>
-                                                                                    </IconButtonWrapper>
-                                                                                </Tooltip>) : ''
-                                                                        }
-                                                                    </Box>
-                                                                </TableCell>
-                                                            </TableRow>
-                                                        )
-                                                    })
-                                                }
-                                                <TableRowDivider/>
-                                            </TableBody>
-                                        </TableContainer>
-                                        <Box pt={1} display="flex" justifyContent="space-between">
-                                            <TablePagination
-                                                component="div"
-                                                count={MaxsulotlarRoyxariReducer?.productTableSearch?.totalItem}
-                                                page={page}
-                                                onPageChange={handleChangePage}
-                                                rowsPerPage={rowsPerPage}
-                                                rowsPerPageOptions={[10, 50, 100, 200]}
-                                                onRowsPerPageChange={handleChangeRowsPerPage}
-                                            />
-                                        </Box>
-                                        {
-                                            active ?
-                                                <KorishM active={active} toggle={toggle} id={mainBranchId}
-                                                         productId={productId}/> : ''
-                                        }
-                                    </Box>
+                                        >
+                                            <Button type="primary" danger onClick={() => {
+                                                deleteMaxsulotRuyxatiByIds(selectedRowKeys)
+                                                setSaveModal(true)
+                                            }} disabled={!hasSelected}>
+                                                {t('as.115')}
+                                            </Button>
+                                            <span
+                                                style={{
+                                                    marginLeft: 8,
+                                                }}
+                                            >
+                                        {hasSelected ? `${selectedRowKeys.length} ta tanlandi` : ''}
+                                            </span>
+                                        </div>
+                                        <CommonTable
+                                            size={rowsPerPage}
+                                            page={page}
+                                            rowSelection={rowSelection}
+                                            total={MaxsulotlarRoyxariReducer?.productTableSearch?.totalItem}
+                                            handlePageChange={handleChangePage}
+                                            handleLimitChange={handleChangeRowsPerPage}
+                                            data={MaxsulotlarRoyxariReducer.productTableSearch?.list}
+                                            pagination={true}
+                                            columns={columns}
+                                        />
+                                    </>
                                     : <div>
                                         <h4 className={'fw-bold text-center'}>{MaxsulotlarRoyxariReducer?.message}</h4>
                                     </div> : <Loading/>
 
                         }
-                        </>
-                    </div> : ''
+                    </CardBody> : ''
+            }
+            {
+                active ?
+                    <KorishM active={active} toggle={toggle} id={mainBranchId}
+                             productId={productId}/> : ''
             }
             <ModalLoading isOpen={saveModal}/>
             <AgreeModal deletemodal={deletemodal} deleteModaltoggle={() => setdeletemodal(prevState => !prevState)}

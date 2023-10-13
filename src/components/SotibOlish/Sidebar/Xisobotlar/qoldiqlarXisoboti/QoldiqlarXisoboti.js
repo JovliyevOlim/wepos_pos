@@ -1,4 +1,3 @@
-import {Link} from 'react-router-dom'
 import './qoldiqlarXisoboti.css'
 import {connect} from 'react-redux'
 import {useTranslation} from "react-i18next";
@@ -7,18 +6,17 @@ import QoldiqlarxisobotiReducer, {
     getWarehouseByBranch, getWarehouseByBusiness, resetWarehouse
 } from '../reducer/QoldiqlarxisobotiReducer'
 import users from "../../../../../reducer/users";
-import {IconButton, TablePagination} from "@mui/material";
 import formatDate from "../../../../../util";
 import Loading from "../../../../Loading";
 import {ModalHeader, Modal, ModalFooter, ModalBody} from "reactstrap";
 import {toast} from "react-toastify";
-import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 import MaxsulotlarRoyxariReducer, {getBarcodeAndName} from "../../Maxsulotlar/reducer/MaxsulotlarRoyxariReducer";
 import moment from "moment";
 import 'moment/locale/uz-latn'
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import CardBody from "../../../../Components/CardBody";
-import SelectAnt, {SearchAnt} from "../../../../Components/SelectAnt";
+import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../Components/SelectAnt";
+import CommonTable from "../../../../Components/CommonTable";
 
 function QoldiqlarXisoboti({
                                users,
@@ -40,6 +38,56 @@ function QoldiqlarXisoboti({
     const [resetActive, setResetActive] = useState(false)
     const [sendBranchId, setSendBranch] = useState(null)
 
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: 'index',
+            rowScope: 'row',
+            width: '2%',
+        },
+        {
+            title: 'Mahsulotlar',
+            dataIndex: 'productName',
+            key: 'productName',
+        },
+        {
+            title: t('ol.13'),
+            dataIndex: 'branchName',
+            key: 'branchName',
+        },
+        {
+            title:'Qolgan mahsulot',
+            dataIndex: 'amount',
+            key: 'amount',
+            render:(item,values)=><p>{item} {values?.measurementName}</p>
+        },
+        {
+            title:'Sotilgan miqdor',
+            dataIndex: 'soldQuantity',
+            key: 'soldQuantity',
+            render:(item,values)=><p>{item} {values?.measurementName}</p>
+        },
+        {
+            title: 'Sotilgan summa',
+            dataIndex: 'soldPrice',
+            key: 'soldPrice',
+            render: (item) => <p className={'m-0'}>{item.toFixed(2)} so'm</p>
+        },
+        {
+            title: 'Foyda',
+            dataIndex: 'profit',
+            key: 'profit',
+            render: (item) => <p className={'m-0'}>{item.toFixed(2)} so'm</p>
+        },
+        {
+            title: 'Oxirgi sotilgan sana',
+            dataIndex: 'lastSoldDate',
+            key: 'lastSoldDate',
+            render: (item) => <p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>
+        },
+
+    ];
+
     function ChangeIncrease(e) {
         if (e === 'true') {
             setIncrease(true)
@@ -52,12 +100,12 @@ function QoldiqlarXisoboti({
     const [limit, setLimit] = useState(5);
     const [search, setSearch] = useState('')
     const [isView, setIsView] = useState(false)
-    const handlePageChange = (_event, newPage) => {
-        setPage(newPage);
+    const handlePageChange = (newPage) => {
+        setPage(newPage-1);
     };
-    const handleLimitChange = (event) => {
+    const handleLimitChange = (event,size) => {
         setPage(0)
-        setLimit(parseInt(event.target.value));
+        setLimit(size);
     };
 
     function selectProduct(id, name) {
@@ -132,11 +180,11 @@ function QoldiqlarXisoboti({
         </div>
         <CardBody>
             <div className="col-md-12 d-flex flex-wrap row-gap-4 justify-content-start ">
-                <div className="col-md-3 col-sm-12">
+                <div className="col-md-3 p-2 col-sm-12">
                     <SelectAnt name={'Filiallar'} permission={users.getInfoAdmin} selectList={users.branches}
                                onChange={(e) => setMainBranchId(e === "" ? null : e)}/>
                 </div>
-                <div className="col-md-3 col-sm-12">
+                <div className="col-md-3 p-2 col-sm-12">
                     <SelectAnt name={'Ma\'lumot'} permission={false}
                                selectList={[
                                    {id: 'price', name: 'Narx'},
@@ -147,14 +195,14 @@ function QoldiqlarXisoboti({
                                ]}
                                onChange={(e) => setField(e)}/>
                 </div>
-                <div className="col-md-3 col-sm-12">
+                <div className="col-md-3 p-2 col-sm-12">
                     <SelectAnt name={'Tartibi'} onChange={ChangeIncrease} permission={false} selectList={[
                         {id: 'false', name: 'Kamayish tartibida'},
                         {id: 'true', name: 'O\'sish tartibida'}
                     ]}/>
                 </div>
                 {
-                    mainBranchId && <div className="col-md-6">
+                    mainBranchId && <div className="col-md-6 p-2">
                         <SearchAnt name={'Mahsulotni qidirish'} onChange={changeSearch}/>
                         {
                             isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?
@@ -177,60 +225,25 @@ function QoldiqlarXisoboti({
         </CardBody>
 
 
-        {loading ? QoldiqlarxisobotiReducer.warehouse?.list?.length > 0 ? <div>
-            <div className="styleContener">
+        {loading ? QoldiqlarxisobotiReducer.warehouse?.list?.length > 0 ?
+
+            <CardBody>
                 <div>
                     <div className={'d-flex justify-content-end'}>
-                        <h4>Statiskani boshlangan
+                        <h4 className={'report-text'}>Statiskani boshlangan
                             sanasi: {formatDate(QoldiqlarxisobotiReducer?.warehouse?.reset)}</h4>
                     </div>
                     <div className={'d-flex justify-content-end'}>
-                        <h4>Statiskani tozalash(Foyda,Sotilgan miqdor,Sotilgan summa)</h4>
-                        <button onClick={() => setResetActive(true)}
-                                className={'btn btn-info mx-2'}>Tozalash
-                        </button>
+                        <h4 className={'report-text mx-2'}>Statiskani tozalash(Foyda,Sotilgan miqdor,Sotilgan summa)</h4>
+                        <ButtonAnt onClick={() => setResetActive(true)} text={'Tozalash'} type={'primary'} />
                     </div>
                 </div>
-                <div className="table-responsive mb-4">
-                    <table className='table table-hover table-primary table-striped table-bordered mt-4 '>
-                        <thead>
-                        <tr>
-                            <th>T/R</th>
-                            <th>Maxsulot</th>
-                            <th>Baza</th>
-                            <th>Qolgan maxsulot</th>
-                            <th>Sotilgan Miqdor</th>
-                            <th>Sotilgan Summa</th>
-                            <th>Foyda</th>
-                            <th>Oxirgi sotilgan sana</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {QoldiqlarxisobotiReducer.warehouse?.list?.map((item, index) => <tr
-                            key={index}>
-                            <td>{index + 1}</td>
-                            <td>{item?.productName}</td>
-                            <td>{item?.branchName}</td>
-                            <td>{item?.amount} {item?.measurementName}</td>
-                            <td>{item?.soldQuantity} {item?.measurementName}</td>
-                            <td>{item?.soldPrice} so'm</td>
-                            <td>{item?.profit} so'm</td>
-                            <td>{moment(new Date(item?.lastSoldDate)).format('LLLL')}</td>
-                        </tr>)}
-                        </tbody>
-                    </table>
+                <div className="table-responsive mt-4">
+                    <CommonTable size={limit} page={page} pagination={true} data={QoldiqlarxisobotiReducer.warehouse?.list}
+                                 handlePageChange={handlePageChange} handleLimitChange={handleLimitChange} columns={columns} total={QoldiqlarxisobotiReducer.warehouse?.totalItem}/>
                 </div>
-                <TablePagination
-                    component="div"
-                    count={QoldiqlarxisobotiReducer.warehouse?.totalItem}
-                    onPageChange={handlePageChange}
-                    onRowsPerPageChange={handleLimitChange}
-                    page={page}
-                    rowsPerPageOptions={[5, 10, 15]}
-                    rowsPerPage={limit}
-                />
-            </div>
-        </div> : <div>
+            </CardBody>
+         : <div>
             <h4 className={'text-center'}>{QoldiqlarxisobotiReducer.message}</h4>
         </div> : <Loading/>}
 

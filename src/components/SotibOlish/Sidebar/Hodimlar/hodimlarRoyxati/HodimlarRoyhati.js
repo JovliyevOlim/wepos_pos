@@ -1,5 +1,5 @@
-    import './HodimlarRoyhati.css';
-import {Link} from 'react-router-dom';
+import './HodimlarRoyhati.css';
+import {Link, useHistory} from 'react-router-dom';
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import users from "../../../../../reducer/users";
@@ -9,7 +9,6 @@ import XodimReducer, {
 } from "../reducer/XodimReducer";
 import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
-
 import ModalLoading from "../../../../ModalLoading";
 import {BaseUrl} from "../../../../../middleware";
 import photoreducer, {savephoto} from "../../../../../reducer/photoreducer";
@@ -20,44 +19,7 @@ import CardBody from "../../../../Components/CardBody";
 import SelectAnt, {ButtonAnt, SearchAnt, TableButton} from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
 import {Avatar} from "antd";
-
-    // <TableCell align="center">
-    //     <Tooltip title={t("Ko'rish")} arrow>
-    //         <Link to={'/main/profil/' + user.id}>
-    //             <IconButton
-    //                 color="primary"
-    //             >
-    //                 <LaunchTwoToneIcon
-    //                     fontSize="small"/>
-    //             </IconButton>
-    //         </Link>
-    //     </Tooltip>
-    //     {
-    //         users.editUser ?
-    //             <Tooltip title={t('ol.78')} arrow>
-    //                 <Link
-    //                     to={'/main/addUser/' + user.id}>
-    //                     <IconButton
-    //                         color="primary"
-    //                     >
-    //                         <EditIcon fontSize="small"/>
-    //                     </IconButton>
-    //                 </Link>
-    //             </Tooltip> : ''
-    //     }
-    //     {
-    //         users.deleteUser ?
-    //             <Tooltip title={t('ol.79')} arrow>
-    //                 <IconButton
-    //                     onClick={() => deleteUserById(user.id)}
-    //                     color="primary"
-    //                 >
-    //                     <DeleteTwoToneIcon
-    //                         fontSize="small"/>
-    //                 </IconButton>
-    //             </Tooltip> : ''
-    //     }
-    // </TableCell>
+import {DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined} from "@ant-design/icons";
 
 
 
@@ -72,6 +34,7 @@ function HodimlarRoyhati({
                              LavozimReducer
                          }) {
     const {t} = useTranslation()
+    const history = useHistory()
     const [mainBranchId, setMainBranchId] = useState(null)
     const [roleId, setRoleId] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -81,7 +44,7 @@ function HodimlarRoyhati({
 
     const columns = [
         {
-            title: '№',
+            title: 'Id',
             dataIndex: 'index',
             rowScope: 'row',
             width: 20,
@@ -97,12 +60,13 @@ function HodimlarRoyhati({
             width: 80,
             dataIndex: 'fio',
             key: 'fio',
-            render: (item,values) => <div className={'d-flex gap-2 justify-content-between align-items-center'}>
+            render: (item, values) => <div className={'d-flex gap-2 justify-content-between align-items-center'}>
                 <div>
                     {
                         values.photoId ?
-                            <Avatar size="large"  src={`${BaseUrl}/attachment/download/${values?.photoId}`}  className={'d-flex justify-content-center align-items-center'} />
-                            :<Avatar>{item.substring(0,1).toUpperCase()}</Avatar>
+                            <Avatar size="large" src={`${BaseUrl}/attachment/download/${values?.photoId}`}
+                                    className={'d-flex justify-content-center align-items-center'}/>
+                            : <Avatar>{item.substring(0, 1).toUpperCase()}</Avatar>
                     }
                 </div>
                 <div>
@@ -126,8 +90,25 @@ function HodimlarRoyhati({
             title: t('ol.20'),
             key: 'operation',
             width: 150,
-            render:()=> <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
-                    <TableButton/>
+            render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
+                {/*<TableButton type={'primary'} title={'Ko\'rish'} onClick={() => {*/}
+                {/*    history.push('/main/profil/' + values.id)*/}
+                {/*}*/}
+                {/*} icon={<EyeOutlined/>}/>*/}
+                {
+                    users.editUser &&
+                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
+                        history.push('/main/addUser/' + values.id)
+                    }
+                    } icon={<EditOutlined/>}/>
+                }
+                {
+                    users.deleteUser && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
+                        deleteUserById(values.id)
+                    }
+                    } icon={<DeleteOutlined/>}/>
+                }
+
             </div>,
         },
     ];
@@ -149,9 +130,9 @@ function HodimlarRoyhati({
     const [query, setQuery] = useState(null)
 
     const handlePageChange = (newPage) => {
-        setPage(newPage-1)
+        setPage(newPage - 1)
     };
-    const handleLimitChange = (event,size) => {
+    const handleLimitChange = (event, size) => {
         setPage(0)
         setLimit(parseInt(size));
     };
@@ -210,54 +191,55 @@ function HodimlarRoyhati({
 
     return (
         <>
-                <div className="d-flex justify-content-between align-items-center">
-                    <MainHeaderText  text={t('ol.9')}/>
-                    {
-                        users.addUser ?
-                            <Link to={'/main/addUser'}>
-                               <ButtonAnt text={t('ol.2')} type={'primary'}/>
-                            </Link> : ''
-                    }
-                </div>
+            <div className="d-flex justify-content-between align-items-center">
+                <MainHeaderText text={t('sidebar.users')}/>
                 {
-                    users.getUser || users.getUserAdmin ?
-                        <CardBody>
-                            <div className="col-md-12 gap-2 gap-sm-0 d-flex flex-wrap  align-items-center">
-                                <div className="col-12  col-sm-6 col-md-6 col-lg-3 p-sm-2">
-                                    <SelectAnt name={t('ol.3')}
-                                               onChange={(e) => setMainBranchId(e === "" ? null : e)}
-                                               selectList={users.branches} permission={users.getBalanceAdmin}/>
-                                </div>
-                                {
-                                    users.getRole &&
-                                    <div className="col-12 col-sm-6  col-md-6 col-lg-3 p-sm-2">
-                                        <SelectAnt name={t('ol.3')}
-                                                   onChange={(e) => setRoleId(e)}
-                                                   selectList={LavozimReducer.roles} permission={users.getBalanceAdmin}/>
-                                    </div>
-                                }
-                                <div className="col-12 col-sm-12  col-md-12 col-lg-6 p-sm-2">
-                                    <SearchAnt name={t('ol.73')} onChange={handleQueryChange}/>
-                                </div>
+                    users.addUser ?
+                        <Link to={'/main/addUser'}>
+                            <ButtonAnt text={t('button.add')} icon={<PlusOutlined/>} type={'primary'}/>
+                        </Link> : ''
+                }
+            </div>
+            {
+                users.getUser || users.getUserAdmin ?
+                    <CardBody>
+                        <div className="col-md-12 gap-2 gap-sm-0 d-flex flex-wrap  align-items-center">
+                            <div className="col-12  col-sm-6 col-md-6 col-lg-3 p-sm-2">
+                                <SelectAnt name={t('ol.3')}
+                                           onChange={(e) => setMainBranchId(e === "" ? null : e)}
+                                           selectList={users.branches} permission={users.getBalanceAdmin}/>
                             </div>
-                        </CardBody>
-                      : ''
-                }
-                {
-                    users.getUserAdmin || users.getUser ?
-                        loading ?
-                            XodimReducer.users?.list?.length > 0 ?
-                                <CardBody>
-                                    <CommonTable data={XodimReducer.users?.list?.map((item,index)=>{
-                                        return  {...item,index:index + 1+(page*limit)}
-                                    })} columns={columns} total={XodimReducer.users?.totalItem}
-                                                 page={page} size={limit} handlePageChange={handlePageChange} handleLimitChange={handleLimitChange}
-                                    />
-                                </CardBody> : <div className={'border border-2'}>
-                                    <h4 className={'text-center'}>{XodimReducer.message}</h4>
+                            {
+                                users.getRole &&
+                                <div className="col-12 col-sm-6  col-md-6 col-lg-3 p-sm-2">
+                                    <SelectAnt name={t('select.users')}
+                                               onChange={(e) => setRoleId(e)}
+                                               selectList={LavozimReducer.roles} permission={users.getBalanceAdmin}/>
                                 </div>
-                            : <Loading/> : ''
-                }
+                            }
+                            <div className="col-12 col-sm-12  col-md-12 col-lg-6 p-sm-2">
+                                <SearchAnt name={t('ol.73')} onChange={handleQueryChange}/>
+                            </div>
+                        </div>
+                    </CardBody>
+                    : ''
+            }
+            {
+                users.getUserAdmin || users.getUser ?
+                    loading ?
+                        XodimReducer.users?.list?.length > 0 ?
+                            <CardBody>
+                                <div className="table-responsive mb-4 table-wrapper-scroll-y">
+                                <CommonTable data={XodimReducer.users?.list} columns={columns} total={XodimReducer.users?.totalItem}
+                                             page={page} size={limit} handlePageChange={handlePageChange} pagination={true}
+                                             handleLimitChange={handleLimitChange}
+                                />
+                                </div>
+                            </CardBody>: <div className={'border border-2'}>
+                                <h4 className={'text-center'}>{XodimReducer.message}</h4>
+                            </div>
+                        : <Loading/> : ''
+            }
 
             <ModalLoading isOpen={saveModal}/>
             <AgreeModal deleteModaltoggle={() => setDeleteModal(prevState => !prevState)} deleteFunc={deleteFunc}

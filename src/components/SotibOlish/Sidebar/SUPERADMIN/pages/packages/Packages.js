@@ -53,6 +53,8 @@ import AgreeModal from "../../../../../AgreeModal";
 										=== 0 ?'Cheksiz Foydalanuvchilar' : item.employeeAmount+"ta Foydalanuvchilar"
 										}</p>
 										<p>Cheksiz Mahsulotlar</p>
+										<p>{item.history ? 'Hodimlar tarixi' :''}</p>
+										<p>{item.testDay} test kuni</p>
 										<div className={'d-flex align-items-center justify-content-center'}>
 											<h2 className='p-0 m-0'>
 												${item.price}/

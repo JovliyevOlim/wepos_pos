@@ -1,7 +1,7 @@
 import React from 'react';
 import {BaseUrl} from "../middleware";
 import './imageCom.css'
-import defaultProduct from '../img/default-product.png'
+import defaultProduct from '../img/image 3.jpg'
 function Imagecom({id}) {
     return (
         <div className={'d-flex justify-content-center'}>

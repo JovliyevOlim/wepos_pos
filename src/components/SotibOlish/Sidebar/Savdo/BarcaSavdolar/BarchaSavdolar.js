@@ -1,7 +1,4 @@
-import {Link} from 'react-router-dom'
-import Edit from '../../../../../img/Edit.png'
-import Delete from '../../../../../img/Delete.png'
-import Korish from '../../../../../img/Korish.png'
+import {Link, useHistory} from 'react-router-dom'
 import './barcasavdolar.css'
 import React, {useState, useEffect, useRef} from "react";
 import {connect} from "react-redux";
@@ -18,13 +15,10 @@ import users from "../../../../../reducer/users";
 import {useTranslation} from "react-i18next";
 import formatDate, {camelize} from "../../../../../util";
 import Loading from "../../../../Loading";
-import {Pagination} from "antd";
 import Imagecom from "../../../../Imagecom";
 import {useReactToPrint} from "react-to-print";
 import checkReducer, {getInvoice} from "../../../../../reducer/checkReducer";
-import {AiOutlineFileText} from "react-icons/ai";
 import PayReducer, {getPay} from "../../../../../reducer/PayReducer";
-import {Box, TablePagination} from "@mui/material";
 import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
 import CustomerReducer, {
@@ -35,6 +29,11 @@ import XodimReducer, {getUserForFiltering, getUserForFilteringBusiness} from "..
 import moment from "moment";
 import 'moment/locale/uz-latn'
 import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import MainHeaderText from "../../../../Components/MainHeaderText";
+import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../Components/SelectAnt";
+import CardBody from "../../../../Components/CardBody";
+import CommonTable from "../../../../Components/CommonTable";
+import {DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined} from "@ant-design/icons";
 
 function BarchaSavdolar({
                             XodimReducer,
@@ -57,6 +56,7 @@ function BarchaSavdolar({
                         }) {
 
     const {t} = useTranslation()
+    const history = useHistory()
     const componentRef = useRef();
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
@@ -72,7 +72,102 @@ function BarchaSavdolar({
     const [customerId, setCustomerId] = useState(null)
     const [userId, setUserId] = useState(null)
     const [paymentStatus, setPaymentStatus] = useState(null)
-    const [backing,setBacking] = useState('true')
+    const [backing, setBacking] = useState('true')
+
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: 'index',
+            rowScope: 'row',
+            width: '2%',
+        },
+        {
+            title: t('ol.11'),
+            dataIndex: 'createdAt',
+            key: 'createdAt',
+            render: (item) => <p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>
+        },
+        {
+            title: t('Trade.5'),
+            dataIndex: 'invoice',
+            key: 'invoice',
+            width: '80px'
+        },
+        {
+            title: t('Pagination.10'),
+            dataIndex: 'customerName',
+            key: 'customerName',
+        },
+        {
+            title: t('ol.10'),
+            dataIndex: 'userFio',
+            key: 'userFio',
+        },
+        {
+            title: t('ol.13'),
+            dataIndex: 'branchName',
+            key: 'branchName',
+        },
+        {
+            title: t('ol.18'),
+            dataIndex: 'paymentStatus',
+            key: 'paymentStatus',
+        },
+        {
+            title: t('ol.15'),
+            dataIndex: 'totalSum',
+            key: 'totalSum',
+            render: (item) => <p className={'m-0'}>{item} so'm</p>
+        },
+        {
+            title: t('ol.16'),
+            dataIndex: 'paidSum',
+            key: 'paidSum',
+            render: (item) => <p className={'m-0'}>{item} so'm</p>,
+            width: '100px'
+        },
+        {
+            title: t('ol.17'),
+            dataIndex: 'debtSum',
+            key: 'debtSum',
+            render: (item) => <p className={'m-0'}>{item} so'm</p>
+        },
+        {
+            title: t('ol.20'),
+            key: 'operation',
+            width: 150,
+            render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
+                {
+                    users.getTrade &&
+                    <ButtonAnt type={'primary'} text={t('button.view')} bgColor={'aqua'} onClick={() => {
+                        viewTradeInfoById(item?.id)
+                    }
+                    } icon={<EyeOutlined/>}/>
+                }
+
+                {
+                    users.editTrade && values.editable &&
+                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
+                        history.push('/shopping/' + values?.id)
+                    }
+                    } icon={<EditOutlined/>}/>
+                }
+                {
+                    users.editTrade && values.editable &&
+                    <ButtonAnt text={t('button.remain')} type={'primary'} bgColor={'green'} onClick={() => {
+                        history.push('/repeatProducts/' + values?.id + "/" + values?.id)
+                    }
+                    } icon={<EditOutlined/>}/>
+                }
+                {
+                    users.deleteTrade && values.editable && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'}
+                                                                       onClick={() => values?.customerName ? deleteTradeByIdIsCustomer(item.id) : deleteTradeById(item.id)}
+                                                                       icon={<DeleteOutlined/>}/>
+                }
+
+            </div>,
+        },
+    ];
 
 
     function viewTradeInfoById(id) {
@@ -80,12 +175,12 @@ function BarchaSavdolar({
         viewTradeById(id)
     }
 
-    const handlePageChange = (_event, newPage) => {
-        setPage(newPage);
+    const handlePageChange = (newPage) => {
+        setPage(newPage-1);
     };
-    const handleLimitChange = (event) => {
+    const handleLimitChange = (event,size) => {
         setPage(0)
-        setLimit(parseInt(event.target.value));
+        setLimit(size);
     };
 
 
@@ -100,7 +195,7 @@ function BarchaSavdolar({
                     invoice: search
                 }
             })
-        } else if (users.getTrade){
+        } else if (users.getTrade) {
             getTradeByBranch({
                 branchId: mainBranch ? mainBranch : users.branchId,
                 params: {
@@ -159,18 +254,19 @@ function BarchaSavdolar({
         deleteSavdolar(
             {
                 deleteID,
-                params:{
-                    back:true
+                params: {
+                    back: true
                 }
             }
         )
         setSaveModal(true)
     }
+
     function deleteFuncIsCustomer() {
-        deleteSavdolar( {
+        deleteSavdolar({
             deleteID,
-            params:{
-                back:backing === "true" ? true : false
+            params: {
+                back: backing === "true" ? true : false
             }
         })
         setSaveModal(true)
@@ -180,6 +276,7 @@ function BarchaSavdolar({
         setdeletemodal(!deletemodal)
         setdeletID(item)
     }
+
     function deleteTradeByIdIsCustomer(item) {
         setdeletemodalIsCustomer(!deletemodalIsCustomer)
         setdeletID(item)
@@ -202,192 +299,76 @@ function BarchaSavdolar({
 
 
     return (
-        <div className="col-md-12 mt-2 mb-4 mt-4 ">
-            <div className="textHeader">
-                <h2>{t('Trade.1')}</h2>
+        <div>
+            <div className={'d-flex col-md-12 mb-5 align-items-center justify-content-between'}>
+                <MainHeaderText text={t('sidebar.trades')}/>
+                {
+                    users.addTrade ? <Link to={'/shopping'}>
+                        <ButtonAnt text={t('button.add')} icon={<PlusOutlined/>} type={'primary'}/>
+                    </Link> : ''
+                }
             </div>
             {
-                users.getTrade || users.getTradeAdmin ?
-                    <div className="rowStyleH">
-                        <div className="qoshish">
-                            <h5>{t('Buttons.16')}</h5>
-                        </div>
-                        <div className="row cont">
-                            <div className="col-md-3">
-                                <h6>{t('ProductList.8')}:</h6>
-                                <select name="" className={'form-control'} value={mainBranch}
-                                        onChange={(e) => setMainBranch(e.target.value === "" ? null : e.target.value)}
-                                        id="">
-                                    {
-                                        users.getTradeAdmin ? <option value="">{t('mah.28')}</option> : null
-                                    } {
-                                    users.branches?.map(item => <option value={item.id}>{item.name}</option>)
-                                }
-                                </select>
+                users.getTradeAdmin || users.getTrade ?
+                    <CardBody>
+                        <div className="col-md-12 gap-2 gap-sm-0 d-flex flex-wrap">
+                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                                <SelectAnt
+                                    name={t('ol.3')}
+                                    onChange={(e) => setMainBranch(e === "" ? null : e)}
+                                    permission={users.getTradeAdmin}
+                                    selectList={users.branches}/>
                             </div>
-                            <div className="col-md-3">
-                                <h6>{t('mah.29')}</h6>
-                                <select name="" className={'form-control'} value={customerId}
-                                        onChange={(e) => setCustomerId(e.target.value === "" ? null : e.target.value)}
-                                        id="">
-                                    <option value="">{t('mah.28')}</option>
-                                    {
-                                        CustomerReducer.customersTrade?.map(item => <option
-                                            value={item.id}>{item.name}</option>)
-                                    }
-                                </select>
+                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                                <SelectAnt
+                                    name={'Mijozlar'}
+                                    onChange={(e) => setCustomerId(e === "" ? null : e)}
+                                    permission={true}
+                                    selectList={CustomerReducer.customersTrade}/>
                             </div>
-                            <div className="col-md-3">
-                                <h6>{t('mah.30')}</h6>
-                                <select name="" className={'form-control'} value={userId}
-                                        onChange={(e) => setUserId(e.target.value === "" ? null : e.target.value)}
-                                        id="">
-                                    <option value="">{t('mah.28')}</option>
-                                    {
-                                        XodimReducer.usersFiltering?.map(item => <option
-                                            value={item.id}>{item?.fio}</option>)
-                                    }
-                                </select>
+                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                                <SelectAnt
+                                    name={t('ol.9')}
+                                    onChange={(e) => setUserId(e === "" ? null : e)}
+                                    permission={true}
+                                    selectList={XodimReducer.usersFiltering?.map((item) => ({
+                                        id: item.id,
+                                        name: item.fio
+                                    }))}/>
                             </div>
-                            <div className="col-md-3">
-                                <h6>{t('mah.31')}</h6>
-                                <select name="" className={'form-control'} value={paymentStatus}
-                                        onChange={(e) => setPaymentStatus(e.target.value === "" ? null : e.target.value)}
-                                        id="">
-                                    <option value="">{t('mah.28')}</option>
-                                    <option value={'TOLANGAN'}>{t('mah.32')}</option>
-                                    <option value={'QISMAN_TOLANGAN'}>{t('mah.33')}</option>
-                                    <option value={'TOLANMAGAN'}>{t('mah.34')}</option>
-                                </select>
+                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                                <SelectAnt
+                                    name={t('ol.5')}
+                                    onChange={(e) => setPaymentStatus(e === "" ? null : e)}
+                                    permission={true}
+                                    selectList={[
+                                        {id: 'TOLANGAN', name: (t('ol.6'))},
+                                        {id: 'TOLANMAGAN', name: (t('ol.7'))},
+                                        {id: 'QISMAN_TOLANGAN', name: (t('ol.8'))},
+                                    ]}/>
                             </div>
-
                             <div className="col-md-12">
-                                <h6>{t('mah.36')}</h6>
-                                <input type="text" value={search} placeholder={t('mah.35')}
-                                       onChange={(e) => setSearch(e.target.value === '' ? null : e.target.value)}
-                                       className={'form-control'} min={0}/>
+                                <SearchAnt name={t('mah.35')}
+                                           onChange={(e) => setSearch(e.target.value === '' ? null : e.target.value)}/>
                             </div>
                         </div>
-                    </div> : ''
+                    </CardBody>
+                    : ''
             }
-            <div className="rowStyleH2">
-                <div className="qoshish">
-                    <h5>{t('Trade.1')}</h5>
-                    {
-                        users.addTrade ?
-                            <Link to={'/shopping'}>
-                                <button className='btn btn-primary'>+{t('Buttons.2')}</button>
-                            </Link>
-                            : ''
-                    }
-                </div>
+            <CardBody>
                 {
                     users.getTrade || users.getTradeAdmin ?
                         loading ?
                             SavdoQoshishReducer?.trades?.list?.length > 0 ?
                                 <div>
                                     <div className="table-responsive table-wrapper-scroll-y">
-                                        <table className='table table-striped table-bordered mt-4'>
-                                            <thead>
-                                            <tr>
-                                                <th>T/R</th>
-                                                <th>{t('Trade.4')}</th>
-                                                <th>{t('Trade.5')}</th>
-                                                <th>{t('Pagination.10')}</th>
-                                                <th>{t('mah.37')}</th>
-                                                <th>{t('ProductList.8')}</th>
-                                                <th>{t('Purchase.4')}</th>
-                                                {/*<th>{t('Purchase.26')}</th>*/}
-                                                <th>{t('Purchase.22')}</th>
-                                                <th>{t('Trade.6')}</th>
-                                                <th>{t('Supplier.8')}</th>
-                                                <th>{t('mah.38')}</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {
-                                                SavdoQoshishReducer.trades?.list?.map((item, index) => <tr
-                                                    key={item?.id}>
-                                                    <td>{index + 1}</td>
-                                                    <td>{moment(new Date(item?.date)).format('LLLL')}</td>
-                                                    <td className={item.edit && 'bg-warning'}>{item?.invoice}</td>
-                                                    <td>{item?.customerName}</td>
-                                                    <td>{item?.userFio}</td>
-                                                    <td>{item?.branchName}</td>
-                                                    <td>{item?.paymentStatus}</td>
-                                                    {/*<td>{item?.paymentGetDtoList?.map((item, index) =>*/}
-                                                    {/*    <p>{item?.paymentMethodName}</p>)}</td>*/}
-                                                    <td>
-                                                        {item?.totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} {t('mah.39')}
-                                                    </td>
-                                                    <td>
-                                                        {item?.paidSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} {t('mah.39')}
-                                                    </td>
-                                                    <td>
-                                                        {item?.debtSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} {t('mah.39')}
-
-                                                    </td>
-                                                    <td>
-                                                        <div className={'d-flex'}>
-                                                            {
-                                                                users.getTrade ?
-                                                                    <button onClick={() => viewTradeInfoById(item?.id)}
-                                                                            className='korish'><img src={Korish}
-                                                                                                    alt=""/> {t('Buttons.4')}
-                                                                    </button>
-                                                                    : ''
-                                                            }
-                                                            {
-                                                                users.editTrade && item?.editable ?
-                                                                    <Link to={'/shopping/' + item?.id}>
-                                                                        <button className='taxrirlash'><img src={Edit}
-                                                                                                            alt=""/> {t('Buttons.1')}
-                                                                        </button>
-                                                                    </Link> : ''
-                                                            }
-                                                            {
-                                                                users.editTrade &&  item?.editable ?
-                                                                    <Link
-                                                                        to={'/repeatProducts/' + item?.id + "/" + item?.id}>
-                                                                        <button className='taxrirlash'><img src={Edit}
-                                                                                                            alt=""/>{t('mah.40')}
-                                                                        </button>
-                                                                    </Link> : ''
-                                                            }
-                                                            {
-                                                                users.deleteTrade && item?.editable ?
-                                                                    <button onClick={() => item?.customerName ? deleteTradeByIdIsCustomer(item.id) : deleteTradeById(item.id)}
-                                                                            className='ochirish'><img
-                                                                        src={Delete} alt=""/> {t('Buttons.3')}
-                                                                    </button> : ''
-                                                            }
-                                                        </div>
-                                                        {/*<button*/}
-                                                        {/*    onClick={() => checkModalOpen(item.id, item?.branch?.id)}*/}
-                                                        {/*    className='taxrirlash checkView'><AiOutlineFileText*/}
-                                                        {/*    fontSize={18}/>Checkni ko'rish*/}
-                                                        {/*</button>*/}
-
-
-                                                    </td>
-                                                </tr>)
-                                            }
-                                            </tbody>
-                                        </table>
-                                    </div>
-
-                                    <Box p={2}>
-                                        <TablePagination
-                                            component="div"
-                                            count={SavdoQoshishReducer?.trades?.totalItem}
-                                            onPageChange={handlePageChange}
-                                            onRowsPerPageChange={handleLimitChange}
-                                            page={page}
-                                            rowsPerPageOptions={[5, 10, 15]}
-                                            rowsPerPage={limit}
+                                        <CommonTable handlePageChange={handlePageChange}
+                                                     handleLimitChange={handleLimitChange} page={page} size={limit}
+                                                     total={SavdoQoshishReducer?.trades?.totalItem}
+                                                     data={SavdoQoshishReducer.trades?.list} pagination={true}
+                                                     columns={columns}
                                         />
-                                    </Box>
-
+                                    </div>
                                 </div> :
                                 <div className={'border border-2'}>
                                     <h4 className={'text-center'}>{SavdoQoshishReducer.message}</h4>
@@ -525,11 +506,13 @@ function BarchaSavdolar({
                             : ''
                     }
                 </div>
-            </div>
+            </CardBody>
+
+
             <Modal isOpen={isViewTrade} size={'xl'} toggle={() => setIsViewTrade(!isViewTrade)}>
                 <ModalHeader>
                     <h4>
-                       {t('mah.47')}
+                        {t('mah.47')}
                     </h4>
                 </ModalHeader>
                 <ModalBody>
@@ -540,21 +523,25 @@ function BarchaSavdolar({
                                     <div>
                                         <div className="col-md-12 ">
                                             <div className="col-md-12 d-flex flex-wrap">
-                                                <div className="col-md-4"><p>{t('mah.48')} <strong> {item?.invoice}</strong></p>
+                                                <div className="col-md-4"><p>{t('mah.48')}
+                                                    <strong> {item?.invoice}</strong></p>
                                                 </div>
-                                                <div className="col-md-4"><p>{t('mah.49')} <strong> {moment(new Date(item?.createdAt)).format('LLLL')}</strong>
+                                                <div className="col-md-4"><p>{t('mah.49')}
+                                                    <strong> {moment(new Date(item?.createdAt)).format('LLLL')}</strong>
                                                 </p>
                                                 </div>
                                                 <div className="col-md-4">
                                                     {
                                                         item?.paymentGetDtoList.map(item =>
-                                                            <p>{t('mah.50')} <strong>{camelize(item?.paymentMethodName)}:</strong>  {item?.sum} so'm
+                                                            <p>{t('mah.50')}
+                                                                <strong>{camelize(item?.paymentMethodName)}:</strong> {item?.sum} so'm
                                                             </p>
                                                         )
                                                     }
 
                                                 </div>
-                                                <div className="col-md-4"><p>{t('mah.51')} <strong>{item?.paymentStatus}</strong></p>
+                                                <div className="col-md-4"><p>{t('mah.51')}
+                                                    <strong>{item?.paymentStatus}</strong></p>
                                                 </div>
                                                 <div className="col-md-12">
                                                     <p>{t('mah.52')} <strong>{item?.userFio}</strong></p>
@@ -573,27 +560,31 @@ function BarchaSavdolar({
                                                     {
                                                         item?.customerPhoneNumber &&
                                                         <div>
-                                                            <p>{t('mah.53')} <strong>{item?.customerPhoneNumber}</strong></p>
+                                                            <p>{t('mah.53')}
+                                                                <strong>{item?.customerPhoneNumber}</strong></p>
                                                         </div>
                                                     }
                                                 </div>
                                                 <div className="col-md-5">
-                                                    <p className={''}>{t('mah.54')} <strong>{item?.totalSum} {t('mah.39')}</strong>
+                                                    <p className={''}>{t('mah.54')}
+                                                        <strong>{item?.totalSum} {t('mah.39')}</strong>
                                                     </p>
                                                 </div>
                                                 <div className="col-md-5">
-                                                    <p className={''}>{t('mah.55')} <strong>{item?.paidSum} {t('mah.39')}</strong>
+                                                    <p className={''}>{t('mah.55')}
+                                                        <strong>{item?.paidSum} {t('mah.39')}</strong>
                                                     </p>
                                                 </div>
                                                 <div className="col-md-5">
-                                                    <p className={''}>{t('mah.56')} <strong>{item.debtSum} {t('mah.39')}</strong>
+                                                    <p className={''}>{t('mah.56')}
+                                                        <strong>{item.debtSum} {t('mah.39')}</strong>
                                                     </p>
                                                 </div>
 
                                             </div>
                                         </div>
                                     </div>
-                                    <div  className={'table-responsive'}>
+                                    <div className={'table-responsive'}>
                                         <table className={'table table-bordered'}>
                                             <thead>
                                             <tr>
@@ -641,22 +632,24 @@ function BarchaSavdolar({
             <ModalLoading isOpen={saveModal}/>
             <AgreeModal deletemodal={deletemodal} deleteModaltoggle={() => setdeletemodal(prevState => !prevState)}
                         deleteFunc={deleteFunc}/>
-            <AgreeModal deletemodal={deletemodalIsCustomer} deleteModaltoggle={() => setdeletemodalIsCustomer(prevState => !prevState)}
+            <AgreeModal deletemodal={deletemodalIsCustomer}
+                        deleteModaltoggle={() => setdeletemodalIsCustomer(prevState => !prevState)}
                         deleteFunc={deleteFuncIsCustomer}>
-                    <div>
-                        <div className={'d-flex align-items-center m-3'}>
-                            <input type="radio" name='money' value={"true"} checked={backing === "true"} onChange={(e)=>{
-                                setBacking(e.target.value);
-                            }} className={'mx-2'} style={{transform:'scale(1.5)'}}/>
-                            <label htmlFor="" className={'p-0 m-0'}>{t('mah.63')}</label>
-                        </div>
-                        <div className={'d-flex align-items-center m-3'}>
-                            <input type="radio" name='money'  value={"false"} checked={backing === "false"}  onChange={(e)=>{
-                                setBacking(e.target.value);
-                            }}  className={'mx-2'} style={{transform:'scale(1.5)'}}/>
-                            <label htmlFor="" className={'p-0 m-0'}>{t('mah.64')}</label>
-                        </div>
+                <div>
+                    <div className={'d-flex align-items-center m-3'}>
+                        <input type="radio" name='money' value={"true"} checked={backing === "true"} onChange={(e) => {
+                            setBacking(e.target.value);
+                        }} className={'mx-2'} style={{transform: 'scale(1.5)'}}/>
+                        <label htmlFor="" className={'p-0 m-0'}>{t('mah.63')}</label>
                     </div>
+                    <div className={'d-flex align-items-center m-3'}>
+                        <input type="radio" name='money' value={"false"} checked={backing === "false"}
+                               onChange={(e) => {
+                                   setBacking(e.target.value);
+                               }} className={'mx-2'} style={{transform: 'scale(1.5)'}}/>
+                        <label htmlFor="" className={'p-0 m-0'}>{t('mah.64')}</label>
+                    </div>
+                </div>
             </AgreeModal>
         </div>
 

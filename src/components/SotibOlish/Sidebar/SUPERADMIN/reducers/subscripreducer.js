@@ -59,5 +59,11 @@ export const editSubscrip=(data)=>apiCall({
     onSuccess: slice.actions.saveFrom.type,
     onFail: slice.actions.saveFrom.type
 });
-
+export const paymentToBusiness = (data) => apiCall({
+    url: '/business/payment/' + data.id,
+    method: 'put',
+    data,
+    onSuccess: slice.actions.saveFrom.type,
+    onFail: slice.actions.saveFrom.type
+});
 export default slice.reducer

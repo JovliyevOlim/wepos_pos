@@ -51,18 +51,19 @@ body::-webkit-scrollbar-track {
     margin: 0;
 }
 .sidebar-header{
-    padding: 32px;
-    /*// borderBottom: "2px solid #F1F2F3",*/
+    padding: 22px 24px;
+    border-bottom: 1px solid #F3F3F3;
     background: #FFF;
-    height: 103px
+    box-shadow: 0px 16px 24px 0px rgba(223, 226, 231, 0.22);
+    height: 84px
 }
 .ant-btn img {
     padding: 10px !important;
 }
 
 .content {
-    padding: 2rem;
-    background: #FDFDFD;
+    padding: 1.5rem;
+    background: #FAFBFC;
 }
 
 .ant-menu {
@@ -202,8 +203,7 @@ body::-webkit-scrollbar-track {
         height:50px
     }
     .content {
-        padding: 1rem;
-        background: #FDFDFD;
+        padding: 0.5rem;
     }
 }
 @media (min-width: 330px) and (max-width: 425.9px){
@@ -215,20 +215,17 @@ body::-webkit-scrollbar-track {
         height:60px
     }
     .content {
-        padding: 1rem;
-        background: #FDFDFD;
+        padding: 0.5rem;
     }
 }
 @media (min-width: 426px) and (max-width: 767.9px){
     .content {
-        padding: 1.5rem;
-        background: #FDFDFD;
+        padding: 0.75rem;
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width:1440px){
     .content {
-        padding: 1.5rem;
-        background: #FDFDFD;
+        padding: 0.75rem;
     }
 }

@@ -8,13 +8,16 @@ import users from "../../../../../../reducer/users";
 import subscripreducer, {
     editSubscrip,
     getAllSubscrip,
-    saveSubscrip
+    saveSubscrip,
+    paymentToBusiness
 } from "../../reducers/subscripreducer";
 import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import tariffReducer, {getTariffChoose} from "../../../../../../reducer/tariffReducer";
-import formatDate from "../../../../../../util";
+import formatDate, {camelize} from "../../../../../../util";
 import {TablePagination} from "@mui/material";
 import AgreeModal from "../../../../../AgreeModal";
+import PayReducer,{getPay} from "../../../../../../reducer/PayReducer";
+import {toast} from "react-toastify";
 
 function PackageSubscripton({
                                 subscripreducer,
@@ -22,7 +25,10 @@ function PackageSubscripton({
                                 getTariffChoose,
                                 editSubscrip,
                                 saveSubscrip,
-                                getAllSubscrip
+                                getAllSubscrip,
+                                paymentToBusiness,
+                                getPay,
+                                PayReducer,
                             }) {
 
     const [active, setActive] = useState(false)
@@ -34,6 +40,9 @@ function PackageSubscripton({
     const [businessName, setBusinessName] = useState('')
     const [tariff, setTariff] = useState('')
     const [agree,setAgree] = useState(false)
+    const [paymentActive,setPaymentActive] = useState(false)
+    const [paymentId,setPaymentId] = useState(false)
+    const [sum,setSum] = useState(0)
 
 
     function changeBusinessTariff(id, name,tariffId) {
@@ -41,6 +50,29 @@ function PackageSubscripton({
         setBusinessId(id)
         setTariff(tariffId)
         setActive(true)
+    }
+    function changePaymentToBusiness(id) {
+        setBusinessId(id)
+        setPaymentActive(true)
+        getPay()
+    }
+
+    function paymentToggle() {
+        setBusinessId(null)
+        setPaymentActive(false)
+        setPaymentId(null)
+        setSum(0)
+    }
+
+    function handlePaymentToBusiness(){
+        if (paymentId && sum){
+            paymentToBusiness({
+                sum,paymentMethodId:paymentId,id:businessId
+            })
+        }
+        else{
+            toast.warning("Ma'lumotlarni kiriting")
+        }
     }
 
     function toggle() {
@@ -98,7 +130,6 @@ function PackageSubscripton({
 
 
 
-
     useEffect(() => {
         if (subscripreducer.saveSubsBoolean) {
             setActive(false)
@@ -108,8 +139,10 @@ function PackageSubscripton({
             setTariffStatus('')
             setEditSubsId('')
             setChangeStatusTariffActive(false)
+            paymentToggle()
         }
     }, [subscripreducer.current])
+
 
     return (
 
@@ -162,6 +195,11 @@ function PackageSubscripton({
                                                 onClick={() => changeBusinessTariff(item.businessId, item.businessName,item.tariffId)}
                                                 className={'bluebtn'}>
                                                 <img src={Edit} className={'mx-1'}/>Tariffni o'zgartirish
+                                            </button>
+                                            <button
+                                                onClick={() => changePaymentToBusiness(item.businessId)}
+                                                className={'bluebtn'}>
+                                                <img src={Edit} className={'mx-1'}/>Balansi to'ldirish
                                             </button>
                                         </td>
                                     </tr>)
@@ -232,14 +270,40 @@ function PackageSubscripton({
 
                 </ModalFooter>
             </Modal>
+            <Modal isOpen={paymentActive} toggle={()=>setPaymentActive(prevState => !prevState)}>
+                <ModalHeader>
+                    <h3>Balansni to'ldirish</h3>
+                </ModalHeader>
+                <ModalBody>
+                    <label htmlFor="">To'lov usuli</label>
+                    <select className={'form-control'} id="" value={paymentId}
+                            onChange={(e) => setPaymentId(e.target.value)}>
+                        <option value="">Tanlang</option>
+                        {
+                            PayReducer?.paymethod?.map(item=>
+                                <option value={item.id}>{camelize(item.name)}</option>)
+                        }
+                    </select>
+                    <label htmlFor="" className={'mt-2'}>Summani kiriting</label>
+                    <input type="text" className={'form-control'} value={sum} onChange={(e)=>setSum(e.target.value)}/>
+                </ModalBody>
+                <ModalFooter>
+                    <button onClick={paymentToggle} className={'btn btn-danger'}>Chiqish</button>
+                    <button onClick={handlePaymentToBusiness} className={'btn btn-success'}>Saqlash</button>
+
+                </ModalFooter>
+            </Modal>
+
             <AgreeModal deleteFunc={save} deleteModaltoggle={()=>setAgree(prevState => !prevState)} deletemodal={agree}/>
         </div>
     )
 }
 
-export default connect((tariffReducer, users, subscripreducer), {
+export default connect((tariffReducer, users, subscripreducer,PayReducer), {
     getTariffChoose,
     getAllSubscrip,
     saveSubscrip,
     editSubscrip,
+    paymentToBusiness,
+    getPay
 })(PackageSubscripton)

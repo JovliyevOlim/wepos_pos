@@ -5,8 +5,6 @@ import MahsulotTurlariReducer, {
     getProductType,
     saveProductType
 } from "../reducer/MahsulotTurlariReducer";
-import Edit from '../../../../../img/Edit.png'
-import Delete from '../../../../../img/Delete.png'
 import React, {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
@@ -17,6 +15,9 @@ import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
 import MainHeaderText, {AddOrEditText} from "../../../../Components/MainHeaderText";
 import {ButtonAnt} from "../../../../Components/SelectAnt";
+import CardBody from "../../../../Components/CardBody";
+import CommonTable from "../../../../Components/CommonTable";
+import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 
 function MahsulotTurlari({
                              saveProductType,
@@ -40,11 +41,56 @@ function MahsulotTurlari({
     const [isCheck, setIsCheck] = useState(false)
 
 
-    // function search(e) {
-    //     input.search = e.target.value
-    //     let a = {...input}
-    //     setInput(a)
-    // }
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: 'index',
+            rowScope: 'row',
+            width: 10,
+        },
+        {
+            title: t('ProductType.1'),
+            width: 50,
+            dataIndex: 'name',
+            key: 'name',
+        },
+
+        {
+            title: t('ProductType.2'),
+            dataIndex: 'values',
+            key: 'values',
+            width: 100,
+            render: (item) => <p className={'m-0'}>
+                {item.map(item2 =>
+                    <span className={'p-0 m-0'}>{item2.name}, </span>
+                )
+                }
+            </p>
+        },
+        {
+            title: t('ol.20'),
+            key: 'operation',
+            width: 150,
+            render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
+                {
+                    users.productTypeRoles &&
+                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
+                        editt(values.id)
+                    }
+                    } icon={<EditOutlined/>}/>
+                }
+                {
+                    users.productTypeRoles &&
+                    <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
+                        deleteProductTypeById(values.id)
+                    }
+                    } icon={<DeleteOutlined/>}/>
+                }
+
+            </div>,
+
+        },
+    ];
 
 
     function toggle() {
@@ -103,7 +149,7 @@ function MahsulotTurlari({
         setSaveModal(false)
     }, [MahsulotTurlariReducer.current])
 
-    function handleDelete(index,id) {
+    function handleDelete(index, id) {
         if (id) {
             const newArr = valueList.map((obj, val) => {
                 if (val === index) {
@@ -112,8 +158,7 @@ function MahsulotTurlari({
                 return obj;
             })
             setValueList(newArr)
-        }
-        else {
+        } else {
             valueList.splice(index, 1)
             let a = [...valueList]
             setValueList(a)
@@ -183,62 +228,20 @@ function MahsulotTurlari({
     return (
         <div>
             <div className="col-md-12 d-flex align-items-center justify-content-between">
-                <MainHeaderText text={t('ProductType.1')}/>
-                <ButtonAnt onClick={toggle} type={'primary'} text={t('Employ.4')}/>
+                <MainHeaderText text={t('sidebar.addType')}/>
+                <ButtonAnt onClick={toggle} type={'primary'} icon={<PlusOutlined/>} text={t('button.add')}/>
             </div>
 
-            <div className="rowStyleBL">
+            <CardBody>
                 {
                     loading ?
                         <div>
                             {
                                 MahsulotTurlariReducer.productType?.length > 0 ?
                                     <div className="table-responsive table-wrapper-scroll-y mb-4">
-                                        <table className='table  table-bordered mt-4'>
-                                            <thead>
-                                            <tr>
-                                                <th>T/R</th>
-                                                <th>{t('ProductType.1')}</th>
-                                                <th>{t('ProductType.2')}</th>
-                                                <th>{t('as.6')}</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {
-                                                MahsulotTurlariReducer?.productType
-                                                    .map((item, index) =>
-                                                        <tr key={item.id}>
-                                                            <td>{index + 1}</td>
-                                                            <td>{item?.name}</td>
-                                                            <td>
-                                                                {item?.values.map(item2 =>
-                                                                    <span className={'p-0 m-0'}>{item2.name}, </span>
-                                                                )
-                                                                }
-                                                            </td>
-
-                                                            <td>
-                                                                {
-                                                                    users.productTypeRoles ?
-                                                                        <button className='btn btn-info'
-                                                                                onClick={() => editt(item.id)}>
-                                                                            <img
-                                                                                src={Edit} alt=""/> {t('Buttons.1')}
-                                                                        </button> : ''
-                                                                }
-                                                                {
-                                                                    users.productTypeRoles ?
-                                                                        <button className='btn btn-danger'
-                                                                                onClick={() => deleteProductTypeById(item.id)}>
-                                                                            <img src={Delete} alt=""/> {t('Buttons.3')}
-                                                                        </button> : ''
-                                                                }
-                                                            </td>
-                                                        </tr>)
-                                            }
-
-                                            </tbody>
-                                        </table>
+                                        <CommonTable data={MahsulotTurlariReducer?.productType} columns={columns}
+                                                     size={MahsulotTurlariReducer.productType?.length} page={0}
+                                                     pagination={false}/>
                                     </div>
                                     : <div className={'text-center'}>
                                         <h4 className={'text-center'}>{MahsulotTurlariReducer.message || 'NOT FOUND'}</h4>
@@ -247,10 +250,7 @@ function MahsulotTurlari({
 
                         </div> : <Loading/>
                 }
-
-
-
-            </div>
+            </CardBody>
             <Modal isOpen={active} toggle={toggle}>
                 <ModalHeader>
                     <AddOrEditText text={t('mah.1')}/>
@@ -267,14 +267,15 @@ function MahsulotTurlari({
                                 return (
                                     data.delete === false ?
                                         <div className={'d-flex'}>
-                                            <input value={data.name} placeholder={`Tur ${index+1}`} className={'form-control mt-2'} type="text"
+                                            <input value={data.name} placeholder={`Tur ${index + 1}`}
+                                                   className={'form-control mt-2'} type="text"
                                                    onChange={e => handleChange(e, index)}/>
                                             {
                                                 index === 0 ? <button onClick={handleAdd}
                                                                       className={'btn mt-2 mr-1 btnLeft btn-primary'}>+</button>
                                                     :
                                                     <button className={'btn mt-2 btnLeft mr-1 btn-danger'}
-                                                            onClick={() => handleDelete(index,data?.id ? data?.id : null)}>x
+                                                            onClick={() => handleDelete(index, data?.id ? data?.id : null)}>x
                                                     </button>
                                             }
 
