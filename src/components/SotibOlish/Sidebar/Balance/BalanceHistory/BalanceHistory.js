@@ -151,28 +151,28 @@ function BalanceHistory({
 
     return (
         <div className="col-md-12 mt-4 mb-4">
-            <MainHeaderText text={t('bal.1')}/>
+            <MainHeaderText text={t('sidebar.balanceChanges')}/>
             {
                 users.getBalance || users.getBalanceAdmin ?
                     <CardBody>
                         <div className="col-md-12 gap-2 gap-sm-0 d-flex flex-wrap">
                             <div className="col-12 col-sm-6 col-md-6 col-lg-3 p-sm-2">
-                                <SelectAnt name={t('bal.2')}
+                                <SelectAnt name={t('select.branches')}
                                            onChange={(e) => setMainBranchId(e === "" ? null : e)}
                                            selectList={users.branches} permission={users.getBalanceAdmin}/>
                             </div>
                             <div className="col-12 col-sm-6 col-md-6 col-lg-3 p-sm-2">
-                                <SelectAnt name={t('bal.3')}
+                                <SelectAnt name={t('select.payments')}
                                            onChange={(e) => setPaymentMethodId(e === "" ? null : e)}
                                            selectList={PayReducer?.paymethod} permission={true}/>
                             </div>
                             <div className="col-12 col-sm-6 col-md-6 col-lg-3 p-sm-2">
-                                <SelectAnt name={t('bal.4')}
+                                <SelectAnt name={t('select.users')}
                                            onChange={(e) => setUserId(e === "" ? null : e)}
                                            selectList={XodimReducer.usersFiltering.map((item) => ({id: item.id, name: item.fio}))} permission={true}/>
                             </div>
                             <div className="col-12 col-sm-6 col-md-6 col-lg-3 p-sm-2">
-                                <SelectAnt name={t('bal.5')}
+                                <SelectAnt name={t('select.kirimChiqim')}
                                            onChange={changePlus}
                                            selectList={[{id:'true',name:'Kirimlar'},{id:'false',name:'Chiqimlar'}]} permission={true}/>
                             </div>

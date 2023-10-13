@@ -19,7 +19,7 @@ import MainHeaderText from "../../../../Components/MainHeaderText";
 import SelectAnt, {ButtonAnt} from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
 import CommonTable from "../../../../Components/CommonTable";
-import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 
 function XarajatlarRoyxati({
                                getOutlayByBusiness,
@@ -95,13 +95,13 @@ function XarajatlarRoyxati({
             render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
                 {
                     users.editOutlay &&
-                    <ButtonAnt text={t('ol.78')} type={'primary'} onClick={() => {
+                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
                         history.push('/main/addOutlay/' + values.id)
                     }
                     } icon={<EditOutlined/>}/>
                 }
                 {
-                    users.deleteOutlay && <ButtonAnt text={t('ol.79')} danger={true} type={'primary'} onClick={() => {
+                    users.deleteOutlay && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
                         deleteOutlayById(values.id)
                     }
                     } icon={<DeleteOutlined/>}/>
@@ -200,10 +200,10 @@ function XarajatlarRoyxati({
     return (
         <div>
             <div className={'d-flex col-md-12 mb-5 align-items-center justify-content-between'}>
-                <MainHeaderText text={t('Expenses.1')}/>
+                <MainHeaderText text={t('sidebar.outlay')}/>
                 {
                     users.addOutlay ? <Link to={'/main/addOutlay'}>
-                        <ButtonAnt text={t('ol.2')} type={'primary'}/>
+                        <ButtonAnt text={t('button.add')} icon={<PlusOutlined />} type={'primary'}/>
                     </Link> : ''
                 }
             </div>

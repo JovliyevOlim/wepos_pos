@@ -29,7 +29,7 @@ import MainHeaderText, {AddOrEditText} from "../../../../Components/MainHeaderTe
 import SelectAnt, {ButtonAnt, SearchAnt, TableButton} from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
 import CommonTable from "../../../../Components/CommonTable";
-import {DeleteOutlined, DollarOutlined, EditOutlined} from "@ant-design/icons";
+import {DeleteOutlined, DollarOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 import {Space, Typography} from 'antd';
 
 const {Text, Link} = Typography;
@@ -122,18 +122,18 @@ function Customers({
             width: 200,
             render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
                 {users.editSupplier &&
-                    <ButtonAnt color={'blue'} type={'primary'} onClick={() => editM(values.id)} text={t('ol.78')}
+                    <ButtonAnt color={'blue'} type={'primary'} onClick={() => editM(values.id)} text={t('button.edit')}
                                  icon={<EditOutlined/>}/>
                 }
                 {
-                    users.deleteSupplier && <ButtonAnt color={'red'} danger={true} type={'primary'} text={t('ol.79')}
+                    users.deleteSupplier && <ButtonAnt color={'red'} danger={true} type={'primary'} text={t('button.delete')}
                                                          onClick={() => deleteCustomerById(values.id)}
                                                          icon={<DeleteOutlined/>}/>
                 }
-                <ButtonAnt color={'blue'} text={t('bal.31')} type={'primary'} bgColor={'green'}
+                <ButtonAnt color={'blue'} text={t('button.returnMoney')} type={'primary'} bgColor={'green'}
                              onClick={() => customerReturnPayFunc(values.id)}
                              icon={<DollarOutlined/>}/>
-                <ButtonAnt color={'success'}  text={t('bal.30')} type={'primary'} bgColor={'orange'}
+                <ButtonAnt color={'success'}  text={t('button.payDebt')} type={'primary'} bgColor={'orange'}
                              onClick={() => customerGetPayFunc(values.id)}
                              icon={<DollarOutlined/>}/>
             </div>,
@@ -316,10 +316,10 @@ function Customers({
     return (
         <>
             <div className="d-flex align-items-center mb-5 justify-content-between">
-                <MainHeaderText text={t('bal.20')}/>
+                <MainHeaderText text={t('sidebar.customer')}/>
                 {
                     users.addCustomer ?
-                        <ButtonAnt onClick={toggle} text={t('bal.21')} type={'primary'}/> : ''
+                        <ButtonAnt onClick={toggle} text={t('button.add')} icon={<PlusOutlined />} type={'primary'}/> : ''
                 }
             </div>
             {

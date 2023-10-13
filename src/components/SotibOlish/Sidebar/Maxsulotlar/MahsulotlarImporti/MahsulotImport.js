@@ -66,7 +66,7 @@ function MahsulotImport({users, saveProductByExcelFile, MaxsulotlarRoyxariReduce
             <div className="d-flex flex-wrap justify-content-between align-items-end">
                 <MainHeaderText text={t('as.13')}/>
                 <a href={Example} download style={{marginTop:'20px'}}>
-                    <ButtonAnt type={'primary'} text={t('as.14')} icon={<CloudDownloadOutlined className={'excel-import-icon'}/>}/>
+                    <ButtonAnt type={'primary'} text={t('button.getShablon')} icon={<CloudDownloadOutlined className={'excel-import-icon'}/>}/>
                 </a>
             </div>
             <CardBody>
@@ -87,13 +87,13 @@ function MahsulotImport({users, saveProductByExcelFile, MaxsulotlarRoyxariReduce
                                 listType="name"
                                 maxCount={1}
                             >
-                                <ButtonAnt icon={<UploadOutlined/>} type={'primary'} text={t('as.15')}/>
+                                <ButtonAnt icon={<UploadOutlined/>} type={'primary'} text={t('button.selectFile')}/>
                             </Upload>
                     </div>
                 </div>
                 <div className="col-md-12 d-flex align-items-center justify-content-end">
                     <div className="col-md-3 d-flex align-items-center justify-content-end">
-                        <ButtonAnt type={'primary'} bgColor={'green'} text={'Saqlash'} onClick={saveProductByExcel}/>
+                        <ButtonAnt type={'primary'} bgColor={'green'} text={t('button.save')} onClick={saveProductByExcel}/>
                     </div>
                 </div>
             </CardBody>

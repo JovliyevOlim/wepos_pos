@@ -142,9 +142,9 @@ export function getExtension(filename) {
 export function prettify(num) {
     if (!num) return num;
 
-    const [wholeNumber, part] = num.toString().split('.');
+    const [wholeNumber, part] = num.toString().split(' ');
     const regExp = /(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g;
-    const formattedNumber = wholeNumber.toString().replace(regExp, '$1.') + (part ? `.${part}` : '');
+    const formattedNumber = wholeNumber.toString().replace(regExp, '$1 ') + (part ? `.${part}` : '');
 
     return formattedNumber
 }

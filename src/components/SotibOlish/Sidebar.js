@@ -25,13 +25,14 @@ import {
     UsersIcon
 } from "../Components/svg";
 import MainHeader from "./header/MainHeader";
-
+import {useTranslation} from "react-i18next";
 const {Header, Content, Footer, Sider} = Layout;
 
 
 const Sidebar = ({users}) => {
 
     const history = useHistory()
+    const {t} = useTranslation()
     const [collapsed, setCollapsed] = useState(false);
     const rootSubmenuKeys = ['/main/dashboard', '/main/superadmin', '/main/balance', 'user', 'customers', 'products', 'purchase', 'trades', 'outlay', 'reports', 'setting'];
     const [openKeys, setOpenKeys] = useState(['/main/dashboard']);
@@ -62,7 +63,7 @@ const Sidebar = ({users}) => {
     });
     const items = [
         {
-            label: 'SuperAdmin',
+            label: t("sidebar.superadmin"),
             key: '/main/superadmin',
             icon: <Icon component={SuperAdminIcon}/>,
             check: users.isSuperAdmin
@@ -71,148 +72,148 @@ const Sidebar = ({users}) => {
             type: 'divider', check: users.isSuperAdmin,
         },
         {
-            label: 'Bosh sahifa',
+            label: t('sidebar.mainPage'),
             key: '/main/dashboard',
             check: users.getInfo || users.getInfoAdmin,
             icon: <Icon component={MainMenu}/>,
         },
         {
-            label: 'Hodimlar',
+            label: t("sidebar.users"),
             key: 'grp',
             check: !collapsed,
             disabled: true,
         },
         {
-            label: 'Kassa',
+            label: t("sidebar.balance"),
             key: '/main/balance',
             icon: <Icon component={Kassa}/>,
             check: users.getBalance || users.getBalanceAdmin,
             children: [
-                {label: 'Kassa holati', key: '/main/balanceTable', check: users.getBalance || users.getBalanceAdmin},
+                {label: t("sidebar.balanceStatus"), key: '/main/balanceTable', check: users.getBalance || users.getBalanceAdmin},
                 {
-                    label: 'Kassadagi o\'zgarishlar',
+                    label: t("sidebar.balanceChanges"),
                     key: '/main/balanceHistory',
                     check: users.getBalance || users.getBalanceAdmin
                 },
             ].filter(item => item.check === true)
         },
         {
-            label: 'Hodimlar', key: 'user', check: users.addUser || users.getUserAdmin || users.getUser ||
+            label: t("sidebar.users"), key: 'user', check: users.addUser || users.getUserAdmin || users.getUser ||
                 users.addRole || users.getRole, icon: <Icon component={UsersIcon}/>,
             children: [
-                {label: 'Hodimlar', key: '/main/user', check: users.addUser || users.getUserAdmin || users.getUser},
-                {label: 'Lavozimlar', key: '/main/role', check: users.addRole || users.getRole},
+                {label: t("sidebar.users"), key: '/main/user', check: users.addUser || users.getUserAdmin || users.getUser},
+                {label: t("sidebar.roles"), key: '/main/role', check: users.addRole || users.getRole},
             ].filter(item => item.check === true)
         },
         {
-            label: 'Hamkorlar',
+            label: t("sidebar.customers"),
             key: 'customers',
             check: users.addSupplier || users.getSupplier ||
                 users.addCustomer || users.getCustomerAdmin || users.getCustomer,
             icon: <Icon component={CustomerIcon}/>,
             children: [
-                {label: 'Ta\'minotchilar', key: '/main/supplier', check: users.addSupplier || users.getSupplier},
+                {label: t("sidebar.supplier"), key: '/main/supplier', check: users.addSupplier || users.getSupplier},
                 {
-                    label: 'Mijozlar',
+                    label: t("sidebar.customer"),
                     key: '/main/customer',
                     check: users.addCustomer || users.getCustomerAdmin || users.getCustomer
                 },
             ].filter(item => item.check === true)
         },
         {
-            label: 'Xisobotlar',
+            label:  t("sidebar.report"),
             key: 'grp2',
             check: !collapsed,
             disabled: true,
         },
         {
-            label: 'Mahsulotlar',
+            label:  t("sidebar.product"),
             key: 'products',
             check: users.getProductAdmin || users.getProduct || users.addProduct || users.productTypeRoles ||
                 users.measurementRoles || users.brandRoles || users.categoryRoles,
             icon: <Icon component={ProductIcon}/>,
             children: [
                 {
-                    label: 'Mahsulotlar',
+                    label: t("sidebar.product"),
                     key: '/main/productList',
                     check: users.getProductAdmin || users.getProduct || users.addProduct
                 },
-                {label: 'Mahsulot qo\'shish', key: '/main/addProduct', check: users.addProduct},
-                {label: 'Mahsulot turi', key: '/main/productType', check: users.productTypeRoles},
-                {label: 'Mahsulot import', key: '/main/importProduct', check: users.addProduct},
-                {label: 'Bo\'limlar', key: '/main/category', check: users.categoryRoles},
-                {label: 'Firmalar', key: '/main/brand', check: users.brandRoles},
-                {label: 'O\'lchov birligi', key: '/main/measurements', check: users.measurementRoles},
+                {label: t("sidebar.addProduct"), key: '/main/addProduct', check: users.addProduct},
+                {label: t("sidebar.addType"), key: '/main/productType', check: users.productTypeRoles},
+                {label: t("sidebar.importProduct"), key: '/main/importProduct', check: users.addProduct},
+                {label: t("sidebar.category"), key: '/main/category', check: users.categoryRoles},
+                {label: t("sidebar.brand"), key: '/main/brand', check: users.brandRoles},
+                {label:t("sidebar.measurement"), key: '/main/measurements', check: users.measurementRoles},
             ].filter(item => item.check === true)
         },
         {
-            label: 'Xarid',
+            label:  t("sidebar.purchase"),
             key: 'purchase',
             check: users.getPurchase || users.getPurchaseAdmin || users.addPurchase,
             icon: <Icon component={PurchaseIcon}/>,
             children: [
                 {
-                    label: 'Xaridlar',
+                    label: t("sidebar.purchases"),
                     key: '/main/purchaseList',
                     check: users.getPurchase || users.getPurchaseAdmin || users.addPurchase
                 },
-                {label: 'Xarid qo\'shish', key: '/main/addPurchase', check: users.addPurchase},
+                {label: t("sidebar.addPurchases"), key: '/main/addPurchase', check: users.addPurchase},
             ].filter(item => item.check === true)
         },
         {
-            label: 'Savdo',
+            label:  t("sidebar.trade"),
             key: 'trades',
             check: users.addTrade || users.getTrade || users.getTradeAdmin || users.getLoss || users.getLossAdmin || users.addLoss,
             icon: <Icon component={TradeIcon}/>,
             children: [
                 {
-                    label: 'Savdolar',
+                    label: t("sidebar.trades"),
                     key: '/main/tradeList',
                     check: users.addTrade || users.getTradeAdmin || users.getTrade
                 },
-                {label: 'Savdo oynasi', key: '/shopping', check: users.addTrade || users.getTrade},
-                {label: 'Mahsulot yo\'qotish', key: '/main/addLossProducts', check: users.addLoss},
+                {label: t("sidebar.shopWindow"), key: '/shopping', check: users.addTrade || users.getTrade},
+                {label: t("sidebar.lossProduct"), key: '/main/addLossProducts', check: users.addLoss},
                 {
-                    label: 'Yo\'qotilgan mahsulotlar',
+                    label: t("sidebar.tableLossProduct"),
                     key: '/main/lossProducts',
                     check: users.getTrade || users.getTradeAdmin
                 },
             ].filter(item => item.check === true)
         },
         {
-            label: 'Xarajatlar',
+            label:  t("sidebar.outlay"),
             key: 'outlay',
             check: users.addOutlay || users.getOutlay || users.getOutlayAdmin,
             icon: <Icon component={OutlayIcon}/>,
             children: [
                 {
-                    label: 'Xarajatlar',
+                    label: t("sidebar.outlay"),
                     key: '/main/outlayList',
                     check: users.addOutlay || users.getOutlay || users.getOutlayAdmin
                 },
-                {label: 'Xarajat turi', key: '/main/outlayCategoryList', check: users.addOutlay || users.getOutlay},
+                {label: t("sidebar.outlayCategory"), key: '/main/outlayCategoryList', check: users.addOutlay || users.getOutlay},
             ].filter(item => item.check === true)
         },
         {
-            label: 'Xisobotlar',
+            label:  t("sidebar.report"),
             key: 'reports',
             check: users.getInfo || users.getInfoAdmin,
             icon: <Icon component={ReportIcon}/>,
             children: [
-                {label: 'Xaridlar xisoboti', key: '/main/purchasesReport', check: true},
-                {label: 'Mijozlar xisoboti', key: '/main/customersReport', check: true},
-                {label: 'Ta\'minotchilar xisoboti', key: '/main/suppliersReport', check: true},
-                {label: 'Savdolar xisoboti', key: '/main/tradesReport', check: true},
-                {label: 'Mahsulotlar xisoboti', key: '/main/productsReport', check: true},
-                {label: 'Mahsulotlar qoldig\'i', key: '/main/remainProductReport', check: true},
-                {label: 'Xodimlar nazorati', key: '/main/usersReport', check: true},
-                {label: 'Yo\'qotilgan mahsulotlar', key: '/main/lostProductsReport', check: true},
+                {label: t("sidebar.purchaseReport"), key: '/main/purchasesReport', check: true},
+                {label:  t("sidebar.customerReport"), key: '/main/customersReport', check: true},
+                {label:  t("sidebar.supplierReport"), key: '/main/suppliersReport', check: true},
+                {label:  t("sidebar.tradeReport"), key: '/main/tradesReport', check: true},
+                {label:  t("sidebar.productReport"), key: '/main/productsReport', check: true},
+                {label:  t("sidebar.productRemain"), key: '/main/remainProductReport', check: true},
+                {label:  t("sidebar.usersControl"), key: '/main/usersReport', check: true},
+                {label:  t("sidebar.tableLossProduct"), key: '/main/lostProductsReport', check: true},
             ].filter(item => item.check === true)
         },
         {
-            label: 'Sozlamalar',
+            label:  t("sidebar.setting"),
             key: '/main/shopSetting',
-            check: users.editInvoice || users.editMyBusiness || users.getBranch || users.addBranch,
+            check: users.editInvoice || users.editMyBusiness || users.getBranch || users.addBranch || users.getProduct,
             icon: <Icon component={SettingIcon}/>,
         },
 

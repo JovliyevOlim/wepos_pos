@@ -1,18 +1,22 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, Select, Input, Space, Button, Tooltip} from 'antd';
 import './selectAnt.css'
 import arrowDown from "../../img/direction-down 01.svg";
 import {camelize} from "../../util";
-import {t} from "i18next";
+import {useTranslation} from "react-i18next";
 
 const {Search} = Input;
 
 
 function SelectAnt({name, permission, selectList, onChange, all, disabled, value}) {
-    const selectOption = permission ? [{value: '', label: all ? all : (t('ol.21'))},
 
+    const {t, i18n} = useTranslation()
+
+
+    const selectOption = permission ? [{value: '', label: all ? all : t('ol.21')},
             ...selectList.map((item) => ({value: item.id, label: camelize(item?.name)}))] :
         selectList.map((item) => ({value: item.id, label: camelize(item?.name)}))
+
 
     return (
         <>
@@ -40,13 +44,14 @@ function SelectAnt({name, permission, selectList, onChange, all, disabled, value
 export default SelectAnt;
 
 
-export function SearchAnt({name, onChange}) {
-
+export function SearchAnt({name, onChange, value}) {
+    const {t} = useTranslation()
 
     return (
         <>
             <h5 className={'selectLabel'}>{name}:</h5>
             <Search
+                value={value}
                 placeholder={t('ol.23')}
                 allowClear
                 onChange={onChange}

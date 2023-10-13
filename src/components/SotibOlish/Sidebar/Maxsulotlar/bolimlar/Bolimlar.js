@@ -12,7 +12,7 @@ import AgreeModal from "../../../../AgreeModal";
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import {ButtonAnt} from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
-import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 import CardBody from "../../../../Components/CardBody";
 
 function Bolimlar({
@@ -57,13 +57,13 @@ function Bolimlar({
 
                 {
                     users.categoryRoles &&
-                    <ButtonAnt text={t('ol.78')} type={'primary'} onClick={() => {
+                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
                         editBolimF(values.id)
                     }
                     } icon={<EditOutlined/>}/>
                 }
                 {
-                    users.categoryRoles && <ButtonAnt text={t('ol.79')} danger={true} type={'primary'} onClick={() => {
+                    users.categoryRoles && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
                         deleteCategoryById(values.id)
                     }
                     } icon={<DeleteOutlined/>}/>
@@ -152,10 +152,10 @@ function Bolimlar({
     return (
         <div>
                 <div  className="col-md-12 d-flex justify-content-between align-items-center mb-5">
-                    <MainHeaderText text={t('as.1')}/>
+                    <MainHeaderText text={t('sidebar.category')}/>
                     {
                         users.categoryRoles ?
-                            <ButtonAnt onClick={toggle} type={'primary'} text={t('ol.2')}/> : ''
+                            <ButtonAnt onClick={toggle} type={'primary'} icon={<PlusOutlined />} text={t('button.add')}/> : ''
                     }
                 </div>
 

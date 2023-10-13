@@ -19,7 +19,7 @@ import CardBody from "../../../../Components/CardBody";
 import SelectAnt, {ButtonAnt, SearchAnt, TableButton} from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
 import {Avatar} from "antd";
-import {DeleteOutlined, EditOutlined, EyeOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined} from "@ant-design/icons";
 
 
 
@@ -97,13 +97,13 @@ function HodimlarRoyhati({
                 {/*} icon={<EyeOutlined/>}/>*/}
                 {
                     users.editUser &&
-                    <ButtonAnt text={t('ol.78')} type={'primary'} onClick={() => {
+                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
                         history.push('/main/addUser/' + values.id)
                     }
                     } icon={<EditOutlined/>}/>
                 }
                 {
-                    users.deleteUser && <ButtonAnt text={t('ol.79')} danger={true} type={'primary'} onClick={() => {
+                    users.deleteUser && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
                         deleteUserById(values.id)
                     }
                     } icon={<DeleteOutlined/>}/>
@@ -192,11 +192,11 @@ function HodimlarRoyhati({
     return (
         <>
             <div className="d-flex justify-content-between align-items-center">
-                <MainHeaderText text={t('ol.9')}/>
+                <MainHeaderText text={t('sidebar.users')}/>
                 {
                     users.addUser ?
                         <Link to={'/main/addUser'}>
-                            <ButtonAnt text={t('ol.2')} type={'primary'}/>
+                            <ButtonAnt text={t('button.add')} icon={<PlusOutlined/>} type={'primary'}/>
                         </Link> : ''
                 }
             </div>
@@ -212,7 +212,7 @@ function HodimlarRoyhati({
                             {
                                 users.getRole &&
                                 <div className="col-12 col-sm-6  col-md-6 col-lg-3 p-sm-2">
-                                    <SelectAnt name={t('ol.3')}
+                                    <SelectAnt name={t('select.users')}
                                                onChange={(e) => setRoleId(e)}
                                                selectList={LavozimReducer.roles} permission={users.getBalanceAdmin}/>
                                 </div>

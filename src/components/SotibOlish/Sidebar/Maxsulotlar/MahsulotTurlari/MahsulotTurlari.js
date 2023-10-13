@@ -17,7 +17,7 @@ import MainHeaderText, {AddOrEditText} from "../../../../Components/MainHeaderTe
 import {ButtonAnt} from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
 import CommonTable from "../../../../Components/CommonTable";
-import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 
 function MahsulotTurlari({
                              saveProductType,
@@ -74,14 +74,14 @@ function MahsulotTurlari({
             render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
                 {
                     users.productTypeRoles &&
-                    <ButtonAnt text={t('ol.78')} type={'primary'} onClick={() => {
+                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
                         editt(values.id)
                     }
                     } icon={<EditOutlined/>}/>
                 }
                 {
                     users.productTypeRoles &&
-                    <ButtonAnt text={t('ol.79')} danger={true} type={'primary'} onClick={() => {
+                    <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
                         deleteProductTypeById(values.id)
                     }
                     } icon={<DeleteOutlined/>}/>
@@ -228,8 +228,8 @@ function MahsulotTurlari({
     return (
         <div>
             <div className="col-md-12 d-flex align-items-center justify-content-between">
-                <MainHeaderText text={t('ProductType.1')}/>
-                <ButtonAnt onClick={toggle} type={'primary'} text={t('Employ.4')}/>
+                <MainHeaderText text={t('sidebar.addType')}/>
+                <ButtonAnt onClick={toggle} type={'primary'} icon={<PlusOutlined/>} text={t('button.add')}/>
             </div>
 
             <CardBody>

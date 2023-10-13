@@ -96,30 +96,30 @@ function Home({saveusers, users, changeerror, rememberMe}) {
                         <div className="col-12  col-md-6 d-flex justify-content-center align-items-center flex-column">
                             <div className="kirish">
                                 <div className="kirish-text">
-                                    <h5>Xush kelibsiz</h5>
+                                    <h5>{t('login.welcome')}</h5>
                                     <p className={'p'}>
-                                        Xush kelibsiz ! Iltimos, ma'lumotlaringizni kiriting.
+                                        {t('login.please')}
                                     </p>
                                 </div>
                                 <div className="kirish-inputs">
                                     <div className={`kirish-input`}>
                                         <div className={'kirish-label'}>
                                             <label className={'kirish-label-text'}
-                                                   htmlFor="login">Login <small>*</small></label>
+                                                   htmlFor="login">{t('login.login')} <small>*</small></label>
                                         </div>
                                         <div className={'kirish-input-items'}>
                                             <input onChange={login} id='login' value={inputlogin} type="text"
-                                                   placeholder={'Login'}/>
+                                                   placeholder={t('login.login')}/>
                                             <img src={person} alt="person"/>
                                         </div>
                                     </div>
                                     <div className={`kirish-input`}>
                                         <div className={'kirish-label'}>
-                                            <label className={'kirish-label-text'} htmlFor="password">Parol <small>*</small></label>
+                                            <label className={'kirish-label-text'} htmlFor="password">{t('login.password')} <small>*</small></label>
                                         </div>
                                         <div className={'kirish-input-items'}>
                                             <input onChange={parol} id={'password'} value={inputparol} type={typeinput}
-                                                   placeholder={'Password'}/>
+                                                   placeholder={t('login.password')}/>
                                             <img src={password} onClick={changetypeinput} alt="password"/>
                                         </div>
                                     </div>
@@ -136,13 +136,11 @@ function Home({saveusers, users, changeerror, rememberMe}) {
                                             </svg>
                                     </label>
                                     <div className="kirish-checkbox-text">
-                                        <label  htmlFor={'check'}>Meni eslab
-                                            qol</label>
-                                        {/*<a href="">{t('Welcome.6')}</a>*/}
+                                        <label  htmlFor={'check'}>{t('login.remember')}</label>
                                     </div>
                                 </div>
                                 <button onClick={testusers} disabled={disabled}
-                                        className={'kirish-button'}>{t('Welcome.7')}
+                                        className={'kirish-button'}>{t('login.enter')}
                                 </button>
                             </div>
                         </div>

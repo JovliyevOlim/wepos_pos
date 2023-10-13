@@ -24,7 +24,7 @@ import MainHeaderText, {AddOrEditText} from "../../../../Components/MainHeaderTe
 import {ButtonAnt, SearchAnt, TableButton} from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
 import {camelize} from "../../../../../util";
-import {DeleteOutlined, DollarOutlined, EditOutlined} from "@ant-design/icons";
+import {DeleteOutlined, DollarOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 import CommonTable from "../../../../Components/CommonTable";
 import {Space, Typography} from 'antd';
 
@@ -100,11 +100,11 @@ function Taminotchilar({
             width: 200,
             render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
                 {users.editSupplier &&
-                    <ButtonAnt  type={'primary'} onClick={() => editt(values.id)} text={t('ol.78')}
+                    <ButtonAnt  type={'primary'} onClick={() => editt(values.id)} text={t('button.edit')}
                                  icon={<EditOutlined/>}/>
                 }
 
-                <ButtonAnt color={'white'} bgColor={'green'} type={'primary'} text={'Qarz uzish'}
+                <ButtonAnt color={'white'} bgColor={'green'} type={'primary'} text={t('button.payDebt')}
                              onClick={() => debt2(values.id)}
                              icon={<DollarOutlined/>}/>
                 {
@@ -253,11 +253,11 @@ function Taminotchilar({
     return (
         <>
             <div className={'d-flex align-items-center justify-content-between mb-5'}>
-                <MainHeaderText text={t('bal.44')}/>
+                <MainHeaderText text={t('sidebar.supplier')}/>
 
                 {
                     users.addSupplier ?
-                        <ButtonAnt onClick={() => setActive(true)} text={t('bal.21')} type={'primary'}/> : ''
+                        <ButtonAnt onClick={() => setActive(true)} icon={<PlusOutlined />} text={t('button.add')} type={'primary'}/> : ''
                 }
             </div>
 

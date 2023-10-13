@@ -37,7 +37,7 @@ import {InputNumber} from "antd";
 import allbusinessreducer, {getOneBusiness} from "../../SUPERADMIN/reducers/allbusinessreducer";
 import Edit from "../../../../../img/Edit.png";
 import Loading from "../../../../Loading";
-import SelectAnt from "../../../../Components/SelectAnt";
+import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../Components/SelectAnt";
 import kassa from "../../../../../img/money bag coin2.svg"
 import lastTrade from "../../../../../img/shopping basket.svg"
 import back from "../../../../../img/arrow back.svg"
@@ -45,7 +45,7 @@ import searchIcon from "../../../../../img/Search.svg"
 import waiting from "../../../../../img/money bag coinshop.svg"
 import turliTolov from "../../../../../img/card-withdrawshop.svg"
 import debtTrade from "../../../../../img/donate coin.svg"
-import plastik from "../../../../../img/money check.svg"
+import plastik from "../../../../../img/money check2.svg"
 import bank from "../../../../../img/bank.svg"
 import naqd from "../../../../../img/money coin.svg"
 import trash from "../../../../../img/Trash.svg"
@@ -56,6 +56,9 @@ import remove from "../../../../../img/remove.svg"
 import {Button, Drawer, Radio, Space} from 'antd';
 import {BaseUrl} from "../../../../../middleware";
 import defaultProduct from '../../../../../img/image 3.jpg'
+import {AddOrEditText} from "../../../../Components/MainHeaderText";
+import {DeleteOutlined, EditOutlined, EyeOutlined} from "@ant-design/icons";
+import CommonTable from "../../../../Components/CommonTable";
 
 
 function SavdoOynasi({
@@ -82,6 +85,101 @@ function SavdoOynasi({
                      }) {
     const {t} = useTranslation();
     const history = useHistory();
+    const columns = [
+        {
+            title: 'Id',
+            dataIndex: 'index',
+            rowScope: 'row',
+            width: '2%',
+        },
+        {
+            title: t('ol.11'),
+            dataIndex: 'createdAt',
+            key: 'createdAt',
+            render: (item) => <p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>
+        },
+        {
+            title: t('Trade.5'),
+            dataIndex: 'invoice',
+            key: 'invoice',
+            width: '80px'
+        },
+        // {
+        //     title: t('Pagination.10'),
+        //     dataIndex: 'customerName',
+        //     key: 'customerName',
+        // },
+        // {
+        //     title: t('ol.10'),
+        //     dataIndex: 'userFio',
+        //     key: 'userFio',
+        // },
+        // {
+        //     title: t('ol.13'),
+        //     dataIndex: 'branchName',
+        //     key: 'branchName',
+        // },
+        // {
+        //     title: t('ol.18'),
+        //     dataIndex: 'paymentStatus',
+        //     key: 'paymentStatus',
+        // },
+        // {
+        //     title: t('ol.15'),
+        //     dataIndex: 'totalSum',
+        //     key: 'totalSum',
+        //     render: (item) => <p className={'m-0'}>{item} so'm</p>
+        // },
+        // {
+        //     title: t('ol.16'),
+        //     dataIndex: 'paidSum',
+        //     key: 'paidSum',
+        //     render: (item) => <p className={'m-0'}>{item} so'm</p>,
+        //     width: '100px'
+        // },
+        // {
+        //     title: t('ol.17'),
+        //     dataIndex: 'debtSum',
+        //     key: 'debtSum',
+        //     render: (item) => <p className={'m-0'}>{item} so'm</p>
+        // },
+        // {
+        //     title: t('ol.20'),
+        //     key: 'operation',
+        //     width: 150,
+        //     render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
+        //         {
+        //             users.getTrade &&
+        //             <ButtonAnt type={'primary'} text={'Ko\'rish'} bgColor={'aqua'} onClick={() => {
+        //                 viewTradeInfoById(item?.id)
+        //             }
+        //             } icon={<EyeOutlined/>}/>
+        //         }
+        //
+        //         {
+        //             users.editTrade && values.editable &&
+        //             <ButtonAnt text={t('ol.78')} type={'primary'} onClick={() => {
+        //                 history.push('/shopping/' + values?.id)
+        //             }
+        //             } icon={<EditOutlined/>}/>
+        //         }
+        //         {
+        //             users.editTrade && values.editable &&
+        //             <ButtonAnt text={t('mah.40')} type={'primary'} bgColor={'green'} onClick={() => {
+        //                 history.push('/repeatProducts/' + values?.id + "/" + values?.id)
+        //             }
+        //             } icon={<EditOutlined/>}/>
+        //         }
+        //         {
+        //             users.deleteTrade && values.editable && <ButtonAnt text={t('ol.79')} danger={true} type={'primary'}
+        //                                                                onClick={() => values?.customerName ? deleteTradeByIdIsCustomer(item.id) : deleteTradeById(item.id)}
+        //                                                                icon={<DeleteOutlined/>}/>
+        //         }
+        //
+        //     </div>,
+        // },
+    ];
+
     const [open, setOpen] = useState(false);
     const showDrawer = () => {
         setOpen(!open);
@@ -94,7 +192,7 @@ function SavdoOynasi({
     const [isViewSearchProduct, setIsViewSearchProduct] = useState(false)
     const [thisDay, setThisDay] = useState(formatDateMinus(new Date()))
     const [IsCheck, setIsCheck] = useState(false)
-    const [categoryId, setCategoryId] = useState(users.businessId)
+    const [categoryId, setCategoryId] = useState('')
     const [state, dispatch] = useReducer(reducer, {
         name: '',
         branchId: '',
@@ -376,7 +474,7 @@ function SavdoOynasi({
     function sMinus() {
         arr1.map((item) => {
             if (item.productId === changesId) {
-                item.quantity = item.quantity === 0 ? 0 : item.quantity-1
+                item.quantity = item.quantity === 0 ? 0 : item.quantity - 1
                 item.totalSalePrice = item.quantity * item.price
                 item.noChangesTotalSalePrice = item.quantity * item.noChangesPrice
                 item.active = item.quantity > item.amount;
@@ -934,6 +1032,7 @@ function SavdoOynasi({
                         <input type="date" value={thisDay} className={'shopping-datepicker'}
                                onChange={(e) => setThisDay(e.target.value)}
                         />
+
                     </div>
                     <div className="shopping-header-item">
                         <div style={{width: '150px'}}>
@@ -943,26 +1042,29 @@ function SavdoOynasi({
                                        permission={false} onChange={(e) => changeGrossPriceType(e)}/>
                         </div>
                         {tradeIdForEdit ? "" :
-                            <button className={'shopping-header-btn'} onClick={toggle}
-                                    data-tip={t('mah.79')}>Kassaga olish <img src={kassa} alt="kassa"/></button>
+                            <div className={'shopping-btn-header'} onClick={toggle}
+                                 data-tip={t('mah.79')}>
+                                <p className={'shopping-btn-text-header'}>Kassaga olish</p>
+                                <img src={kassa} className={'shopping-btn-header-icon'} alt="kassa"/>
+                            </div>
                         }
-
                         <ReactTooltip/>
-
                         {
                             users.getTrade &&
-                            <button className={'shopping-header-btn'} onClick={toggle4}
-                            >{t('mah.80')} <img src={lastTrade} alt="lastTrade"/>
-                            </button>
+                            <div className={'shopping-btn-header'} onClick={toggle4}
+                            ><p className={'shopping-btn-text-header'}>
+                                    {t('mah.80')}
+                                </p>
+                                <img src={lastTrade} className={'shopping-btn-header-icon'} alt="lastTrade"/>
+                            </div>
                         }
 
-                        <Link to={'/main/tradeList'}>
-                            <button className={'shopping-header-btnDanger'} onClick={() => {
-                                savdooynasi()
-                                clear()
-                            }}>
-                                Ortga <img src={back} alt="back"/>
-                            </button>
+                        <Link to={'/main/tradeList'} style={{backgroundColor: 'red'}} onClick={() => {
+                            savdooynasi()
+                            clear()
+                        }} className={'shopping-btn-header'}>
+                            <p className={'shopping-btn-text-header'} style={{color:'#ffffff'}}>Ortga</p>
+                            <img src={back} className={'shopping-btn-header-icon'} alt="back"/>
                         </Link>
                     </div>
                 </div>
@@ -1165,89 +1267,98 @@ function SavdoOynasi({
                     <div style={{width: open ? '30%' : '35%'}} className="shopping-body-right">
                         <div className={'button-changes'}>
                             <div className={'btn-change'} onClick={sMinus}>
-                                <img src={minus} alt="minus"/>
+                                <img src={minus} className={'btn-change-icon'} alt="minus"/>
                                 <p className={'btn-change-text'} style={{color: '#FF7272'}}>Kamaytirish</p>
                             </div>
                             <div className={'btn-change'} onClick={() => setCount(changesId)}>
-                                <img src={plus} alt="plus"/>
+                                <img src={plus} alt="plus" className={'btn-change-icon'}/>
                                 <p className={'btn-change-text'} style={{color: '#377DFF'}}>Qo'shish</p>
                             </div>
                             <div className={'btn-change'} onClick={deleteM}>
-                                <img src={remove} alt="remove"/>
-                                <p className={'btn-change-text'} style={{color: '#4E5D78'}}>O'chirish</p>
+                                <img src={remove} alt="remove" className={'btn-change-icon'}/>
+                                <p className={'btn-change-text'} style={{color: '#B0B7C3'}}>O'chirish</p>
                             </div>
                         </div>
-                        {
-                            tradeIdForEdit ? '' :
-                                <div onClick={toggle8}
-                                     className={'shopping-left-btn'}>
-                                    <img src={waiting} className={'btn-icon'} alt="waiting"/>
-                                    <p className={'m-0'} style={{color: '#FFC040'}}>Ushlab turish</p>
+                        <div className={'d-flex justify-content-between flex-wrap  align-items-center w-100'}>
+                            {
+                                tradeIdForEdit ? '' :
+                                    <div onClick={toggle8}
+                                         className={'shopping-btn-top2'}>
+                                        <img src={waiting}  className={'shopping-btn-icon'} alt="waiting"/>
+                                        <p style={{color:'#FFC040'}} className={'shopping-btn-text'}>Ushlab turish</p>
+                                    </div>
+                            }
+                            {
+                                !tradeIdForEdit &&
+                                <div onClick={clear} className={'shopping-btn-top2'}><img src={trash}
+                                                                                          className={'shopping-btn-icon'}
+                                                                                          alt="waiting"/>
+                                    <p style={{color:'#4E5D78'}} className={'shopping-btn-text'}>Tozalash</p>
                                 </div>
-                        }
-                        {/*{*/}
-                        {/*    !tradeIdForEdit &&*/}
-                        {/*    <div onClick={clear} className={'shopping-left-btn'}><img src={trash} className={'btn-icon'}*/}
-                        {/*                                                              alt="waiting"/>*/}
-                        {/*        <p className={'m-0'} style={{color: '#4E5D78'}}>Tozalash</p>*/}
-                        {/*    </div>*/}
-                        {/*}*/}
-                        {
-                            tradeIdForEdit ? editActiveButton === "qarz" ? '' :
-                                    <div className={'shopping-left-btn'}
-                                         style={{border: paymentTypeCheck === 'turli' ? '2px solid #38CB89' : 'none'}}
-                                         onClick={() => setPaymentTypeCheck('turli')}><img src={turliTolov}
-                                                                                           className={'btn-icon'}
-                                                                                           alt="waiting"/>
-                                        <p className={'m-0'} style={{color: '#38CB89'}}>Turli to'lov</p></div>
-                                : <div className={'shopping-left-btn'}
-                                       style={{border: paymentTypeCheck === 'turli' ? '2px solid #38CB89' : 'none'}}
-                                       onClick={() => setPaymentTypeCheck('turli')}><img src={turliTolov}
-                                                                                         className={'btn-icon'}
-                                                                                         alt="waiting"/>
-                                    <p className={'m-0'} style={{color: '#38CB89'}}>Turli to'lov</p></div>
-                        }
-                        {
-                            tradeIdForEdit ? editActiveButton === "turli" ? "" :
-                                    <div onClick={customer ? () => setPaymentTypeCheck('qarz')
-                                        : () => {
-                                            toast.error(t('mah.88'))
-                                        }
-                                    } style={{border: paymentTypeCheck === 'qarz' ? '2px solid #FF7272' : 'none'}}
-                                         className={'shopping-left-btn'}><img
-                                        src={debtTrade} className={'btn-icon'}
-                                        alt="waiting"/>
-                                        <p className={'m-0'} style={{color: '#FF7272'}}>Qarzga sotish</p></div>
-                                : <div onClick={customer ? () => setPaymentTypeCheck('qarz') : () => {
-                                    toast.error(t('mah.88'))
-                                }
-                                } style={{border: paymentTypeCheck === 'qarz' ? '2px solid #FF7272' : 'none'}}
-                                       className={'shopping-left-btn'}><img src={debtTrade} className={'btn-icon'}
+                            }
+                        </div>
+                        <div className={'d-flex justify-content-between flex-wrap  align-items-center w-100'}>
+                            {
+                                tradeIdForEdit ? editActiveButton === "qarz" ? '' :
+                                        <div className={'shopping-btn-top2'}
+                                             style={{border: paymentTypeCheck === 'turli' ? '3px solid red' : 'none'}}
+                                             onClick={() => setPaymentTypeCheck('turli')}><img src={turliTolov}
+                                                                                               className={'shopping-btn-icon'}
+                                                                                               alt="waiting"/>
+                                            <p style={{color:'#38CB89'}} className={'shopping-btn-text'}>Turli to'lov</p></div>
+                                    : <div className={'shopping-btn-top2'}
+                                           style={{border: paymentTypeCheck === 'turli' ? '3px solid red' : 'none'}}
+                                           onClick={() => setPaymentTypeCheck('turli')}><img src={turliTolov}
+                                                                                             className={'shopping-btn-icon'}
+                                                                                             alt="waiting"/>
+                                        <p style={{color:'#38CB89'}} className={'shopping-btn-text'}>Turli to'lov</p></div>
+                            }
+                            {
+                                tradeIdForEdit ? editActiveButton === "turli" ? "" :
+                                        <div onClick={customer ? () => setPaymentTypeCheck('qarz')
+                                            : () => {
+                                                toast.error(t('mah.88'))
+                                            }
+                                        } style={{border: paymentTypeCheck === 'qarz' ? '3px solid red' : 'none'}}
+                                             className={'shopping-btn-top2'}><img
+                                            src={debtTrade} className={'shopping-btn-icon'}
+                                            alt="waiting"/>
+                                            <p style={{color:'#FF7272'}} className={'shopping-btn-text'}>Qarzga sotish</p></div>
+                                    : <div onClick={customer ? () => setPaymentTypeCheck('qarz') : () => {
+                                        toast.error(t('mah.88'))
+                                    }
+                                    } style={{border: paymentTypeCheck === 'qarz' ? '3px solid red' : 'none'}}
+                                           className={'shopping-btn-top2'}><img src={debtTrade}
+                                                                            className={'shopping-btn-icon'}
                                                                             alt="waiting"/>
-                                    <p className={'m-0'} style={{color: '#FF7272'}}>Qarzga sotish</p></div>
-                        }
+                                        <p style={{color:'#FF7272'}} className={'shopping-btn-text'}>Qarzga sotish</p></div>
+                            }
 
-                        {
-                            PayReducer.paymethod &&
-                            PayReducer.paymethod.map(item =>
-                                match.params.remainId || tradeIdForEdit ?
-                                    editActiveButton === item.id &&
-                                    <button key={item.id}
-                                            onClick={() => setPaymentTypeCheck(item.id)}
-                                            className={'shopping-left-payment'}
-                                            style={{border: paymentTypeCheck === item.id ? '2px solid #377DFF' : 'none'}}
-                                    >
-                                        <img src={checkImg(item.name)} alt="waiting"/>
-                                        <p className={'m-0'}> {camelize(item.name)}</p>
-                                    </button> : <button key={item.id}
-                                                        style={{border: paymentTypeCheck === item.id ? '2px solid #377DFF' : 'none'}}
-                                                        onClick={() => setPaymentTypeCheck(item.id)}
-                                                        className={'shopping-left-payment'}>
-                                    <img src={checkImg(item.name)} alt="waiting"/>
-                                    <p className={'m-0'}> {camelize(item.name)}</p>
-                                </button>
-                            )
-                        }
+                        </div>
+                        <div className={'d-flex justify-content-between flex-wrap  align-items-center w-100'}>
+                            {
+                                PayReducer.paymethod &&
+                                PayReducer.paymethod.map(item =>
+                                    match.params.remainId || tradeIdForEdit ?
+                                        editActiveButton === item.id &&
+                                        <button key={item.id}
+                                                onClick={() => setPaymentTypeCheck(item.id)}
+                                                className={'shopping-btn'}
+                                                style={{border: paymentTypeCheck === item.id ? '3px solid red' : 'none'}}
+                                        >
+                                            <img src={checkImg(item.name)} alt="waiting"
+                                                 className={'shopping-btn-icon-pay'}/>
+                                            <p style={{color:'#377DFF'}} className={'shopping-btn-text'}> {camelize(item.name)}</p>
+                                        </button> : <button key={item.id}
+                                                            style={{border: paymentTypeCheck === item.id ? '3px solid red' : 'none'}}
+                                                            onClick={() => setPaymentTypeCheck(item.id)}
+                                                            className={'shopping-btn'}>
+                                        <img src={checkImg(item.name)} alt="waiting" className={'shopping-btn-icon-pay'}/>
+                                        <p style={{color:'#377DFF'}} className={'shopping-btn-text'}> {camelize(item.name)}</p>
+                                    </button>
+                                )
+                            }
+                        </div>
                         {
                             tradeIdForEdit || match.params.remainId ?
                                 <div className={'shop-totalSum'}>
@@ -1271,6 +1382,373 @@ function SavdoOynasi({
                     </div>
                 </div>
 
+                {/*<div className="shopping-body">*/}
+                {/*    <div style={{width: open ? '25%' : '5%'}} className="shopping-body-left">*/}
+                {/*        <div className="shopping-products">*/}
+                {/*            <div style={{justifyContent: open ? 'space-between' : "center"}} className={'d-flex'}>*/}
+                {/*                {*/}
+                {/*                    open && <div style={{width: '60%'}}>*/}
+                {/*                        {*/}
+                {/*                            BolimReducer.bolimlar?.length > 0*/}
+                {/*                            &&*/}
+                {/*                            <SelectAnt value={categoryId} onChange={(e) => setCategoryId(e)}*/}
+                {/*                                       all={'Kategoriya tanlang'}*/}
+                {/*                                       permission={true} selectList={BolimReducer.bolimlar}/>*/}
+                {/*                        }*/}
+                {/*                    </div>*/}
+
+                {/*                }*/}
+                {/*                {*/}
+                {/*                    tradeIdForEdit ? '' :*/}
+                {/*                        <div onClick={showDrawer}*/}
+                {/*                             className={'shopping-left-product-btn'}>*/}
+                {/*                            <img src={products} className={'btn-icon'} alt="waiting"/>*/}
+                {/*                        </div>*/}
+                {/*                }*/}
+                {/*            </div>*/}
+                {/*            {*/}
+                {/*                open && <div className={'shopping-product-list'}>*/}
+                {/*                    {*/}
+
+                {/*                        MaxsulotlarRoyxariReducer.productForShopping.length > 0 ?*/}
+                {/*                            MaxsulotlarRoyxariReducer.productForShopping.map((item, index) => <div*/}
+                {/*                                className={'shop-product-card'}*/}
+                {/*                                key={index} onClick={() => {*/}
+                {/*                                pushesh(item)*/}
+                {/*                            }}>*/}
+                {/*                                {*/}
+                {/*                                    item.photoId === null ?*/}
+                {/*                                        <img className={'shop-product-image'} src={defaultProduct}*/}
+                {/*                                             alt={item.name}/>*/}
+                {/*                                        : <img className={'shop-product-image'}*/}
+                {/*                                               src={`${BaseUrl}/attachment/download/${item.photoId}`}*/}
+                {/*                                               alt="###"/>*/}
+
+                {/*                                }*/}
+                {/*                                <p className={'shop-product-name'}>{item.name}</p>*/}
+                {/*                                <p className={'shop-product-price'}>{!grossPriceType ? item.salePrice : item.grossPrice} {t('mah.39')}</p>*/}
+                {/*                            </div>) : <div>*/}
+                {/*                                <h4 className={'text-center'}>{MaxsulotlarRoyxariReducer.message}</h4>*/}
+                {/*                            </div>*/}
+
+                {/*                    }*/}
+                {/*                </div>*/}
+
+                {/*            }*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*    <div style={{width: open ? '45%' : '60%'}} className="shopping-body-middle">*/}
+                {/*        <div className="shopping-body-header-item">*/}
+                {/*            <h5 className={'shop-header-text'}>Filial</h5>*/}
+                {/*            <div style={{width: '250px'}}>*/}
+                {/*                <SelectAnt disabled={match.params.remainId || tradeIdForEdit ? true : false}*/}
+                {/*                           value={mainBranchId ? mainBranchId : users.branchId} permission={false}*/}
+                {/*                           selectList={users.branches} onChange={(e) => {*/}
+                {/*                    setMainBranchId(e)*/}
+                {/*                    setarr1([])*/}
+                {/*                    setSearch('')*/}
+                {/*                    setIsViewSearchProduct(false)*/}
+                {/*                }}/>*/}
+                {/*            </div>*/}
+                {/*            /!*{*!/*/}
+                {/*            /!*    (tradeIdForEdit) && match.params.remainId ? <h5>*!/*/}
+                {/*            /!*            <h5 className={'shop-header-text'}>{t('mah.74')}</h5>*!/*/}
+                {/*            /!*        </h5> :*!/*/}
+                {/*            /!*        tradeIdForEdit ?*!/*/}
+                {/*            /!*            <h5 className={'shop-header-text'}>{t('mah.75')}</h5> :*!/*/}
+                {/*            /!*            <h5 className={'shop-header-text'}>{t('mah.76')}</h5>*!/*/}
+                {/*            /!*}*!/*/}
+                {/*            <input type="date" value={thisDay} className={'shopping-datepicker'}*/}
+                {/*                   onChange={(e) => setThisDay(e.target.value)}*/}
+                {/*            />*/}
+                {/*            <div style={{width: '150px'}}>*/}
+                {/*                <SelectAnt disabled={tradeIdForEdit ? true : IsGross}*/}
+                {/*                           selectList={[{id: 'DONA', name: 'Dona'}, {id: 'OPTOM', name: 'Optom'}]}*/}
+                {/*                           value={grossPriceTypeString}*/}
+                {/*                           permission={false} onChange={(e) => changeGrossPriceType(e)}/>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*        <div className="shopping-body-header">*/}
+                {/*            <div style={{width: '250px'}}>*/}
+                {/*                <SelectAnt disabled={tradeIdForEdit ? true : false}*/}
+                {/*                           all={'Mijozni tanlang'}*/}
+                {/*                           selectList={CustomerReducer.customersTrade}*/}
+                {/*                           onChange={selectCustomer}*/}
+                {/*                           permission={true}*/}
+                {/*                />*/}
+                {/*            </div>*/}
+                {/*            {*/}
+                {/*                !tradeIdForEdit && users.addCustomer ?*/}
+                {/*                    <button onClick={addCustomerToggle}*/}
+                {/*                            className={'shopping-plus'}>+*/}
+                {/*                    </button> : ''*/}
+                {/*            }*/}
+                {/*            {*/}
+                {/*                match.params.remainId ? " " :*/}
+                {/*                    <div className="shopping-search">*/}
+                {/*                        <input ref={inputRef} type="text"*/}
+                {/*                               value={search}*/}
+                {/*                               onChange={mahsulotnomi}*/}
+                {/*                               autoFocus={true}*/}
+                {/*                               placeholder={"Maxsulot nomi yoki barcode"}/>*/}
+                {/*                        <img src={searchIcon} alt="search"/>*/}
+                {/*                        {*/}
+                {/*                            MaxsulotlarRoyxariReducer.productSearch.length > 0 && isViewSearchProduct &&*/}
+                {/*                            <div className={'shopping-search-list'}>*/}
+                {/*                                {*/}
+                {/*                                    MaxsulotlarRoyxariReducer.productSearch.map(item =>*/}
+                {/*                                        <button className={'shopping-search-button'} key={item.id}*/}
+                {/*                                                onClick={() => pushesh(item)}>*/}
+                {/*                                            <p className={'p-0 m-0'}>{item.name} ({item.barcode})</p>*/}
+                {/*                                            <p className={'p-0 m-0'}>{t('mah.83')} {item.amount} {item.measurementName}</p>*/}
+                {/*                                        </button>*/}
+                {/*                                    )*/}
+                {/*                                }*/}
+                {/*                            </div>*/}
+                {/*                        }*/}
+                {/*                    </div>*/}
+
+                {/*            }*/}
+                {/*        </div>*/}
+                {/*        <div className="shopping-body-body">*/}
+                {/*            <div className="table-responsive">*/}
+                {/*                <table className={'shopping-table'}>*/}
+                {/*                    <thead>*/}
+                {/*                    <tr>*/}
+                {/*                        <th width={30}>ID</th>*/}
+                {/*                        <th>{t('ProductList.1')}</th>*/}
+                {/*                        <th className={'text-center'}>{t('ProductEdit.7')}</th>*/}
+                {/*                        <th className={'text-center'}>Narxi</th>*/}
+                {/*                        <th className={'text-center'}>Jami</th>*/}
+                {/*                    </tr>*/}
+                {/*                    </thead>*/}
+                {/*                    <tbody>*/}
+                {/*                    {*/}
+                {/*                        arr1.map((item, index) =>*/}
+                {/*                                !item.delete*/}
+                {/*                                && (*/}
+                {/*                                    <tr style={{*/}
+                {/*                                        height: '70px',*/}
+                {/*                                        border: item.productId === changesId ? '2px solid red' : 'none',*/}
+                {/*                                        cursor: 'pointer',*/}
+                {/*                                    }}*/}
+                {/*                                        key={item?.id} onClick={() => setChangesId(item.productId)}>*/}
+                {/*                                        <td>{index + 1}</td>*/}
+                {/*                                        <td>{item?.name}</td>*/}
+                {/*                                        <td className={'text-center'}>*/}
+                {/*                                            {*/}
+                {/*                                                item.productId === changesId ?*/}
+                {/*                                                    <div>*/}
+                {/*                                                        <InputNumber*/}
+                {/*                                                            value={item?.quantity}*/}
+                {/*                                                            min={0}*/}
+                {/*                                                            step={'number'}*/}
+                {/*                                                            max={match.params.remainId && item?.noQuantity}*/}
+                {/*                                                            onChange={(e) => {*/}
+                {/*                                                                changeCount(e, index)*/}
+                {/*                                                            }}*/}
+                {/*                                                            className={'shop-change-number'}*/}
+                {/*                                                        />*/}
+                {/*                                                    </div> : item.quantity*/}
+                {/*                                            }*/}
+
+                {/*                                            <div className="col-md-12"> {*/}
+                {/*                                                item?.active ?*/}
+                {/*                                                    <p style={{fontSize: '10px'}}*/}
+                {/*                                                       className={'text-danger text-center p-0 m-0'}><strong*/}
+                {/*                                                        style={{fontSize: '14px'}}> {item?.amount}</strong> {item?.measurementName} bor*/}
+                {/*                                                        ! </p> : ''*/}
+                {/*                                            }</div>*/}
+                {/*                                        </td>*/}
+                {/*                                        <td className={'text-center'}>*/}
+                {/*                                            <div*/}
+                {/*                                                className={'d-flex flex-column justify-content-start align-items-center'}>*/}
+                {/*                                                {*/}
+                {/*                                                    item?.noChangesPrice !== item?.price &&*/}
+                {/*                                                    <del*/}
+                {/*                                                        className={'mb-1 text-danger'}>{parseFloat(item?.noChangesPrice).toFixed(0)} {t('mah.39')}</del>*/}
+                {/*                                                }*/}
+                {/*                                                {*/}
+                {/*                                                    item.productId === changesId ?*/}
+                {/*                                                        <InputNumber*/}
+                {/*                                                            value={item?.price}*/}
+                {/*                                                            min={0}*/}
+                {/*                                                            disabled={IsDiscount}*/}
+                {/*                                                            onChange={(e) =>*/}
+                {/*                                                                handleChangeBuyPrice(e, index)}*/}
+                {/*                                                            className={'shop-change-number'}*/}
+                {/*                                                        /> : item.price*/}
+                {/*                                                }*/}
+
+                {/*                                            </div>*/}
+                {/*                                        </td>*/}
+                {/*                                        <td className={'text-center'}>*/}
+                {/*                                            <div className={'d-flex align-items-center flex-column'}>*/}
+                {/*                                                {*/}
+                {/*                                                    item?.noChangesPrice !== item?.price &&*/}
+                {/*                                                    <del*/}
+                {/*                                                        className={'mt-3 mb-1 text-danger'}>{parseFloat(item?.noChangesTotalSalePrice).toFixed(0)} {t('mah.39')}</del>*/}
+                {/*                                                }*/}
+                {/*                                                <p>                                                        {parseFloat(item?.totalSalePrice).toFixed(0)} {t('mah.39')}*/}
+                {/*                                                </p>*/}
+                {/*                                            </div>*/}
+                {/*                                        </td>*/}
+                {/*                                        /!*<td>*!/*/}
+                {/*                                        /!*    <button*!/*/}
+                {/*                                        /!*        onClick={() => deleteM(index, item.id)}*!/*/}
+                {/*                                        /!*        className={'shopTable-btn shopTable-btn-delete'}>x*!/*/}
+                {/*                                        /!*    </button>*!/*/}
+                {/*                                        /!*</td>*!/*/}
+                {/*                                    </tr>*/}
+                {/*                                )*/}
+                {/*                        )*/}
+                {/*                    }*/}
+                {/*                    </tbody>*/}
+                {/*                </table>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*    </div>*/}
+                {/*    <div style={{width: open ? '30%' : '35%'}} className="shopping-body-right">*/}
+                {/*        <div className={'d-flex justify-content-between flex-wrap align-items-center w-100'}>*/}
+                {/*            {tradeIdForEdit ? "" :*/}
+                {/*                <div className={'shopping-btn-top'}  onClick={toggle}*/}
+                {/*                     data-tip={t('mah.79')}><img src={kassa} className={'shopping-btn-icon'} alt="kassa"/>*/}
+                {/*                    <p className={'shopping-btn-text'}>Kassaga olish</p>*/}
+                {/*                </div>*/}
+                {/*            }*/}
+                {/*            <ReactTooltip/>*/}
+                {/*            {*/}
+                {/*                users.getTrade &&*/}
+                {/*                <div className={'shopping-btn-top'} onClick={toggle4}*/}
+                {/*                ><img src={lastTrade}  className={'shopping-btn-icon'} alt="lastTrade"/>*/}
+                {/*                    <p className={'shopping-btn-text'}>*/}
+                {/*                        {t('mah.80')}*/}
+
+                {/*                    </p>*/}
+                {/*                </div>*/}
+                {/*            }*/}
+
+                {/*            <Link to={'/main/tradeList'} style={{backgroundColor:'red'}} onClick={() => {*/}
+                {/*                savdooynasi()*/}
+                {/*                clear()*/}
+                {/*            }} className={'shopping-btn-top'}>*/}
+                {/*                <img src={back} className={'shopping-btn-icon'} alt="back"/>*/}
+                {/*                <p className={'shopping-btn-text'}>Ortga</p>*/}
+                {/*            </Link>*/}
+                {/*        </div>*/}
+                {/*        <div className={'d-flex justify-content-between flex-wrap  align-items-center w-100'}>*/}
+                {/*            {*/}
+                {/*                tradeIdForEdit ? '' :*/}
+                {/*                    <div onClick={toggle8}*/}
+                {/*                         className={'shopping-btn-top2'}>*/}
+                {/*                        <img src={waiting} className={'shopping-btn-icon'} alt="waiting"/>*/}
+                {/*                        <p className={'shopping-btn-text'}>Ushlab turish</p>*/}
+                {/*                    </div>*/}
+                {/*            }*/}
+                {/*            {*/}
+                {/*                !tradeIdForEdit &&*/}
+                {/*                <div onClick={clear} className={'shopping-btn-top2'}><img src={trash} className={'shopping-btn-icon'}*/}
+                {/*                                                                          alt="waiting"/>*/}
+                {/*                    <p className={'shopping-btn-text'} >Tozalash</p>*/}
+                {/*                </div>*/}
+                {/*            }*/}
+                {/*        </div>*/}
+                {/*        <div className={'button-changes'}>*/}
+                {/*            <div className={'btn-change'} onClick={sMinus}>*/}
+                {/*                <img src={minus} className={'btn-change-icon'} alt="minus"/>*/}
+                {/*                <p className={'btn-change-text'} style={{color: '#FF7272'}}>Kamaytirish</p>*/}
+                {/*            </div>*/}
+                {/*            <div className={'btn-change'} onClick={() => setCount(changesId)}>*/}
+                {/*                <img src={plus} alt="plus" className={'btn-change-icon'}/>*/}
+                {/*                <p className={'btn-change-text'} style={{color: '#377DFF'}}>Qo'shish</p>*/}
+                {/*            </div>*/}
+                {/*            <div className={'btn-change'} onClick={deleteM}>*/}
+                {/*                <img src={remove} alt="remove" className={'btn-change-icon'}/>*/}
+                {/*                <p className={'btn-change-text'} style={{color: '#B0B7C3'}}>O'chirish</p>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*        <div className={'d-flex justify-content-between flex-wrap  align-items-center w-100'}>*/}
+                {/*            {*/}
+                {/*                tradeIdForEdit ? editActiveButton === "qarz" ? '' :*/}
+                {/*                        <div className={'shopping-btn2'}*/}
+                {/*                             style={{border: paymentTypeCheck === 'turli' ? '3px solid red' : 'none'}}*/}
+                {/*                             onClick={() => setPaymentTypeCheck('turli')}><img src={turliTolov}*/}
+                {/*                                                                               className={'shopping-btn-icon'}*/}
+                {/*                                                                               alt="waiting"/>*/}
+                {/*                            <p className={'shopping-btn-text'} >Turli to'lov</p></div>*/}
+                {/*                    : <div className={'shopping-btn2'}*/}
+                {/*                           style={{border: paymentTypeCheck === 'turli' ? '3px solid red' : 'none'}}*/}
+                {/*                           onClick={() => setPaymentTypeCheck('turli')}><img src={turliTolov}*/}
+                {/*                                                                             className={'shopping-btn-icon'}*/}
+                {/*                                                                             alt="waiting"/>*/}
+                {/*                        <p className={'shopping-btn-text'} >Turli to'lov</p></div>*/}
+                {/*            }*/}
+                {/*            {*/}
+                {/*                tradeIdForEdit ? editActiveButton === "turli" ? "" :*/}
+                {/*                        <div onClick={customer ? () => setPaymentTypeCheck('qarz')*/}
+                {/*                            : () => {*/}
+                {/*                                toast.error(t('mah.88'))*/}
+                {/*                            }*/}
+                {/*                        } style={{border: paymentTypeCheck === 'qarz' ? '3px solid red' : 'none'}}*/}
+                {/*                             className={'shopping-btn2'}><img*/}
+                {/*                            src={debtTrade} className={'shopping-btn-icon'}*/}
+                {/*                            alt="waiting"/>*/}
+                {/*                            <p className={'shopping-btn-text'}>Qarzga sotish</p></div>*/}
+                {/*                    : <div onClick={customer ? () => setPaymentTypeCheck('qarz') : () => {*/}
+                {/*                        toast.error(t('mah.88'))*/}
+                {/*                    }*/}
+                {/*                    } style={{border: paymentTypeCheck === 'qarz' ? '3px solid red' : 'none'}}*/}
+                {/*                           className={'shopping-btn2'}><img src={debtTrade} className={'shopping-btn-icon'}*/}
+                {/*                                                            alt="waiting"/>*/}
+                {/*                        <p className={'shopping-btn-text'}>Qarzga sotish</p></div>*/}
+                {/*            }*/}
+
+                {/*        </div>*/}
+                {/*        <div className={'d-flex justify-content-between flex-wrap  align-items-center w-100'}>*/}
+                {/*            {*/}
+                {/*                PayReducer.paymethod &&*/}
+                {/*                PayReducer.paymethod.map(item =>*/}
+                {/*                    match.params.remainId || tradeIdForEdit ?*/}
+                {/*                        editActiveButton === item.id &&*/}
+                {/*                        <button key={item.id}*/}
+                {/*                                onClick={() => setPaymentTypeCheck(item.id)}*/}
+                {/*                                className={'shopping-btn'}*/}
+                {/*                                style={{border: paymentTypeCheck === item.id ? '3px solid red' : 'none'}}*/}
+                {/*                        >*/}
+                {/*                            <img src={checkImg(item.name)} alt="waiting" className={'shopping-btn-icon'}/>*/}
+                {/*                            <p className={'shopping-btn-text'}> {camelize(item.name)}</p>*/}
+                {/*                        </button> : <button key={item.id}*/}
+                {/*                                            style={{border: paymentTypeCheck === item.id ? '3px solid red' : 'none'}}*/}
+                {/*                                            onClick={() => setPaymentTypeCheck(item.id)}*/}
+                {/*                                            className={'shopping-btn'}>*/}
+                {/*                        <img src={checkImg(item.name)} alt="waiting" className={'shopping-btn-icon'}/>*/}
+                {/*                        <p className={'shopping-btn-text'}> {camelize(item.name)}</p>*/}
+                {/*                    </button>*/}
+                {/*                )*/}
+                {/*            }*/}
+                {/*        </div>*/}
+                {/*        {*/}
+                {/*            tradeIdForEdit || match.params.remainId ?*/}
+                {/*                <div className={'shop-totalSum'}>*/}
+                {/*                    <p>{t('mah.86')} </p>*/}
+                {/*                    <p> {noChangesPaidSum} {t('mah.27')}</p>*/}
+                {/*                </div> : ''*/}
+                {/*        }*/}
+                {/*        <div className={'shop-totalSum'}>*/}
+                {/*            <p>{t('Trade.14')}: </p>*/}
+                {/*            <p>{jamixisob} {t('mah.39')}</p>*/}
+                {/*        </div>*/}
+                {/*        <div className={'d-flex justify-content-between align-items-center w-100'}>*/}
+                {/*            <p className='shop-productSum'>{t('Trade.15')}:{xisob}</p>*/}
+                {/*            <div className={'discount-percent'}>*/}
+                {/*                <p>{t('Trade.28')}: {customerPercent} %</p>*/}
+                {/*            </div>*/}
+                {/*        </div>*/}
+                {/*        <button className={'btn-payment'} onClick={saveAllTrade}>*/}
+                {/*            To'lov*/}
+                {/*        </button>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
 
                 <Modal isOpen={activeHoldOn} toggle={toggle}>
                     <ModalHeader>
@@ -1536,14 +2014,12 @@ function SavdoOynasi({
                 </Modal>
                 <Modal isOpen={lastTradeActive} toggle={toggle4}>
                     <ModalHeader>
-                        <p>{t('Trade.26')}</p>
+                        <AddOrEditText text={t('Trade.26')}/>
                     </ModalHeader>
                     <ModalBody>
                         <div className={'col-md-12 '}>
                             <div className="col-md-12">
-                                <label htmlFor="tradeId">{t('mah.109')}</label>
-                                <input type="text" value={tradeIdSearch} onChange={(e) => setTradeIdSearch(e.target.value)}
-                                       id={'tradeId'} className={'form-control'}/>
+                                <SearchAnt name={"Savdo raqami bo'yicha qidirish"} onChange={(e) => setTradeIdSearch(e.target.value)}/>
                             </div>
                             <div className={'d-flex justify-content-between mt-2'}>
                                 {
@@ -1565,30 +2041,32 @@ function SavdoOynasi({
                                                             </thead>
                                                             <tbody>
                                                             {
-                                                                SavdoQoshishReducer.trades?.list?.map((item, index) => <tr
-                                                                    key={item?.id}>
-                                                                    <td>{index + 1}</td>
-                                                                    <td>{moment(new Date(item?.createdAt)).format('lll')}</td>
-                                                                    <td className={item.edit && 'bg-warning'}>{item?.invoice}</td>
-                                                                    <td>{item?.customerName}</td>
-                                                                    <td>
-                                                                        <div className={'d-flex'}>
-                                                                            {
-                                                                                users.editTrade && item?.editable ?
-                                                                                    <button
-                                                                                        onClick={() => getTradeByForEdit(item.id)}
-                                                                                        className='taxrirlash'><img
-                                                                                        src={Edit}
-                                                                                        alt=""/> {t('Buttons.1')}
-                                                                                    </button>
-                                                                                    : ''
-                                                                            }
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>)
+                                                                SavdoQoshishReducer.trades?.list?.map((item, index) =>
+                                                                    <tr
+                                                                        key={item?.id}>
+                                                                        <td>{index + 1}</td>
+                                                                        <td>{moment(new Date(item?.createdAt)).format('lll')}</td>
+                                                                        <td className={item.edit && 'bg-warning'}>{item?.invoice}</td>
+                                                                        <td>{item?.customerName}</td>
+                                                                        <td>
+                                                                            <div className={'d-flex'}>
+                                                                                {
+                                                                                    users.editTrade && item?.editable ?
+                                                                                        <button
+                                                                                            onClick={() => getTradeByForEdit(item.id)}
+                                                                                            className='taxrirlash'><img
+                                                                                            src={Edit}
+                                                                                            alt=""/> {t('Buttons.1')}
+                                                                                        </button>
+                                                                                        : ''
+                                                                                }
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>)
                                                             }
                                                             </tbody>
                                                         </table>
+
                                                     </div>
                                                 </div> :
                                                 <div className={'border border-2'}>
@@ -1597,6 +2075,8 @@ function SavdoOynasi({
                                         : ''
                                 }
                             </div>
+                            {/*<CommonTable pagination={false} page={0} size={10}  columns={columns}*/}
+                            {/*             data={SavdoQoshishReducer.trades?.list}  />*/}
                         </div>
                     </ModalBody>
                     <ModalFooter>
@@ -1606,6 +2086,8 @@ function SavdoOynasi({
                 </Modal>
                 <ModalLoading isOpen={saveModal}/>
             </div>
+
+
             <div ref={componentRef} className={'p-2 position-absolute w-100'}>
                 <div className={'d-flex justify-content-center align-items-center'}>
                     {

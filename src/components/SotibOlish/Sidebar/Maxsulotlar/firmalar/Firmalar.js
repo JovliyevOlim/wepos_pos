@@ -13,7 +13,7 @@ import MainHeaderText from "../../../../Components/MainHeaderText";
 import {ButtonAnt} from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
 import CardBody from "../../../../Components/CardBody";
-import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 
 function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma, FirmaReducer,}) {
 
@@ -44,13 +44,13 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
             render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
                 {
                     users.brandRoles &&
-                    <ButtonAnt text={t('ol.78')} type={'primary'} onClick={() => {
+                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
                       editB(values.id)
                     }
                     } icon={<EditOutlined/>}/>
                 }
                 {
-                    users.brandRoles && <ButtonAnt text={t('ol.79')} danger={true} type={'primary'} onClick={() => {
+                    users.brandRoles && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
                         deleteBrandById(values.id)
                     }
                     } icon={<DeleteOutlined/>}/>
@@ -148,10 +148,10 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
     return (
         <div >
             <div className="col-md-12 d-flex justify-content-between align-items-center">
-                <MainHeaderText text={t('as.9')}/>
+                <MainHeaderText text={t('sidebar.brand')}/>
                 {
                     users.brandRoles ?
-                        <ButtonAnt type={'primary'} text={t('ol.2')} onClick={toggle}/>: ''
+                        <ButtonAnt type={'primary'} icon={<PlusOutlined/>} text={t('button.add')} onClick={toggle}/>: ''
                 }
             </div>
             <CardBody>

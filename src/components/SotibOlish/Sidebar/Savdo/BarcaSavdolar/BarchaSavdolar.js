@@ -33,7 +33,7 @@ import MainHeaderText from "../../../../Components/MainHeaderText";
 import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
 import CommonTable from "../../../../Components/CommonTable";
-import {DeleteOutlined, EditOutlined, EyeOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined} from "@ant-design/icons";
 
 function BarchaSavdolar({
                             XodimReducer,
@@ -139,7 +139,7 @@ function BarchaSavdolar({
             render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
                 {
                     users.getTrade &&
-                    <ButtonAnt type={'primary'} text={'Ko\'rish'} bgColor={'aqua'} onClick={() => {
+                    <ButtonAnt type={'primary'} text={t('button.view')} bgColor={'aqua'} onClick={() => {
                         viewTradeInfoById(item?.id)
                     }
                     } icon={<EyeOutlined/>}/>
@@ -147,20 +147,20 @@ function BarchaSavdolar({
 
                 {
                     users.editTrade && values.editable &&
-                    <ButtonAnt text={t('ol.78')} type={'primary'} onClick={() => {
+                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
                         history.push('/shopping/' + values?.id)
                     }
                     } icon={<EditOutlined/>}/>
                 }
                 {
                     users.editTrade && values.editable &&
-                    <ButtonAnt text={t('mah.40')} type={'primary'} bgColor={'green'} onClick={() => {
+                    <ButtonAnt text={t('button.remain')} type={'primary'} bgColor={'green'} onClick={() => {
                         history.push('/repeatProducts/' + values?.id + "/" + values?.id)
                     }
                     } icon={<EditOutlined/>}/>
                 }
                 {
-                    users.deleteTrade && values.editable && <ButtonAnt text={t('ol.79')} danger={true} type={'primary'}
+                    users.deleteTrade && values.editable && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'}
                                                                        onClick={() => values?.customerName ? deleteTradeByIdIsCustomer(item.id) : deleteTradeById(item.id)}
                                                                        icon={<DeleteOutlined/>}/>
                 }
@@ -301,10 +301,10 @@ function BarchaSavdolar({
     return (
         <div>
             <div className={'d-flex col-md-12 mb-5 align-items-center justify-content-between'}>
-                <MainHeaderText text={t('Trade.1')}/>
+                <MainHeaderText text={t('sidebar.trades')}/>
                 {
                     users.addTrade ? <Link to={'/shopping'}>
-                        <ButtonAnt text={t('ol.2')} type={'primary'}/>
+                        <ButtonAnt text={t('button.add')} icon={<PlusOutlined/>} type={'primary'}/>
                     </Link> : ''
                 }
             </div>

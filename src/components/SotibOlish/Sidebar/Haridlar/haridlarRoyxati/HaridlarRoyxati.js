@@ -23,7 +23,7 @@ import MainHeaderText from "../../../../Components/MainHeaderText";
 import SelectAnt, {ButtonAnt} from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
 import CommonTable from "../../../../Components/CommonTable";
-import {DeleteOutlined, EditOutlined, EyeOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined} from "@ant-design/icons";
 
 function HaridlarRoyxati({
                              getAllSupplier,
@@ -119,7 +119,7 @@ function HaridlarRoyxati({
             render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
                 {
                     users.getPurchase &&
-                    <ButtonAnt type={'primary'} text={'Ko\'rish'} bgColor={'aqua'} onClick={() => {
+                    <ButtonAnt type={'primary'} text={t('button.view')} bgColor={'aqua'} onClick={() => {
                         getOneById(values.id)
                     }
                     } icon={<EyeOutlined/>}/>
@@ -127,13 +127,13 @@ function HaridlarRoyxati({
 
                 {
                     users.editPurchase && values.editable &&
-                    <ButtonAnt text={t('ol.78')} type={'primary'} onClick={() => {
+                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
                         history.push('/main/addPurchase/' + values.id)
                     }
                     } icon={<EditOutlined/>}/>
                 }
                 {
-                    users.deletePurchase  && values.editable && <ButtonAnt text={t('ol.79')} danger={true} type={'primary'} onClick={() => {
+                    users.deletePurchase  && values.editable && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
                         deletePurchaseById(values.id)
                     }
                     } icon={<DeleteOutlined/>}/>
@@ -242,10 +242,10 @@ function HaridlarRoyxati({
     return (
         <div>
             <div className={'d-flex col-md-12 mb-5 align-items-center justify-content-between'}>
-                <MainHeaderText text={t('ol.1')}/>
+                <MainHeaderText text={t('sidebar.purchases')}/>
                 {
                     users.addPurchase ? <Link to={'/main/addPurchase'}>
-                        <ButtonAnt text={t('ol.2')} type={'primary'}/>
+                        <ButtonAnt text={t('button.add')} icon={<PlusOutlined/>} type={'primary'}/>
                     </Link> : ''
                 }
             </div>

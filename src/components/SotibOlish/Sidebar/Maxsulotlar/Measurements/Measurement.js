@@ -19,7 +19,7 @@ import MainHeaderText from "../../../../Components/MainHeaderText";
 import {ButtonAnt} from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
 import CardBody from "../../../../Components/CardBody";
-import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement, deleteMeasurement, editMeasurement}) {
 
     const {t} = useTranslation()
@@ -51,13 +51,13 @@ function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement
 
                 {
                     users.measurementRoles &&
-                    <ButtonAnt text={t('ol.78')} type={'primary'} onClick={() => {
+                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
                         editB(values.id)
                     }
                     } icon={<EditOutlined/>}/>
                 }
                 {
-                    users.measurementRoles && <ButtonAnt text={t('ol.79')} danger={true} type={'primary'} onClick={() => {
+                    users.measurementRoles && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
                         deleteMeasureById(values.id)
                     }
                     } icon={<DeleteOutlined/>}/>
@@ -150,9 +150,10 @@ function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement
     return (
         <div >
             <div className="col-md-12 d-flex justify-content-between align-items-center">
-                <MainHeaderText text={t('mah.3')}/>
+                <MainHeaderText text={t('sidebar.measurement')}/>
                 {
-                    users.measurementRoles && <ButtonAnt onClick={() => setAddMeasureActive(true)} type={'primary'} text={t('as.96')} />
+                    users.measurementRoles &&
+                    <ButtonAnt onClick={() => setAddMeasureActive(true)} icon={<PlusOutlined />} type={'primary'} text={t('button.add')} />
                 }
 
             </div>

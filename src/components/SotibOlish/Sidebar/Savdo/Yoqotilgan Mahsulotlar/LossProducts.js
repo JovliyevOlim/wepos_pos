@@ -18,7 +18,7 @@ import {Link} from "react-router-dom";
 import SelectAnt, {ButtonAnt} from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
 import CommonTable from "../../../../Components/CommonTable";
-import {EyeOutlined} from "@ant-design/icons";
+import {EyeOutlined, PlusOutlined} from "@ant-design/icons";
 
 function LossProducts({
                           lossReducer,
@@ -69,7 +69,7 @@ function LossProducts({
             render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
                 {
                     users.getLoss &&
-                    <ButtonAnt type={'primary'} text={'Ko\'rish'} bgColor={'aqua'} onClick={() => {
+                    <ButtonAnt type={'primary'} text={t('button.view')} bgColor={'aqua'} onClick={() => {
                         getOneById(values.id)
                     }
                     } icon={<EyeOutlined/>}/>
@@ -153,10 +153,10 @@ function LossProducts({
     return (
         <div>
             <div className={'d-flex col-md-12 mb-5 align-items-center justify-content-between'}>
-                <MainHeaderText text={t('mah.111')}/>
+                <MainHeaderText text={t('sidebar.tableLossProduct')}/>
                 {
                     users.addLoss ? <Link to={'/main/addLossProducts'}>
-                        <ButtonAnt text={t('ol.2')} type={'primary'}/>
+                        <ButtonAnt text={t('button.add')} icon={<PlusOutlined />} type={'primary'}/>
                     </Link> : ''
                 }
             </div>

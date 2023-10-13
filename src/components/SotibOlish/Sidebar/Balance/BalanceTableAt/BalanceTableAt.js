@@ -55,8 +55,8 @@ function BalanceTableAt({users, balanceReducer, getBalanceByBranch, getBalanceBy
             key: 'operation',
             width: 200,
             render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
-                <ButtonAnt danger={true}  type={'primary'} text={'Kassadan pul olish'} onClick={() => changeBalanceOpen(false, values?.id)}/>
-                <ButtonAnt danger={false}  type={'primary'} text={'Kassaga pul qo\'yish'} onClick={() => changeBalanceOpen(true, values?.id)}/>
+                <ButtonAnt danger={true}  type={'primary'} text={t('button.getMoneyBalance')} onClick={() => changeBalanceOpen(false, values?.id)}/>
+                <ButtonAnt danger={false}  type={'primary'} text={t('button.setMoneyBalance')} onClick={() => changeBalanceOpen(true, values?.id)}/>
             </div>,
 
         },
@@ -122,11 +122,11 @@ function BalanceTableAt({users, balanceReducer, getBalanceByBranch, getBalanceBy
 
     return (
         <div className="balanceTable">
-            <MainHeaderText text={t('bal.12')}/>
+            <MainHeaderText text={t('sidebar.balance')}/>
             <CardBody>
                 <div className="col-md-12 d-flex flex-wrap justify-content-between align-items-center">
                     <div className="col-md-3">
-                        <SelectAnt name={t('bal.13')}
+                        <SelectAnt name={t('select.branches')}
                                    onChange={(e) => setMainBranchId(e === "" ? null : e)}
                                    selectList={users.branches} permission={users.getBalanceAdmin}/>
                     </div>

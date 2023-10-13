@@ -90,7 +90,7 @@ function Header({id}) {
                                 <button className={'header-btn'} onClick={toggle}>{t('Welcome.7')}</button>
                             </Link>
                             : <Link to={'/tariffs'}>
-                                <button className={'header-btn'} onClick={toggle}>Tarifflar</button>
+                                <button className={'header-btn'} onClick={toggle}>{t('login.tariffs')}</button>
                             </Link>
 
 

@@ -12,7 +12,7 @@ import ModalLoading from "../../../../ModalLoading";
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import {ButtonAnt} from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
-import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 import CardBody from "../../../../Components/CardBody";
 
 function Lavozimlar({getLavozim, users, deleteLavozim, LavozimReducer}) {
@@ -56,13 +56,13 @@ function Lavozimlar({getLavozim, users, deleteLavozim, LavozimReducer}) {
             width: 150,
             render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
                 {users.editRole &&
-                    <ButtonAnt text={t('ol.78')} type={'primary'} onClick={() => {
+                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
                         history.push('/main/addRole/' + values.id)
                     }
                     } icon={<EditOutlined/>}/>
                 }
                 {
-                    users.deleteRole && <ButtonAnt text={t('ol.79')} danger={true} type={'primary'} onClick={() => {
+                    users.deleteRole && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
                         deleteRoleById(values.id)
                     }
                     } icon={<DeleteOutlined/>}/>
@@ -107,10 +107,10 @@ function Lavozimlar({getLavozim, users, deleteLavozim, LavozimReducer}) {
     return (
         <>
             <div className="d-flex justify-content-between align-items-center">
-                <MainHeaderText text={t('ol.102')}/>
+                <MainHeaderText text={t('sidebar.roles')}/>
                 {
                     users.addRole ? <Link to={'/main/addRole'}>
-                        <ButtonAnt text={t('ol.2')} type={'primary'}/>
+                        <ButtonAnt text={t('button.add')} icon={<PlusOutlined/>} type={'primary'}/>
                     </Link> : ''
                 }
             </div>

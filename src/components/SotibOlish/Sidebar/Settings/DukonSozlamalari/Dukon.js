@@ -8,6 +8,7 @@ import users from "../../../../../reducer/users";
 import {useTranslation} from "react-i18next";
 import ChangeTariff from "./changeTariff/ChangeTariff";
 import Bazalar from "../bazalar/Bazalar";
+import ShtrixCode from "./ShtrixCode/ShrtixCode";
 
  function Dukon({users}) {
      const {t} = useTranslation()
@@ -17,27 +18,32 @@ import Bazalar from "../bazalar/Bazalar";
                 <div className="dashboardBox">
                     {
                         users.editMyBusiness &&
-                        <Link to={'/main/shopSetting/1'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('set.27')}</button></Link>
+                        <Link to={'/main/shopSetting/1'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.settingBusiness')}</button></Link>
                     }
 
                     {
                         users.editMyBusiness  ?
-                            <Link to={'/main/shopSetting/2'}><button className={'btn btn-outline-primary form-control mt-2'}>Tariff</button></Link>
+                            <Link to={'/main/shopSetting/2'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.settingChangeTariff')}</button></Link>
                             :''
                     }
                     {
                         users.editMyBusiness  ?
-                            <Link to={'/main/shopSetting/3'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('set.28')}</button></Link>
+                            <Link to={'/main/shopSetting/3'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.trade')}</button></Link>
                             :''
                     }
                     {
                         users.editInvoice ?
-                        <Link to={'/main/shopSetting/4'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('set.29')}</button></Link>
+                        <Link to={'/main/shopSetting/4'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.settingCheck')}</button></Link>
                                 :''
                     }
                     {
                         users.getBranch ?
-                            <Link to={'/main/shopSetting/5'}><button className={'btn btn-outline-primary form-control mt-2'}>Filiallar</button></Link>
+                            <Link to={'/main/shopSetting/5'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.settingBranch')}</button></Link>
+                            :''
+                    }
+                    {
+                        users.getProduct ?
+                            <Link to={'/main/shopSetting/6'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.settingBarcode')}</button></Link>
                             :''
                     }
                 </div>
@@ -59,6 +65,9 @@ import Bazalar from "../bazalar/Bazalar";
                         }
                         {
                             users.getBranch && <Route path={'/main/shopSetting/5'} component={Bazalar}/>
+                        }
+                        {
+                            users.getProduct && <Route path={'/main/shopSetting/6'} component={ShtrixCode}/>
                         }
                     </Switch>
                 </div>
