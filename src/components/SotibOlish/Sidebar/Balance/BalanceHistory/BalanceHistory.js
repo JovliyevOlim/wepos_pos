@@ -138,9 +138,7 @@ function BalanceHistory({
 
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 200)
     }, [balanceReducer.getBoolean])
 
     useEffect(() => {
@@ -182,29 +180,33 @@ function BalanceHistory({
                     : ''
 
             }
-                <CardBody>
                     {
                         users.getBalance || users.getBalanceAdmin ?
-                            loading ?
-                                balanceReducer.balanceHistory.list?.length > 0 ?
-                                    <div className="table-responsive mb-4 table-wrapper-scroll-y">
-                                        <CommonTable
-                                            columns={columns}
-                                            data={balanceReducer.balanceHistory?.list}
-                                            page={page}
-                                            size={size}
-                                            pagination={true}
-                                            handleLimitChange={handleLimitChange}
-                                            handlePageChange={handlePageChange}
-                                            total={balanceReducer.balanceHistory?.totalItem}
-                                        />
-                                    </div> : <div>
-                                        <h4 className={'text-center'}>{balanceReducer.message}</h4>
-                                    </div> :
-                                <Loading/> : ''
+                            <CardBody>
+                                <Loading spinning={loading}>
+                                    {
+                                        balanceReducer.balanceHistory.list?.length > 0 ?
+                                        <div className="table-responsive mb-4 table-wrapper-scroll-y">
+                                            <CommonTable
+                                                columns={columns}
+                                                data={balanceReducer.balanceHistory?.list}
+                                                page={page}
+                                                size={size}
+                                                pagination={true}
+                                                handleLimitChange={handleLimitChange}
+                                                handlePageChange={handlePageChange}
+                                                total={balanceReducer.balanceHistory?.totalItem}
+                                            />
+                                        </div> :
+                                        <div>
+                                            <h4 className={'text-center'}>{balanceReducer.message}</h4>
+                                        </div>
+                                    }
+                                </Loading>
+                            </CardBody>
+                            : ''
                     }
 
-                </CardBody>
 
         </div>
     )

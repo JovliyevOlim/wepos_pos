@@ -139,9 +139,7 @@ function XarajatTurlari({
     }, [XarajatTurlariReducer.current])
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 500)
     }, [XarajatTurlariReducer.getOutlayBool])
 
     useEffect(() => {
@@ -160,41 +158,39 @@ function XarajatTurlari({
             </div>
 
             <CardBody>
-                {
-                    loading ?
-                        XarajatTurlariReducer.xarajatturlari?.length>0 ?
+                <Loading spinning={loading}>
+                    {
+                            XarajatTurlariReducer.xarajatturlari?.length>0 ?
                                 <div className="table-responsive table-wrapper-scroll-y  mb-4">
                                     <CommonTable
-                                    data={XarajatTurlariReducer.xarajatturlari}
-                                    columns={columns}
-                                    pagination={false}
-                                    page={0}
-                                    size={XarajatTurlariReducer.xarajatturlari.length}
+                                        data={XarajatTurlariReducer.xarajatturlari}
+                                        columns={columns}
+                                        pagination={false}
+                                        page={0}
+                                        size={XarajatTurlariReducer.xarajatturlari.length}
                                     />
                                 </div>
-                            : <div>
-                                <h4 className={'text-center'}>{XarajatTurlariReducer.message}</h4>
-                            </div>
-                        : <Loading/>
-                }
-
-
-                <Modal isOpen={active} toggle={toggle}>
-                    <ModalHeader>
-                        {t('Sections.8')}
-                    </ModalHeader>
-                    <ModalBody>
-                        <label htmlFor={'nomi'}>{t('Expenses.11')}</label>
-                        <input type="text" value={name} placeholder={'Nomi'} onChange={(e) => setName(e.target.value)}
-                               className={'form-control'} id={'nomi'}/>
-                    </ModalBody>
-                    <ModalFooter>
-                        <button className={'btn btn-danger'} onClick={toggle}>{t('Buttons.7')}</button>
-                        <button className={'btn btn-success'} onClick={saqla}>{t('Buttons.6')}</button>
-                    </ModalFooter>
-                </Modal>
-
+                                : <div>
+                                    <h4 className={'text-center'}>{XarajatTurlariReducer.message}</h4>
+                                </div>
+                    }
+                </Loading>
             </CardBody>
+            <Modal isOpen={active} toggle={toggle}>
+                <ModalHeader>
+                    {t('Sections.8')}
+                </ModalHeader>
+                <ModalBody>
+                    <label htmlFor={'nomi'}>{t('Expenses.11')}</label>
+                    <input type="text" value={name} placeholder={'Nomi'} onChange={(e) => setName(e.target.value)}
+                           className={'form-control'} id={'nomi'}/>
+                </ModalBody>
+                <ModalFooter>
+                    <button className={'btn btn-danger'} onClick={toggle}>{t('Buttons.7')}</button>
+                    <button className={'btn btn-success'} onClick={saqla}>{t('Buttons.6')}</button>
+                </ModalFooter>
+            </Modal>
+
             <ModalLoading isOpen={saveModal}/>
             <AgreeModal deleteModaltoggle={() => setdeletemodal(prevState => !prevState)} deleteFunc={deleteFunc}
                         deletemodal={deletemodal}/>

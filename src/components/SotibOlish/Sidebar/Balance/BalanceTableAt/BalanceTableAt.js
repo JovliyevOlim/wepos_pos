@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {connect} from "react-redux";
-import {camelize} from "../../../../../util";
+import {camelize, prettify} from "../../../../../util";
 import users from "../../../../../reducer/users";
 import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
@@ -16,6 +16,7 @@ import SelectAnt, {ButtonAnt, TableButton} from "../../../../Components/SelectAn
 import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import './BalanceTableAt.css'
 import CommonTable from "../../../../Components/CommonTable";
+
 const {Title} = Typography;
 
 function BalanceTableAt({users, balanceReducer, getBalanceByBranch, getBalanceByBusiness, changeBalance}) {
@@ -41,27 +42,28 @@ function BalanceTableAt({users, balanceReducer, getBalanceByBranch, getBalanceBy
             width: 80,
             dataIndex: 'paymentMethodName',
             key: 'paymentMethodName',
-            render:(item)=><p className={'m-0'}>{camelize(item)}</p>
+            render: (item) => <p className={'m-0'}>{camelize(item)}</p>
         },
         {
             title: t('bal.15'),
             width: 100,
             dataIndex: 'sum',
             key: 'sum',
-            render:(item)=><p className={'m-0'}>{item.toFixed(2)} {t('bal.16')}</p>
+            render: (item) => <p className={'m-0'}>{prettify(item, 3)} {t('bal.16')}</p>
         },
         {
             title: t('bal.27'),
             key: 'operation',
             width: 200,
             render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
-                <ButtonAnt danger={true}  type={'primary'} text={t('button.getMoneyBalance')} onClick={() => changeBalanceOpen(false, values?.id)}/>
-                <ButtonAnt danger={false}  type={'primary'} text={t('button.setMoneyBalance')} onClick={() => changeBalanceOpen(true, values?.id)}/>
+                <ButtonAnt danger={true} type={'primary'} text={t('button.getMoneyBalance')}
+                           onClick={() => changeBalanceOpen(false, values?.id)}/>
+                <ButtonAnt danger={false} type={'primary'} text={t('button.setMoneyBalance')}
+                           onClick={() => changeBalanceOpen(true, values?.id)}/>
             </div>,
 
         },
     ];
-
 
 
     useEffect(() => {
@@ -136,28 +138,31 @@ function BalanceTableAt({users, balanceReducer, getBalanceByBranch, getBalanceBy
             <div className={'d-flex col-md-12 flex-wrap'}>
                 {
                     users.getBalance ?
-                        loading ?
-                            balanceReducer.balance?.length > 0 ?
-                                balanceReducer.balance?.map(item =>
-                                    <div className="table-responsive col-lg-12 mb-2 p-2  table-wrapper-scroll-y">
-                                        <CardBody>
+                        balanceReducer.balance?.length > 0 ?
+                            balanceReducer.balance?.map(item =>
+                                <div className="table-responsive col-lg-12 mb-2 p-2  table-wrapper-scroll-y">
+                                    <CardBody>
+                                        <Loading spinning={loading}>
                                             <h4 className={'balanceFilial'}>{t('bal.14')} {item[0].branchName}</h4>
-                                            <h4 className={'balanceFilial'}>Jami summa : {totalSum(item).toFixed(2)} so'm</h4>
-                                            <CommonTable data={item} columns={columns} size={item?.length} page={0} pagination={false}/>
-                                        </CardBody>
-                                    </div>
-                                )
-                                : <div>
-                                    <h4 className={'text-center'}>{balanceReducer.message}</h4>
-                                </div> :
-                            <Loading/> : ''
+                                            <h4 className={'balanceFilial'}>Jami summa
+                                                : {prettify(totalSum(item).toFixed(2), 3)} so'm</h4>
+                                            <CommonTable data={item} columns={columns} size={item?.length} page={0}
+                                                         pagination={false}/>
+                                        </Loading>
+                                    </CardBody>
+                                </div>
+                            )
+                            : <div>
+                                <h4 className={'text-center'}>{balanceReducer.message}</h4>
+                            </div>
+                        : ''
                 }
 
 
             </div>
             <Modal isOpen={openModal} toggle={() => setOpenModal(!openModal)}>
                 <ModalHeader>
-                    <h4>{btnValues  ? 'Kassaga pul qo\'yish' : 'Kassadan pul olish'}</h4>
+                    <h4>{btnValues ? t('button.setMoneyBalance') : t('button.getMoneyBalance')}</h4>
                 </ModalHeader>
                 <ModalBody>
                     <label htmlFor="sum">Miqdorni kiriting</label>
@@ -165,8 +170,8 @@ function BalanceTableAt({users, balanceReducer, getBalanceByBranch, getBalanceBy
                            defaultValue={0} id={'sum'}/>
                 </ModalBody>
                 <ModalFooter>
-                    <button onClick={toggle} className={'btn btn-danger'}>Chiqish</button>
-                    <button onClick={saveBalanceChange} className={'btn btn-primary'}>Saqlash</button>
+                    <button onClick={toggle} className={'btn btn-danger'}>{t('button.exit')}</button>
+                    <button onClick={saveBalanceChange} className={'btn btn-primary'}>{t('button.save')}</button>
                 </ModalFooter>
             </Modal>
         </div>

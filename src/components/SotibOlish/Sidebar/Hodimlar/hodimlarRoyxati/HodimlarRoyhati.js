@@ -22,8 +22,6 @@ import {Avatar} from "antd";
 import {DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined} from "@ant-design/icons";
 
 
-
-
 function HodimlarRoyhati({
                              getXodim,
                              deleteXodim,
@@ -103,7 +101,8 @@ function HodimlarRoyhati({
                     } icon={<EditOutlined/>}/>
                 }
                 {
-                    users.deleteUser && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
+                    users.deleteUser &&
+                    <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
                         deleteUserById(values.id)
                     }
                     } icon={<DeleteOutlined/>}/>
@@ -152,6 +151,7 @@ function HodimlarRoyhati({
     }, [XodimReducer.current]);
 
     useEffect(() => {
+        setLoading(false)
         if (users.getUserAdmin && !mainBranchId) {
             getXodim({
                 id: users.businessId,
@@ -175,9 +175,7 @@ function HodimlarRoyhati({
     }, [XodimReducer.current, page, limit, mainBranchId, query, roleId])
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 500)
     }, [XodimReducer.getBoolean])
 
 
@@ -226,19 +224,25 @@ function HodimlarRoyhati({
             }
             {
                 users.getUserAdmin || users.getUser ?
-                    loading ?
-                        XodimReducer.users?.list?.length > 0 ?
-                            <CardBody>
-                                <div className="table-responsive mb-4 table-wrapper-scroll-y">
-                                <CommonTable data={XodimReducer.users?.list} columns={columns} total={XodimReducer.users?.totalItem}
-                                             page={page} size={limit} handlePageChange={handlePageChange} pagination={true}
-                                             handleLimitChange={handleLimitChange}
-                                />
-                                </div>
-                            </CardBody>: <div className={'border border-2'}>
-                                <h4 className={'text-center'}>{XodimReducer.message}</h4>
-                            </div>
-                        : <Loading/> : ''
+                    <CardBody>
+                        <Loading spinning={loading}>
+                            {
+                                XodimReducer.users?.list?.length > 0 ?
+                                    <div className="table-responsive mb-4 table-wrapper-scroll-y">
+                                        <CommonTable data={XodimReducer.users?.list} columns={columns}
+                                                     total={XodimReducer.users?.totalItem}
+                                                     page={page} size={limit} handlePageChange={handlePageChange}
+                                                     pagination={true}
+                                                     handleLimitChange={handleLimitChange}
+                                        />
+                                    </div>
+                                    : <div className={'border border-2'}>
+                                        <h4 className={'text-center'}>{XodimReducer.message}</h4>
+                                    </div>
+                            }
+                        </Loading>
+                    </CardBody>
+                    : ''
             }
 
             <ModalLoading isOpen={saveModal}/>

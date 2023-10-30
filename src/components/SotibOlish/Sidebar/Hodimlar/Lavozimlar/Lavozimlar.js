@@ -1,6 +1,6 @@
 import React from 'react'
 import "./lavozimlar.css"
-import {Link,useHistory} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import LavozimReducer, {getLavozim, saveLavozim, editLavozim, deleteLavozim} from "../reducer/LavozimReducer";
@@ -62,7 +62,8 @@ function Lavozimlar({getLavozim, users, deleteLavozim, LavozimReducer}) {
                     } icon={<EditOutlined/>}/>
                 }
                 {
-                    users.deleteRole && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
+                    users.deleteRole &&
+                    <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
                         deleteRoleById(values.id)
                     }
                     } icon={<DeleteOutlined/>}/>
@@ -95,9 +96,7 @@ function Lavozimlar({getLavozim, users, deleteLavozim, LavozimReducer}) {
 
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 500)
     }, [LavozimReducer.getBoolean])
 
     useEffect(() => {
@@ -114,19 +113,23 @@ function Lavozimlar({getLavozim, users, deleteLavozim, LavozimReducer}) {
                     </Link> : ''
                 }
             </div>
-            <CardBody>
-                {
-                    users.getRole ?
-                        loading ?
-                            LavozimReducer.roles?.length > 0 ?
-                                    <CommonTable pagination={false} data={LavozimReducer.roles} columns={columns} size={LavozimReducer.roles?.length} page={0}/>
-                               :
-                                <div>
-                                    <h4 className={'text-center'}>{LavozimReducer.message}</h4>
-                                </div>
-                            : <Loading/> : ''
-                }
-            </CardBody>
+            {
+                users.getRole ?
+                    <CardBody>
+                        <Loading spinning={loading}>
+                            {
+                                LavozimReducer.roles?.length > 0 ?
+                                    <CommonTable pagination={false} data={LavozimReducer.roles} columns={columns}
+                                                 size={LavozimReducer.roles?.length} page={0}/>
+                                    :
+                                    <div>
+                                        <h4 className={'text-center'}>{LavozimReducer.message}</h4>
+                                    </div>
+                            }
+                        </Loading>
+                    </CardBody>
+                    : ''
+            }
             <AgreeModal deletemodal={deletemodal} deleteFunc={deleteFunc}
                         deleteModaltoggle={() => setdeletemodal(prevState => !prevState)}/>
             <ModalLoading isOpen={saveModal}/>

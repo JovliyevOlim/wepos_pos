@@ -32,7 +32,19 @@ ReactDOM.render(
 
             </div>)}>
                 <Provider store={store}>
-                    <ToastContainer/>
+                    <ToastContainer
+                        position="top-center"
+                        autoClose={1500}
+                        limit={1}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss={false}
+                        draggable
+                        pauseOnHover
+                        theme="colored"
+                    />
                     <BrowserRouter>
                         <App/>
                     </BrowserRouter>

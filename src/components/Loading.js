@@ -1,12 +1,11 @@
 import React from 'react';
+import {Spin} from 'antd';
 
-function Loading(props) {
+function Loading({children,spinning}) {
     return (
-        <div  className={'d-flex justify-content-center align-items-center'}>
-            <div className="spinner-border me-2" role="status">
-            </div>
-            <h4>Yuklanmoqda ...</h4>
-        </div>
+        <Spin size={'large'} spinning={!spinning}>
+             { children}
+        </Spin>
     );
 }
 

@@ -1,4 +1,4 @@
-import {Link,useHistory} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import './haridlarRoyxati.css'
 import {connect} from "react-redux";
 import React, {useEffect, useState} from "react";
@@ -24,6 +24,7 @@ import SelectAnt, {ButtonAnt} from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
 import CommonTable from "../../../../Components/CommonTable";
 import {DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined} from "@ant-design/icons";
+import {prettify} from "../../../../../util";
 
 function HaridlarRoyxati({
                              getAllSupplier,
@@ -65,13 +66,13 @@ function HaridlarRoyxati({
             title: t('ol.11'),
             dataIndex: 'createdAt',
             key: 'createdAt',
-            render:(item)=><p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>
+            render: (item) => <p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>
         },
         {
             title: t('ol.12'),
             dataIndex: 'invoice',
             key: 'invoice',
-            width:'80px'
+            width: '80px'
         },
         {
             title: t('ol.13'),
@@ -87,20 +88,20 @@ function HaridlarRoyxati({
             title: t('ol.15'),
             dataIndex: 'totalSum',
             key: 'totalSum',
-            render:(item)=><p className={'m-0'}>{item} so'm</p>
+            render: (item) => <p className={'m-0'}>{prettify(item)} so'm</p>
         },
         {
             title: t('ol.16'),
             dataIndex: 'paidSum',
             key: 'paidSum',
-            render:(item)=><p className={'m-0'}>{item} so'm</p>,
+            render: (item) => <p className={'m-0'}>{prettify(item)} so'm</p>,
             width: '100px'
         },
         {
             title: t('ol.17'),
             dataIndex: 'debtSum',
             key: 'debtSum',
-            render:(item)=><p className={'m-0'}>{item} so'm</p>
+            render: (item) => <p className={'m-0'}>{prettify(item)} so'm</p>
         },
         {
             title: t('ol.18'),
@@ -133,7 +134,8 @@ function HaridlarRoyxati({
                     } icon={<EditOutlined/>}/>
                 }
                 {
-                    users.deletePurchase  && values.editable && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
+                    users.deletePurchase && values.editable &&
+                    <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
                         deletePurchaseById(values.id)
                     }
                     } icon={<DeleteOutlined/>}/>
@@ -144,9 +146,9 @@ function HaridlarRoyxati({
     ];
 
     const handlePageChange = (newPage) => {
-        setPage(newPage-1);
+        setPage(newPage - 1);
     };
-    const handleLimitChange = (page,size) => {
+    const handleLimitChange = (page, size) => {
         setPage(0)
         setLimit(size);
     };
@@ -229,9 +231,7 @@ function HaridlarRoyxati({
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 500)
     }, [XaridReducer.getBoolean])
 
 
@@ -273,9 +273,9 @@ function HaridlarRoyxati({
                                     onChange={(e) => setPaymentStatus(e === "" ? null : e)}
                                     permission={true}
                                     selectList={[
-                                        {id:'TOLANGAN',name:(t('ol.6'))},
-                                        {id:'TOLANMAGAN',name:(t('ol.7'))},
-                                        {id:'QISMAN_TOLANGAN',name:(t('ol.'))},
+                                        {id: 'TOLANGAN', name: (t('ol.6'))},
+                                        {id: 'TOLANMAGAN', name: (t('ol.7'))},
+                                        {id: 'QISMAN_TOLANGAN', name: (t('ol.'))},
                                     ]}/>
                             </div>
                             <div className="col-12 col-sm-6 col-md-3 p-sm-2">
@@ -295,29 +295,28 @@ function HaridlarRoyxati({
             <CardBody>
                 {
                     users.getPurchaseAdmin || users.getPurchase ?
-                        loading ?
-                            XaridReducer.purchase?.list?.length > 0 ?
-                                <CardBody>
-                                    <div className="izlashBH">
-                                        {/*<div >*/}
-                                        {/*    <button><img src={Excel} alt=""/> Export Excel</button>*/}
-                                        {/*</div>*/}
-                                    </div>
-                                    <div className="table-responsive table-wrapper-scroll-y">
-                                        <CommonTable
-                                            columns={columns}
-                                            size={limit}
-                                            page={page}
-                                            pagination={true}
-                                            data={XaridReducer.purchase?.list}
-                                            total={XaridReducer.purchase?.totalItem}
-                                            handleLimitChange={handleLimitChange}
-                                            handlePageChange={handlePageChange}
-                                        />
-                                    </div>
-                                </CardBody> : <div className={'border border-2'}>
-                                    <h4 className={'text-center'}>{XaridReducer.message || 'NOT FOUND'}</h4>
-                                </div> : <Loading/> : ''
+                        <CardBody>
+                            <Loading spinning={loading}>
+                                {
+                                    XaridReducer.purchase?.list?.length > 0 ?
+                                        <div className="table-responsive table-wrapper-scroll-y">
+                                            <CommonTable
+                                                columns={columns}
+                                                size={limit}
+                                                page={page}
+                                                pagination={true}
+                                                data={XaridReducer.purchase?.list}
+                                                total={XaridReducer.purchase?.totalItem}
+                                                handleLimitChange={handleLimitChange}
+                                                handlePageChange={handlePageChange}
+                                            />
+                                        </div>
+                                        : <div className={'border border-2'}>
+                                            <h4 className={'text-center'}>{XaridReducer.message || 'NOT FOUND'}</h4>
+                                        </div>
+                                }
+                            </Loading>
+                        </CardBody> : ''
                 }
             </CardBody>
 
@@ -336,12 +335,15 @@ function HaridlarRoyxati({
                                     <div>
                                         <div className="col-md-12 ">
                                             <div className="col-md-12 d-flex flex-wrap">
-                                                <div className="col-md-4"><p>{t('ol.26')} <strong> {moment(new Date(item?.createdAt)).format('LLLL')}</strong>
+                                                <div className="col-md-4"><p>{t('ol.26')}
+                                                    <strong> {moment(new Date(item?.createdAt)).format('LLLL')}</strong>
                                                 </p>
                                                 </div>
-                                                <div className="col-md-4"><p>{t('ol.27')} <strong>{item?.paymentMethodName}</strong></p>
+                                                <div className="col-md-4"><p>{t('ol.27')}
+                                                    <strong>{item?.paymentMethodName}</strong></p>
                                                 </div>
-                                                <div className="col-md-4"><p>{t('ol.28')} <strong>{item?.paymentStatus}</strong></p>
+                                                <div className="col-md-4"><p>{t('ol.28')}
+                                                    <strong>{item?.paymentStatus}</strong></p>
                                                 </div>
                                                 <div className="col-md-12">
                                                     <p>{t('ol.29')} <strong>{item?.description}</strong></p>
@@ -352,15 +354,18 @@ function HaridlarRoyxati({
                                                     <p>{t('ol.30')} <strong>{item?.supplierName}</strong></p>
                                                 </div>
                                                 <div className="col-md-5">
-                                                    <p className={''}>{t('ol.31')} <strong>{item?.totalSum} {t('ol.32')}</strong>
+                                                    <p className={''}>{t('ol.31')}
+                                                        <strong>{item?.totalSum} {t('ol.32')}</strong>
                                                     </p>
                                                 </div>
                                                 <div className="col-md-5">
-                                                    <p className={''}>{t('ol.33')} <strong>{item?.paidSum} {t('ol.34')}</strong>
+                                                    <p className={''}>{t('ol.33')}
+                                                        <strong>{item?.paidSum} {t('ol.34')}</strong>
                                                     </p>
                                                 </div>
                                                 <div className="col-md-5">
-                                                    <p className={''}>{t('ol.35')} <strong>{item.debtSum} {t('ol.34')}</strong>
+                                                    <p className={''}>{t('ol.35')}
+                                                        <strong>{item.debtSum} {t('ol.34')}</strong>
                                                     </p>
                                                 </div>
 
@@ -430,7 +435,8 @@ function HaridlarRoyxati({
                     }
                 </ModalBody>
                 <ModalFooter>
-                    <button className={'btn btn-danger'} onClick={() => setViewOnePurchase(!viewOnePurchase)}>{t('ol.44')}
+                    <button className={'btn btn-danger'}
+                            onClick={() => setViewOnePurchase(!viewOnePurchase)}>{t('ol.44')}
                     </button>
                 </ModalFooter>
             </Modal>

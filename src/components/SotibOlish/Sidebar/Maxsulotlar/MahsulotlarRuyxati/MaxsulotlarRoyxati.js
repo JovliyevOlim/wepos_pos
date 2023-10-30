@@ -51,7 +51,6 @@ function MaxsulotlarRoyxati({
                             }) {
 
 
-
     const [loading, setLoading] = useState(false)
     const {t} = useTranslation()
     const [deletemodal, setdeletemodal] = useState(false)
@@ -61,6 +60,8 @@ function MaxsulotlarRoyxati({
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [filter, setFilter] = useState(null);
+    const [ascend, setAscend] = useState(false)
     const [mainBranchId, setMainBranchId] = useState(null)
     const [brandId, setbranId] = useState(null)
     const [categoryId, setCategoryId] = useState(null)
@@ -124,6 +125,7 @@ function MaxsulotlarRoyxati({
             width: '100px',
             render: (item, values) => <div>
                 <p className={'m-1'}>{values.barcode}</p>
+                <p className={'m-1'}>{values.code}</p>
                 <p className={'m-1'}>{values.many ? (t('as.63')) : (t('as.62'))}</p>
                 <p className={'m-1'}>{values.brandName} {values.categoryName && `,${values.categoryName}`}</p>
             </div>
@@ -133,13 +135,15 @@ function MaxsulotlarRoyxati({
             dataIndex: 'buyPrice',
             key: 'buyPrice',
             width: '100px',
-            render: (item) => <p>{item} so'm</p>
+            sorter: true,
+            render: (item) => <p>{item} so'm</p>,
         },
         {
             title: 'Sotish',
             dataIndex: 'salePrice',
             key: 'salePrice',
             render: (item) => <p>{item} so'm</p>,
+            sorter: true,
             width: '80px'
         },
         {
@@ -147,6 +151,7 @@ function MaxsulotlarRoyxati({
             dataIndex: 'grossPrice',
             key: 'grossPrice',
             render: (item) => <p>{item} so'm</p>,
+            sorter: true,
             width: '80px'
         },
         {
@@ -208,7 +213,8 @@ function MaxsulotlarRoyxati({
                     measurementId,
                     page,
                     size: rowsPerPage,
-                    search
+                    search,
+                    filter, ascend
                 }
             })
         } else if (users.getProduct) {
@@ -220,13 +226,26 @@ function MaxsulotlarRoyxati({
                     measurementId,
                     page,
                     size: rowsPerPage,
-                    search
+                    search,
+                    filter, ascend
                 }
             })
         }
 
-    }, [brandId, mainBranchId, categoryId, search, rowsPerPage, page, measurementId, MaxsulotlarRoyxariReducer.current])
+    }, [brandId, mainBranchId, categoryId, search, rowsPerPage, page, measurementId, MaxsulotlarRoyxariReducer.current, filter, ascend])
 
+
+    function tableFilter(pagination, filter, sorter) {
+        console.log(sorter)
+        if (sorter.order) {
+            setFilter(sorter.columnKey)
+            setAscend(sorter.order === 'ascend' ? true : false)
+        } else {
+            setFilter(null)
+            setAscend(false)
+
+        }
+    }
 
     const [productId, setProductId] = useState(null)
 
@@ -313,7 +332,8 @@ function MaxsulotlarRoyxati({
                 <MainHeaderText text={t('sidebar.product')}/>
                 {
                     users.addProduct ?
-                        <ButtonAnt onClick={togglePush} icon={<PlusOutlined/>} text={t('button.add')} type={'primary'}/> : ''
+                        <ButtonAnt onClick={togglePush} icon={<PlusOutlined/>} text={t('button.add')}
+                                   type={'primary'}/> : ''
                 }
             </div>
             <>
@@ -414,10 +434,9 @@ function MaxsulotlarRoyxati({
             </>
             {
                 users.getProductAdmin || users.getProduct ?
-
                     <CardBody>
-                        {
-                            loading ?
+                        <Loading spinning={loading}>
+                            {
                                 MaxsulotlarRoyxariReducer.productTableSearch?.list?.length > 0 ?
                                     <>
                                         <div
@@ -442,6 +461,7 @@ function MaxsulotlarRoyxati({
                                         <CommonTable
                                             size={rowsPerPage}
                                             page={page}
+                                            onchange={tableFilter}
                                             rowSelection={rowSelection}
                                             total={MaxsulotlarRoyxariReducer?.productTableSearch?.totalItem}
                                             handlePageChange={handleChangePage}
@@ -453,9 +473,9 @@ function MaxsulotlarRoyxati({
                                     </>
                                     : <div>
                                         <h4 className={'fw-bold text-center'}>{MaxsulotlarRoyxariReducer?.message}</h4>
-                                    </div> : <Loading/>
-
-                        }
+                                    </div>
+                            }
+                        </Loading>
                     </CardBody> : ''
             }
             {

@@ -215,9 +215,7 @@ function MahsulotTurlari({
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 500)
     }, [MahsulotTurlariReducer.getBoolean])
 
     useEffect(() => {
@@ -233,23 +231,19 @@ function MahsulotTurlari({
             </div>
 
             <CardBody>
-                {
-                    loading ?
-                        <div>
-                            {
-                                MahsulotTurlariReducer.productType?.length > 0 ?
-                                    <div className="table-responsive table-wrapper-scroll-y mb-4">
-                                        <CommonTable data={MahsulotTurlariReducer?.productType} columns={columns}
-                                                     size={MahsulotTurlariReducer.productType?.length} page={0}
-                                                     pagination={false}/>
-                                    </div>
-                                    : <div className={'text-center'}>
-                                        <h4 className={'text-center'}>{MahsulotTurlariReducer.message || 'NOT FOUND'}</h4>
-                                    </div>
-                            }
-
-                        </div> : <Loading/>
-                }
+                <Loading spinning={loading}>
+                    {
+                        MahsulotTurlariReducer.productType?.length > 0 ?
+                            <div className="table-responsive table-wrapper-scroll-y mb-4">
+                                <CommonTable data={MahsulotTurlariReducer?.productType} columns={columns}
+                                             size={MahsulotTurlariReducer.productType?.length} page={0}
+                                             pagination={false}/>
+                            </div>
+                            : <div className={'text-center'}>
+                                <h4 className={'text-center'}>{MahsulotTurlariReducer.message || 'NOT FOUND'}</h4>
+                            </div>
+                    }
+                </Loading>
             </CardBody>
             <Modal isOpen={active} toggle={toggle}>
                 <ModalHeader>

@@ -20,6 +20,7 @@ import SelectAnt, {ButtonAnt} from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
 import CommonTable from "../../../../Components/CommonTable";
 import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
+import {prettify} from "../../../../../util";
 
 function XarajatlarRoyxati({
                                getOutlayByBusiness,
@@ -80,7 +81,7 @@ function XarajatlarRoyxati({
             title: 'Jami summa',
             dataIndex: 'sum',
             key: 'sum',
-            render: (item) => <p className={'m-0'}>{item} so'm</p>
+            render: (item) => <p className={'m-0'}>{prettify(item, 3)} so'm</p>
         },
         {
             title: t('Expenses.8'),
@@ -101,7 +102,8 @@ function XarajatlarRoyxati({
                     } icon={<EditOutlined/>}/>
                 }
                 {
-                    users.deleteOutlay && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
+                    users.deleteOutlay &&
+                    <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
                         deleteOutlayById(values.id)
                     }
                     } icon={<DeleteOutlined/>}/>
@@ -113,10 +115,10 @@ function XarajatlarRoyxati({
 
 
     const handlePageChange = (newPage) => {
-        setPage(newPage-1);
+        setPage(newPage - 1);
     };
 
-    const handleLimitChange = (event,size) => {
+    const handleLimitChange = (event, size) => {
         setPage(0)
         setLimit(size);
     };
@@ -134,6 +136,7 @@ function XarajatlarRoyxati({
 
 
     useEffect(() => {
+        setLoading(false)
         setPage(0)
         if (users.getOutlayAdmin && !mainBranchId) {
             getOutlayByBusiness({
@@ -186,9 +189,7 @@ function XarajatlarRoyxati({
 
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 500)
     }, [XarajatlarReducer.getOutlaysBool])
 
     useEffect(() => {
@@ -203,7 +204,7 @@ function XarajatlarRoyxati({
                 <MainHeaderText text={t('sidebar.outlay')}/>
                 {
                     users.addOutlay ? <Link to={'/main/addOutlay'}>
-                        <ButtonAnt text={t('button.add')} icon={<PlusOutlined />} type={'primary'}/>
+                        <ButtonAnt text={t('button.add')} icon={<PlusOutlined/>} type={'primary'}/>
                     </Link> : ''
                 }
             </div>
@@ -247,11 +248,12 @@ function XarajatlarRoyxati({
                     : ''
             }
 
-            <CardBody>
-                {
-                    users.getOutlayAdmin || users.getOutlay ?
-                        loading ?
-                            XarajatlarReducer.outlays?.outlayList?.length > 0 ?
+            {
+                users.getOutlayAdmin || users.getOutlay ?
+                    <CardBody>
+                        <Loading spinning={loading}>
+                            {
+                                XarajatlarReducer.outlays?.outlayList?.length > 0 ?
                                     <div className="table-responsive table-wrapper-scroll-y ">
                                         <CommonTable size={limit} page={page}
                                                      total={XarajatlarReducer.outlays?.totalItem}
@@ -261,15 +263,16 @@ function XarajatlarRoyxati({
                                                      columns={columns}
                                         />
                                     </div> :
-                                <div>
-                                    <h4 className={'text-center'}>{XarajatlarReducer.message}</h4>
-                                </div>
-                            : <Loading/>
-                        : ''
-                }
+                                    <div>
+                                        <h4 className={'text-center'}>{XarajatlarReducer.message}</h4>
+                                    </div>
+                            }
+                        </Loading>
+                    </CardBody>
+                    : ''
+            }
 
 
-            </CardBody>
             <AgreeModal deletemodal={deletemodal} deleteFunc={deleteFunc}
                         deleteModaltoggle={() => setdeletemodal(prevState => !prevState)}/>
         </div>

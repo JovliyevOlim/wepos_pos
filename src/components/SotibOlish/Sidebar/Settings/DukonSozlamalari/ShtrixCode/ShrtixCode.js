@@ -3,17 +3,18 @@ import users from "../../../../../../reducer/users";
 import {ImCancelCircle} from "react-icons/im";
 import React, {useEffect, useRef, useState} from "react";
 import {toast} from "react-toastify";
-import Barcode from "react-barcode";
 import {useReactToPrint} from "react-to-print";
+import Barcode from 'react-jsbarcode';
 import "./shtrixcode.css"
 import {useTranslation} from "react-i18next";
 import MaxsulotlarRoyxariReducer, {getBarcodeAndName} from "../../../Maxsulotlar/reducer/MaxsulotlarRoyxariReducer";
 import MainHeaderText from "../../../../../Components/MainHeaderText";
 import CardBody from "../../../../../Components/CardBody";
 import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../../Components/SelectAnt";
+import {Input, Checkbox, DatePicker, InputNumber} from 'antd';
 import CommonTable from "../../../../../Components/CommonTable";
-import moment from "moment/moment";
 import {CloseCircleOutlined} from "@ant-design/icons";
+import moment from "moment";
 
 const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
 
@@ -21,25 +22,33 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
     const [mainBranchId, setMainBranchId] = useState(null)
     const [search, setSearch] = useState('')
     const [isView, setIsView] = useState(false)
-    const [display,setDisplay] = useState('d-none')
+    const [display, setDisplay] = useState('d-none')
 
     const [XaridArrayPost, setXaridArrayPost] = useState([])
-    const [shtrixData, setShtrixData] = useState({
-        rowGap: 60,
-        columnGap: 0,
-        grid: 1,
-        barcodeWIdth: '100%',
-        barcodeHeight: 250,
-        textHeight: 40,
-        numberSize: 40,
-        yon: 20,
-        top: 20
+    const [fontSize, setFontSize] = useState(24)
+    const [isName, setIsName] = useState(true)
+    const [isBranchName, setIsBranchName] = useState(true)
+    const [isDate, setIsDate] = useState(false)
+    const [date, setDate] = useState('')
+    const [branchName, setBranchName] = useState('')
+    const [cardSize, setCardSize] = useState({
+        width: 58,
+        height: 40
     })
+
+    function changeSize(e) {
+        cardSize.width = e.substring(0, 2)
+        cardSize.height = e.substring(2, 4)
+        let a = {...cardSize}
+        setCardSize(a)
+    }
+
     const componentRef = useRef();
     const {t} = useTranslation()
 
-
     useEffect(() => {
+        let a = users.branches.find(item => item.id === mainBranchId ? mainBranchId : users.branchId)
+        setBranchName(a.name)
         setXaridArrayPost([])
         setSearch('')
         setIsView(false)
@@ -140,12 +149,12 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
 
     const handlePrint = () => {
         setDisplay('d-flex')
-        setTimeout(()=>{
+        setTimeout(() => {
             handlePrintCopy()
             setXaridArrayPost([])
             setSearch('')
             setDisplay('d-none')
-        },1000)
+        }, 1000)
     }
 
 
@@ -194,113 +203,174 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
             }
 
             <CardBody>
-                <div className={'col-md-10 mt-4 mb-5 offset-1'}>
-                    {/*<div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20}}>*/}
-                    {/*    <div>*/}
-                    {/*        <label className='font-w600' htmlFor='grid'>{t('mah.11')}</label>*/}
-                    {/*        <input className='form-control' min='1' type='number' value={shtrixData.grid}*/}
-                    {/*               onChange={(e) => setShtrixData((prev) => ({...prev, grid: e.target.value}))}*/}
-                    {/*               placeholder={t('mah.11')} name='grid' id='grid'/>*/}
-                    {/*    </div>*/}
-                    {/*    <div>*/}
-                    {/*        <label className='font-w600' htmlFor='barcodeWidth'>{t('mah.12')} </label>*/}
-                    {/*        <input className='form-control' min='1' max='8' type='number'*/}
-                    {/*               value={shtrixData.barcodeWIdth}*/}
-                    {/*               onChange={(e) => setShtrixData((prev) => ({...prev, barcodeWIdth: e.target.value}))}*/}
-                    {/*               placeholder={t('mah.12')} name='barcodeWidth' id='barcodeWidth'/>*/}
-                    {/*    </div>*/}
-                    {/*    <div>*/}
-                    {/*        <label className='font-w600' htmlFor='barcodeHeight'>{t('mah.13')}</label>*/}
-                    {/*        <input className='form-control' min='1' type='number' value={shtrixData.barcodeHeight}*/}
-                    {/*               onChange={(e) => setShtrixData((prev) => ({...prev, barcodeHeight: e.target.value}))}*/}
-                    {/*               placeholder={t('mah.13')} name='barcodeHeight' id='barcodeHeight'/>*/}
-                    {/*    </div>*/}
-                    {/*    <div>*/}
-                    {/*        <label className='font-w600' htmlFor='textHeight'>{t('mah.14')} </label>*/}
-                    {/*        <input className='form-control' min='1' type='number' value={shtrixData.textHeight}*/}
-                    {/*               onChange={(e) => setShtrixData((prev) => ({...prev, textHeight: e.target.value}))}*/}
-                    {/*               placeholder={t('mah.14')} name='textHeight' id='textHeight'/>*/}
-                    {/*    </div>*/}
-                    {/*    <div>*/}
-                    {/*        <label className='font-w600' htmlFor='numberSize'>{t('mah.15')} </label>*/}
-                    {/*        <input className='form-control' min='1' type='number' value={shtrixData.numberSize}*/}
-                    {/*               onChange={(e) => setShtrixData((prev) => ({...prev, numberSize: e.target.value}))}*/}
-                    {/*               placeholder={t('mah.15')} name='numberSize' id='numberSize'/>*/}
-                    {/*    </div>*/}
-                    {/*    <div>*/}
-                    {/*        <label className='font-w600' htmlFor='rowGap'>{t('mah.16')} </label>*/}
-                    {/*        <input className='form-control' min='0' type='number' value={shtrixData.rowGap}*/}
-                    {/*               onChange={(e) => setShtrixData((prev) => ({...prev, rowGap: e.target.value}))}*/}
-                    {/*               placeholder={t('mah.16')} name='rowGap' id='rowGap'/>*/}
-                    {/*    </div>*/}
-                    {/*    <div>*/}
-                    {/*        <label className='font-w600' htmlFor='columnGap'>{t('mah.17')}</label>*/}
-                    {/*        <input className='form-control' min='0' type='number' value={shtrixData.columnGap}*/}
-                    {/*               onChange={(e) => setShtrixData((prev) => ({...prev, columnGap: e.target.value}))}*/}
-                    {/*               placeholder={t('mah.17')} name='columnGap' id='columnGap'*/}
-                    {/*               disabled={shtrixData.grid <= 1}*/}
-                    {/*        />*/}
-                    {/*    </div>*/}
-                    {/*    <div>*/}
-                    {/*        <label className='font-w600' htmlFor='yon'>{t('mah.18')} </label>*/}
-                    {/*        <input className='form-control' min='0' type='number' value={shtrixData.yon}*/}
-                    {/*               onChange={(e) => setShtrixData((prev) => ({...prev, yon: e.target.value}))}*/}
-                    {/*               placeholder={t('mah.18')} name='yon' id='yon'*/}
-                    {/*        />*/}
-                    {/*    </div>*/}
-                    {/*    <div>*/}
-                    {/*        <label className='font-w600' htmlFor='top'>{t('mah.19')} </label>*/}
-                    {/*        <input className='form-control' min='0' type='number' value={shtrixData.top}*/}
-                    {/*               onChange={(e) => setShtrixData((prev) => ({...prev, top: e.target.value}))}*/}
-                    {/*               placeholder={t('mah.19')} name='top' id='top'*/}
-                    {/*        />*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
-                    <div className={`${display} d-flex justify-content-between flex-wrap gap-2 align-items-center w-100`} ref={componentRef}>
-                            {
-                                XaridArrayPost.map((item) => {
-                                    let array = [];
-                                    let i = 0;
-                                    while (i < item.purchasedQuantity) {
-                                        i++;
-                                        array = [...array,
-                                            <div className={'barcode-card-check'}>
-                                            <p className={"barcode-card-price"}>{item.price} so'm</p>
-                                            <p className={"barcode-card-text"}>{item.name}</p>
-                                            <div className={'d-flex col-md-12 mb-2'}>
-                                                <div className="col-md-6 barcode-icon">
-                                                    <Barcode format="CODE128"  value={item.barcode}/>
-                                                </div>
-                                                <div className="col-md-6">
-
-                                                </div>
-                                            </div>
-
-                                        </div>]
-                                    }
-                                    return array;
-                                })
-                            }
+                <div className={'col-md-12 d-flex gap-4 align-items-center'}>
+                    <div className={'col-md-3 d-flex flex-column'}>
+                        <label className='barcode-text' htmlFor='grid'>Shrift o'lchami</label>
+                        <InputNumber value={fontSize} onChange={(e) => setFontSize(e)} className={'barcode-input'}
+                                     placeholder="Basic usage"/>
+                    </div>
+                    <div className={'col-md-3'}>
+                        <SelectAnt name={'O\'lchami'} permission={false} selectList={[
+                            {id: '5840', name: '58x40'},
+                            {id: '5830', name: '58x30'},
+                            {id: '4325', name: '43x25'},
+                            {id: '3020', name: '30x20'},
+                        ]} onChange={changeSize}/>
+                    </div>
+                    <div className={'col-md-1 d-flex align-items-center'}>
+                        <Checkbox onChange={(e) => setIsName(e.target.checked)} checked={isName}
+                                  className='barcode-text'>Nomi</Checkbox>
+                    </div>
+                    <div className={'col-md-1 d-flex align-items-center'}>
+                        <Checkbox onChange={(e) => setIsBranchName(e.target.checked)} checked={isBranchName}
+                                  className='barcode-text'>Filial Nomi</Checkbox>
+                    </div>
+                    <div className={'col-md-3 d-flex align-items-center gap-2'}>
+                        <Checkbox onChange={(e) => setIsDate(e.target.checked)} checked={isDate}
+                                  className='barcode-text'>Sana</Checkbox>
+                        <DatePicker onChange={(e) => setDate(moment(e).format('l'))} disabled={!isDate}/>
                     </div>
                 </div>
-                <div  className={`d-flex justify-content-between flex-wrap gap-2 align-items-center w-100`}>
+                <div
+                    className={`${display} d-flex justify-content-between flex-wrap gap-2 align-items-center w-100`}
+                    ref={componentRef}>
                     {
-                        XaridArrayPost.map((item) => <div className={'barcode-card'}>
-                                <p className={"barcode-card-price"}>{item.price} so'm</p>
-                                <p className={"barcode-card-text"}>{item.name}</p>
-                                <div className={'d-flex col-md-12 mb-2'}>
-                                    <div className="col-md-6 barcode-icon">
-                                        <Barcode format="CODE128"  value={item.barcode}/>
+                        XaridArrayPost.map((item) => {
+                            let array = [];
+                            let i = 0;
+                            while (i < item.purchasedQuantity) {
+                                i++;
+                                array = [...array,
+                                    <div
+                                        style={{
+                                            width: `${cardSize.width * 3.78}px`,
+                                            height: `${cardSize.height * 3.78}px`,
+                                            padding: `${58 / 6}px`
+                                        }}
+                                        className={'barcode-card'}>
+                                        {
+                                            isBranchName &&  <h1 style={{
+                                                fontSize: `${fontSize / 3}px`,
+                                                textAlign: 'center',
+                                                margin: 0
+                                            }}>{branchName}</h1>
+                                        }
+                                        <div className={'d-flex gap-2 align-items-stretch mt-1'}>
+                                            <div className="col-md-6">
+                                                <h1 className={"barcode-card-price"}
+                                                   style={{
+                                                       fontSize: `${fontSize}px`,
+                                                       lineHeight: `${fontSize}px`
+                                                   }}>{item.price.toString().substring(0, item.price.toString().length - 3)}</h1>
+                                            </div>
+                                            <div
+                                                className="col-md-5 d-flex flex-column align-items-start justify-content-center">
+                                                <h1 className={"barcode-card-price"}
+                                                   style={{
+                                                       fontSize: `${fontSize / 2}px`,
+                                                       textAlign: 'start',
+                                                       lineHeight: `${fontSize / 2}px`
+                                                   }}>{item.price.toString().substring(item.price.toString().length - 3, item.price.toString().length)}</h1>
+                                                <h1 className={"barcode-card-price"} style={{
+                                                    fontSize: `${fontSize / 2.25}px`,
+                                                    textAlign: 'start',
+                                                    lineHeight: `${fontSize / 2.5}px`
+                                                }}>so'm</h1>
+                                            </div>
+                                        </div>
+                                        {
+                                            isName &&
+                                            <h1 className={"barcode-card-text mt-2"}
+                                                style={{fontSize: `${fontSize / 2.5}px`}}>{item.name}</h1>
+                                        }
+                                        <div className={'d-flex col-md-12 mt-2 p-1 justify-content-between'}>
+                                            <div className="col-md-8 barcode-icon" style={{
+                                                width: `${cardSize.width * 3.78 / 3}px`,
+                                                height: `${cardSize.height * 3.78 / 3}px`
+                                            }}>
+                                                <Barcode
+                                                    options={{format: item.barcode.length == 13 ? 'ean13' : 'code128'}}
+                                                    renderer="svg" value={item.barcode}/>
+                                            </div>
+                                            {
+                                                isDate && <div className="col-md-4 d-flex align-items-end"
+                                                               style={{fontSize: `${fontSize / 2.5}px`}}>
+                                                    {date}
+                                                </div>
+                                            }
+                                        </div>
                                     </div>
-                                    <div className="col-md-6">
+                                ]
+                            }
+                            return array;
+                        })
+                    }
+                </div>
+                <div className={`d-flex mt-2 justify-content-between flex-wrap gap-2 align-items-center w-100`}>
+                    {
+                        XaridArrayPost.map((item) => <div
+                                style={{
+                                    width: `${cardSize.width * 3.78}px`,
+                                    height: `${cardSize.height * 3.78}px`,
+                                    padding: `${58 / 6}px`
+                                }}
+                                className={'barcode-card'}>
+                                {
+                                    isBranchName && <p style={{
+                                        fontSize: `${fontSize / 3}px`,
+                                        textAlign: 'center',
+                                        margin: 0
+                                    }}>{branchName}</p>
 
+                                }
+                                <div className={'d-flex gap-2 align-items-stretch mt-1'}>
+                                    <div className="col-md-6">
+                                        <p className={"barcode-card-price"}
+                                           style={{
+                                               fontSize: `${fontSize}px`,
+                                               lineHeight: `${fontSize}px`
+                                           }}>{item.price.toString().substring(0, item.price.toString().length - 3)}</p>
+                                    </div>
+                                    <div className="col-md-5 d-flex flex-column align-items-start justify-content-center">
+                                        <p className={"barcode-card-price"}
+                                           style={{
+                                               fontSize: `${fontSize / 2}px`,
+                                               textAlign: 'start',
+                                               lineHeight: `${fontSize / 2}px`
+                                           }}>{item.price.toString().substring(item.price.toString().length - 3, item.price.toString().length)}</p>
+                                        <p className={"barcode-card-price"} style={{
+                                            fontSize: `${fontSize / 2.25}px`,
+                                            textAlign: 'start',
+                                            lineHeight: `${fontSize / 2.5}px`
+                                        }}>so'm</p>
                                     </div>
                                 </div>
 
+                                {
+                                    isName &&
+                                    <p className={"barcode-card-text mt-2"}
+                                       style={{fontSize: `${fontSize / 2.5}px`}}>{item.name}</p>
+                                }
+                                <div className={'d-flex col-md-12 mt-2 p-1 justify-content-between'}>
+                                    <div className="col-md-8 barcode-icon" style={{
+                                        width: `${cardSize.width * 3.78 / 3}px`,
+                                        height: `${cardSize.height * 3.78 / 3}px`
+                                    }}>
+                                        <Barcode options={{format: item.barcode.length == 13 ? 'ean13' : 'code128'}}
+                                                 renderer="svg" value={item.barcode}/>
+                                    </div>
+                                    {
+                                        isDate && <div className="col-md-4 d-flex align-items-end"
+                                                       style={{fontSize: `${fontSize / 2.5}px`}}>
+                                            {date}
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         )
                     }
                 </div>
+
                 <div className="row">
                     <div className="col-md-12">
                         <div style={{display: 'flex', justifyContent: 'end', marginTop: 10}}>

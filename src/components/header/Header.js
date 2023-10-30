@@ -6,6 +6,7 @@ import {Link, useLocation} from "react-router-dom";
 import arrowDown from "../../img/direction-down 01.svg";
 import uzLanguage from "../../img/🇺🇿.svg";
 import rusLanguage from "../../img/🇷🇺.svg";
+import Logo from "../../img/g14.svg";
 
 function Header({id}) {
 
@@ -54,7 +55,10 @@ function Header({id}) {
         <div className={'header__ '}>
             <div className="homebody d-flex col-md-12 align-items-center">
                 <div className="col-5">
-                    <h2 className={'logo-name'}>CORONA</h2>
+                    <div className={'d-flex gap-1 align-items-center'}>
+                        <img src={Logo} width={50} height={50} alt="logo"/>
+                        <h4 style={{fontSize:'32px',margin:0,fontWeight:'600'}}>Miro</h4>
+                    </div>
                 </div>
                 <div className="col-7 d-flex gap-2 gap-lg-4 align-items-stretch justify-content-end">
                     <div className="drop-down">

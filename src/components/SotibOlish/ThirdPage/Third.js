@@ -49,11 +49,12 @@ function Third({
                }) {
     const location = useLocation()
     const history = useHistory()
+    const {t} = useTranslation()
     const [mainBranchId, setMainBranch] = useState(null)
     const [currentDay, setCurrentDay] = useState('day')
     const [date, setDate] = useState([])
 
-    const filialSelect = users.getInfoAdmin ? [{value: '', label: "Barcha filiallar"},
+    const filialSelect = users.getInfoAdmin ? [{value: '', label: t('mainPage.allBranch')},
             ...users.branches?.map((item) => ({value: item.id, label: item.name}))] :
         users.branches?.map((item) => ({value: item.id, label: item.name}))
 
@@ -63,7 +64,6 @@ function Third({
     }, [])
 
 
-    const {t} = useTranslation()
 
     const {
         balance,
@@ -79,9 +79,9 @@ function Third({
 
 
     const listDay = [
-        {value: 'week', label: 'Hafta'},
-        {value: 'month', label: 'Oy'},
-        {value: 'year', label: 'Shu yil'},
+        {value: 'week', label: t('mainPage.week')},
+        {value: 'month', label: t('mainPage.month')},
+        {value: 'year', label: t('mainPage.thisYear')},
     ]
 
 
@@ -114,22 +114,22 @@ function Third({
 
     const cards = [
         {
-            title: 'Kassa',
+            title: t('mainPage.balance'),
             sum: infoReducer?.infoObject?.balance,
             percent: infoReducer?.infoObjectPercent?.balancePercent,
             img: kassa
         },
-        {title: 'Savdo', sum: trade, percent: tradePercent, img: savdo},
-        {title: 'Savdodagi to\'lov', sum: tradePaid, percent: tradePaidPercent, img: savdotolov},
-        {title: 'Savdodagi qarz', sum: tradeDebt, percent: tradeDebtPercent, img: savdoqarz},
-        {title: 'Foyda', sum: profit, percent: profitPercent, img: foyda},
-        {title: 'Xarid', sum: purchase, percent: purchasePercent, img: xarid},
-        {title: 'Xariddagi qilingan to\'lov', sum: purchasePaid, percent: purchasePaidPercent, img: xaridtolov},
-        {title: 'Xariddagi qarz', sum: purchaseDebt, percent: purchaseDebtPercent, img: xaridqarz},
-        {title: 'Mijozlardan olingan summa', sum: fromCustomer, percent: fromCustomerPercent, img: mijozolsum},
-        {title: 'Mijozga berilgan summa', sum: toCustomer, percent: toCustomerPercent, img: mijozbersum},
-        {title: 'Diller berilgan summa', sum: toSupplier, percent: toSupplierPercent, img: dillerbersum},
-        {title: 'Xarajat', sum: outlay, percent: outlayPercent, img: xarajat},
+        {title: t('mainPage.trade'), sum: trade, percent: tradePercent, img: savdo},
+        {title: t('mainPage.payInTrade'), sum: tradePaid, percent: tradePaidPercent, img: savdotolov},
+        {title: t('mainPage.debtInTrade'), sum: tradeDebt, percent: tradeDebtPercent, img: savdoqarz},
+        {title: t('mainPage.profit'), sum: profit, percent: profitPercent, img: foyda},
+        {title: t('mainPage.purchase'), sum: purchase, percent: purchasePercent, img: xarid},
+        {title:t('mainPage.payInPurchase'), sum: purchasePaid, percent: purchasePaidPercent, img: xaridtolov},
+        {title: t('mainPage.debtInPurchase'), sum: purchaseDebt, percent: purchaseDebtPercent, img: xaridqarz},
+        {title: t('mainPage.getSumByCustomer'), sum: fromCustomer, percent: fromCustomerPercent, img: mijozolsum},
+        {title: t('mainPage.setSumByCustomer'), sum: toCustomer, percent: toCustomerPercent, img: mijozbersum},
+        {title: t('mainPage.setSumToSupplier'), sum: toSupplier, percent: toSupplierPercent, img: dillerbersum},
+        {title: t('mainPage.outlay'), sum: outlay, percent: outlayPercent, img: xarajat},
     ]
 
 
@@ -188,7 +188,7 @@ function Third({
             <div className={'dashboard-header'}>
                 <div className={'d-flex col-md-12 gap-2 gap-lg-0 flex-wrap align-items-end justify-content-between'}>
                     <div className={'col-12 col-md-3'}>
-                        <MainHeaderText text={'Bosh sahifa'}/>
+                        <MainHeaderText text={t('mainPage.mainPage')}/>
                     </div>
                     <div
                         className={'col-12 p-0 col-sm-12 col-md-12 col-lg-9 d-flex flex-wrap gap-2 gap-md-3 justify-content-center justify-content-lg-end  p-0   align-items-center'}>
@@ -201,7 +201,7 @@ function Third({
                                     style={{width: '250px'}}
                                     suffixIcon={<Image preview={false} src={calendar}/>}
                                     separator={<MinusOutlined/>}
-                                    placeholder={['Boshlanish sanasi', 'Tugash sanasi']}
+                                    placeholder={[t('mainPage.startDate'), t('mainPage.endDate')]}
                                     onChange={(e) => {
                                         if (e) {
                                             setDate(e)
@@ -224,7 +224,7 @@ function Third({
                         />
                         <button value={'day'}
                                 className={`dashboard-day-button ${currentDay === 'day' ? 'dashboard-day-button-active' : ''}`}
-                                onClick={(e) => Dates(e.target.value)}>Bugun
+                                onClick={(e) => Dates(e.target.value)}>{t('mainPage.thisDay')}
                         </button>
                     </div>
                 </div>

@@ -54,7 +54,6 @@ function MainHeader({
     }, [notificationReducer.current, location.pathname])
 
     const [activeN, setactiveN] = useState(false)
-    const [activeN2, setactiveN2] = useState(false)
     const [exit, setExit] = useState(false)
     const [langShown, setlangShown] = useState(false)
     const [selectedImg, setselectedImg] = useState(uzLanguage)
@@ -76,12 +75,14 @@ function MainHeader({
         setactiveN(!activeN)
     }
 
-    function toggle3() {
-        setactiveN2(!activeN2)
-    }
-
 
     const {t, i18n} = useTranslation()
+
+
+    // window.addEventListener('mouseleave',()=>{
+    //     setlangShown(false)
+    //     setExit(false)
+    // })
 
     function ChangeLanguage(list) {
         languagesList.map((item, val) => {
@@ -119,10 +120,8 @@ function MainHeader({
     }
 
 
-    function closeModal() {
-        toggle3()
-        toggle2()
-    }
+
+
 
     function logOut() {
         localStorage.clear();

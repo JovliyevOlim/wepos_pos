@@ -1,6 +1,5 @@
 import React from 'react';
 import {ModalBody,Modal} from "reactstrap";
-import Loading from "./Loading";
 import {ClockLoader} from "react-spinners";
 function ModalLoading({toggle,isOpen}) {
     return (

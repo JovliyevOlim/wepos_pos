@@ -16,6 +16,7 @@ import MainHeaderText from "../../../../Components/MainHeaderText";
 import CardBody from "../../../../Components/CardBody";
 import SelectAnt from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
+import {prettify} from "../../../../../util";
 
 function SupplierReport({
                             users,
@@ -68,7 +69,7 @@ function SupplierReport({
             title: 'Summa',
             dataIndex: 'sum',
             key: 'sum',
-            render: (item) => <p className={'m-0'}>{item} so'm</p>
+            render: (item) => <p className={'m-0'}>{prettify(item,0)} so'm</p>
         },
         {
             title: 'To\'lov turi',
@@ -128,9 +129,7 @@ function SupplierReport({
 
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 200)
     }, [SupplierReportReducer.getBoolean])
 
     useEffect(() => {
@@ -173,18 +172,20 @@ function SupplierReport({
                 </div>
             </CardBody>
             <CardBody>
-                    {loading ?
+                <Loading spinning={loading}>
+                    {
                         SupplierReportReducer.supplierReport?.list?.length > 0 ?
                             <div className="table-responsive mb-4 table-wrapper-scroll-y">
                                 <CommonTable size={size} page={page} data={SupplierReportReducer.supplierReport?.list} columns={columns}
-                                handlePageChange={handlePageChange} pagination={true} handleLimitChange={handleLimitChange}
+                                             handlePageChange={handlePageChange} pagination={true} handleLimitChange={handleLimitChange}
                                              total={SupplierReportReducer.supplierReport?.totalItem}
                                 />
                             </div> : <div>
                                 <h4 className={'text-center'}>{SupplierReportReducer.message}</h4>
-                            </div> :
-                        <Loading/>
+                            </div>
                     }
+                </Loading>
+
                 </CardBody>
         </div>
     )

@@ -165,9 +165,7 @@ function XaridlarXisoboti({
     }, [])
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 200)
     }, [XaridlarXisobotiReducer.getBoolean])
 
     useEffect(() => {
@@ -229,7 +227,8 @@ function XaridlarXisoboti({
             </CardBody>
 
             <CardBody>
-                    {loading ?
+                <Loading spinning={loading}>
+                    {
                         XaridlarXisobotiReducer.purchaseReport?.list?.length > 0 ?
                             <div className="table-responsive mb-4 table-wrapper-scroll-y">
                                 <CommonTable size={size} page={page} columns={columns} data={XaridlarXisobotiReducer.purchaseReport?.list}
@@ -237,9 +236,9 @@ function XaridlarXisoboti({
                                              total={XaridlarXisobotiReducer.purchaseReport?.totalItem}/>
                             </div> : <div>
                                 <h4 className={'text-center'}>{XaridlarXisobotiReducer.message}</h4>
-                            </div> :
-                        <Loading/>
+                            </div>
                     }
+                </Loading>
             </CardBody>
 
             <Modal isOpen={check} toggle={checktoggle} size={'xl'}>

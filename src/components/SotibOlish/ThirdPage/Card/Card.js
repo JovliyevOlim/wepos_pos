@@ -2,9 +2,13 @@ import React from 'react';
 import './card.css';
 import {prettify} from "../../../../util";
 import CountUp from 'react-countup';
-const formatter = (value) => <CountUp  end={value} separator="." />;
+import {useTranslation} from "react-i18next";
+const formatter = (value) => <CountUp  end={value}   separator=" " />;
 
 function Card({title,img,sum,percent}) {
+
+    const {t} = useTranslation()
+
     return (
         <div className={'dashboard-card'}>
             <div className={'dashboard-card-header'}>
@@ -12,7 +16,7 @@ function Card({title,img,sum,percent}) {
                 <h4 className={'dashboard-card-header-text'}>{title}</h4>
             </div>
             <div>
-                <h2 className={'dashboard-card-body-text'}>{formatter(sum)} so'm</h2>
+                <h2 className={'dashboard-card-body-text'}>{formatter(sum)} {t('mainPage.sum')}</h2>
             </div>
             <div className={'dashboard-card-footer'}>
                 <div className={'dashboard-card-header-percent'}>
@@ -25,7 +29,7 @@ function Card({title,img,sum,percent}) {
                         {percent < 0 ? `${percent}`
                             : `+${percent}`}% vs
                     </p>
-                    <p className={'dashboard-card-footer-dayText'}>oxirgi 30 kun</p>
+                    <p className={'dashboard-card-footer-dayText'}>{t('mainPage.last30day')}</p>
                 </div>
             </div>
         </div>
