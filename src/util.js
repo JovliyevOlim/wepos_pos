@@ -139,10 +139,11 @@ export function getExtension(filename) {
 }
 
 
-export function prettify(num) {
+export function prettify(num,digits) {
     if (!num) return num;
-
-    const [wholeNumber, part] = num.toString().split(' ');
+    const lastNumber = digits ? digits :0
+    const number = Math.round(num / Math.pow(10, parseInt(lastNumber,10))) * Math.pow(10,lastNumber)
+    const [wholeNumber, part] = number.toString().split(' ');
     const regExp = /(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g;
     const formattedNumber = wholeNumber.toString().replace(regExp, '$1 ') + (part ? `.${part}` : '');
 

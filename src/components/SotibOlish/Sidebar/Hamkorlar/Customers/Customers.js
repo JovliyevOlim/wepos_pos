@@ -23,7 +23,7 @@ import AgreeModal from "../../../../AgreeModal";
 import {use} from "i18next";
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
-import {camelize} from "../../../../../util";
+import {camelize, prettify} from "../../../../../util";
 import allbusinessreducer, {getOneBusiness} from "../../SUPERADMIN/reducers/allbusinessreducer";
 import MainHeaderText, {AddOrEditText} from "../../../../Components/MainHeaderText";
 import SelectAnt, {ButtonAnt, SearchAnt, TableButton} from "../../../../Components/SelectAnt";
@@ -33,6 +33,7 @@ import {DeleteOutlined, DollarOutlined, EditOutlined, PlusOutlined} from "@ant-d
 import {Space, Typography} from 'antd';
 
 const {Text, Link} = Typography;
+
 function Customers({
                        getCustomers,
                        allbusinessreducer, getOneBusiness,
@@ -105,8 +106,8 @@ function Customers({
             key: 'debt',
             render: (item) => <div>
                 {
-                    item >= 0 ? <Text type="success" style={{fontWeight: '800'}}>{item} so'm</Text>
-                        : <Text type="danger" style={{fontWeight: '800'}}>{item} so'm</Text>
+                    item >= 0 ? <Text type="success" style={{fontWeight: '800'}}>{prettify(item)} so'm</Text>
+                        : <Text type="danger" style={{fontWeight: '800'}}>{prettify(item)} so'm</Text>
                 }
             </div>
         },
@@ -123,28 +124,29 @@ function Customers({
             render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
                 {users.editSupplier &&
                     <ButtonAnt color={'blue'} type={'primary'} onClick={() => editM(values.id)} text={t('button.edit')}
-                                 icon={<EditOutlined/>}/>
+                               icon={<EditOutlined/>}/>
                 }
                 {
-                    users.deleteSupplier && <ButtonAnt color={'red'} danger={true} type={'primary'} text={t('button.delete')}
-                                                         onClick={() => deleteCustomerById(values.id)}
-                                                         icon={<DeleteOutlined/>}/>
+                    users.deleteSupplier &&
+                    <ButtonAnt color={'red'} danger={true} type={'primary'} text={t('button.delete')}
+                               onClick={() => deleteCustomerById(values.id)}
+                               icon={<DeleteOutlined/>}/>
                 }
                 <ButtonAnt color={'blue'} text={t('button.returnMoney')} type={'primary'} bgColor={'green'}
-                             onClick={() => customerReturnPayFunc(values.id)}
-                             icon={<DollarOutlined/>}/>
-                <ButtonAnt color={'success'}  text={t('button.payDebt')} type={'primary'} bgColor={'orange'}
-                             onClick={() => customerGetPayFunc(values.id)}
-                             icon={<DollarOutlined/>}/>
+                           onClick={() => customerReturnPayFunc(values.id)}
+                           icon={<DollarOutlined/>}/>
+                <ButtonAnt color={'success'} text={t('button.payDebt')} type={'primary'} bgColor={'orange'}
+                           onClick={() => customerGetPayFunc(values.id)}
+                           icon={<DollarOutlined/>}/>
             </div>,
 
         },
     ];
 
     const handleChangePage = (newPage) => {
-        setPage(newPage-1);
+        setPage(newPage - 1);
     };
-    const handleChangeRowsPerPage = (event,size) => {
+    const handleChangeRowsPerPage = (event, size) => {
         setPage(0);
         setRowsPerPage(parseInt(size));
     };
@@ -303,9 +305,7 @@ function Customers({
     }, [])
 
     useEffect(() => {
-        setTimeout(() => {
-            setLoading(true)
-        }, 500)
+        setLoading(true)
     }, [CustomerReducer.getBoolean])
     useEffect(() => {
         setLoading(false)
@@ -319,7 +319,8 @@ function Customers({
                 <MainHeaderText text={t('sidebar.customer')}/>
                 {
                     users.addCustomer ?
-                        <ButtonAnt onClick={toggle} text={t('button.add')} icon={<PlusOutlined />} type={'primary'}/> : ''
+                        <ButtonAnt onClick={toggle} text={t('button.add')} icon={<PlusOutlined/>}
+                                   type={'primary'}/> : ''
                 }
             </div>
             {
@@ -327,37 +328,35 @@ function Customers({
                     <CardBody>
                         <div className="col-md-12 gap-2 d-flex align-items-center flex-wrap">
                             <div className={'col-12 col-sm-3 col-md-3'}>
-                                <SelectAnt name={t('bal.2')} onChange={(e) => setMainBranchId(e)} permission={users.getCustomerAdmin} selectList={users?.branches}/>
+                                <SelectAnt name={t('bal.2')} onChange={(e) => setMainBranchId(e)}
+                                           permission={users.getCustomerAdmin} selectList={users?.branches}/>
                             </div>
                             <div className={'col-12 col-sm-6 col-md-6'}>
                                 <SearchAnt name={t('bal.22')} onChange={(e) => setSearch(e.target.value)}/>
                             </div>
                         </div>
-                    </CardBody>:''
+                    </CardBody> : ''
             }
 
             {
                 users.getCustomerAdmin || users.getCustomer ?
-
-                    <div className="rowStyleMIG">
-                        {
-                            loading ?
+                    <CardBody>
+                        <Loading spinning={loading}>
+                            {
                                 CustomerReducer.customers?.list?.length > 0 ?
-                                    <CardBody>
-                                        <CommonTable pagination={true} total={CustomerReducer.customers?.totalItem} page={page} size={rowsPerPage} columns={columns} data={CustomerReducer.customers?.list} handlePageChange={handleChangePage} handleLimitChange={handleChangeRowsPerPage}/>
-                                    </CardBody>
-                                   :
+                                    <CommonTable pagination={true} total={CustomerReducer.customers?.totalItem}
+                                                 page={page} size={rowsPerPage} columns={columns}
+                                                 data={CustomerReducer.customers?.list}
+                                                 handlePageChange={handleChangePage}
+                                                 handleLimitChange={handleChangeRowsPerPage}/>
+                                    :
                                     <div>
                                         <h4 className={'text-center'}>{CustomerReducer.message}</h4>
                                     </div>
-                                :
-                                <Loading/>
-                        }
 
-
-
-                    </div>
-                    : ''
+                            }
+                        </Loading>
+                    </CardBody> : ''
             }
             <Modal size={'md'} isOpen={active} toggle={toggle}>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -405,7 +404,7 @@ function Customers({
                                     <p className={'text-danger text-center p-0 m-0'}>{t('bal.34')}</p>
                                 }
                             </div>
-                            <div className="col-12 p-sm-2 col-sm-6  col-md-6"  >
+                            <div className="col-12 p-sm-2 col-sm-6  col-md-6">
                                 <label className={'global-label'} htmlFor={'tel'}>{t('Buttons.14')}</label>
                                 <PhoneInput
                                     placeholder={t('bal.36')}

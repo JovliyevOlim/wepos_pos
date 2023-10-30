@@ -32,8 +32,8 @@ function TopTrader({users, mainBranchId, getInfoUserByTradeByBranch, infoReducer
     return (
         <div className={'top-trader-page'}>
             <div className={'d-block d-sm-flex justify-content-between mb-4 align-items-end'}>
-                <h5 className={'top-trader-page-text'}>Sotuvchilar reytingi</h5>
-                <DatePicker style={{height: '30px'}} onChange={(e) => setDate(e)}/>
+                <h5 className={'top-trader-page-text'}>{t('mainPage.tradeList')}</h5>
+                <DatePicker style={{height: '30px'}} placeholder={t('mainPage.selectDate')} onChange={(e) => setDate(e)}/>
             </div>
             <div  className={'top-traders'}>
                 {
@@ -49,10 +49,10 @@ function TopTrader({users, mainBranchId, getInfoUserByTradeByBranch, infoReducer
                                     }
                                     <div>
                                         <h5 className={'trader-name'}>{item?.userFio}</h5>
-                                        <p className={'trader-sum-mobile'}>{formatter(item?.trade)} {t('Bosh1.sum')}</p>
+                                        <p className={'trader-sum-mobile'}>{formatter(item?.trade)} {t('mainPage.sum')}</p>
                                     </div>
                                     </div>
-                                    <h5 className={'trader-sum'}>{formatter(item?.trade)} {t('Bosh1.sum')}</h5>
+                                    <h5 className={'trader-sum'}>{formatter(item?.trade)} {t('mainPage.sum')}</h5>
                                 </div>
                           ) : <div><h4 className={'text-center'}>NOT FOUND</h4></div>
                 }

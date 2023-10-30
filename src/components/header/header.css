@@ -11,6 +11,11 @@
 .logo-name{
     font-size: clamp(1rem, 0.6719rem + 1.875vw, 2.5rem);
     margin: 0;
+    color: #484964;
+    font-family: 'Audiowide';
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
 }
 .header-btn{
     background: #FFFFFF;

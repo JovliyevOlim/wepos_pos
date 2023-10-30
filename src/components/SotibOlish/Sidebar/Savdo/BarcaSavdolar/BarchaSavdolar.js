@@ -185,6 +185,7 @@ function BarchaSavdolar({
 
 
     useEffect(() => {
+        setLoading(false)
         if (users.getTradeAdmin && !mainBranch) {
             getTradeByBusiness({
                 businessId: users.businessId,
@@ -226,9 +227,7 @@ function BarchaSavdolar({
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 200)
     }, [SavdoQoshishReducer.getTradeBool])
 
     useEffect(() => {
@@ -358,21 +357,24 @@ function BarchaSavdolar({
             <CardBody>
                 {
                     users.getTrade || users.getTradeAdmin ?
-                        loading ?
-                            SavdoQoshishReducer?.trades?.list?.length > 0 ?
-                                <div>
-                                    <div className="table-responsive table-wrapper-scroll-y">
-                                        <CommonTable handlePageChange={handlePageChange}
-                                                     handleLimitChange={handleLimitChange} page={page} size={limit}
-                                                     total={SavdoQoshishReducer?.trades?.totalItem}
-                                                     data={SavdoQoshishReducer.trades?.list} pagination={true}
-                                                     columns={columns}
-                                        />
+                        <Loading spinning={loading}>
+                            {
+                                SavdoQoshishReducer?.trades?.list?.length > 0 ?
+                                    <div>
+                                        <div className="table-responsive table-wrapper-scroll-y">
+                                            <CommonTable handlePageChange={handlePageChange}
+                                                         handleLimitChange={handleLimitChange} page={page} size={limit}
+                                                         total={SavdoQoshishReducer?.trades?.totalItem}
+                                                         data={SavdoQoshishReducer.trades?.list} pagination={true}
+                                                         columns={columns}
+                                            />
+                                        </div>
+                                    </div> :
+                                    <div className={'border border-2'}>
+                                        <h4 className={'text-center'}>{SavdoQoshishReducer.message}</h4>
                                     </div>
-                                </div> :
-                                <div className={'border border-2'}>
-                                    <h4 className={'text-center'}>{SavdoQoshishReducer.message}</h4>
-                                </div> : <Loading/>
+                            }
+                        </Loading>
                         : ''
                 }
 

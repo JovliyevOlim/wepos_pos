@@ -138,9 +138,7 @@ function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement
 
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 500)
     }, [MeasurementReducer.getBoolean])
 
     useEffect(() => {
@@ -158,45 +156,44 @@ function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement
 
             </div>
             <CardBody>
+                <Loading spinning={loading}>
+                    {
 
-                {
-
-                    loading ?
-                        MeasurementReducer.measurements.length > 0 ?
-                            <div>
-                                <div className="table-responsive table-wrapper-scroll-y my-custom-scrollbar pb-4">
-                                    <CommonTable data={MeasurementReducer.measurements} columns={columns} pagination={false} size={MeasurementReducer.measurements.length} page={0} />
+                            MeasurementReducer.measurements.length > 0 ?
+                                <div>
+                                    <div className="table-responsive table-wrapper-scroll-y my-custom-scrollbar pb-4">
+                                        <CommonTable data={MeasurementReducer.measurements} columns={columns} pagination={false} size={MeasurementReducer.measurements.length} page={0} />
+                                    </div>
+                                </div> : <div>
+                                    <h4 className={'text-center'}>{MeasurementReducer.message}</h4>
                                 </div>
-                            </div> : <div>
-                                <h4 className={'text-center'}>{MeasurementReducer.message}</h4>
-                            </div> : <Loading/>
-                }
-
-
-                <Modal isOpen={addMeasureActive} toggle={toggle}>
-                    <ModalHeader>
-                        {
-                            editId ? (t('Roles.42')) : (t('as.96'))
-                        }
-                    </ModalHeader>
-                    <ModalBody>
-                        <label htmlFor={'name'}>{t('as.41')}</label>
-                        <input value={name} placeholder={t('as.41')}
-                               onChange={(e) => setName(e.target.value)} type="text" id={'name'}
-                               className={'form-control'}/>
-                        {
-                            isCheck && !name && <div>
-                                <p className={"text-danger text-center m-0 p-0"}>{t('as.89')}</p>
-                            </div>
-                        }
-                    </ModalBody>
-                    <ModalFooter>
-                        <button className={'btn btn-danger'} onClick={toggle}>{t('Buttons.7')}</button>
-                        <button className={'btn btn-success'} onClick={saqla}>{t('Buttons.6')}</button>
-                    </ModalFooter>
-
-                </Modal>
+                    }
+                </Loading>
             </CardBody>
+            <Modal isOpen={addMeasureActive} toggle={toggle}>
+                <ModalHeader>
+                    {
+                        editId ? (t('Roles.42')) : (t('as.96'))
+                    }
+                </ModalHeader>
+                <ModalBody>
+                    <label htmlFor={'name'}>{t('as.41')}</label>
+                    <input value={name} placeholder={t('as.41')}
+                           onChange={(e) => setName(e.target.value)} type="text" id={'name'}
+                           className={'form-control'}/>
+                    {
+                        isCheck && !name && <div>
+                            <p className={"text-danger text-center m-0 p-0"}>{t('as.89')}</p>
+                        </div>
+                    }
+                </ModalBody>
+                <ModalFooter>
+                    <button className={'btn btn-danger'} onClick={toggle}>{t('Buttons.7')}</button>
+                    <button className={'btn btn-success'} onClick={saqla}>{t('Buttons.6')}</button>
+                </ModalFooter>
+
+            </Modal>
+
             <ModalLoading isOpen={activeModal}/>
             <AgreeModal deleteFunc={deleteFunc} deleteModaltoggle={() => setDeleteModal(prevState => !prevState)}
                         deletemodal={deleteModal}/>

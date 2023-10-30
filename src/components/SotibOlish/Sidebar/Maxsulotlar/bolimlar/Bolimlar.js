@@ -63,7 +63,8 @@ function Bolimlar({
                     } icon={<EditOutlined/>}/>
                 }
                 {
-                    users.categoryRoles && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
+                    users.categoryRoles &&
+                    <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
                         deleteCategoryById(values.id)
                     }
                     } icon={<DeleteOutlined/>}/>
@@ -140,9 +141,7 @@ function Bolimlar({
 
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 500)
     }, [BolimReducer.getBoolean])
 
     useEffect(() => {
@@ -151,24 +150,25 @@ function Bolimlar({
 
     return (
         <div>
-                <div  className="col-md-12 d-flex justify-content-between align-items-center mb-5">
-                    <MainHeaderText text={t('sidebar.category')}/>
-                    {
-                        users.categoryRoles ?
-                            <ButtonAnt onClick={toggle} type={'primary'} icon={<PlusOutlined />} text={t('button.add')}/> : ''
-                    }
-                </div>
+            <div className="col-md-12 d-flex justify-content-between align-items-center mb-5">
+                <MainHeaderText text={t('sidebar.category')}/>
+                {
+                    users.categoryRoles ?
+                        <ButtonAnt onClick={toggle} type={'primary'} icon={<PlusOutlined/>}
+                                   text={t('button.add')}/> : ''
+                }
+            </div>
 
             <CardBody>
-                {
-
-                    loading ?
+                <Loading spinning={loading}>
+                    {
                         BolimReducer.bolimlar.length > 0 ?
                             <div>
                                 {
                                     <div
                                         className="table-responsive table-wrapper-scroll-y  mb-4">
-                                        <CommonTable data={BolimReducer.bolimlar} columns={columns} page={0} pagination={false} size={BolimReducer.bolimlar?.length}/>
+                                        <CommonTable data={BolimReducer.bolimlar} columns={columns} page={0}
+                                                     pagination={false} size={BolimReducer.bolimlar?.length}/>
                                     </div>
                                 }
                             </div>
@@ -176,9 +176,8 @@ function Bolimlar({
                             <div>
                                 <h4 className={'text-center'}>{BolimReducer.message}</h4>
                             </div>
-                        : <Loading/>}
-
-
+                    }
+                </Loading>
             </CardBody>
             <Modal isOpen={active} toggle={toggle}>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -188,7 +187,7 @@ function Bolimlar({
                     <ModalBody>
                         <label htmlFor={'bnomi'}>{t('Sections.9')}</label>
                         <input type="text" className={'form-control '}
-                               {...register('name', {required:{value:true,message:(t('as.7'))}})}
+                               {...register('name', {required: {value: true, message: (t('as.7'))}})}
                                placeholder={t('as.8')}
                                id={'bnomi'}/>
                         {
@@ -210,7 +209,8 @@ function Bolimlar({
                 </form>
             </Modal>
             <ModalLoading isOpen={saveModal}/>
-            <AgreeModal deleteModaltoggle={()=>setActive(prevState => !prevState)} deletemodal={deletemodal} deleteFunc={deleteFunc}/>
+            <AgreeModal deleteModaltoggle={() => setActive(prevState => !prevState)} deletemodal={deletemodal}
+                        deleteFunc={deleteFunc}/>
         </div>
     )
 }

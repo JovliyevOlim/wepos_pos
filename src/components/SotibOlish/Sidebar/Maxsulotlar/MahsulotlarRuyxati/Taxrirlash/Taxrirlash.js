@@ -278,6 +278,7 @@ function Taxrirlash({
 
     const [form, setForm] = useState([{
         barcode: '',
+        code:'',
         typeId: '',
         buyPrice: '',
         profitPercent: '',
@@ -350,6 +351,7 @@ function Taxrirlash({
         let a = form?.length
         form.push({
             barcode: '',
+            code:'',
             typeId: typeData.typeId,
             buyPrice: '',
             taxPrice: '',
@@ -375,6 +377,7 @@ function Taxrirlash({
         findType[0].values.map((item, index) => {
             a.push({
                 barcode: '',
+                code:'',
                 typeId: item.id,
                 buyPrice: '',
                 taxPrice: '',
@@ -393,6 +396,7 @@ function Taxrirlash({
             let a = findType[0].values
             let size = a?.length
             form.push({
+                code:'',
                 barcode: '',
                 productTypeValueId: a[size]?.id,
                 buyPrice: '',
@@ -433,6 +437,9 @@ function Taxrirlash({
         if (e.target.name === 'barcode') {
             a[index].barcode = e.target.value
         }
+        if (e.target.name === 'code') {
+            a[index].code = e.target.value
+        }
         if (e.target.name === 'grossPrice') {
             a[index].grossPrice = e.target.value
         }
@@ -468,6 +475,7 @@ function Taxrirlash({
         const {
             brandId,
             barcode,
+            code,
             buyPrice,
             grossPrice,
             categoryId,
@@ -484,6 +492,7 @@ function Taxrirlash({
         } = MaxsulotlarRoyxariReducer.product
         setValue('name', name)
         setValue('barcode', barcode)
+        setValue('code', code)
         setValue('minQuantity', minQuantity)
         setValue('measurementId', measurementId)
         setValue('categoryId', categoryId)
@@ -518,6 +527,7 @@ function Taxrirlash({
             productManyDtoList.map(item => {
                 a.push({
                     barcode: item?.barcode,
+                    code: item?.code,
                     typeId: item?.typeId,
                     buyPrice: item?.buyPrice,
                     profitPercent: item?.profitPercent,
@@ -545,7 +555,7 @@ function Taxrirlash({
                         <input type="text"
                                {...register('name', {required: {value: true, message:(t('as.59'))}})}
                                placeholder={t('as.60')}
-                               id={'name'} className={'form-control '}/>
+                               id={'name'} className={'form-control'}/>
                         {
                             errors.name &&
                             <div>
@@ -673,6 +683,18 @@ function Taxrirlash({
                         }
 
                     </div>
+                    {
+                        changedtype === "SINGLE" &&
+                        <div className="col-md-4 mt-2">
+                            <label htmlFor={'code'}>Kod</label>
+                            <input type="number"
+                                   {...register('code', )}
+                                   placeholder={'Kod'}
+                                   className={'form-control'} id={'code'}/>
+                        </div>
+                    }
+
+
                 </div>
 
                 <div className="row mt-4 p-md-3 ">
@@ -820,6 +842,7 @@ function Taxrirlash({
                                             <thead>
                                             <tr className={'bg-primary'}>
                                                 <th className={'table-text-add-product'}>{t('as.80')}</th>
+                                                <th className={'table-text-add-product'}>Kod</th>
                                                 <th className={'table-text-add-product'}>{t('as.81')}</th>
                                                 <th className={'table-text-add-product'}>{t('as.82')}</th>
                                                 <th className={'table-text-add-product'}>{t('as.83')}(%)</th>
@@ -842,6 +865,11 @@ function Taxrirlash({
                                                                name={'barcode'}
                                                                required={'required'}
                                                                value={val.barcode}
+                                                               type="text"/></td>
+                                                    <td><input className={'manytype-input'}
+                                                               onChange={(e) => changeTypeForm(e, index)}
+                                                               name={'code'}
+                                                               value={val.code}
                                                                type="text"/></td>
                                                     <td><input className={'manytype-input'}
                                                                onChange={(e) => changeTypeForm(e, index)}
@@ -923,10 +951,7 @@ function Taxrirlash({
                                                     <td>
                                                         <div
                                                             className={'d-flex align-items-center justify-content-around'}>
-                                                            <div>
-                                                                <input type="file" id='productPicture' value={''}
-                                                                       onChange={(e) => saveProductImage(e, index)}/>
-                                                            </div>
+
                                                             <div style={{width: '100px', height: '100px'}}>
                                                                 {
                                                                     val.photoId ?
@@ -937,6 +962,10 @@ function Taxrirlash({
                                                                                src={defaultProduct}
                                                                                alt="###"/>
                                                                 }
+                                                            </div>
+                                                            <div>
+                                                                <input type="file" id='productPicture' value={''}
+                                                                       onChange={(e) => saveProductImage(e, index)}/>
                                                             </div>
                                                         </div>
 

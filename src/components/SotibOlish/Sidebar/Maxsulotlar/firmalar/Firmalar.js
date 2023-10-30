@@ -45,12 +45,13 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
                 {
                     users.brandRoles &&
                     <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
-                      editB(values.id)
+                        editB(values.id)
                     }
                     } icon={<EditOutlined/>}/>
                 }
                 {
-                    users.brandRoles && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
+                    users.brandRoles &&
+                    <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
                         deleteBrandById(values.id)
                     }
                     } icon={<DeleteOutlined/>}/>
@@ -95,6 +96,7 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
             setSaveModal(true)
         }
     }
+
     const [active, setActive] = useState(false)
 
     function toggle() {
@@ -136,9 +138,7 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
     }, [FirmaReducer.current])
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 500)
     }, [FirmaReducer.getBoolean])
 
     useEffect(() => {
@@ -146,51 +146,54 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
     }, [])
 
     return (
-        <div >
+        <div>
             <div className="col-md-12 d-flex justify-content-between align-items-center">
                 <MainHeaderText text={t('sidebar.brand')}/>
                 {
                     users.brandRoles ?
-                        <ButtonAnt type={'primary'} icon={<PlusOutlined/>} text={t('button.add')} onClick={toggle}/>: ''
+                        <ButtonAnt type={'primary'} icon={<PlusOutlined/>} text={t('button.add')}
+                                   onClick={toggle}/> : ''
                 }
             </div>
             <CardBody>
-                {
-                    loading ?
+                <Loading spinning={loading}>
+                    {
                         FirmaReducer.firmalar.length > 0 ?
                             <div>
                                 <div className="table-responsive table-wrapper-scroll-y  pb-4">
-                                    <CommonTable pagination={false} data={FirmaReducer.firmalar} size={FirmaReducer.firmalar.length} page={0} columns={columns}/>
+                                    <CommonTable pagination={false} data={FirmaReducer.firmalar}
+                                                 size={FirmaReducer.firmalar.length} page={0} columns={columns}/>
                                 </div>
                             </div> : <div>
                                 <h4 className={'text-center'}>{FirmaReducer.message}</h4>
-                            </div> : <Loading/>
-                }
-
-                <Modal isOpen={active} toggle={toggle}>
-                    <ModalHeader>
-                        {t('Sections.8')}
-                    </ModalHeader>
-                    <ModalBody>
-                        <label htmlFor={'l'}>{t('Firms.4')}</label>
-                        <input value={name} placeholder={'Brand nomi'}
-                               onChange={(e) => setName(e.target.value)} type="text" id={'l'}
-                               className={'form-control'}/>
-                        {
-                            isCheck && !name &&  <div>
-                                <p className={'text-danger text-center m-0 p-0'}>{t('as.10')}</p>
                             </div>
-                        }
-                    </ModalBody>
-                    <ModalFooter>
-                        <button className={'btn btn-danger'} onClick={toggle}>{t('Buttons.7')}</button>
-                        <button className={'btn btn-success'} onClick={saqla}>{t('Buttons.6')}</button>
-                    </ModalFooter>
-
-                </Modal>
+                    }
+                </Loading>
             </CardBody>
+            <Modal isOpen={active} toggle={toggle}>
+                <ModalHeader>
+                    {t('Sections.8')}
+                </ModalHeader>
+                <ModalBody>
+                    <label htmlFor={'l'}>{t('Firms.4')}</label>
+                    <input value={name} placeholder={'Brand nomi'}
+                           onChange={(e) => setName(e.target.value)} type="text" id={'l'}
+                           className={'form-control'}/>
+                    {
+                        isCheck && !name && <div>
+                            <p className={'text-danger text-center m-0 p-0'}>{t('as.10')}</p>
+                        </div>
+                    }
+                </ModalBody>
+                <ModalFooter>
+                    <button className={'btn btn-danger'} onClick={toggle}>{t('Buttons.7')}</button>
+                    <button className={'btn btn-success'} onClick={saqla}>{t('Buttons.6')}</button>
+                </ModalFooter>
+
+            </Modal>
             <ModalLoading isOpen={saveModal}/>
-            <AgreeModal deleteModaltoggle={()=>setdeletemodal(prevState => !prevState)} deleteFunc={deleteFunc} deletemodal={deletemodal}/>
+            <AgreeModal deleteModaltoggle={() => setdeletemodal(prevState => !prevState)} deleteFunc={deleteFunc}
+                        deletemodal={deletemodal}/>
         </div>
 
     )

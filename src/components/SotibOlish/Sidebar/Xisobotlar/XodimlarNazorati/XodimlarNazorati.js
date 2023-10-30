@@ -11,6 +11,7 @@ import MainHeaderText from "../../../../Components/MainHeaderText";
 import CardBody from "../../../../Components/CardBody";
 import SelectAnt from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
+import {prettify} from "../../../../../util";
 function XodimlarNazorati({users, XodimReducer, getUserForFiltering, getUserForFilteringBusiness,
                               UserHistoryReducer,getUserHistoryByBranch,getUserHistoryByBusiness
                           }) {
@@ -53,10 +54,10 @@ function XodimlarNazorati({users, XodimReducer, getUserForFiltering, getUserForF
             render:(item,values)=><div>
                 {
                     values?.oldSum !== 0 && (
-                        <del>{values.oldSum.toFixed(2)} so'm</del>
+                        <del>{prettify(values.oldSum,3)} so'm</del>
                     )
                 }
-                <p>{item.toFixed(2)} so'm</p>
+                <p>{prettify(item,3)} so'm</p>
             </div>
         },
         {
@@ -116,9 +117,7 @@ function XodimlarNazorati({users, XodimReducer, getUserForFiltering, getUserForF
 
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 200)
     }, [UserHistoryReducer.getBoolean])
 
     useEffect(() => {
@@ -158,17 +157,18 @@ function XodimlarNazorati({users, XodimReducer, getUserForFiltering, getUserForF
                 </div>
             </CardBody>
             <CardBody>
-                    {loading ?
-                       UserHistoryReducer.userHistory?.list?.length > 0 ?
+                <Loading spinning={loading}>
+                    {
+                        UserHistoryReducer.userHistory?.list?.length > 0 ?
                             <div className="table-responsive mb-4 table-wrapper-scroll-y">
                                 <CommonTable size={size} page={page} total={UserHistoryReducer.userHistory?.totalItem} columns={columns}
                                              handlePageChange={handlePageChange} handleLimitChange={handleLimitChange}
                                              data={UserHistoryReducer.userHistory?.list} pagination={true}/>
                             </div> : <div>
                                 <h4 className={'text-center'}>{UserHistoryReducer.message}</h4>
-                            </div> :
-                        <Loading/>
+                            </div>
                     }
+                </Loading>
             </CardBody>
         </div>
     )

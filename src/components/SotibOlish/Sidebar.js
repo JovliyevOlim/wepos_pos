@@ -38,7 +38,9 @@ const Sidebar = ({users}) => {
     const [openKeys, setOpenKeys] = useState(['/main/dashboard']);
     // const [goFull,setGoFull] = useState(false)
 
+
     // const screenWidth = window.innerWidth
+
         // const screenWidthTrue = screenWidth < 768
     const onOpenChange = (keys) => {
         console.log(keys)
@@ -234,7 +236,7 @@ const Sidebar = ({users}) => {
                     {
                         !collapsed && <div className={'d-flex gap-1 align-items-center'}>
                             <img src={Logo} width={32} height={29} alt="logo"/>
-                            <h4 className={'demo-logo-text'}>Rise</h4>
+                            <h4 className={'demo-logo-text'}>Miro</h4>
                         </div>
                     }
                     <Button
@@ -264,7 +266,8 @@ const Sidebar = ({users}) => {
                 marginLeft: screenWidthTrue ? (collapsed ? 0 : '100%') : (collapsed ? 80 : 250),
                 overflowX: 'hidden',
             }}>
-                <Header className={'sidebar-header'}><MainHeader changeScreenFull={changeFullScreen} setCollapsed={() => setCollapsed(!collapsed)}/>
+                <Header className={'sidebar-header'}>
+                    <MainHeader changeScreenFull={changeFullScreen} setCollapsed={() => setCollapsed(!collapsed)}/>
                 </Header>
                 <Content className={'content'}>
                     <Switch>

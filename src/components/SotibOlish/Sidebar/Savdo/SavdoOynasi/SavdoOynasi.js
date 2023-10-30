@@ -828,7 +828,6 @@ function SavdoOynasi({
     });
 
 
-    console.log(componentRef.current)
 
 
     useEffect(() => {
@@ -925,9 +924,7 @@ function SavdoOynasi({
 
 
     useEffect(() => {
-        setTimeout(() => {
             setLoadingProduct(true)
-        }, 200)
     }, [MaxsulotlarRoyxariReducer.getBoolean])
 
     useEffect(() => {
@@ -950,9 +947,7 @@ function SavdoOynasi({
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 200)
     }, [SavdoQoshishReducer.getTradeBool])
 
     useEffect(() => {
@@ -1093,9 +1088,10 @@ function SavdoOynasi({
                                 }
                             </div>
                             {
-                                open && <div className={'shopping-product-list'}>
+                                open &&
+                                <Loading spinning={loadingProduct}>
+                                    <div className={'shopping-product-list'}>
                                     {
-
                                         MaxsulotlarRoyxariReducer.productForShopping.length > 0 ?
                                             MaxsulotlarRoyxariReducer.productForShopping.map((item, index) => <div
                                                 className={'shop-product-card'}
@@ -1118,7 +1114,8 @@ function SavdoOynasi({
                                             </div>
 
                                     }
-                                </div>
+                                    </div>
+                                </Loading>
 
                             }
                         </div>
@@ -2024,54 +2021,57 @@ function SavdoOynasi({
                             <div className={'d-flex justify-content-between mt-2'}>
                                 {
                                     users.getTrade || users.getTradeAdmin ?
-                                        loading ?
-                                            SavdoQoshishReducer?.trades?.list?.length > 0 ?
-                                                <div>
-                                                    <div className="table-responsive table-wrapper-scroll-y"
-                                                         style={{height: '400px'}}>
-                                                        <table className='table table-striped table-bordered mt-4'>
-                                                            <thead>
-                                                            <tr>
-                                                                <th>T/R</th>
-                                                                <th>{t('Trade.4')}</th>
-                                                                <th>{t('mah.110')}</th>
-                                                                <th>{t('Pagination.10')}</th>
-                                                                <th>{t('as.6')}</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            {
-                                                                SavdoQoshishReducer.trades?.list?.map((item, index) =>
-                                                                    <tr
-                                                                        key={item?.id}>
-                                                                        <td>{index + 1}</td>
-                                                                        <td>{moment(new Date(item?.createdAt)).format('lll')}</td>
-                                                                        <td className={item.edit && 'bg-warning'}>{item?.invoice}</td>
-                                                                        <td>{item?.customerName}</td>
-                                                                        <td>
-                                                                            <div className={'d-flex'}>
-                                                                                {
-                                                                                    users.editTrade && item?.editable ?
-                                                                                        <button
-                                                                                            onClick={() => getTradeByForEdit(item.id)}
-                                                                                            className='taxrirlash'><img
-                                                                                            src={Edit}
-                                                                                            alt=""/> {t('Buttons.1')}
-                                                                                        </button>
-                                                                                        : ''
-                                                                                }
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>)
-                                                            }
-                                                            </tbody>
-                                                        </table>
+                                        <Loading spinning={loading}>
+                                            {
+                                                SavdoQoshishReducer?.trades?.list?.length > 0 ?
+                                                    <div>
+                                                        <div className="table-responsive table-wrapper-scroll-y"
+                                                             style={{height: '400px'}}>
+                                                            <table className='table table-striped table-bordered mt-4'>
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>T/R</th>
+                                                                    <th>{t('Trade.4')}</th>
+                                                                    <th>{t('mah.110')}</th>
+                                                                    <th>{t('Pagination.10')}</th>
+                                                                    <th>{t('as.6')}</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                {
+                                                                    SavdoQoshishReducer.trades?.list?.map((item, index) =>
+                                                                        <tr
+                                                                            key={item?.id}>
+                                                                            <td>{index + 1}</td>
+                                                                            <td>{moment(new Date(item?.createdAt)).format('lll')}</td>
+                                                                            <td className={item.edit && 'bg-warning'}>{item?.invoice}</td>
+                                                                            <td>{item?.customerName}</td>
+                                                                            <td>
+                                                                                <div className={'d-flex'}>
+                                                                                    {
+                                                                                        users.editTrade && item?.editable ?
+                                                                                            <button
+                                                                                                onClick={() => getTradeByForEdit(item.id)}
+                                                                                                className='taxrirlash'><img
+                                                                                                src={Edit}
+                                                                                                alt=""/> {t('Buttons.1')}
+                                                                                            </button>
+                                                                                            : ''
+                                                                                    }
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>)
+                                                                }
+                                                                </tbody>
+                                                            </table>
 
+                                                        </div>
+                                                    </div> :
+                                                    <div className={'border border-2'}>
+                                                        <h4 className={'text-center'}>{SavdoQoshishReducer.message}</h4>
                                                     </div>
-                                                </div> :
-                                                <div className={'border border-2'}>
-                                                    <h4 className={'text-center'}>{SavdoQoshishReducer.message}</h4>
-                                                </div> : <Loading/>
+                                            }
+                                        </Loading>
                                         : ''
                                 }
                             </div>
@@ -2110,37 +2110,37 @@ function SavdoOynasi({
                 }
                 <br/>
                 <div className={'d-flex justify-content-between align-items-center'}>
-                    <h4 style={{fontSize: 12, fontWeight: 600}}>
+                    <div style={{fontSize: 12, fontWeight: 600}}>
                         {
                             moment(thisDay).format("DD:MM:YYYY")
                         }
-                    </h4>
-                    <h4 style={{fontSize: 12, fontWeight: 600}}>
+                    </div>
+                    <div style={{fontSize: 12, fontWeight: 600}}>
                         {
                             moment(new Date()).format("HH:mm:ss")
                         }
-                    </h4>
+                    </div>
                 </div>
                 <div className={'d-flex justify-content-between align-items-center'}>
-                    <h4 style={{fontSize: 12, fontWeight: 600}}>
+                    <div style={{fontSize: 12, fontWeight: 600}}>
                         {t('mah.41')}
-                    </h4>
-                    <h4 style={{fontSize: 12, fontWeight: 600}}>
+                    </div>
+                    <div style={{fontSize: 12, fontWeight: 600}}>
                         {
                             SavdoQoshishReducer.treadeId?.invoice
                         }
-                    </h4>
+                    </div>
                 </div>
                 <div className={'d-flex align-items-center justify-content-between'}>
-                    <h4 style={{fontSize: 12, fontWeight: 600}}>{t('mah.42')} </h4>
+                    <h1 style={{fontSize: 12, fontWeight: 600}}>{t('mah.42')} </h1>
                     {
                         CustomerReducer.customersTrade ?
                             CustomerReducer.customersTrade.filter(val => {
                                 if (val.id === customer) {
                                     return val
                                 }
-                            })?.map(item => <h5 style={{fontSize: 12, fontWeight: 600}}
-                                                key={item.id}> {item.name}</h5>) : ''
+                            })?.map(item => <h1 style={{fontSize: 12, fontWeight: 600}}
+                                                key={item.id}> {item.name}</h1>) : ''
                     }
                 </div>
                 <div style={{borderBottom: "1px dashed #000"}}></div>
@@ -2148,18 +2148,18 @@ function SavdoOynasi({
                     {
                         traderArray.filter(itemDelete => itemDelete.delete === false).map((item, index) => <div
                             key={item.id}>
-                            <h4 style={{fontSize: 12, fontWeight: 600}}>{index + 1}{".  "}{item.name}</h4>
+                            <h1 style={{fontSize: 12, fontWeight: 600}}>{index + 1}{".  "}{item.name}</h1>
                             <div style={{marginLeft: 20, marginTop: -7}}
                                  className={"d-flex align-items-center justify-content-between"}>
-                                <h4 style={{
+                                <h1 style={{
                                     fontSize: 12,
                                     fontWeight: 600,
                                     lineHeight: 1
                                 }}>
-                                    {item.quantity} {item.measurementName} * {item.price} {t('mah.39')}</h4>
-                                <h4 style={{fontSize: 12, fontWeight: 600, lineHeight: 1}}>
+                                    {item.quantity} {item.measurementName} * {item.price} {t('mah.39')}</h1>
+                                <h1 style={{fontSize: 12, fontWeight: 600, lineHeight: 1}}>
                                     = {parseFloat(item.totalSalePrice).toFixed(0)} {t('mah.39')}
-                                </h4>
+                                </h1>
                             </div>
                         </div>)
                     }
@@ -2169,52 +2169,52 @@ function SavdoOynasi({
 
                     <div style={{width: "100%"}}>
                         <div className={"d-flex justify-content-between"}>
-                            <h4 style={{fontSize: 14, fontWeight: 800}}>{t('mah.43')} </h4>
-                            <h4 style={{
+                            <h1 style={{fontSize: 14, fontWeight: 800}}>{t('mah.43')} </h1>
+                            <h1 style={{
                                 fontSize: 14,
                                 fontWeight: 800
-                            }}>{jamixisob} {t('mah.39')}</h4>
+                            }}>{jamixisob} {t('mah.39')}</h1>
                         </div>
 
                         {
                             payForm.map(item =>
                                 <div className={"d-flex justify-content-between"}>
-                                    <h4 style={{
+                                    <h1 style={{
                                         fontSize: 13,
                                         fontWeight: 600
-                                    }}>{camelize(item.paymentMethodName)}:</h4>
-                                    <h4 style={{
+                                    }}>{camelize(item.paymentMethodName)}:</h1>
+                                    <h1 style={{
                                         fontSize: 13,
                                         fontWeight: 600
-                                    }}>{item.sum} {t('mah.39')}</h4>
+                                    }}>{item.sum} {t('mah.39')}</h1>
                                 </div>
                             )
                         }
                         <div className={"d-flex justify-content-between"}>
-                            <h4 style={{fontSize: 13, fontWeight: 600}}>{t('mah.44')}</h4>
-                            <h4 style={{
+                            <h1 style={{fontSize: 13, fontWeight: 600}}>{t('mah.44')}</h1>
+                            <h1 style={{
                                 fontSize: 13,
                                 fontWeight: 600
                             }}>
-                                {jamixisob - tradeDebt} {t('mah.39')}</h4>
+                                {jamixisob - tradeDebt} {t('mah.39')}</h1>
                         </div>
                         {
                             customer ?
                                 <div className={"d-flex justify-content-between"}>
-                                    <h4 style={{fontSize: 14}}>{t('mah.45')} </h4>
-                                    <h4 style={{
+                                    <h1 style={{fontSize: 14}}>{t('mah.45')} </h1>
+                                    <h1 style={{
                                         fontSize: 14,
-                                    }}>{tradeDebt} {t('mah.39')}</h4>
+                                    }}>{tradeDebt} {t('mah.39')}</h1>
                                 </div> : ''
                         }
                         {
                             customer ?
                                 <div className={"d-flex justify-content-between"}>
-                                    <h4 style={{fontSize: 14, fontWeight: 800}}>{t('mah.46')} </h4>
-                                    <h4 style={{
+                                    <h1 style={{fontSize: 14, fontWeight: 800}}>{t('mah.46')} </h1>
+                                    <h1 style={{
                                         fontSize: 14,
                                         fontWeight: 800
-                                    }}>{SavdoQoshishReducer.treadeId?.customerDebt} {t('mah.39')}</h4>
+                                    }}>{SavdoQoshishReducer.treadeId?.customerDebt} {t('mah.39')}</h1>
                                 </div> : ''
                         }
 

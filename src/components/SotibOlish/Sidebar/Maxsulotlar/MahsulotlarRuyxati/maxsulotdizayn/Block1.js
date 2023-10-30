@@ -1,19 +1,19 @@
 import {
-  Grid,
-  Box,
-  Card,
-  Typography,
-  Divider,
-  Tooltip,
-  Stack,
-  IconButton,
-  Avatar,
-  alpha,
-  styled,
-  useTheme
+    Grid,
+    Box,
+    Card,
+    Typography,
+    Divider,
+    Tooltip,
+    Stack,
+    IconButton,
+    Avatar,
+    alpha,
+    styled,
+    useTheme
 } from '@mui/material';
 
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import AccountBoxTwoToneIcon from '@mui/icons-material/AccountBoxTwoTone';
 
 import ThumbUpTwoToneIcon from '@mui/icons-material/ThumbUpTwoTone';
@@ -28,14 +28,14 @@ import users from "../../../../../../reducer/users";
 import FirmaReducer, {getFirma} from "../../reducer/FirmaReducer";
 
 const IconButtonWrapper = styled(IconButton)(
-  ({ theme }) => `
+    ({theme}) => `
     padding: ${theme.spacing(1.5)};
     color: ${theme.palette.primary.contrastText};
     transform: translateY(0px);
     transition: ${theme.transitions.create([
-      'color',
-      'transform',
-      'background'
+        'color',
+        'transform',
+        'background'
     ])};
     
     .MuiSvgIcon-root {
@@ -54,291 +54,300 @@ const IconButtonWrapper = styled(IconButton)(
   `
 );
 
-function Block1({active,toggle,MaxsulotlarRoyxariReducer}){
-  const { t } = useTranslation();
-  const theme = useTheme();
+function Block1({active, toggle, MaxsulotlarRoyxariReducer}) {
+    const {t} = useTranslation();
+    const theme = useTheme();
     const {measurementName} = MaxsulotlarRoyxariReducer.productView
-    const {amount,tradeQuantity,purchaseQuantity,backQuantity,profit,salePrice,buyPrice,tradePrice,lossQuantity} = MaxsulotlarRoyxariReducer.productViewExtra
-  return (
-    <Grid container spacing={4} style={{marginRight:"15px"}}>
-      <Grid item xs={12} md={6}>
-        <Card
-          sx={{
-            p: 2.5,
-              background: `${theme.colors.gradients.purple3}`
-          }}
-        >
-          <Box
-            pb={2}
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box>
-              <Typography
-                gutterBottom
-                component="div"
-                variant="caption"
-                sx={{
-                  color: `${theme.colors.alpha.trueWhite[70]}`
-                }}
-              >
-                {t('as.16')}
-              </Typography>
-              <Typography
-                variant="h3"
-                sx={{
-                  color: `${theme.colors.alpha.trueWhite[100]}`
-                }}
-              >
-                  {amount} {measurementName}
-              </Typography>
-            </Box>
-            <Avatar
-              variant="rounded"
-              sx={{
-                width: `${theme.spacing(7)}`,
-                height: `${theme.spacing(7)}`,
-                background: `${theme.colors.alpha.trueWhite[100]}`,
-                color: `${theme.colors.success.main}`
-              }}
-            >
-              <AccountBoxTwoToneIcon />
-            </Avatar>
-          </Box>
+    const {
+        amount,
+        tradeQuantity,
+        purchaseQuantity,
+        backQuantity,
+        profit,
+        salePrice,
+        buyPrice,
+        tradePrice,
+        lossQuantity
+    } = MaxsulotlarRoyxariReducer.productViewExtra
+    return (
+        <Grid container spacing={4} style={{marginRight: "15px"}}>
+            <Grid item xs={12} md={6}>
+                <Card
+                    sx={{
+                        p: 2.5,
+                        background: `${theme.colors.gradients.purple3}`
+                    }}
+                >
+                    <Box
+                        pb={2}
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="space-between"
+                    >
+                        <Box>
+                            <Typography
+                                gutterBottom
+                                component="div"
+                                variant="caption"
+                                sx={{
+                                    color: `${theme.colors.alpha.trueWhite[70]}`
+                                }}
+                            >
+                                {t('as.16')}
+                            </Typography>
+                            <Typography
+                                variant="h3"
+                                sx={{
+                                    color: `${theme.colors.alpha.trueWhite[100]}`
+                                }}
+                            >
+                                {amount} {measurementName}
+                            </Typography>
+                        </Box>
+                        <Avatar
+                            variant="rounded"
+                            sx={{
+                                width: `${theme.spacing(7)}`,
+                                height: `${theme.spacing(7)}`,
+                                background: `${theme.colors.alpha.trueWhite[100]}`,
+                                color: `${theme.colors.success.main}`
+                            }}
+                        >
+                            <AccountBoxTwoToneIcon/>
+                        </Avatar>
+                    </Box>
 
-        </Card>
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <Card
-          sx={{
-            p: 2.5,
-            background: `${theme.colors.gradients.orange1}`
+                </Card>
+            </Grid>
+            <Grid item xs={12} md={6}>
+                <Card
+                    sx={{
+                        p: 2.5,
+                        background: `${theme.colors.gradients.orange1}`
 
-          }}
-        >
-          <Box
-            pb={2}
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box>
-              <Typography
-                gutterBottom
-                component="div"
-                variant="caption"
-                sx={{
-                  color: `${theme.colors.alpha.trueWhite[70]}`
-                }}
-              >
-                {t('as.17')}
-              </Typography>
-              <Typography
-                variant="h3"
-                sx={{
-                  color: `${theme.colors.alpha.trueWhite[100]}`
-                }}
-              >
-                  {tradeQuantity} {measurementName}
-              </Typography>
-            </Box>
-            <Avatar
-              variant="rounded"
-              sx={{
-                width: `${theme.spacing(7)}`,
-                height: `${theme.spacing(7)}`,
-                background: `${theme.colors.alpha.trueWhite[100]}`,
-                color: `${theme.colors.warning.main}`
-              }}
-            >
-              <ThumbUpTwoToneIcon />
-            </Avatar>
-          </Box>
+                    }}
+                >
+                    <Box
+                        pb={2}
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="space-between"
+                    >
+                        <Box>
+                            <Typography
+                                gutterBottom
+                                component="div"
+                                variant="caption"
+                                sx={{
+                                    color: `${theme.colors.alpha.trueWhite[70]}`
+                                }}
+                            >
+                                {t('as.17')}
+                            </Typography>
+                            <Typography
+                                variant="h3"
+                                sx={{
+                                    color: `${theme.colors.alpha.trueWhite[100]}`
+                                }}
+                            >
+                                {tradeQuantity} {measurementName}
+                            </Typography>
+                        </Box>
+                        <Avatar
+                            variant="rounded"
+                            sx={{
+                                width: `${theme.spacing(7)}`,
+                                height: `${theme.spacing(7)}`,
+                                background: `${theme.colors.alpha.trueWhite[100]}`,
+                                color: `${theme.colors.warning.main}`
+                            }}
+                        >
+                            <ThumbUpTwoToneIcon/>
+                        </Avatar>
+                    </Box>
 
-        </Card>
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <Card
-          sx={{
-            p: 2.5,
-            background: `${theme.colors.gradients.green2}`
-          }}
-        >
-          <Box
-            pb={2}
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box>
-              <Typography
-                gutterBottom
-                component="div"
-                variant="caption"
-                sx={{
-                  color: `${theme.colors.alpha.trueWhite[70]}`
-                }}
-              >
-                {t('as.18')}
-              </Typography>
-              <Typography
-                variant="h3"
-                sx={{
-                  color: `${theme.colors.alpha.trueWhite[100]}`
-                }}
-              >
-                  {purchaseQuantity} {measurementName}
-              </Typography>
-            </Box>
-            <Avatar
-              variant="rounded"
-              sx={{
-                width: `${theme.spacing(7)}`,
-                height: `${theme.spacing(7)}`,
-                background: `${alpha(theme.colors.alpha.trueWhite[100], 0.2)}`,
-                color: `${theme.colors.alpha.trueWhite[100]}`
-              }}
-            >
-              <AddAlertTwoToneIcon />
-            </Avatar>
-          </Box>
+                </Card>
+            </Grid>
+            <Grid item xs={12} md={6}>
+                <Card
+                    sx={{
+                        p: 2.5,
+                        background: `${theme.colors.gradients.green2}`
+                    }}
+                >
+                    <Box
+                        pb={2}
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="space-between"
+                    >
+                        <Box>
+                            <Typography
+                                gutterBottom
+                                component="div"
+                                variant="caption"
+                                sx={{
+                                    color: `${theme.colors.alpha.trueWhite[70]}`
+                                }}
+                            >
+                                {t('as.18')}
+                            </Typography>
+                            <Typography
+                                variant="h3"
+                                sx={{
+                                    color: `${theme.colors.alpha.trueWhite[100]}`
+                                }}
+                            >
+                                {purchaseQuantity} {measurementName}
+                            </Typography>
+                        </Box>
+                        <Avatar
+                            variant="rounded"
+                            sx={{
+                                width: `${theme.spacing(7)}`,
+                                height: `${theme.spacing(7)}`,
+                                background: `${alpha(theme.colors.alpha.trueWhite[100], 0.2)}`,
+                                color: `${theme.colors.alpha.trueWhite[100]}`
+                            }}
+                        >
+                            <AddAlertTwoToneIcon/>
+                        </Avatar>
+                    </Box>
 
-        </Card>
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <Card
-          sx={{
-            p: 2.5,
-            background: `#ff4b4b`
-          }}
-        >
-          <Box
-            pb={2}
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Box>
-              <Typography
-                gutterBottom
-                component="div"
-                variant="caption"
-                sx={{
-                  color: `${theme.colors.alpha.trueWhite[70]}`
-                }}
-              >
-                {t('as.19')}
-              </Typography>
-              <Typography
-                variant="h3"
-                sx={{
-                  color: `${theme.colors.alpha.trueWhite[100]}`
-                }}
-              >
-                  {lossQuantity} {measurementName}
-              </Typography>
-            </Box>
-            <Avatar
-              variant="rounded"
-              sx={{
-                width: `${theme.spacing(7)}`,
-                height: `${theme.spacing(7)}`,
-                background: `${alpha(theme.colors.alpha.trueWhite[100], 0.2)}`,
-                color: `${theme.colors.alpha.trueWhite[100]}`
-              }}
-            >
-              <AddAlertTwoToneIcon />
-            </Avatar>
-          </Box>
+                </Card>
+            </Grid>
+            <Grid item xs={12} md={6}>
+                <Card
+                    sx={{
+                        p: 2.5,
+                        background: `#ff4b4b`
+                    }}
+                >
+                    <Box
+                        pb={2}
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="space-between"
+                    >
+                        <Box>
+                            <Typography
+                                gutterBottom
+                                component="div"
+                                variant="caption"
+                                sx={{
+                                    color: `${theme.colors.alpha.trueWhite[70]}`
+                                }}
+                            >
+                                {t('as.19')}
+                            </Typography>
+                            <Typography
+                                variant="h3"
+                                sx={{
+                                    color: `${theme.colors.alpha.trueWhite[100]}`
+                                }}
+                            >
+                                {lossQuantity} {measurementName}
+                            </Typography>
+                        </Box>
+                        <Avatar
+                            variant="rounded"
+                            sx={{
+                                width: `${theme.spacing(7)}`,
+                                height: `${theme.spacing(7)}`,
+                                background: `${alpha(theme.colors.alpha.trueWhite[100], 0.2)}`,
+                                color: `${theme.colors.alpha.trueWhite[100]}`
+                            }}
+                        >
+                            <AddAlertTwoToneIcon/>
+                        </Avatar>
+                    </Box>
 
-        </Card>
-      </Grid>
+                </Card>
+            </Grid>
 
 
-      <Grid item xs={12}>
-        <Card>
-          <Stack
-            direction={{ xs: 'column', sm: 'row' }}
-            justifyContent="center"
-            alignItems="stretch"
-            divider={<Divider orientation="vertical" flexItem />}
-            spacing={0}
-          >
-            <Box
-              display="flex"
-              flex={1}
-              flexWrap={'wrap'}
-              justifyContent="space-evenly"
-              alignItems="stretch"
-            >
-              <Box
-                p={3}
-                sx={{
-                  textAlign: 'center'
-                }}
-              >
-                <Text color="warning">
-                  <MonetizationOnTwoToneIcon />
-                </Text>
-                <Typography variant="subtitle2">{t('as.20')}</Typography>
-                  <Typography variant="h5">{buyPrice} {t('as.21')}</Typography>
+            <Grid item xs={12}>
+                <Card>
+                    <Stack
+                        direction={{xs: 'column', sm: 'row'}}
+                        justifyContent="center"
+                        alignItems="stretch"
+                        divider={<Divider orientation="vertical" flexItem/>}
+                        spacing={0}
+                    >
+                        <Box
+                            display="flex"
+                            flex={1}
+                            flexWrap={'wrap'}
+                            justifyContent="space-evenly"
+                            alignItems="stretch"
+                        >
+                            <Box
+                                p={3}
+                                sx={{
+                                    textAlign: 'center'
+                                }}
+                            >
+                                <Text color="warning">
+                                    <MonetizationOnTwoToneIcon/>
+                                </Text>
+                                <Typography variant="subtitle2">{t('as.20')}</Typography>
+                                <Typography variant="h5">{buyPrice} {t('as.21')}</Typography>
+                            </Box>
+                            <Box
+                                p={3}
+                                sx={{
+                                    textAlign: 'center'
+                                }}
+                            >
+                                <Text color="success">
+                                    <PersonTwoToneIcon/>
+                                </Text>
+                                <Typography variant="subtitle2">{t('as.22')}</Typography>
+                                <Typography variant="h5">{salePrice} {t('as.21')}</Typography>
 
-              </Box>
-              <Box
-                p={3}
-                sx={{
-                  textAlign: 'center'
-                }}
-              >
-                <Text color="success">
-                  <PersonTwoToneIcon />
-                </Text>
-                <Typography variant="subtitle2">{t('as.22')}</Typography>
-                  <Typography variant="h5">{salePrice} {t('as.21')}</Typography>
+                            </Box>
+                        </Box>
 
-              </Box>
-            </Box>
+                        <Box
+                            display="flex"
+                            flex={1}
+                            flexWrap={'wrap'}
+                            justifyContent="space-evenly"
+                            alignItems="stretch"
+                        >
+                            <Box
+                                p={3}
+                                sx={{
+                                    textAlign: 'center'
+                                }}
+                            >
+                                <Text color="warning">
+                                    <MonetizationOnTwoToneIcon/>
+                                </Text>
+                                <Typography variant="subtitle2">{t('as.23')}</Typography>
+                                <Typography variant="h5">{tradePrice} {t('as.21')}</Typography>
 
-              <Box
-                  display="flex"
-                  flex={1}
-                  flexWrap={'wrap'}
-                  justifyContent="space-evenly"
-                  alignItems="stretch"
-              >
-                  <Box
-                      p={3}
-                      sx={{
-                          textAlign: 'center'
-                      }}
-                  >
-                      <Text color="warning">
-                          <MonetizationOnTwoToneIcon />
-                      </Text>
-                      <Typography variant="subtitle2">{t('as.23')}</Typography>
-                      <Typography variant="h5">{tradePrice} {t('as.21')}</Typography>
+                            </Box>
+                            <Box
+                                p={3}
+                                sx={{
+                                    textAlign: 'center'
+                                }}
+                            >
+                                <Text color="success">
+                                    <PersonTwoToneIcon/>
+                                </Text>
+                                <Typography variant="subtitle2">{t('as.24')}</Typography>
+                                <Typography variant="h5">{profit} {t('as.21')}</Typography>
 
-                  </Box>
-                  <Box
-                      p={3}
-                      sx={{
-                          textAlign: 'center'
-                      }}
-                  >
-                      <Text color="success">
-                          <PersonTwoToneIcon />
-                      </Text>
-                      <Typography variant="subtitle2">{t('as.24')}</Typography>
-                      <Typography variant="h5">{profit} {t('as.21')}</Typography>
-
-                  </Box>
-              </Box>
-          </Stack>
-        </Card>
-      </Grid>
-    </Grid>
-  );
+                            </Box>
+                        </Box>
+                    </Stack>
+                </Card>
+            </Grid>
+        </Grid>
+    );
 }
 
 export default connect((MaxsulotlarRoyxariReducer, users, FirmaReducer), {

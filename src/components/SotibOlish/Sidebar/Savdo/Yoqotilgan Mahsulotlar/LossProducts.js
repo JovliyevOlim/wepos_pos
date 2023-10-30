@@ -80,6 +80,7 @@ function LossProducts({
 
 
     useEffect(() => {
+        setLoading(false)
         if (users.getLossAdmin && !mainBranch) {
             getLossProductByBusiness({
                 businessId: users.businessId,
@@ -130,7 +131,7 @@ function LossProducts({
         setdeletID(item)
     }
 
-    const onShowSizeChange = (event,size) => {
+    const onShowSizeChange = (event, size) => {
         setSizeData(size)
     };
     const changePage = (newPage) => {
@@ -156,7 +157,7 @@ function LossProducts({
                 <MainHeaderText text={t('sidebar.tableLossProduct')}/>
                 {
                     users.addLoss ? <Link to={'/main/addLossProducts'}>
-                        <ButtonAnt text={t('button.add')} icon={<PlusOutlined />} type={'primary'}/>
+                        <ButtonAnt text={t('button.add')} icon={<PlusOutlined/>} type={'primary'}/>
                     </Link> : ''
                 }
             </div>
@@ -188,11 +189,12 @@ function LossProducts({
                 }
             </CardBody>
 
-            <CardBody>
-                {
-                    users.getLoss || users.getLossAdmin ?
-                        loading ?
-                            lossReducer.lossProduct?.list?.length > 0 ?
+            {
+                users.getLoss || users.getLossAdmin ?
+                    <CardBody>
+                        <Loading spinning={loading}>
+                            {
+                                lossReducer.lossProduct?.list?.length > 0 ?
                                     <div className="table-responsive table-wrapper-scroll-y">
                                         <CommonTable columns={columns} page={pageData} size={sizeData}
                                                      data={lossReducer.lossProduct?.list} pagination={true}
@@ -201,89 +203,92 @@ function LossProducts({
                                                      total={lossReducer.lossProduct.totalItem}
                                         />
                                     </div>
-                                 :
-                                <div className={'border border-2'}>
-                                    <h4 className={'text-center'}>{lossReducer.message || 'NOT FOUND'}</h4>
-                                </div> : <Loading/> : ''
+                                    :
+                                    <div className={'border border-2'}>
+                                        <h4 className={'text-center'}>{lossReducer.message || 'NOT FOUND'}</h4>
+                                    </div>
+                            }
+                        </Loading>
+                    </CardBody>
+                    : ''
 
-                }
-            </CardBody>
-                <Modal isOpen={deletemodal} toggle={deleteModaltoggle}>
-                    <ModalBody>
-                        <h5>{t('Buttons.12')} ?</h5>
-                    </ModalBody>
-                    <ModalFooter>
-                        <button onClick={deleteFunc}
-                                className={'btn btn-outline-primary'}>{t('Buttons.3')}</button>
-                        <button onClick={() => deleteModaltoggle('')}
-                                className={'btn btn-outline-primary'}>{t('Buttons.7')}</button>
-                    </ModalFooter>
-                </Modal>
+            }
+            <Modal isOpen={deletemodal} toggle={deleteModaltoggle}>
+                <ModalBody>
+                    <h5>{t('Buttons.12')} ?</h5>
+                </ModalBody>
+                <ModalFooter>
+                    <button onClick={deleteFunc}
+                            className={'btn btn-outline-primary'}>{t('Buttons.3')}</button>
+                    <button onClick={() => deleteModaltoggle('')}
+                            className={'btn btn-outline-primary'}>{t('Buttons.7')}</button>
+                </ModalFooter>
+            </Modal>
 
 
-                <Modal isOpen={viewOneLoss} toggle={() => setViewOneLoss(!viewOneLoss)}>
-                    <ModalHeader>
-                        <h4>
-                            {t('mah.116')}
-                        </h4>
-                    </ModalHeader>
-                    <ModalBody>
+            <Modal isOpen={viewOneLoss} toggle={() => setViewOneLoss(!viewOneLoss)}>
+                <ModalHeader>
+                    <h4>
+                        {t('mah.116')}
+                    </h4>
+                </ModalHeader>
+                <ModalBody>
 
-                        {
-                            lossReducer.oneLossProduct ?
-                                lossReducer.oneLossProduct.map(item =>
+                    {
+                        lossReducer.oneLossProduct ?
+                            lossReducer.oneLossProduct.map(item =>
+                                <div>
                                     <div>
                                         <div>
-                                            <div>
-                                                <p className={'p-0 m-0'}>{t('mah.117')}
-                                                    <strong>{item?.branchName}</strong></p>
-                                                <p className={'p-0 m-0'}>{t('mah.118')} <strong>{item?.userFio}</strong>
-                                                </p>
-                                                <p className={'p-0 m-0'}>{t('mah.119')}
-                                                    <strong>{item?.totalPrice} {t('mah.27')}</strong></p>
-                                            </div>
+                                            <p className={'p-0 m-0'}>{t('mah.117')}
+                                                <strong>{item?.branchName}</strong></p>
+                                            <p className={'p-0 m-0'}>{t('mah.118')} <strong>{item?.userFio}</strong>
+                                            </p>
+                                            <p className={'p-0 m-0'}>{t('mah.119')}
+                                                <strong>{item?.totalPrice} {t('mah.27')}</strong></p>
                                         </div>
-                                        <table className={'table table-bordered'}>
-                                            <thead>
-                                            <tr>
-                                                <th>{t('mah.57')}</th>
-                                                <th>{t('mah.58')}</th>
-                                                <th>{t('mah.61')}</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {
-                                                item?.lossProductGetDtoList?.map(item =>
-                                                    <tr>
-                                                        <th>{item.productName}</th>
-                                                        <th>{item.quantity} {item.measurementName}</th>
-                                                        <th>{item.price} {t('mah.27')}</th>
-                                                    </tr>
-                                                )
-                                            }
-
-                                            </tbody>
-                                        </table>
                                     </div>
-                                )
-                                : <div><h4 className={'text-center'}>NOT FOUND</h4></div>
-                        }
-                    </ModalBody>
-                    <ModalFooter>
-                        <button className={'btn btn-danger'}
-                                onClick={() => setViewOneLoss(!viewOneLoss)}>{t('mah.108')}</button>
-                    </ModalFooter>
-                </Modal>
+                                    <table className={'table table-bordered'}>
+                                        <thead>
+                                        <tr>
+                                            <th>{t('mah.57')}</th>
+                                            <th>{t('mah.58')}</th>
+                                            <th>{t('mah.61')}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {
+                                            item?.lossProductGetDtoList?.map(item =>
+                                                <tr>
+                                                    <th>{item.productName}</th>
+                                                    <th>{item.quantity} {item.measurementName}</th>
+                                                    <th>{item.price} {t('mah.27')}</th>
+                                                </tr>
+                                            )
+                                        }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )
+                            : <div><h4 className={'text-center'}>NOT FOUND</h4></div>
+                    }
+                </ModalBody>
+                <ModalFooter>
+                    <button className={'btn btn-danger'}
+                            onClick={() => setViewOneLoss(!viewOneLoss)}>{t('mah.108')}</button>
+                </ModalFooter>
+            </Modal>
 
         </div>
-        )
+    )
 }
 
 export default connect((users, lossReducer, XodimReducer),
-{
-    getLossProductByBusiness,
+    {
+        getLossProductByBusiness,
         getLossProductByBranch,
         getUserForFiltering,
         getUserForFilteringBusiness,
         getLossProductOne
-})(LossProducts)
+    })(LossProducts)

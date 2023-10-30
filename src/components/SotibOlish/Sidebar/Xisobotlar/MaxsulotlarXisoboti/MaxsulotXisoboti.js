@@ -158,9 +158,7 @@ function MaxsulotXisoboti({
 
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 200)
     }, [MaxsulotxisobotReducer.getBoolean])
 
     useEffect(() => {
@@ -213,8 +211,8 @@ function MaxsulotXisoboti({
 
 
             <CardBody>
-                {
-                    loading ?
+                <Loading spinning={loading}>
+                    {
                         MaxsulotxisobotReducer.productHistory?.list?.length > 0 ?
                             <div>
                                 <div className="table-responsive">
@@ -225,9 +223,9 @@ function MaxsulotXisoboti({
                                 </div>
                             </div> : <div>
                                 <h4 className={'text-center'}>{MaxsulotxisobotReducer.message}</h4>
-                            </div> : <Loading/>
-                }
-
+                            </div>
+                    }
+                </Loading>
             </CardBody>
         </div>
     )

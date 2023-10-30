@@ -5,7 +5,7 @@ import './selectAnt.css'
 
 
 
-const CommonTable = ({data,columns,size,page,pagination,total,handleLimitChange,handlePageChange,rowSelection}) => (
+const CommonTable = ({data,columns,size,page,pagination,total,handleLimitChange,handlePageChange,rowSelection,onchange}) => (
     <Table
         columns={columns}
         dataSource={data?.map((item, index) => {
@@ -15,6 +15,7 @@ const CommonTable = ({data,columns,size,page,pagination,total,handleLimitChange,
             y: 400,
             x: 800
         }}
+        onChange={onchange}
         rowSelection={rowSelection}
         pagination={pagination && {
             total:total,

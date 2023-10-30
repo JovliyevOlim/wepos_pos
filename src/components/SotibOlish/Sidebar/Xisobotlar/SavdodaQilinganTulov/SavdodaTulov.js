@@ -198,9 +198,7 @@ function SavdodaTulov({
 
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 200)
     }, [SavdodagiTulovReducer.getBoolean])
 
     useEffect(() => {
@@ -254,18 +252,20 @@ function SavdodaTulov({
                 </div>
             </CardBody>
             <CardBody>
-                {
-                    loading ?
-                        SavdodagiTulovReducer.tradeReports?.list?.length > 0 ?
+                <Loading spinning={loading}>
+                    {
+                            SavdodagiTulovReducer.tradeReports?.list?.length > 0 ?
                                 <div className="table-responsive">
                                     <CommonTable size={size} page={page} total={SavdodagiTulovReducer.tradeReports?.totalItem}
                                                  handleLimitChange={handleLimitChange} columns={columns} data={SavdodagiTulovReducer.tradeReports?.list}
                                                  handlePageChange={handlePageChange} pagination={true}/>
                                 </div>
-                         : <div>
-                                <h4 className={'text-center'}>{SavdodagiTulovReducer.message}</h4>
-                            </div> : <Loading/>
-                }
+                                : <div>
+                                    <h4 className={'text-center'}>{SavdodagiTulovReducer.message}</h4>
+                                </div>
+                    }
+                </Loading>
+
 
 
                 {/*// <Modal isOpen={check} toggle={checktoggle} size={'xl'}>*/}

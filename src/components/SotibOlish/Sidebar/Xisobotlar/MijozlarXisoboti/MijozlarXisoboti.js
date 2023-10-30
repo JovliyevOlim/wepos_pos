@@ -19,6 +19,7 @@ import MainHeaderText from "../../../../Components/MainHeaderText";
 import CardBody from "../../../../Components/CardBody";
 import SelectAnt from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
+import {prettify} from "../../../../../util";
 function MijozlarXisoboti({
                               users, CustomerReducer, getCustomersForTrade, getCustomersForTradeBusiness,
                               MijozHisobotiReducer, getCustomerReportByBusiness, getCustomerReportByBranch,
@@ -47,7 +48,7 @@ function MijozlarXisoboti({
             title: 'Summa',
             dataIndex: 'sum',
             key: 'sum',
-            render: (item) => <p className={'m-0'}>{item} so'm</p>
+            render: (item) => <p className={'m-0'}>{prettify(item,3)} so'm</p>
         },
 
         {
@@ -126,9 +127,7 @@ function MijozlarXisoboti({
 
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 200)
     }, [MijozHisobotiReducer.getBoolean])
 
     useEffect(() => {
@@ -171,8 +170,8 @@ function MijozlarXisoboti({
                 </div>
             </CardBody>
             <CardBody>
-                <div>
-                    {loading ?
+                <Loading spinning={loading}>
+                    {
                         MijozHisobotiReducer.customerReport?.list?.length > 0 ?
                             <div className="table-responsive mb-4 table-wrapper-scroll-y">
                                 <CommonTable size={size} page={page} total={MijozHisobotiReducer.customerReport?.totalItem}
@@ -182,11 +181,10 @@ function MijozlarXisoboti({
                                 />
                             </div> : <div>
                                 <h4 className={'text-center'}>{MijozHisobotiReducer.message}</h4>
-                            </div> :
-                        <Loading/>
+                            </div>
                     }
 
-                </div>
+                </Loading>
             </CardBody>
         </div>
     )

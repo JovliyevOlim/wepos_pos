@@ -12,6 +12,7 @@ import MainHeaderText from "../../../../Components/MainHeaderText";
 import CardBody from "../../../../Components/CardBody";
 import SelectAnt, {SearchAnt} from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
+import {prettify} from "../../../../../util";
 function MaxsulotMiqdoriQoldigi({
                                     users, XodimReducer, getUserForFiltering, getUserForFilteringBusiness,
                                     MaxsulotxisobotReducer,getLossProductByBusiness,getLossProductByBranch,
@@ -60,7 +61,7 @@ function MaxsulotMiqdoriQoldigi({
             title: 'Zarar summasi',
             dataIndex: 'price',
             key: 'price',
-            render: (item) => <p className={'m-0'}>{item} so'm</p>
+            render: (item) => <p className={'m-0'}>{prettify(item,3)} so'm</p>
         },
         {
             title: t('ol.11'),
@@ -137,9 +138,7 @@ function MaxsulotMiqdoriQoldigi({
 
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 200)
     }, [MaxsulotxisobotReducer.getBoolean])
 
     useEffect(() => {
@@ -186,8 +185,8 @@ function MaxsulotMiqdoriQoldigi({
                 </div>
             </CardBody>
             <CardBody>
-                <div>
-                    {loading ?
+                <Loading spinning={loading}>
+                    {
                        MaxsulotxisobotReducer.lossProducts?.list?.length > 0 ?
                             <div className="table-responsive mb-4 table-wrapper-scroll-y">
                                 <CommonTable size={size} page={page} total={MaxsulotxisobotReducer.lossProducts?.totalItem}
@@ -195,10 +194,9 @@ function MaxsulotMiqdoriQoldigi({
                                              data={MaxsulotxisobotReducer.lossProducts?.list} pagination={true}/>
                             </div> : <div>
                                 <h4 className={'text-center'}>{MaxsulotxisobotReducer.message}</h4>
-                            </div> :
-                        <Loading/>
+                            </div>
                     }
-                </div>
+                </Loading>
             </CardBody>
         </div>
     )

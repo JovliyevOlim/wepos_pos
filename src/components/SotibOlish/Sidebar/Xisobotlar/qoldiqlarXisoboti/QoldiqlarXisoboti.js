@@ -6,7 +6,7 @@ import QoldiqlarxisobotiReducer, {
     getWarehouseByBranch, getWarehouseByBusiness, resetWarehouse
 } from '../reducer/QoldiqlarxisobotiReducer'
 import users from "../../../../../reducer/users";
-import formatDate from "../../../../../util";
+import formatDate, {prettify} from "../../../../../util";
 import Loading from "../../../../Loading";
 import {ModalHeader, Modal, ModalFooter, ModalBody} from "reactstrap";
 import {toast} from "react-toastify";
@@ -56,28 +56,28 @@ function QoldiqlarXisoboti({
             key: 'branchName',
         },
         {
-            title:'Qolgan mahsulot',
+            title: 'Qolgan mahsulot',
             dataIndex: 'amount',
             key: 'amount',
-            render:(item,values)=><p>{item} {values?.measurementName}</p>
+            render: (item, values) => <p>{item} {values?.measurementName}</p>
         },
         {
-            title:'Sotilgan miqdor',
+            title: 'Sotilgan miqdor',
             dataIndex: 'soldQuantity',
             key: 'soldQuantity',
-            render:(item,values)=><p>{item} {values?.measurementName}</p>
+            render: (item, values) => <p>{item} {values?.measurementName}</p>
         },
         {
             title: 'Sotilgan summa',
             dataIndex: 'soldPrice',
             key: 'soldPrice',
-            render: (item) => <p className={'m-0'}>{item.toFixed(2)} so'm</p>
+            render: (item) => <p className={'m-0'}>{prettify(item, 3)} so'm</p>
         },
         {
             title: 'Foyda',
             dataIndex: 'profit',
             key: 'profit',
-            render: (item) => <p className={'m-0'}>{item.toFixed(2)} so'm</p>
+            render: (item) => <p className={'m-0'}>{prettify(item, 3)} so'm</p>
         },
         {
             title: 'Oxirgi sotilgan sana',
@@ -101,9 +101,9 @@ function QoldiqlarXisoboti({
     const [search, setSearch] = useState('')
     const [isView, setIsView] = useState(false)
     const handlePageChange = (newPage) => {
-        setPage(newPage-1);
+        setPage(newPage - 1);
     };
-    const handleLimitChange = (event,size) => {
+    const handleLimitChange = (event, size) => {
         setPage(0)
         setLimit(size);
     };
@@ -135,6 +135,7 @@ function QoldiqlarXisoboti({
     }
 
     useEffect(() => {
+        setLoading(false)
         if (users.getInfoAdmin && !mainBranchId) {
             setProductId(null)
             getWarehouseByBusiness({
@@ -157,9 +158,7 @@ function QoldiqlarXisoboti({
     }, [limit, field, increase, productId, mainBranchId, QoldiqlarxisobotiReducer.current])
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 200)
     }, [QoldiqlarxisobotiReducer.getBoolean])
 
     useEffect(() => {
@@ -225,27 +224,34 @@ function QoldiqlarXisoboti({
         </CardBody>
 
 
-        {loading ? QoldiqlarxisobotiReducer.warehouse?.list?.length > 0 ?
-
-            <CardBody>
-                <div>
-                    <div className={'d-flex justify-content-end'}>
-                        <h4 className={'report-text'}>Statiskani boshlangan
-                            sanasi: {formatDate(QoldiqlarxisobotiReducer?.warehouse?.reset)}</h4>
-                    </div>
-                    <div className={'d-flex justify-content-end'}>
-                        <h4 className={'report-text mx-2'}>Statiskani tozalash(Foyda,Sotilgan miqdor,Sotilgan summa)</h4>
-                        <ButtonAnt onClick={() => setResetActive(true)} text={'Tozalash'} type={'primary'} />
-                    </div>
-                </div>
-                <div className="table-responsive mt-4">
-                    <CommonTable size={limit} page={page} pagination={true} data={QoldiqlarxisobotiReducer.warehouse?.list}
-                                 handlePageChange={handlePageChange} handleLimitChange={handleLimitChange} columns={columns} total={QoldiqlarxisobotiReducer.warehouse?.totalItem}/>
-                </div>
-            </CardBody>
-         : <div>
-            <h4 className={'text-center'}>{QoldiqlarxisobotiReducer.message}</h4>
-        </div> : <Loading/>}
+        <CardBody>
+            <Loading spinning={loading}>
+                {
+                    QoldiqlarxisobotiReducer.warehouse?.list?.length > 0 ?
+                        <>
+                            <div>
+                                <div className={'d-flex justify-content-end'}>
+                                    <h4 className={'report-text'}>Statiskani boshlangan
+                                        sanasi: {formatDate(QoldiqlarxisobotiReducer?.warehouse?.reset)}</h4>
+                                </div>
+                                <div className={'d-flex justify-content-end'}>
+                                    <h4 className={'report-text mx-2'}>Statiskani tozalash(Foyda,Sotilgan
+                                        miqdor,Sotilgan summa)</h4>
+                                    <ButtonAnt onClick={() => setResetActive(true)} text={'Tozalash'} type={'primary'}/>
+                                </div>
+                            </div>
+                            <div className="table-responsive mt-4">
+                                <CommonTable size={limit} page={page} pagination={true}
+                                             data={QoldiqlarxisobotiReducer.warehouse?.list}
+                                             handlePageChange={handlePageChange} handleLimitChange={handleLimitChange}
+                                             columns={columns} total={QoldiqlarxisobotiReducer.warehouse?.totalItem}/>
+                            </div>
+                        </> : <div>
+                            <h4 className={'text-center'}>{QoldiqlarxisobotiReducer.message}</h4>
+                        </div>
+                }
+            </Loading>
+        </CardBody>
 
 
         <Modal isOpen={resetActive} toggle={() => setResetActive(prevState => !prevState)}>
@@ -256,8 +262,6 @@ function QoldiqlarXisoboti({
                     <select className={'form-control'} value={sendBranchId}
                             onChange={(e) => setSendBranch(e.target.value)} id="">
                         <option value="">Tanlang</option>
-
-                        }
                         {users.branches.map((item, index) => <option value={item.id}>{item.name}</option>)}
                     </select>
                 </div>

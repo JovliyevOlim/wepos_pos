@@ -49,7 +49,7 @@ function Bazalar({
             dataIndex: 'createdAt',
             key: 'createdAt',
             width: '50px',
-            render:(item)=><p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>
+            render: (item) => <p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>
         },
         {
             title: t('ol.20'),
@@ -64,7 +64,7 @@ function Bazalar({
                     } icon={<EditOutlined/>}/>
                 }
                 {
-                    users.deleteOutlay  && <ButtonAnt text={t('ol.79')} danger={true} type={'primary'} onClick={() => {
+                    users.deleteOutlay && <ButtonAnt text={t('ol.79')} danger={true} type={'primary'} onClick={() => {
                         deleteBranchById(values.id)
                     }
                     } icon={<DeleteOutlined/>}/>
@@ -159,9 +159,7 @@ function Bazalar({
 
 
     useEffect(() => {
-        setTimeout(() => {
             setLoading(true)
-        }, 500)
     }, [branchreducer.getBranchBool])
 
     return (
@@ -174,29 +172,28 @@ function Bazalar({
                         : ''
                 }
             </div>
-            <CardBody>
-                {
-                    users.getBranch ?
-                        loading ?
-                            branchreducer.branch.length > 0 ?
-                                <div>
-                                    {/*<div className="izlashBaza mb-3">*/}
-                                    {/*    <input value={search} onChange={(e) => setSearch(e.target.value)} type="text"*/}
-                                    {/*           placeholder={t('set.4')}/>*/}
-                                    {/*</div>*/}
-                                    <div className="table-responsive">
-                                        <CommonTable pagination={false} data={branchreducer.branch.filter(val => {
-                                            if (search === '') {
-                                                return val
-                                            } else if (val.name.toUpperCase().includes(search.toUpperCase())) {
-                                                return val
-                                            }
-                                        })} columns={columns}/>
-                                    </div>
-                                </div> : branchreducer.getMessage
-                            : <Loading/> : ''
-                }
-            </CardBody>
+            {
+                users.getBranch ?
+                    <CardBody>
+                        <Loading spinning={loading}>
+                            {
+                                branchreducer.branch.length > 0 ?
+                                    <div>
+                                        <div className="table-responsive">
+                                            <CommonTable pagination={false} data={branchreducer.branch.filter(val => {
+                                                if (search === '') {
+                                                    return val
+                                                } else if (val.name.toUpperCase().includes(search.toUpperCase())) {
+                                                    return val
+                                                }
+                                            })} columns={columns}/>
+                                        </div>
+                                    </div> : branchreducer.getMessage
+                            }
+                        </Loading>
+                    </CardBody>
+                    : ''
+            }
             <Modal isOpen={active} toggle={toggle}>
                 <form action="" onSubmit={handleSubmit(onSubmit)}>
                     <ModalHeader>
