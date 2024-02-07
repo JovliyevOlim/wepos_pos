@@ -575,14 +575,9 @@ function Taxrirlash({
                         <div className="col-md-4 mt-2">
                             <label htmlFor={'barcode'}>{t('ProductEdit.5')}</label>
                             <input type="text" id={'barcode'}
-                                   {...register('barcode', {required: {value: true, message: (t('as.64')) }})}
+                                   {...register('barcode')}
                                    placeholder={t('as.65')}
                                    className={'form-control'}/>
-                            {
-                                errors.barcode &&
-                                <div>
-                                    <p className={'text-danger text-center p-0 m-0'}>{errors.barcode.message}</p>
-                                </div>}
                         </div>
 
                     }
@@ -863,7 +858,6 @@ function Taxrirlash({
                                                     <td><input className={'manytype-input'}
                                                                onChange={(e) => changeTypeForm(e, index)}
                                                                name={'barcode'}
-                                                               required={'required'}
                                                                value={val.barcode}
                                                                type="text"/></td>
                                                     <td><input className={'manytype-input'}

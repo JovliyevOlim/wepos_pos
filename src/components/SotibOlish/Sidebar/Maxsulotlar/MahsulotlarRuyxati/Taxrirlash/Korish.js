@@ -15,6 +15,7 @@ import Block3 from "../maxsulotdizayn/Block3";
 import {Grid} from "@mui/material";
 import TarixiM from "../maxsulotdizayn/TarixiM";
 import Block1 from "../maxsulotdizayn/Block1";
+import ProductOneImage from "../maxsulotdizayn/ProductOneImage";
 
 function Korish({active, toggle, MaxsulotlarRoyxariReducer, getMaxsulotByIdView, productId, id, users,getProductHistoryByProductByBusiness,
                     getProductHistoryByProductByBranch}) {
@@ -69,6 +70,7 @@ function Korish({active, toggle, MaxsulotlarRoyxariReducer, getMaxsulotByIdView,
 
     return (
         <Modal isOpen={active} toggle={toggle} size={'xl'}>
+            <ProductOneImage/>
             <Block3/>
             <Grid container spacing={4} alignItems={'stretch'} style={{paddingTop: "20px"}}>
 
