@@ -189,7 +189,6 @@ function SavdoOynasi({
     const [changesId, setChangesId] = useState(null);
     const [paymentTypeCheck, setPaymentTypeCheck] = useState(null);
     const [mainBranchId, setMainBranchId] = useState(null)
-    const [isViewSearchProduct, setIsViewSearchProduct] = useState(false)
     const [thisDay, setThisDay] = useState(formatDateMinus(new Date()))
     const [IsCheck, setIsCheck] = useState(false)
     const [categoryId, setCategoryId] = useState('')
@@ -357,14 +356,43 @@ function SavdoOynasi({
 
     }
 
+
+    const [IsSearchProductList, setIsSearchProduct] = useState([])
+
     function mahsulotnomi(e) {
         setSearch(e.target.value)
-        getBarcodeAndName({
-            branchId: mainBranchId ? mainBranchId : users.branchId,
-            name: e.target.value
-        })
-        setIsViewSearchProduct(true)
+
     }
+
+    useEffect(() => {
+        const searchPro =  setTimeout(()=>{
+            if (search){
+                getBarcodeAndName({
+                    branchId: mainBranchId ? mainBranchId : users.branchId,
+                    name: search
+                })
+            }
+            else{
+                setIsSearchProduct([])
+            }
+
+        },1000)
+
+        return () => clearTimeout(searchPro)
+    }, [search])
+
+    useEffect(() => {
+        if (MaxsulotlarRoyxariReducer?.productSearch && search) {
+            setIsSearchProduct(MaxsulotlarRoyxariReducer.productSearch)
+            let findProduct = MaxsulotlarRoyxariReducer.productSearch.length  == 1
+            if (findProduct) pushesh(MaxsulotlarRoyxariReducer.productSearch[0])
+        }
+        if (MaxsulotlarRoyxariReducer.isClearInput) {
+            setIsSearchProduct([])
+            setSearch('')
+            inputRef.current.focus()
+        }
+    }, [MaxsulotlarRoyxariReducer.productSearch])
 
 
     function xisobkitob(array) {
@@ -384,19 +412,6 @@ function SavdoOynasi({
     }, [arr1])
 
 
-    useEffect(() => {
-        if (MaxsulotlarRoyxariReducer.productSearch) {
-            let findProduct = MaxsulotlarRoyxariReducer.productSearch
-                .find(val => val.barcode === search || val.name.toLowerCase() === search.toLowerCase())
-            if (findProduct) pushesh(findProduct)
-        }
-        if (MaxsulotlarRoyxariReducer.isClearInput) {
-            setSearch('')
-            inputRef.current.focus()
-        }
-    }, [MaxsulotlarRoyxariReducer.getBoolean])
-
-
     function pushesh(val) {
         console.log(val)
         if (val.amount <= 0 && checkMinusShop) {
@@ -411,10 +426,11 @@ function SavdoOynasi({
                 setChangesId(val.id)
                 arr1.unshift({
                     productId: val.id,
-                    quantity: 1,
+                    quantity: val.totalKg ? val.totalKg : 1,
+                    changeInput: val.totalKg ? true : false,
                     name: val.name,
                     price: mainPrice,
-                    totalSalePrice: 1 * mainPrice,
+                    totalSalePrice: (val.totalKg ? val.totalKg : 1) * mainPrice,
                     noChangesPrice: val.salePrice,
                     noChangesTotalSalePrice: 1 * val.salePrice,
                     measurementName: val.measurementName,
@@ -429,7 +445,7 @@ function SavdoOynasi({
             inputRef.current.focus()
         }
         setSearch('')
-        setIsViewSearchProduct(false)
+        setIsSearchProduct([])
     }
 
     function changeCount(e, id) {
@@ -485,7 +501,6 @@ function SavdoOynasi({
         setarr1(a)
     }
 
-    console.log(arr1)
 
     function deleteM() {
         let IsTradeId = arr1.find(item => item.productId === changesId)
@@ -707,9 +722,15 @@ function SavdoOynasi({
     }
 
 
+    const [reactToast, setReactToast] = useState(false)
+
     function toggle() {
         if (!holdOnReducer.holdOn) {
+            setReactToast(true)
             toast.info(t('mah.70'))
+            setTimeout(() => {
+                setReactToast(false)
+            }, 1500)
         } else {
             setActiveHoldOn(!activeHoldOn)
         }
@@ -828,8 +849,6 @@ function SavdoOynasi({
     });
 
 
-
-
     useEffect(() => {
         if (tradeIdForEdit) {
             console.log('tradeIdFor', tradeIdForEdit)
@@ -924,7 +943,7 @@ function SavdoOynasi({
 
 
     useEffect(() => {
-            setLoadingProduct(true)
+        setLoadingProduct(true)
     }, [MaxsulotlarRoyxariReducer.getBoolean])
 
     useEffect(() => {
@@ -947,7 +966,7 @@ function SavdoOynasi({
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-            setLoading(true)
+        setLoading(true)
     }, [SavdoQoshishReducer.getTradeBool])
 
     useEffect(() => {
@@ -1001,19 +1020,19 @@ function SavdoOynasi({
     }
 
     return (
-        <div className={'position-relative'}>
+        <div>
             <div className={"shopping"}>
                 <div className="shopping-header">
                     <div className="shopping-header-item">
                         <h5 className={'shop-header-text'}>Filial</h5>
-                        <div style={{width: '250px'}}>
+                        <div>
                             <SelectAnt disabled={match.params.remainId || tradeIdForEdit ? true : false}
                                        value={mainBranchId ? mainBranchId : users.branchId} permission={false}
                                        selectList={users.branches} onChange={(e) => {
                                 setMainBranchId(e)
                                 setarr1([])
                                 setSearch('')
-                                setIsViewSearchProduct(false)
+                                setIsSearchProduct([])
                             }}/>
                         </div>
                         {
@@ -1030,26 +1049,26 @@ function SavdoOynasi({
 
                     </div>
                     <div className="shopping-header-item">
-                        <div style={{width: '150px'}}>
+                        <div >
                             <SelectAnt disabled={tradeIdForEdit ? true : IsGross}
                                        selectList={[{id: 'DONA', name: 'Dona'}, {id: 'OPTOM', name: 'Optom'}]}
                                        value={grossPriceTypeString}
                                        permission={false} onChange={(e) => changeGrossPriceType(e)}/>
                         </div>
                         {tradeIdForEdit ? "" :
-                            <div className={'shopping-btn-header'} onClick={toggle}
-                                 data-tip={t('mah.79')}>
+                            <button className={'shopping-btn-header'} disabled={reactToast} onClick={toggle}
+                                    data-tip={t('mah.79')}>
                                 <p className={'shopping-btn-text-header'}>Kassaga olish</p>
                                 <img src={kassa} className={'shopping-btn-header-icon'} alt="kassa"/>
-                            </div>
+                            </button>
                         }
                         <ReactTooltip/>
                         {
                             users.getTrade &&
                             <div className={'shopping-btn-header'} onClick={toggle4}
                             ><p className={'shopping-btn-text-header'}>
-                                    {t('mah.80')}
-                                </p>
+                                {t('mah.80')}
+                            </p>
                                 <img src={lastTrade} className={'shopping-btn-header-icon'} alt="lastTrade"/>
                             </div>
                         }
@@ -1058,7 +1077,7 @@ function SavdoOynasi({
                             savdooynasi()
                             clear()
                         }} className={'shopping-btn-header'}>
-                            <p className={'shopping-btn-text-header'} style={{color:'#ffffff'}}>Ortga</p>
+                            <p className={'shopping-btn-text-header'} style={{color: '#ffffff'}}>Ortga</p>
                             <img src={back} className={'shopping-btn-header-icon'} alt="back"/>
                         </Link>
                     </div>
@@ -1089,8 +1108,7 @@ function SavdoOynasi({
                             </div>
                             {
                                 open &&
-                                <Loading spinning={loadingProduct}>
-                                    <div className={'shopping-product-list'}>
+                                <div className={'shopping-product-list'}>
                                     {
                                         MaxsulotlarRoyxariReducer.productForShopping.length > 0 ?
                                             MaxsulotlarRoyxariReducer.productForShopping.map((item, index) => <div
@@ -1114,8 +1132,7 @@ function SavdoOynasi({
                                             </div>
 
                                     }
-                                    </div>
-                                </Loading>
+                                </div>
 
                             }
                         </div>
@@ -1145,15 +1162,17 @@ function SavdoOynasi({
                                                autoFocus={true}
                                                placeholder={"Maxsulot nomi yoki barcode"}/>
                                         <img src={searchIcon} alt="search"/>
+                                        {console.log(IsSearchProductList)}
                                         {
-                                            MaxsulotlarRoyxariReducer.productSearch.length > 0 && isViewSearchProduct &&
+                                            IsSearchProductList.length > 0 &&
                                             <div className={'shopping-search-list'}>
                                                 {
-                                                    MaxsulotlarRoyxariReducer.productSearch.map(item =>
+                                                    IsSearchProductList.map(item =>
                                                         <button className={'shopping-search-button'} key={item.id}
                                                                 onClick={() => pushesh(item)}>
-                                                            <p className={'p-0 m-0'}>{item.name} ({item.barcode})</p>
-                                                            <p className={'p-0 m-0'}>{t('mah.83')} {item.amount} {item.measurementName}</p>
+                                                            <p className={'p-0 m-0'}>{item.name} ({item.barcode}) </p>
+                                                            <p className={'p-0 m-0'}>{t('mah.83')} {item.amount} {item.measurementName} ({grossPriceType ? item.grossPrice : item.salePrice} so'm)</p>
+
                                                         </button>
                                                     )
                                                 }
@@ -1196,13 +1215,16 @@ function SavdoOynasi({
                                                                             value={item?.quantity}
                                                                             min={0}
                                                                             step={'number'}
+                                                                            disabled={item.changeInput}
                                                                             max={match.params.remainId && item?.noQuantity}
                                                                             onChange={(e) => {
                                                                                 changeCount(e, index)
                                                                             }}
                                                                             className={'shop-change-number'}
                                                                         />
-                                                                    </div> : item.quantity
+                                                                        {item.measurementName}
+                                                                    </div> :
+                                                                    <p className={'m-0'}>{item.quantity} {item.measurementName}</p>
                                                             }
 
                                                             <div className="col-md-12"> {
@@ -1226,7 +1248,7 @@ function SavdoOynasi({
                                                                         <InputNumber
                                                                             value={item?.price}
                                                                             min={0}
-                                                                            disabled={IsDiscount}
+                                                                            disabled={IsDiscount || item?.changeInput}
                                                                             onChange={(e) =>
                                                                                 handleChangeBuyPrice(e, index)}
                                                                             className={'shop-change-number'}
@@ -1281,8 +1303,8 @@ function SavdoOynasi({
                                 tradeIdForEdit ? '' :
                                     <div onClick={toggle8}
                                          className={'shopping-btn-top2'}>
-                                        <img src={waiting}  className={'shopping-btn-icon'} alt="waiting"/>
-                                        <p style={{color:'#FFC040'}} className={'shopping-btn-text'}>Ushlab turish</p>
+                                        <img src={waiting} className={'shopping-btn-icon'} alt="waiting"/>
+                                        <p style={{color: '#FFC040'}} className={'shopping-btn-text'}>Ushlab turish</p>
                                     </div>
                             }
                             {
@@ -1290,7 +1312,7 @@ function SavdoOynasi({
                                 <div onClick={clear} className={'shopping-btn-top2'}><img src={trash}
                                                                                           className={'shopping-btn-icon'}
                                                                                           alt="waiting"/>
-                                    <p style={{color:'#4E5D78'}} className={'shopping-btn-text'}>Tozalash</p>
+                                    <p style={{color: '#4E5D78'}} className={'shopping-btn-text'}>Tozalash</p>
                                 </div>
                             }
                         </div>
@@ -1302,13 +1324,14 @@ function SavdoOynasi({
                                              onClick={() => setPaymentTypeCheck('turli')}><img src={turliTolov}
                                                                                                className={'shopping-btn-icon'}
                                                                                                alt="waiting"/>
-                                            <p style={{color:'#38CB89'}} className={'shopping-btn-text'}>Turli to'lov</p></div>
+                                            <p style={{color: '#38CB89'}} className={'shopping-btn-text'}>Turli to'lov</p>
+                                        </div>
                                     : <div className={'shopping-btn-top2'}
                                            style={{border: paymentTypeCheck === 'turli' ? '3px solid red' : 'none'}}
                                            onClick={() => setPaymentTypeCheck('turli')}><img src={turliTolov}
                                                                                              className={'shopping-btn-icon'}
                                                                                              alt="waiting"/>
-                                        <p style={{color:'#38CB89'}} className={'shopping-btn-text'}>Turli to'lov</p></div>
+                                        <p style={{color: '#38CB89'}} className={'shopping-btn-text'}>Turli to'lov</p></div>
                             }
                             {
                                 tradeIdForEdit ? editActiveButton === "turli" ? "" :
@@ -1320,15 +1343,17 @@ function SavdoOynasi({
                                              className={'shopping-btn-top2'}><img
                                             src={debtTrade} className={'shopping-btn-icon'}
                                             alt="waiting"/>
-                                            <p style={{color:'#FF7272'}} className={'shopping-btn-text'}>Qarzga sotish</p></div>
+                                            <p style={{color: '#FF7272'}} className={'shopping-btn-text'}>Qarzga sotish</p>
+                                        </div>
                                     : <div onClick={customer ? () => setPaymentTypeCheck('qarz') : () => {
                                         toast.error(t('mah.88'))
                                     }
                                     } style={{border: paymentTypeCheck === 'qarz' ? '3px solid red' : 'none'}}
                                            className={'shopping-btn-top2'}><img src={debtTrade}
-                                                                            className={'shopping-btn-icon'}
-                                                                            alt="waiting"/>
-                                        <p style={{color:'#FF7272'}} className={'shopping-btn-text'}>Qarzga sotish</p></div>
+                                                                                className={'shopping-btn-icon'}
+                                                                                alt="waiting"/>
+                                        <p style={{color: '#FF7272'}} className={'shopping-btn-text'}>Qarzga sotish</p>
+                                    </div>
                             }
 
                         </div>
@@ -1345,13 +1370,16 @@ function SavdoOynasi({
                                         >
                                             <img src={checkImg(item.name)} alt="waiting"
                                                  className={'shopping-btn-icon-pay'}/>
-                                            <p style={{color:'#377DFF'}} className={'shopping-btn-text'}> {camelize(item.name)}</p>
+                                            <p style={{color: '#377DFF'}}
+                                               className={'shopping-btn-text'}> {camelize(item.name)}</p>
                                         </button> : <button key={item.id}
                                                             style={{border: paymentTypeCheck === item.id ? '3px solid red' : 'none'}}
                                                             onClick={() => setPaymentTypeCheck(item.id)}
                                                             className={'shopping-btn'}>
-                                        <img src={checkImg(item.name)} alt="waiting" className={'shopping-btn-icon-pay'}/>
-                                        <p style={{color:'#377DFF'}} className={'shopping-btn-text'}> {camelize(item.name)}</p>
+                                        <img src={checkImg(item.name)} alt="waiting"
+                                             className={'shopping-btn-icon-pay'}/>
+                                        <p style={{color: '#377DFF'}}
+                                           className={'shopping-btn-text'}> {camelize(item.name)}</p>
                                     </button>
                                 )
                             }
@@ -2016,7 +2044,8 @@ function SavdoOynasi({
                     <ModalBody>
                         <div className={'col-md-12 '}>
                             <div className="col-md-12">
-                                <SearchAnt name={"Savdo raqami bo'yicha qidirish"} onChange={(e) => setTradeIdSearch(e.target.value)}/>
+                                <SearchAnt name={"Savdo raqami bo'yicha qidirish"}
+                                           onChange={(e) => setTradeIdSearch(e.target.value)}/>
                             </div>
                             <div className={'d-flex justify-content-between mt-2'}>
                                 {
@@ -2052,9 +2081,10 @@ function SavdoOynasi({
                                                                                         users.editTrade && item?.editable ?
                                                                                             <button
                                                                                                 onClick={() => getTradeByForEdit(item.id)}
-                                                                                                className='taxrirlash'><img
-                                                                                                src={Edit}
-                                                                                                alt=""/> {t('Buttons.1')}
+                                                                                                className='taxrirlash'>
+                                                                                                <img
+                                                                                                    src={Edit}
+                                                                                                    alt=""/> {t('Buttons.1')}
                                                                                             </button>
                                                                                             : ''
                                                                                     }
@@ -2087,8 +2117,7 @@ function SavdoOynasi({
                 <ModalLoading isOpen={saveModal}/>
             </div>
 
-
-            <div ref={componentRef} className={'p-2 position-absolute w-100'}>
+            <div ref={componentRef} className={'p-2 w-100'}>
                 <div className={'d-flex justify-content-center align-items-center'}>
                     {
                         checkReducer.check ?

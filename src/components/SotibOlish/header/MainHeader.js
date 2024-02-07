@@ -22,8 +22,8 @@ import 'moment/locale/uz-latn'
 import avatar from "../../../img/defaul-user-profile.svg"
 import notificationActive from '../../../img/notification-active.svg'
 import notification from '../../../img/notification.svg'
-import uzLanguage from '../../../img/🇺🇿.svg'
-import rusLanguage from '../../../img/🇷🇺.svg'
+import uzLanguage from '../../../img/uzbek.svg'
+import rusLanguage from '../../../img/russian.svg'
 import arrowDown from "../../../img/direction-down 01.svg";
 import fullScreen from "../../../img/pixel grid-rectangle.svg"
 import Icon, {DeleteOutlined} from "@ant-design/icons";

@@ -158,7 +158,7 @@ function MaxsulotlarRoyxati({
             title: t('ol.20'),
             key: 'operation',
             width: 150,
-            render: (item, values) => <div className={'d-flex justify-content-center gap-3 flex-wrap'}>
+            render: (item, values) => <div className={'d-flex justify-content-center gap-3'}>
 
                 {
                     users.getProduct &&

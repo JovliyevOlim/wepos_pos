@@ -115,7 +115,7 @@ export const slice = createSlice({
                 if (action.payload.object.businessId) {
                     state.businessId = action.payload.object.businessId
                 }
-                if (action.payload.object.branches) {
+                if (action.payload.object?.branches && action.payload.object?.branches?.length >0) {
                     state.branchId = action.payload.object.branches[0].id
                     state.branchesValues = action.payload.object.branches.map(({
                                                                                    name: label,

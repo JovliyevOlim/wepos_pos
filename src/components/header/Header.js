@@ -4,8 +4,8 @@ import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import {Link, useLocation} from "react-router-dom";
 import arrowDown from "../../img/direction-down 01.svg";
-import uzLanguage from "../../img/🇺🇿.svg";
-import rusLanguage from "../../img/🇷🇺.svg";
+import uzLanguage from "../../img/uzbek.svg";
+import rusLanguage from "../../img/russian.svg";
 import Logo from "../../img/g14.svg";
 
 function Header({id}) {

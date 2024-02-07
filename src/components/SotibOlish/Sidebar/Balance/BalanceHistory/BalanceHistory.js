@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {connect} from "react-redux";
-import {camelize} from "../../../../../util";
+import {camelize, prettify} from "../../../../../util";
 import users from "../../../../../reducer/users";
 import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
@@ -70,13 +70,20 @@ function BalanceHistory({
         },
         {
             title: t('bal.9'),
+            width: 80,
+            dataIndex: 'sum',
+            key: 'sum',
+            render:(item)=><p className={'m-0'}>{prettify(item,3)} so'm</p>
+        },
+        {
+            title: t('bal.10'),
             width: 100,
             dataIndex: 'createdAt',
             key: 'createdAt',
             render:(item)=><p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>
         },
         {
-            title: t('bal.10'),
+            title: t('bal.11'),
             width: 100,
             dataIndex: 'description',
             key: 'description',
