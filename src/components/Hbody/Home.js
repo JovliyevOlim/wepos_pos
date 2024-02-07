@@ -58,10 +58,10 @@ function Home({saveusers, users, changeerror, rememberMe}) {
                 password: inputparol
             }
         }).then(function (res) {
-            saveusers(res.data)
+            saveusers(res?.data)
         }).catch(function (err) {
             console.log(err)
-            saveusers({...err.response.data})
+            saveusers({...err?.response?.data})
         })
     }
 

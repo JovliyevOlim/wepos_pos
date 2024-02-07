@@ -1,6 +1,6 @@
 import axios from "axios";
-// export  const  BaseUrl = 'http://147.182.161.225:8080/api'
-export  const  BaseUrl = 'http://localhost:8080/api'
+export  const  BaseUrl = 'http://147.182.161.225:8080/api'
+// export  const  BaseUrl = 'http://localhost:8080/api'
 // export  const  BaseUrl = 'http://172.20.10.14:8080/api'
 
 export const axiosCreate = axios.create({
@@ -43,7 +43,10 @@ axios.interceptors.response.use((res) => {
 }, (error) => {
     const status = error?.response?.status;
     if (status === 401) {
-        localStorage.clear();
+        // localStorage.removeItem("user");
+        // localStorage.removeItem("tokenname");
+        // sessionStorage.removeItem("user");
+        // sessionStorage.removeItem("tokenname");
         // window.location.href='/login'
     }
     return Promise.reject(error)

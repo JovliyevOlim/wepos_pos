@@ -1,3 +1,20 @@
+.savdoOynasiBtn{
+    border: none;
+    color: #FFF;
+    font-family: Inter, "sans-serif";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    border-radius: 10px;
+    background: #377DFF;
+    box-shadow: 0 8px 17px 0 rgba(55, 125, 255, 0.16);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 .main-header{
     position: relative !important;
     display: flex;
@@ -199,11 +216,17 @@
     background: #dcdcdc;
 }
 @media screen and (max-width: 329.9px) {
+    .savdoOynasiBtn{
+        font-size: 14px;
+        border-radius: 10px;
+        padding: 6px 10px;
+        gap: 6px;
+    }
     .main-header{
         align-items: center;
     }
     .main-header-left{
-        display:inline;
+        display: flex;
     }
     .main-header-left .main-header-body{
         display: none;
@@ -259,8 +282,14 @@
     .main-header{
         align-items: center;
     }
+    .savdoOynasiBtn{
+        font-size: 14px;
+        border-radius: 10px;
+        padding: 6px 10px;
+        gap: 6px;
+    }
     .main-header-left{
-        display:inline;
+        display:flex;
     }
     .main-header-left .main-header-body{
         display: none;
@@ -320,8 +349,15 @@
     .main-header{
         align-items: center;
     }
+    .savdoOynasiBtn{
+        font-size: 14px;
+        border-radius: 10px;
+        padding: 6px 10px;
+        gap: 6px;
+    }
     .main-header-left{
-        display:inline;
+        display: flex;
+        gap: 10px;
     }
     .main-header-left .main-header-body{
         display: none;
@@ -370,6 +406,11 @@
 @media (min-width: 768px) and (max-width:1023.9px){
     .main-header-icon{
         display:none;
+    }
+    .savdoOynasiBtn{
+        font-size: 16px;
+        border-radius: 10px;
+        gap: 6px;
     }
     .main-header-left .main-header-body{
         display: none;
