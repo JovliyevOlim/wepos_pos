@@ -43,7 +43,10 @@ axios.interceptors.response.use((res) => {
 }, (error) => {
     const status = error?.response?.status;
     if (status === 401) {
-        localStorage.clear();
+        // localStorage.removeItem("user");
+        // localStorage.removeItem("tokenname");
+        // sessionStorage.removeItem("user");
+        // sessionStorage.removeItem("tokenname");
         // window.location.href='/login'
     }
     return Promise.reject(error)

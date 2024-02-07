@@ -4,24 +4,22 @@ import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import {Link, useLocation} from "react-router-dom";
 import arrowDown from "../../img/direction-down 01.svg";
-import uzLanguage from "../../img/uzbek.svg";
-import rusLanguage from "../../img/russian.svg";
+import uzLanguage from "../../img/uz.svg";
+import rusLanguage from "../../img/ru.svg";
 import Logo from "../../img/g14.svg";
 
 function Header({id}) {
-
+    const appLang =  localStorage.getItem("miroLang") || "uz"
     const {t, i18n} = useTranslation();
     const location = useLocation();
     const [langShown, setlangShown] = useState(false)
-    const [selectedImg, setselectedImg] = useState(uzLanguage)
-    const [selectedLang, setselectedLang] = useState('Uzbek')
-    const [selectedLangShort, setselectedLangShort] = useState('Uz')
-
-
+    const [selectedImg, setselectedImg] = useState( appLang === "ru" ? rusLanguage : uzLanguage)
+    const [selectedLang, setselectedLang] = useState(appLang === "ru" ? 'Русский' : appLang === "ki" ? 'Крилл' : 'Uzbek')
+    const [selectedLangShort, setselectedLangShort] = useState(appLang === "ru" ? 'Ру' : appLang === "ki" ? 'Кр' : 'Uz')
     const [languagesList, setLanguagesList] = useState([
-        {id: 'uz', nameShort: 'Uz', name: 'Uzbek', img: uzLanguage, active: true},
-        {id: 'ki', nameShort: 'Кр', name: 'Крилл', img: uzLanguage, active: false},
-        {id: 'ru', nameShort: 'Ру', name: 'Русский', img: rusLanguage, active: false},
+        {id: 'uz', nameShort: 'Uz', name: 'Uzbek', img: uzLanguage, active: appLang === 'uz'},
+        {id: 'ki', nameShort: 'Кр', name: 'Крилл', img: uzLanguage, active: appLang === 'ki'},
+        {id: 'ru', nameShort: 'Ру', name: 'Русский', img: rusLanguage, active: appLang === 'ru'},
     ])
 
     function toggle() {
@@ -35,7 +33,7 @@ function Header({id}) {
                 setselectedLang(item.name)
                 setselectedLangShort(item.nameShort)
                 i18n.changeLanguage(item.id)
-                localStorage.setItem("i18nextLng", item.id)
+                localStorage.setItem("miroLang", item.id)
                 item.active = true
             } else {
                 item.active = false
@@ -48,7 +46,8 @@ function Header({id}) {
 
 
     useEffect(() => {
-        const storageLanguage = localStorage.getItem("i18nextLng")
+        const storageLanguage = localStorage.getItem("miroLang")
+        i18n.changeLanguage(storageLanguage)
     }, [])
 
     return (
