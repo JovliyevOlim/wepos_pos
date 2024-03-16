@@ -429,7 +429,9 @@ function Xarid({
                                                     <td>
                                                         <div
                                                             className={'d-flex justify-content-center align-items-center'}>
-                                                            <input className={'form-control'} name={'quantity'}
+                                                            <input className={'form-control'}
+                                                                   step="any"
+                                                                   name={'quantity'}
                                                                    value={item.quantity}
                                                                    onChange={(e) => ComboChangeAmount(e, index)}
                                                                    type="number"
