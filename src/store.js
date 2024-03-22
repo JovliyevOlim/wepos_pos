@@ -39,6 +39,7 @@ import lossReducer from "./reducer/lossReducer";
 import UserHistoryReducer from "./components/SotibOlish/Sidebar/Xisobotlar/reducer/UserHistoryReducer";
 import infoReducer from "./reducer/infoReducer";
 import SupplierReportReducer from "./components/SotibOlish/Sidebar/Xisobotlar/reducer/SupplierReportReducer";
+import registerUserReducer from "./components/SotibOlish/Sidebar/SUPERADMIN/pages/registerUsers/registerUserReducer";
 export default configureStore({
     reducer: {
         users,
@@ -79,7 +80,8 @@ export default configureStore({
         holdOnReducer,
         lossReducer,
         infoReducer,
-        SupplierReportReducer
+        SupplierReportReducer,
+        registerUserReducer
     },
     middleware: [api]
 })
