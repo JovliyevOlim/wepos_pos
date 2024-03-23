@@ -105,9 +105,6 @@ function XarajatQoshish({
                         match.params.id ? "Xarajat taxrirlash" : t('Expenses.9')
                     } </h5>
                 </div>
-                {
-                    console.log(errors)
-                }
 
                 <div className="col-12  mt-4">
                     <form onSubmit={handleSubmit(saqla)}>

@@ -22,7 +22,6 @@ const slice = createSlice({
     reducers: {
         getFrom: (state, action) => {
             state.reports = action.payload.object
-            console.log(action.payload);
         },
         getFromBestSellerChart:(state,action)=>{
           if (action.payload.success){

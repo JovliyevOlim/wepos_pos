@@ -19,7 +19,6 @@ const slice = createSlice({
                 state.xarajatxisobot = null
                     state.message =  action.payload.message
             }
-            console.log(action.payload);
         },
     }
 });

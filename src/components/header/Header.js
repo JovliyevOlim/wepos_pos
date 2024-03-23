@@ -1,54 +1,30 @@
-import React, {useEffect} from "react";
+import {useEffect} from "react";
 import './header.css'
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
 import {Link, useLocation} from "react-router-dom";
-import arrowDown from "../../img/direction-down 01.svg";
 import uzLanguage from "../../img/uz.svg";
 import rusLanguage from "../../img/ru.svg";
 import Logo from "../../img/g14.svg";
+import {Select} from "antd";
+import useWindowWidth from "../Components/useWindowWidth";
 
 function Header({id}) {
+    const widthWidth = useWindowWidth()
     const appLang =  localStorage.getItem("miroLang") || "uz"
+    const [lang, setLang] = useState(appLang)
     const {t, i18n} = useTranslation();
     const location = useLocation();
-    const [langShown, setlangShown] = useState(false)
-    const [selectedImg, setselectedImg] = useState( appLang === "ru" ? rusLanguage : uzLanguage)
-    const [selectedLang, setselectedLang] = useState(appLang === "ru" ? 'Русский' : appLang === "ki" ? 'Крилл' : 'Uzbek')
-    const [selectedLangShort, setselectedLangShort] = useState(appLang === "ru" ? 'Ру' : appLang === "ki" ? 'Кр' : 'Uz')
-    const [languagesList, setLanguagesList] = useState([
-        {id: 'uz', nameShort: 'Uz', name: 'Uzbek', img: uzLanguage, active: appLang === 'uz'},
-        {id: 'ki', nameShort: 'Кр', name: 'Крилл', img: uzLanguage, active: appLang === 'ki'},
-        {id: 'ru', nameShort: 'Ру', name: 'Русский', img: rusLanguage, active: appLang === 'ru'},
-    ])
 
     function toggle() {
 
     }
 
-    function ChangeLanguage(list) {
-        languagesList.map((item, val) => {
-            if (list.id === item.id) {
-                setselectedImg(item.img)
-                setselectedLang(item.name)
-                setselectedLangShort(item.nameShort)
-                i18n.changeLanguage(item.id)
-                localStorage.setItem("miroLang", item.id)
-                item.active = true
-            } else {
-                item.active = false
-            }
-        })
-        setLanguagesList(languagesList)
-        setlangShown(false)
+    function ChangeLanguage(e) {
+        setLang(e)
+        localStorage.setItem("appLang", e)
+        i18n.changeLanguage(e)
     }
-
-
-
-    useEffect(() => {
-        const storageLanguage = localStorage.getItem("miroLang")
-        i18n.changeLanguage(storageLanguage)
-    }, [])
 
     return (
         <div className={'header__ '}>
@@ -59,34 +35,49 @@ function Header({id}) {
                         <h4 style={{fontSize:'32px',margin:0,fontWeight:'600'}}>Miro</h4>
                     </div>
                 </div>
-                <div className="col-7 d-flex gap-2 gap-lg-4 align-items-stretch justify-content-end">
-                    <div className="drop-down">
-                        <div className={'wrapper-con'} onClick={() => setlangShown(prevState => !prevState)}>
-                            <div className="wrapper">
-                                <img className={'lang-logo'} src={selectedImg} alt="country"/>
-                                <div className={'selected-lang-text'}>{selectedLang}</div>
-                                <div className={'selected-langShort-text'}>{selectedLangShort}</div>
-                            </div>
-                            <img src={arrowDown} alt="arrow"/>
-                        </div>
-                        {
-                            langShown && <div className="lang-list">
-                                {
-                                    languagesList.filter(item => item.active === false).map((lang) =>
-                                        <div className={'lang-list-items'}>
-                                            <div className="lang-list-item" onClick={() => ChangeLanguage(lang)}>
-                                                <img className={'lang-logo'} src={lang.img} alt="rus"/>
-                                                <div className={'selected-lang-text'}>{lang.name}</div>
-                                                <div className={'selected-langShort-text'}>{lang.nameShort}</div>
-                                            </div>
-                                        </div>
-                                    )
-                                }
+                <div className="col-7 d-flex gap-2 gap-lg-4 align-items-center justify-content-end">
+                    <Select
+                      style={{width: widthWidth >= 768 ? 150 : 70}}
+                      size={"large"}
+                      onChange={ChangeLanguage}
+                      value={lang}
+                      options={[
+                          {
+                              value: 'uz',
+                              label: <div className="d-flex align-items-center gap-2">
+                                  {
+                                      widthWidth >= 768 ?  <>
+                                          <img src={uzLanguage} alt="uz"/>
+                                          <span>O'zbekcha</span>
+                                      </> : <span>O'z</span>
+                                  }
+                              </div>,
+                          },
+                          {
+                              value: 'ki',
+                              label: <div className="d-flex align-items-center gap-2">
+                                  {
+                                      widthWidth >= 768 ? <>
+                                          <img src={uzLanguage} alt="kr"/>
+                                          <span>Ўзбекча</span>
+                                      </> : <span>Ўз</span>
+                                  }
 
-                            </div>
-                        }
-
-                    </div>
+                              </div>,
+                          },
+                          {
+                              value: 'ru',
+                              label: <div className="d-flex align-items-center gap-2">
+                                  {
+                                      widthWidth >= 768 ? <>
+                                          <img src={rusLanguage} alt="ru"/>
+                                          <span>Русский</span>
+                                      </> : <span>Ру</span>
+                                  }
+                              </div>,
+                          },
+                      ]}
+                    />
                     {
                         location.pathname === `/shopDetails/${id}` || location.pathname === "/tariffs" ?
                             <Link to={'/login'}>

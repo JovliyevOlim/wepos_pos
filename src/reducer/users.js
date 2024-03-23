@@ -106,9 +106,7 @@ export const slice = createSlice({
     },
     reducers: {
         saveusers: (state, action) => {
-            console.log(action.payload)
             if (action.payload.success) {
-                console.log(action)
                 state.authEnter = true
 
                 state.users = action.payload.object

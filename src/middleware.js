@@ -31,7 +31,7 @@ export const api = ({dispatch}) => (next) => (action) => {
             payload: res.data
         })
     }).catch(err => {
-        console.log(err.response)
+        console.error(err.response)
         dispatch({
             type: onFail,
             payload: {...err?.response?.data,success:false}
