@@ -156,7 +156,7 @@ function MainHeader({
                       }}
                     />
                 </div>
-              <button onClick={() => history.push('/shopping')} className="savdoOynasiBtn">
+              <button onClick={() => history.push('/shopping')} style={{fontFamily:'sans-serif'}} className="savdoOynasiBtn">
                 <span>{t("sidebar.shopWindow")}</span>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
                   <path d="M7 18.5C7 17.3954 7.89543 16.5 9 16.5C10.1046 16.5 11 17.3954 11 18.5V22.5H7V18.5Z"
