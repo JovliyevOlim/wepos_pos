@@ -43,8 +43,8 @@ function XarajatTurlari({
     const columns = [
         {
             title: 'Id',
+            key:'index',
             dataIndex: 'index',
-            rowScope: 'row',
             width: '2%',
         },
         {
@@ -55,7 +55,8 @@ function XarajatTurlari({
         },
         {
             title: t('ol.20'),
-            key: 'operation',
+            dataIndex: 'name',
+            key: 'name',
             width: 150,
             render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
                 {
