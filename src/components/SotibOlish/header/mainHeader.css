@@ -225,6 +225,7 @@
     }
     .main-header-left{
         display:flex;
+        gap: 10px;
     }
     .main-header-left .main-header-body{
         display: none;
@@ -315,10 +316,10 @@
         border-radius: 10px;
         gap: 6px;
     }
-    /*.main-header-left{*/
-    /*    display: flex;*/
-    /*    gap: 10px;*/
-    /*}*/
+    .main-header-left{
+        display: flex;
+        gap: 10px;
+    }
     .main-header-left .main-header-body{
         display: none;
     }
@@ -351,5 +352,4 @@
     .selected-langShort-text{
         display: none;
     }
-
 }

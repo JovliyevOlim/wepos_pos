@@ -194,7 +194,7 @@ body::-webkit-scrollbar-track {
 /*.ant-menu-submenu-selected .svgFillColorSubMenu ellipse, circle {*/
 /*    stroke: #1777ff;*/
 /*}*/
-@media screen and (max-width: 329.9px){
+@media screen and (max-width: 330px){
     .sidebar-scroll{
         height:100%
     }
@@ -202,28 +202,28 @@ body::-webkit-scrollbar-track {
         padding: 10px;
     }
     .content {
-        padding: 0.5rem;
+        padding: 0.75rem 0.5rem;
     }
 }
-@media (min-width: 330px) and (max-width: 425.9px){
+@media (min-width: 330px) and (max-width: 426px){
     .sidebar-scroll{
         height:100%
     }
     .sidebar-header{
-        padding: 16px;
+        padding: 12px;
     }
     .content {
-        padding: 0.5rem;
+        padding: 0.75rem 0.5rem;
     }
 }
-@media (min-width: 426px) and (max-width: 767.9px){
+@media (min-width: 426px) and (max-width: 768px){
     .content {
-        padding: 0.75rem;
+        padding: 1rem 0.75rem;
     }
 }
 
 @media (min-width: 768px) and (max-width:1440px){
     .content {
-        padding: 0.75rem;
+        padding: 1rem 0.75rem;
     }
 }
