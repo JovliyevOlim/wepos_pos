@@ -28,7 +28,7 @@
     font-size: clamp(1rem, 0.9453rem + 0.3125vw, 1.25rem);
     text-align: center;
     color: #4E5D78;
-    border: none;
+    border: 1px solid transparent;
 }
 .header-btn:hover{
     box-sizing: border-box;
@@ -39,6 +39,9 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
+}
+.homebody .ant-select-single.ant-select-lg {
+    height: 40px !important;
 }
 
 @media (max-width: 425.9px) {
@@ -57,4 +60,4 @@
         width: 130px;
     }
 }
-    
+

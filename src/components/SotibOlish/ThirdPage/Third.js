@@ -7,7 +7,6 @@ import users, {savdooynasi} from "../../../reducer/users";
 import functionreducer, {active, activSavdo} from "../../../reducer/functionreducer";
 import {useTranslation} from "react-i18next";
 import arrowDown from '../../../img/direction-down 01.svg'
-import Home from "../../../dashboard/jsx/components/Dashboard/Home";
 import 'swiper/css';
 import infoReducer,
 {getInfoBalanceByBranch, getInfoBalanceByBusiness, getInfoByBranch, getInfoByBusiness, getInfo}
@@ -131,9 +130,6 @@ function Third({
         {title: t('mainPage.setSumToSupplier'), sum: toSupplier, percent: toSupplierPercent, img: dillerbersum},
         {title: t('mainPage.outlay'), sum: outlay, percent: outlayPercent, img: xarajat},
     ]
-
-
-    console.log(cards)
 
     function Dates(name) {
         setCurrentDay(name)

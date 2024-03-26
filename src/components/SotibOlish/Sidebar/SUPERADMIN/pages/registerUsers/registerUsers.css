@@ -1,0 +1,21 @@
+.table_button{
+    height: 34px;
+    min-width: 34px;
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-color: transparent;
+}
+
+.edit_buttonTable, .edit_buttonTable:hover {
+    background: #EEF2FC !important;
+    color: #0077FF !important;
+}
+
+.ant-btn img{
+    padding: 0 !important;
+}

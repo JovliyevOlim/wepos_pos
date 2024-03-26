@@ -7,6 +7,7 @@ const PackageSubscription = lazy(() => import('./pages/package-subscription/Pack
 const Packages = lazy(() => import('./pages/packages/Packages'))
 const AddBusiness = lazy(() => import('./pages/all-buseness/addBusiness/AddBusiness'))
 const PackageAdd = lazy(() => import('./pages/packages/PackageAdd/PackageAdd'))
+const UserRegister = lazy(() => import("./pages/registerUsers/RegisterUsers"))
 
 function SuperAdmin() {
 
@@ -16,6 +17,7 @@ function SuperAdmin() {
             <Link to='/main/superadmin/allbusenesses'> <button>All Busenesses</button></Link>
             <Link to='/main/superadmin/packagesubscription'> <button>Package Subscription</button></Link>
             <Link to='/main/superadmin/paskages'> <button>Paskages</button></Link>
+            <Link to='/main/superadmin/registerUser'> <button>Ro'yxatdan o'tganlar</button></Link>
         </div>
         <div className='mt-2'>
             <Switch>
@@ -26,6 +28,7 @@ function SuperAdmin() {
                 <Route path={'/main/superadmin/paskages/addpackage/:id'} component={PackageAdd}/>
                 <Route path={'/main/superadmin/paskages/addpackage'} component={PackageAdd}/>
                 <Route path={'/main/superadmin/paskages'} component={Packages}/>
+                <Route path={'/main/superadmin/registerUser'} component={UserRegister}/>
                 <Route path={'/main/superadmin'} component={SuperAdminPages}/>
             </Switch>
         </div>

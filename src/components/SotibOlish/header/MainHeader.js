@@ -1,5 +1,5 @@
 import './mainHeader.css'
-import React, {useState, useEffect} from "react";
+import {useState, useEffect} from "react";
 import {connect} from "react-redux";
 import {active} from "../../../reducer/functionreducer";
 import users, {logOutUser} from "../../../reducer/users";
@@ -16,7 +16,6 @@ import notificationReducer, {
 } from "../../../reducer/notificationReducer";
 import {MdOutlineFiberNew} from "react-icons/md"
 import {BsCheckAll} from 'react-icons/bs'
-import ModalLoading from "../../ModalLoading";
 import moment from "moment";
 import 'moment/locale/uz-latn'
 import avatar from "../../../img/defaul-user-profile.svg"
@@ -24,13 +23,10 @@ import notificationActive from '../../../img/notification-active.svg'
 import notification from '../../../img/notification.svg'
 import uzLanguage from '../../../img/uz.svg'
 import rusLanguage from '../../../img/ru.svg'
-import arrowDown from "../../../img/direction-down 01.svg";
-import fullScreen from "../../../img/pixel grid-rectangle.svg"
 import Icon, {DeleteOutlined} from "@ant-design/icons";
 import {BurgerIcon, EditIcon, LogOutIcon, PersonIcon} from "../../Components/svg";
-import {changeLanguage} from "i18next";
-import {formatDayDashboard} from "../../../util";
-import {Button} from "antd";
+import {Button, Select} from "antd";
+import useWindowWidth from "../../Components/useWindowWidth";
 
 function MainHeader({
                         deleteNotification,
@@ -41,12 +37,16 @@ function MainHeader({
                         getNotification,
                         isReadNotification,
                         deleteAllNotification,
-                        setCollapsed,
-                        changeScreenFull
+                        setCollapsed
                     }) {
+    const widthWidth = useWindowWidth()
+    const {t, i18n} = useTranslation()
     const location = useLocation()
     const history = useHistory()
     const appLang =  localStorage.getItem("miroLang") || "uz"
+    const [lang, setLang] = useState(appLang)
+    const [activeN, setactiveN] = useState(false)
+    const [exit, setExit] = useState(false)
 
     useEffect(() => {
         getNotification()
@@ -54,18 +54,6 @@ function MainHeader({
             getNotificationAll()
         }
     }, [notificationReducer.current, location.pathname])
-
-    const [activeN, setactiveN] = useState(false)
-    const [exit, setExit] = useState(false)
-    const [langShown, setlangShown] = useState(false)
-    const [selectedImg, setselectedImg] = useState( appLang === "ru" ? rusLanguage : uzLanguage)
-    const [selectedLang, setselectedLang] = useState(appLang === "ru" ? 'Русский' : appLang === "ki" ? 'Крилл' : 'Uzbek')
-    const [selectedLangShort, setselectedLangShort] = useState(appLang === "ru" ? 'Ру' : appLang === "ki" ? 'Кр' : 'Uz')
-    const [languagesList, setLanguagesList] = useState([
-        {id: 'uz', nameShort: 'Uz', name: 'Uzbek', img: uzLanguage, active: appLang === 'uz'},
-        {id: 'ki', nameShort: 'Кр', name: 'Крилл', img: uzLanguage, active: appLang === 'ki'},
-        {id: 'ru', nameShort: 'Ру', name: 'Русский', img: rusLanguage, active: appLang === 'ru'},
-    ])
 
     function out() {
         setExit(!exit)
@@ -75,53 +63,21 @@ function MainHeader({
         setactiveN(!activeN)
     }
 
-
-    const {t, i18n} = useTranslation()
-
-
-    // window.addEventListener('mouseleave',()=>{
-    //     setlangShown(false)
-    //     setExit(false)
-    // })
-
-    function ChangeLanguage(list) {
-        languagesList.map((item, val) => {
-            if (list.id === item.id) {
-                setselectedImg(item.img)
-                setselectedLang(item.name)
-                setselectedLangShort(item.nameShort)
-                i18n.changeLanguage(item.id)
-                localStorage.setItem("i18nextLng", item.id)
-                localStorage.setItem("miroLang", item.id)
-                item.active = true
-            } else {
-                item.active = false
-            }
-        })
-        setLanguagesList(languagesList)
-        setlangShown(false)
-    }
+  function ChangeLanguage(e) {
+    setLang(e)
+    localStorage.setItem("appLang", e)
+    i18n.changeLanguage(e)
+  }
 
 
     function isRead(id) {
         isReadNotification(id)
     }
 
-
-    useEffect(() => {
-      const storageLanguage = localStorage.getItem("miroLang")
-        i18n.changeLanguage(storageLanguage)
-    }, [])
-
-
     function openNotification() {
         setactiveN(true)
         getNotificationAll()
     }
-
-
-
-
 
     function logOut() {
         localStorage.removeItem("user");
@@ -129,14 +85,8 @@ function MainHeader({
         sessionStorage.removeItem("user");
         sessionStorage.removeItem("tokenname");
         logOutUser()
-        // window.location.reload();
-        // history.push('/login')
         out()
     }
-
-
-    const [saveModal, setSaveModal] = useState(false)
-
 
     return (
         <div className={'main-header'}>
@@ -151,13 +101,13 @@ function MainHeader({
                           justifyContent: 'center',
                           alignItems: 'center',
                           padding: '10px',
-                          width: 22,
-                          height: 22,
                       }}
                     />
                 </div>
-              <button onClick={() => history.push('/shopping')} style={{fontFamily:'sans-serif'}} className="savdoOynasiBtn">
-                <span>{t("sidebar.shopWindow")}</span>
+              <button title={t("sidebar.shopWindow")} onClick={() => history.push('/shopping')} className="savdoOynasiBtn">
+                {
+                  widthWidth >= 768 ? <span>{t("sidebar.shopWindow")}</span> : null
+                }
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
                   <path d="M7 18.5C7 17.3954 7.89543 16.5 9 16.5C10.1046 16.5 11 17.3954 11 18.5V22.5H7V18.5Z"
                         stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
@@ -171,48 +121,52 @@ function MainHeader({
                         stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
                 </svg>
               </button>
-              {/*<div className={'main-header-body'}>*/}
-              {/*    <h4 className={'main-header-text'}>Asosiy</h4>*/}
-              {/*    <p className={'main-header-this-day'}>Bugun {formatDayDashboard()}</p>*/}
-              {/*</div>*/}
             </div>
           <div className={'main-header-right'}>
             <div>
-              <div className="drop-down">
-                <div className={'wrapper-con'} onClick={() => setlangShown(prevState => !prevState)}>
-                  <div className="wrapper">
-                    <img className={'lang-logo'} src={selectedImg} alt="country"/>
-                    <div className={'selected-lang-text'}>{selectedLang}</div>
-                    <div className={'selected-langShort-text'}>{selectedLangShort}</div>
-                  </div>
-                  <img src={arrowDown} alt="arrow"/>
-                </div>
-                {
-                langShown && <div className="lang-list">
-                                {
-                                    languagesList.filter(item => item.active === false).map((lang) =>
-                                        <div className={'lang-list-items'}>
-                                            <div className="lang-list-item" onClick={() => ChangeLanguage(lang)}>
-                                                <img className={'lang-logo'} src={lang.img} alt="rus"/>
-                                                <div className={'selected-lang-text'}>{lang.name}</div>
-                                                <div className={'selected-langShort-text'}>{lang.nameShort}</div>
-                                            </div>
-                                        </div>
-                                    )
-                                }
+              <Select
+                style={{width: widthWidth >= 768 ? 150 : 70}}
+                size={"large"}
+                onChange={ChangeLanguage}
+                value={lang}
+                options={[
+                  {
+                    value: 'uz',
+                    label: <div className="d-flex align-items-center gap-2">
+                      {
+                        widthWidth >= 768 ?  <>
+                          <img src={uzLanguage} alt="uz"/>
+                          <span>O'zbekcha</span>
+                        </> : <span>O'z</span>
+                      }
+                    </div>,
+                  },
+                  {
+                    value: 'ki',
+                    label: <div className="d-flex align-items-center gap-2">
+                      {
+                        widthWidth >= 768 ? <>
+                          <img src={uzLanguage} alt="kr"/>
+                          <span>Ўзбекча</span>
+                        </> : <span>Ўз</span>
+                      }
 
-                            </div>
-                        }
-
-                    </div>
+                    </div>,
+                  },
+                  {
+                    value: 'ru',
+                    label: <div className="d-flex align-items-center gap-2">
+                      {
+                        widthWidth >= 768 ? <>
+                          <img src={rusLanguage} alt="ru"/>
+                          <span>Русский</span>
+                        </> : <span>Ру</span>
+                      }
+                    </div>,
+                  },
+                ]}
+              />
                 </div>
-                {/*<div>*/}
-                {/*    <div className={'main-notification-img'} onClick={changeScreenFull}>*/}
-                {/*        <img className={'img-fluid'}*/}
-                {/*             src={fullScreen}*/}
-                {/*             alt="notification"/>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
                 <div>
                     <div className={'main-notification-img'} onClick={openNotification}>
                         <img className={'img-fluid'}
@@ -227,7 +181,7 @@ function MainHeader({
                              alt="avatar"/>
                     </div>
                     <div className={'main-header-text'}>
-                        <h6 className={'main-header-text-fio'}>{users.users?.fio}</h6>
+                        <h6 className={'main-header-text-fio'}>{widthWidth >= 768 ? users.users?.fio : users.users?.fio?.split(" ")[0]}</h6>
                         <p className={'main-header-text-login'}>{users.users?.username}</p>
                     </div>
                 </div>
@@ -255,7 +209,7 @@ function MainHeader({
                                     <p className={'profile-items-text'}>Chiqish</p>
                                 </div>
                             </Link>
-                        </div> : ''
+                        </div> : null
                 }
             </div>
 
@@ -297,7 +251,6 @@ function MainHeader({
                     <button className={'btn btn-success'} onClick={toggle2}>Chiqish</button>
                 </ModalFooter>
             </Modal>
-            <ModalLoading isOpen={saveModal}/>
         </div>
     )
 }

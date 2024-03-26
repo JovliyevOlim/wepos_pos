@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import Icon from '@ant-design/icons';
 import './sidebar.css'
-import {Breadcrumb, Button, Layout, Menu, theme} from 'antd';
+import {Button, Layout, Menu} from 'antd';
 import {Route, Switch, useHistory} from "react-router-dom";
 import ProtectedRoute from "./ThirdPage/ProtectedRoute";
 import Profil from "./header/Profil";
@@ -26,24 +26,19 @@ import {
 } from "../Components/svg";
 import MainHeader from "./header/MainHeader";
 import {useTranslation} from "react-i18next";
+import useWindowWidth from "../Components/useWindowWidth";
 const {Header, Content, Footer, Sider} = Layout;
 
 
 const Sidebar = ({users}) => {
-
+    const widthWidth = useWindowWidth()
     const history = useHistory()
     const {t} = useTranslation()
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(widthWidth <= 1024);
     const rootSubmenuKeys = ['/main/dashboard', '/main/superadmin', '/main/balance', 'user', 'customers', 'products', 'purchase', 'trades', 'outlay', 'reports', 'setting'];
     const [openKeys, setOpenKeys] = useState(['/main/dashboard']);
-    // const [goFull,setGoFull] = useState(false)
 
-
-    // const screenWidth = window.innerWidth
-
-        // const screenWidthTrue = screenWidth < 768
     const onOpenChange = (keys) => {
-        console.log(keys)
         const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
         if (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
             setOpenKeys(keys);
@@ -51,18 +46,7 @@ const Sidebar = ({users}) => {
             setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
         }
     };
-    function changeFullScreen(){
-        let e = document.getElementById("fullscreen")
-        if(e.screenfull.isEnabled){
 
-        }
-    }
-
-    const [screenWidthTrue,setScreenWidthTrue] = useState(false)
-    window.addEventListener("resize", function () {
-        const screenWidth = window.innerWidth
-        setScreenWidthTrue(screenWidth < 768)
-    });
     const items = [
         {
             label: t("sidebar.superadmin"),
@@ -229,9 +213,14 @@ const Sidebar = ({users}) => {
             }}
             id="fullscreen"
         >
-            <Sider trigger={null} className={`sidebar-scroll ${screenWidthTrue && (collapsed ? 'd-none' : '')}`}
-                   collapsible
-                   width={screenWidthTrue ? (collapsed ? 0 : '100%') : (collapsed ? 80 : 250)} collapsed={collapsed}>
+            <Sider
+              trigger={null}
+              className={`sidebar-scroll ${widthWidth < 1024 && (collapsed ? 'd-none' : '')}`}
+              collapsible
+              collapsedWidth={widthWidth >= 1024 ? 100 : 0}
+              width={widthWidth <= 1024 ? (collapsed ? 0 : '100%') : (collapsed ? 80 : 250)}
+              collapsed={collapsed}
+            >
                 <div className="demo-logo-vertical">
                     {
                         !collapsed && <div className={'d-flex gap-1 align-items-center'}>
@@ -253,21 +242,26 @@ const Sidebar = ({users}) => {
                         }}
                     />
                 </div>
-                <Menu colorText={'#1AA6E1'} onOpenChange={onOpenChange}
-                      openKeys={openKeys} defaultSelectedKeys={['/main/dashboard']} onClick={(e) => {
+                <Menu
+                  colorText={'#1AA6E1'}
+                  onOpenChange={onOpenChange}
+                  openKeys={openKeys}
+                  defaultSelectedKeys={['/main/dashboard']}
+                  onClick={(e) => {
                     history.push(e.key)
-                    if (screenWidthTrue) {
+                    if (widthWidth < 1024) {
                         setCollapsed(!collapsed)
                     }
-                }}
-                      mode="inline" items={items}/>
+                  }}
+                  mode="inline"
+                  items={items}/>
             </Sider>
             <Layout style={{
-                marginLeft: screenWidthTrue ? (collapsed ? 0 : '100%') : (collapsed ? 80 : 250),
-                overflowX: 'hidden',
+                marginLeft: widthWidth <=1024 ? (collapsed ? 0 : '100%') : (collapsed ? 80 : 250),
+                overflowX: 'hidden'
             }}>
                 <Header className={'sidebar-header'}>
-                    <MainHeader changeScreenFull={changeFullScreen} setCollapsed={() => setCollapsed(!collapsed)}/>
+                    <MainHeader setCollapsed={() => setCollapsed(!collapsed)}/>
                 </Header>
                 <Content className={'content'}>
                     <Switch>

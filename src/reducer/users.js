@@ -106,9 +106,7 @@ export const slice = createSlice({
     },
     reducers: {
         saveusers: (state, action) => {
-            console.log(action.payload)
             if (action.payload.success) {
-                console.log(action)
                 state.authEnter = true
 
                 state.users = action.payload.object
@@ -141,7 +139,7 @@ export const slice = createSlice({
                 }
                 state.logout = false
                 state.roles = state.users.permissions
-                state.users.permissions.map(item => {
+                state.users.permissions?.map(item => {
                     switch (item) {
                         case "SUPER_ADMIN":
                             state.isSuperAdmin = true

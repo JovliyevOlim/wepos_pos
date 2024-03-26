@@ -60,7 +60,7 @@ function Home({saveusers, users, changeerror, rememberMe}) {
         }).then(function (res) {
             saveusers(res?.data)
         }).catch(function (err) {
-            console.log(err)
+            console.err(err)
             saveusers({...err?.response?.data})
         })
     }
@@ -69,7 +69,6 @@ function Home({saveusers, users, changeerror, rememberMe}) {
     useEffect(() => {
         let user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user'))
         let tokenname = localStorage.getItem('tokenname') || sessionStorage.getItem('tokenname')
-        console.log(user, tokenname)
         if (user && tokenname) {
             saveusers({
                 object: user,

@@ -13,6 +13,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    height: 40px;
 }
 
 .main-header{
@@ -52,7 +53,8 @@
     align-items: center;
     column-gap: 32px;
 }
-.main-header-text{
+.main-header .ant-select-single.ant-select-lg {
+    height: 40px !important;
 }
 .main-header-text-login{
     margin:0;
@@ -131,7 +133,6 @@
     flex-direction: column;
     justify-content: center;
     gap:5px;
-    /*align-items: center;*/
 }
 .main-header-this-day{
     margin: 0;
@@ -165,57 +166,7 @@
     align-items: center;
     gap: 12px;
 }
-.lang-logo{
-    width:22px;
-    height:22px
-}
-.selected-lang-text{
-    color: #4E5D78;
-    font-family: 'Inter',sans-serif;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-}
-.selected-langShort-text{
-    color: #4E5D78;
-    font-family: 'Inter',sans-serif;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-}
-.lang-list{
-    background-color: #FFFFFF;
-    position: absolute;
-    top: 100%;
-    left:0;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.322);
-    cursor:pointer;
-    max-height: 250px;
-    z-index: 10;
-    width: 100%;
-    transition: all 0.3s ease;
-}
-.lang-list-items{
-    display:flex;
-    align-items: center;
-    padding:3px;
-    gap:12px;
-}
-.lang-list-item{
-    display:flex;
-    align-items: center;
-    padding: 6px 15px;
-    gap:12px;
-    width: 100%;
-    border-radius: 8px;
-}
-.lang-list-item:hover{
-    background: #dcdcdc;
-}
-@media screen and (max-width: 329.9px) {
+@media screen and (max-width: 330px) {
     .savdoOynasiBtn{
         font-size: 14px;
         border-radius: 10px;
@@ -230,22 +181,6 @@
     }
     .main-header-left .main-header-body{
         display: none;
-    }
-    .drop-down {
-        padding: 3px 9px;
-        height: 30px;
-        width: max-content;
-    }
-    .selected-lang-text{
-        display: none;
-    }
-    .lang-list{}
-    .lang-list-items{
-        padding:0;
-        width: max-content;
-    }
-    .lang-list-item{
-        padding: 1px 9px;
     }
     .main-header-icon svg{
         width: 20px;
@@ -278,7 +213,7 @@
         margin: 12px 8px;
     }
 }
-@media (min-width: 330px) and (max-width: 425.9px) {
+@media (min-width: 330px) and (max-width: 426px) {
     .main-header{
         align-items: center;
     }
@@ -290,35 +225,13 @@
     }
     .main-header-left{
         display:flex;
+        gap: 10px;
     }
     .main-header-left .main-header-body{
         display: none;
     }
-    .drop-down {
-        padding: 5px 10px;
-        height: 35px;
-        width: 110px;
-    }
-    .selected-langShort-text{
-        display: none;
-    }
     .wrapper{
         gap: 8px;
-    }
-    .lang-logo{
-        width: 20px;
-        height: 20px;
-    }
-    .selected-lang-text{
-        font-size: 12px;
-        }
-    .lang-list{}
-    .lang-list-items{
-        padding:0;
-        width: max-content;
-    }
-    .lang-list-item{
-        padding: 3px 10px;
     }
     .main-header-icon svg{
         width: 30px;
@@ -345,7 +258,7 @@
         line-height: 5px;
     }
 }
-@media (min-width: 426px) and (max-width: 767.9px) {
+@media (min-width: 426px) and (max-width: 768px) {
     .main-header{
         align-items: center;
     }
@@ -361,21 +274,6 @@
     }
     .main-header-left .main-header-body{
         display: none;
-    }
-    .drop-down {
-        padding: 8px 12px;
-        height: 40px;
-        width: 150px;
-    }
-    .selected-langShort-text{
-        display: none;
-    }
-    .lang-list-items{
-        padding:0;
-        width: max-content;
-    }
-    .lang-list-item{
-        padding: 3px 10px;
     }
     .main-header-icon svg{
         width: 30px;
@@ -403,14 +301,24 @@
     }
 }
 
-@media (min-width: 768px) and (max-width:1023.9px){
+@media (min-width: 768px) and (max-width:1024px){
     .main-header-icon{
-        display:none;
+        width: 30px;
+        height: 30px;
+        display: flex;
+    }
+    .main-header-icon svg{
+        width: 30px;
+        height: 30px;
     }
     .savdoOynasiBtn{
         font-size: 16px;
         border-radius: 10px;
         gap: 6px;
+    }
+    .main-header-left{
+        display: flex;
+        gap: 10px;
     }
     .main-header-left .main-header-body{
         display: none;
@@ -419,7 +327,7 @@
         display: none;
     }
 }
-@media (min-width: 1024px) and (max-width:1219.9px){
+@media (min-width: 1024px) and (max-width:1220px){
     .main-header-icon{
         display:none;
     }
@@ -444,5 +352,4 @@
     .selected-langShort-text{
         display: none;
     }
-
 }
