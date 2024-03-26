@@ -16,7 +16,7 @@ import tariffReducer, {getTariffChoose} from "../../../../../../reducer/tariffRe
 import formatDate, {camelize} from "../../../../../../util";
 import {TablePagination} from "@mui/material";
 import AgreeModal from "../../../../../AgreeModal";
-import PayReducer,{getPay} from "../../../../../../reducer/PayReducer";
+import PayReducer, {getPay} from "../../../../../../reducer/PayReducer";
 import {toast} from "react-toastify";
 
 function PackageSubscripton({
@@ -29,6 +29,7 @@ function PackageSubscripton({
                                 paymentToBusiness,
                                 getPay,
                                 PayReducer,
+                                users
                             }) {
 
     const [active, setActive] = useState(false)
@@ -39,22 +40,23 @@ function PackageSubscripton({
     const [businessId, setBusinessId] = useState('')
     const [businessName, setBusinessName] = useState('')
     const [tariff, setTariff] = useState('')
-    const [agree,setAgree] = useState(false)
-    const [paymentActive,setPaymentActive] = useState(false)
-    const [paymentId,setPaymentId] = useState(false)
-    const [sum,setSum] = useState(0)
+    const [agree, setAgree] = useState(false)
+    const [paymentActive, setPaymentActive] = useState(false)
+    const [paymentId, setPaymentId] = useState(false)
+    const [sum, setSum] = useState(0)
 
 
-    function changeBusinessTariff(id, name,tariffId) {
+    function changeBusinessTariff(id, name, tariffId) {
         setBusinessName(name)
         setBusinessId(id)
         setTariff(tariffId)
         setActive(true)
     }
+
     function changePaymentToBusiness(id) {
         setBusinessId(id)
         setPaymentActive(true)
-        getPay()
+        getPay(users?.businessId)
     }
 
     function paymentToggle() {
@@ -64,13 +66,12 @@ function PackageSubscripton({
         setSum(0)
     }
 
-    function handlePaymentToBusiness(){
-        if (paymentId && sum){
+    function handlePaymentToBusiness() {
+        if (paymentId && sum) {
             paymentToBusiness({
-                sum,paymentMethodId:paymentId,id:businessId
+                sum, paymentMethodId: paymentId, id: businessId
             })
-        }
-        else{
+        } else {
             toast.warning("Ma'lumotlarni kiriting")
         }
     }
@@ -129,7 +130,6 @@ function PackageSubscripton({
     }
 
 
-
     useEffect(() => {
         if (subscripreducer.saveSubsBoolean) {
             setActive(false)
@@ -152,7 +152,7 @@ function PackageSubscripton({
                 subscripreducer.subscrip?.subscriptionList?.length > 0 ?
                     <>
                         <div className="izlashPageS">
-                                <button><img src={Excel} alt=""/> Export Excel</button>
+                            <button><img src={Excel} alt=""/> Export Excel</button>
                             <div className="izlashBox2">
                                 <input type="text" placeholder='Izlash...'/>
                             </div>
@@ -192,7 +192,7 @@ function PackageSubscripton({
                                                 <img src={Edit} className={'mx-1'}/>STATUS
                                             </button>
                                             <button
-                                                onClick={() => changeBusinessTariff(item.businessId, item.businessName,item.tariffId)}
+                                                onClick={() => changeBusinessTariff(item.businessId, item.businessName, item.tariffId)}
                                                 className={'bluebtn'}>
                                                 <img src={Edit} className={'mx-1'}/>Tariffni o'zgartirish
                                             </button>
@@ -238,7 +238,8 @@ function PackageSubscripton({
                             <select value={tariff} onChange={(e) => setTariff(e.target.value)} className='form-control'>
                                 {
                                     tariffReducer.tariffchoose.map((item, index) => <option
-                                        value={item.id} disabled={item.id === tariff}>{item.name} ({item.price} so'm ) </option>)
+                                        value={item.id} disabled={item.id === tariff}>{item.name} ({item.price} so'm
+                                        ) </option>)
                                 }
                             </select>
                         </div>
@@ -246,7 +247,7 @@ function PackageSubscripton({
                 </ModalBody>
                 <ModalFooter>
                     <button onClick={toggle} className={'btn btn-danger'}>Chiqish</button>
-                    <button onClick={()=>setAgree(true)} className={'btn btn-success'}>Saqlash</button>
+                    <button onClick={() => setAgree(true)} className={'btn btn-success'}>Saqlash</button>
                 </ModalFooter>
             </Modal>
             <Modal isOpen={changeStatusTariffActive} toggle={toggleEdit}>
@@ -270,7 +271,7 @@ function PackageSubscripton({
 
                 </ModalFooter>
             </Modal>
-            <Modal isOpen={paymentActive} toggle={()=>setPaymentActive(prevState => !prevState)}>
+            <Modal isOpen={paymentActive} toggle={() => setPaymentActive(prevState => !prevState)}>
                 <ModalHeader>
                     <h3>Balansni to'ldirish</h3>
                 </ModalHeader>
@@ -280,12 +281,12 @@ function PackageSubscripton({
                             onChange={(e) => setPaymentId(e.target.value)}>
                         <option value="">Tanlang</option>
                         {
-                            PayReducer?.paymethod?.map(item=>
+                            PayReducer?.paymethod?.map(item =>
                                 <option value={item.id}>{camelize(item.name)}</option>)
                         }
                     </select>
                     <label htmlFor="" className={'mt-2'}>Summani kiriting</label>
-                    <input type="text" className={'form-control'} value={sum} onChange={(e)=>setSum(e.target.value)}/>
+                    <input type="text" className={'form-control'} value={sum} onChange={(e) => setSum(e.target.value)}/>
                 </ModalBody>
                 <ModalFooter>
                     <button onClick={paymentToggle} className={'btn btn-danger'}>Chiqish</button>
@@ -294,12 +295,13 @@ function PackageSubscripton({
                 </ModalFooter>
             </Modal>
 
-            <AgreeModal deleteFunc={save} deleteModaltoggle={()=>setAgree(prevState => !prevState)} deletemodal={agree}/>
+            <AgreeModal deleteFunc={save} deleteModaltoggle={() => setAgree(prevState => !prevState)}
+                        deletemodal={agree}/>
         </div>
     )
 }
 
-export default connect((tariffReducer, users, subscripreducer,PayReducer), {
+export default connect((tariffReducer, users, subscripreducer, PayReducer), {
     getTariffChoose,
     getAllSubscrip,
     saveSubscrip,

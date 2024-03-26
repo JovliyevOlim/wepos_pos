@@ -245,7 +245,7 @@ function Taminotchilar({
 
     useEffect(() => {
         setLoading(false)
-        getPay()
+        getPay(users.businessId)
     }, [])
 
 

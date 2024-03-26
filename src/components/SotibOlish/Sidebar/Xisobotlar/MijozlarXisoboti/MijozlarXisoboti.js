@@ -132,7 +132,7 @@ function MijozlarXisoboti({
 
     useEffect(() => {
         setLoading(false)
-        getPay()
+        getPay(users.businessId)
     }, [])
 
 

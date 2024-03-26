@@ -365,18 +365,17 @@ function SavdoOynasi({
     }
 
     useEffect(() => {
-        const searchPro =  setTimeout(()=>{
-            if (search){
+        const searchPro = setTimeout(() => {
+            if (search) {
                 getBarcodeAndName({
                     branchId: mainBranchId ? mainBranchId : users.branchId,
                     name: search
                 })
-            }
-            else{
+            } else {
                 setIsSearchProduct([])
             }
 
-        },1000)
+        }, 1000)
 
         return () => clearTimeout(searchPro)
     }, [search])
@@ -384,7 +383,7 @@ function SavdoOynasi({
     useEffect(() => {
         if (MaxsulotlarRoyxariReducer?.productSearch && search) {
             setIsSearchProduct(MaxsulotlarRoyxariReducer.productSearch)
-            let findProduct = MaxsulotlarRoyxariReducer.productSearch.length  == 1
+            let findProduct = MaxsulotlarRoyxariReducer.productSearch.length == 1
             if (findProduct) pushesh(MaxsulotlarRoyxariReducer.productSearch[0])
         }
         if (MaxsulotlarRoyxariReducer.isClearInput) {
@@ -927,7 +926,7 @@ function SavdoOynasi({
     useEffect(() => {
         getBolim(users.businessId)
         getFirma(users.businessId)
-        getPay()
+        getPay(users.businessId)
         getOneBusiness(users.businessId)
     }, [])
     useEffect(() => {
@@ -1019,6 +1018,9 @@ function SavdoOynasi({
         }
     }
 
+
+
+
     return (
         <div>
             <div className={"shopping"}>
@@ -1049,7 +1051,7 @@ function SavdoOynasi({
 
                     </div>
                     <div className="shopping-header-item">
-                        <div >
+                        <div>
                             <SelectAnt disabled={tradeIdForEdit ? true : IsGross}
                                        selectList={[{id: 'DONA', name: 'Dona'}, {id: 'OPTOM', name: 'Optom'}]}
                                        value={grossPriceTypeString}
@@ -1357,7 +1359,7 @@ function SavdoOynasi({
                             }
 
                         </div>
-                        <div className={'d-flex justify-content-between flex-wrap  align-items-center w-100'}>
+                        <div className={'d-flex justify-content-between flex-wrap   align-items-center w-100'}>
                             {
                                 PayReducer.paymethod &&
                                 PayReducer.paymethod.map(item =>
@@ -2116,147 +2118,150 @@ function SavdoOynasi({
                 </Modal>
                 <ModalLoading isOpen={saveModal}/>
             </div>
-
-            <div ref={componentRef} className={'p-2 w-100'}>
-                <div className={'d-flex justify-content-center align-items-center'}>
+            <div style={{display: 'none'}}>
+                <div ref={componentRef}>
+                    <div className={'d-flex justify-content-center align-items-center'}>
+                        {
+                            checkReducer.check ?
+                                checkReducer.check.photoId ?
+                                    <Imagecom id={checkReducer.check.photoId}/> : ''
+                                : ''
+                        }
+                    </div>
+                    <h2 className={'text-center'}>{
+                        checkReducer.check ?
+                            checkReducer.check.name : ''
+                    }
+                    </h2>
                     {
                         checkReducer.check ?
-                            checkReducer.check.photoId ?
-                                <Imagecom id={checkReducer.check.photoId}/> : ''
+                            <div dangerouslySetInnerHTML={{__html: checkReducer.check.description}}>
+                            </div>
+                            : ''
+                    }
+                    <br/>
+                    <div className={'d-flex justify-content-between align-items-center'}>
+                        <div style={{fontSize: 12, fontWeight: 600}}>
+                            {
+                                moment(thisDay).format("DD:MM:YYYY")
+                            }
+                        </div>
+                        <div style={{fontSize: 12, fontWeight: 600}}>
+                            {
+                                moment(new Date()).format("HH:mm:ss")
+                            }
+                        </div>
+                    </div>
+                    <div className={'d-flex justify-content-between align-items-center'}>
+                        <div style={{fontSize: 12, fontWeight: 600}}>
+                            {t('mah.41')}
+                        </div>
+                        <div style={{fontSize: 12, fontWeight: 600}}>
+                            {
+                                SavdoQoshishReducer.treadeId?.invoice
+                            }
+                        </div>
+                    </div>
+                    <div className={'d-flex align-items-center justify-content-between'}>
+                        <h1 style={{fontSize: 12, fontWeight: 600}}>{t('mah.42')} </h1>
+                        {
+                            CustomerReducer.customersTrade ?
+                                CustomerReducer.customersTrade.filter(val => {
+                                    if (val.id === customer) {
+                                        return val
+                                    }
+                                })?.map(item => <h1 style={{fontSize: 12, fontWeight: 600}}
+                                                    key={item.id}> {item.name}</h1>) : ''
+                        }
+                    </div>
+                    <div style={{borderBottom: "1px dashed #000"}}></div>
+                    <div className={'mt-3 table-responsive'}>
+                        {
+                            traderArray.filter(itemDelete => itemDelete.delete === false).map((item, index) => <div
+                                key={item.id}>
+                                <h1 style={{fontSize: 12, fontWeight: 600}}>{index + 1}{".  "}{item.name}</h1>
+                                <div style={{marginLeft: 20, marginTop: -7}}
+                                     className={"d-flex align-items-center justify-content-between"}>
+                                    <h1 style={{
+                                        fontSize: 12,
+                                        fontWeight: 600,
+                                        lineHeight: 1
+                                    }}>
+                                        {item.quantity} {item.measurementName} * {item.price} {t('mah.39')}</h1>
+                                    <h1 style={{fontSize: 12, fontWeight: 600, lineHeight: 1}}>
+                                        = {parseFloat(item.totalSalePrice).toFixed(0)} {t('mah.39')}
+                                    </h1>
+                                </div>
+                            </div>)
+                        }
+                    </div>
+                    <div style={{borderBottom: "1px dashed #000", marginTop: 20}}></div>
+                    <div className={'d-flex'}>
+
+                        <div style={{width: "100%"}}>
+                            <div className={"d-flex justify-content-between"}>
+                                <h1 style={{fontSize: 14, fontWeight: 800}}>{t('mah.43')} </h1>
+                                <h1 style={{
+                                    fontSize: 14,
+                                    fontWeight: 800
+                                }}>{jamixisob} {t('mah.39')}</h1>
+                            </div>
+
+                            {
+                                payForm.map(item =>
+                                    <div className={"d-flex justify-content-between"}>
+                                        <h1 style={{
+                                            fontSize: 13,
+                                            fontWeight: 600
+                                        }}>{camelize(item.paymentMethodName)}:</h1>
+                                        <h1 style={{
+                                            fontSize: 13,
+                                            fontWeight: 600
+                                        }}>{item.sum} {t('mah.39')}</h1>
+                                    </div>
+                                )
+                            }
+                            <div className={"d-flex justify-content-between"}>
+                                <h1 style={{fontSize: 13, fontWeight: 600}}>{t('mah.44')}</h1>
+                                <h1 style={{
+                                    fontSize: 13,
+                                    fontWeight: 600
+                                }}>
+                                    {jamixisob - tradeDebt} {t('mah.39')}</h1>
+                            </div>
+                            {
+                                customer ?
+                                    <div className={"d-flex justify-content-between"}>
+                                        <h1 style={{fontSize: 14}}>{t('mah.45')} </h1>
+                                        <h1 style={{
+                                            fontSize: 14,
+                                        }}>{tradeDebt} {t('mah.39')}</h1>
+                                    </div> : ''
+                            }
+                            {
+                                customer ?
+                                    <div className={"d-flex justify-content-between"}>
+                                        <h1 style={{fontSize: 14, fontWeight: 800}}>{t('mah.46')} </h1>
+                                        <h1 style={{
+                                            fontSize: 14,
+                                            fontWeight: 800
+                                        }}>{SavdoQoshishReducer.treadeId?.customerDebt} {t('mah.39')}</h1>
+                                    </div> : ''
+                            }
+
+                        </div>
+                    </div>
+                    <div style={{borderBottom: "1px dashed #000"}}></div>
+                    {
+                        checkReducer.check ?
+                            <div dangerouslySetInnerHTML={{__html: checkReducer.check.footer}}>
+                            </div>
                             : ''
                     }
                 </div>
-                <h2 className={'text-center'}>{
-                    checkReducer.check ?
-                        checkReducer.check.name : ''
-                }
-                </h2>
-                {
-                    checkReducer.check ?
-                        <div dangerouslySetInnerHTML={{__html: checkReducer.check.description}}>
-                        </div>
-                        : ''
-                }
-                <br/>
-                <div className={'d-flex justify-content-between align-items-center'}>
-                    <div style={{fontSize: 12, fontWeight: 600}}>
-                        {
-                            moment(thisDay).format("DD:MM:YYYY")
-                        }
-                    </div>
-                    <div style={{fontSize: 12, fontWeight: 600}}>
-                        {
-                            moment(new Date()).format("HH:mm:ss")
-                        }
-                    </div>
-                </div>
-                <div className={'d-flex justify-content-between align-items-center'}>
-                    <div style={{fontSize: 12, fontWeight: 600}}>
-                        {t('mah.41')}
-                    </div>
-                    <div style={{fontSize: 12, fontWeight: 600}}>
-                        {
-                            SavdoQoshishReducer.treadeId?.invoice
-                        }
-                    </div>
-                </div>
-                <div className={'d-flex align-items-center justify-content-between'}>
-                    <h1 style={{fontSize: 12, fontWeight: 600}}>{t('mah.42')} </h1>
-                    {
-                        CustomerReducer.customersTrade ?
-                            CustomerReducer.customersTrade.filter(val => {
-                                if (val.id === customer) {
-                                    return val
-                                }
-                            })?.map(item => <h1 style={{fontSize: 12, fontWeight: 600}}
-                                                key={item.id}> {item.name}</h1>) : ''
-                    }
-                </div>
-                <div style={{borderBottom: "1px dashed #000"}}></div>
-                <div className={'mt-3 table-responsive'}>
-                    {
-                        traderArray.filter(itemDelete => itemDelete.delete === false).map((item, index) => <div
-                            key={item.id}>
-                            <h1 style={{fontSize: 12, fontWeight: 600}}>{index + 1}{".  "}{item.name}</h1>
-                            <div style={{marginLeft: 20, marginTop: -7}}
-                                 className={"d-flex align-items-center justify-content-between"}>
-                                <h1 style={{
-                                    fontSize: 12,
-                                    fontWeight: 600,
-                                    lineHeight: 1
-                                }}>
-                                    {item.quantity} {item.measurementName} * {item.price} {t('mah.39')}</h1>
-                                <h1 style={{fontSize: 12, fontWeight: 600, lineHeight: 1}}>
-                                    = {parseFloat(item.totalSalePrice).toFixed(0)} {t('mah.39')}
-                                </h1>
-                            </div>
-                        </div>)
-                    }
-                </div>
-                <div style={{borderBottom: "1px dashed #000", marginTop: 20}}></div>
-                <div className={'d-flex'}>
 
-                    <div style={{width: "100%"}}>
-                        <div className={"d-flex justify-content-between"}>
-                            <h1 style={{fontSize: 14, fontWeight: 800}}>{t('mah.43')} </h1>
-                            <h1 style={{
-                                fontSize: 14,
-                                fontWeight: 800
-                            }}>{jamixisob} {t('mah.39')}</h1>
-                        </div>
-
-                        {
-                            payForm.map(item =>
-                                <div className={"d-flex justify-content-between"}>
-                                    <h1 style={{
-                                        fontSize: 13,
-                                        fontWeight: 600
-                                    }}>{camelize(item.paymentMethodName)}:</h1>
-                                    <h1 style={{
-                                        fontSize: 13,
-                                        fontWeight: 600
-                                    }}>{item.sum} {t('mah.39')}</h1>
-                                </div>
-                            )
-                        }
-                        <div className={"d-flex justify-content-between"}>
-                            <h1 style={{fontSize: 13, fontWeight: 600}}>{t('mah.44')}</h1>
-                            <h1 style={{
-                                fontSize: 13,
-                                fontWeight: 600
-                            }}>
-                                {jamixisob - tradeDebt} {t('mah.39')}</h1>
-                        </div>
-                        {
-                            customer ?
-                                <div className={"d-flex justify-content-between"}>
-                                    <h1 style={{fontSize: 14}}>{t('mah.45')} </h1>
-                                    <h1 style={{
-                                        fontSize: 14,
-                                    }}>{tradeDebt} {t('mah.39')}</h1>
-                                </div> : ''
-                        }
-                        {
-                            customer ?
-                                <div className={"d-flex justify-content-between"}>
-                                    <h1 style={{fontSize: 14, fontWeight: 800}}>{t('mah.46')} </h1>
-                                    <h1 style={{
-                                        fontSize: 14,
-                                        fontWeight: 800
-                                    }}>{SavdoQoshishReducer.treadeId?.customerDebt} {t('mah.39')}</h1>
-                                </div> : ''
-                        }
-
-                    </div>
-                </div>
-                <div style={{borderBottom: "1px dashed #000"}}></div>
-                {
-                    checkReducer.check ?
-                        <div dangerouslySetInnerHTML={{__html: checkReducer.check.footer}}>
-                        </div>
-                        : ''
-                }
             </div>
+
         </div>
     )
 }

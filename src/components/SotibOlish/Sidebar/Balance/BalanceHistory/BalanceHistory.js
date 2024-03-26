@@ -149,7 +149,7 @@ function BalanceHistory({
     }, [balanceReducer.getBoolean])
 
     useEffect(() => {
-        getPay()
+        getPay(users.businessId)
         setLoading(false)
     }, [])
 

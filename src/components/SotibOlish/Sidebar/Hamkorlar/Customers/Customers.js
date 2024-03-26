@@ -164,7 +164,7 @@ function Customers({
 
 
     useEffect(() => {
-        getPay()
+        getPay(users.businessId)
     }, [])
 
 

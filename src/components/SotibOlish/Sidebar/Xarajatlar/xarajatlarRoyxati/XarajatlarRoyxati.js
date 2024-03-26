@@ -195,7 +195,7 @@ function XarajatlarRoyxati({
     useEffect(() => {
         setLoading(false)
         getXarajatlarTurlari(users.businessId)
-        getPay()
+        getPay(users.businessId)
     }, [])
 
     return (

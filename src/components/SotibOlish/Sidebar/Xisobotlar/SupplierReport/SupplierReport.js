@@ -134,7 +134,7 @@ function SupplierReport({
 
     useEffect(() => {
         setLoading(false)
-        getPay()
+        getPay(users.businessId)
         getAllSupplier(users.businessId)
     }, [])
 

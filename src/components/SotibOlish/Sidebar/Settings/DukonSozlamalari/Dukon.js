@@ -9,6 +9,7 @@ import {useTranslation} from "react-i18next";
 import ChangeTariff from "./changeTariff/ChangeTariff";
 import Bazalar from "../bazalar/Bazalar";
 import ShtrixCode from "./ShtrixCode/ShrtixCode";
+import PaymentMethod from "./PaymentMethods/PaymentMethod";
 
  function Dukon({users}) {
      const {t} = useTranslation()
@@ -45,7 +46,11 @@ import ShtrixCode from "./ShtrixCode/ShrtixCode";
                         users.getProduct ?
                             <Link to={'/main/shopSetting/6'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.settingBarcode')}</button></Link>
                             :''
-                    }
+                    } {
+                    users.getProduct ?
+                        <Link to={'/main/shopSetting/7'}><button className={'btn btn-outline-primary form-control mt-2'}>To'lov turlari</button></Link>
+                        :''
+                }
                 </div>
                 
                 <div className="blokSet">
@@ -68,6 +73,9 @@ import ShtrixCode from "./ShtrixCode/ShrtixCode";
                         }
                         {
                             users.getProduct && <Route path={'/main/shopSetting/6'} component={ShtrixCode}/>
+                        }
+                        {
+                            users.getProduct && <Route path={'/main/shopSetting/7'} component={PaymentMethod}/>
                         }
                     </Switch>
                 </div>
