@@ -221,7 +221,7 @@ function Taxrirlash({
             branches: input.bazalar,
             businessId: users.businessId,
             productManyDtoList: form,
-            many: changedtype === 'SINGLE' ? false : true
+            many: changedtype !== 'SINGLE'
         })
     }
 
@@ -232,7 +232,7 @@ function Taxrirlash({
             branches: input.bazalar,
             businessId: users.businessId,
             productManyDtoList: form,
-            many: changedtype === 'SINGLE' ? false : true,
+            many: changedtype !== 'SINGLE',
             id: match.params.id,
         })
     }
@@ -551,7 +551,7 @@ function Taxrirlash({
                 <h4 className={'text-center'}>{match.params.id ? (t('as.57')) : (t('as.58'))}</h4>
                 <div className="row p-md-3 ">
                     <div className="col-md-4 mt-2">
-                        <label htmlFor={'name'}>{t('ProductEdit.2')}</label>
+                        <label className="mb-1" htmlFor={'name'}>{t('ProductEdit.2')}</label>
                         <input type="text"
                                {...register('name', {required: {value: true, message:(t('as.59'))}})}
                                placeholder={t('as.60')}
@@ -564,7 +564,7 @@ function Taxrirlash({
                         }
                     </div>
                     <div className="col-md-4 mt-2">
-                        <label htmlFor="">{t('as.61')}</label>
+                        <label className="mb-1" htmlFor="">{t('as.61')}</label>
                         <select name="type" className={'form-control'} value={changedtype} onChange={changeType}>
                             <option value="SINGLE">{t('as.62')}</option>
                             <option value="MANY">{t('as.63')}</option>
@@ -582,7 +582,7 @@ function Taxrirlash({
 
                     }
                     <div className="col-md-4 mt-2">
-                        <label htmlFor="bazalar">{t('ProductList.8')}</label>
+                        <label className="mb-1" htmlFor="bazalar">{t('ProductList.8')}</label>
                         <Select options={users?.branchesValues}
                                 styles={{
                                     control: (style) => {
@@ -599,7 +599,7 @@ function Taxrirlash({
                         }
                     </div>
                     <div className="col-md-4 mt-2">
-                        <label htmlFor={'measurement'}>{t('ProductList.5')}</label>
+                        <label className="mb-1" htmlFor={'measurement'}>{t('ProductList.5')}</label>
                         <div className={'d-flex justify-content-between '}>
                             <select name="" id={'measurement'}
                                     {...register('measurementId', {required: true})}
@@ -618,7 +618,7 @@ function Taxrirlash({
                         </div>
                     </div>
                     <div className="col-md-4 mt-2">
-                        <label htmlFor={'firma'}>{t('ProductList.7')}</label>
+                        <label className="mb-1" htmlFor={'firma'}>{t('ProductList.7')}</label>
                         <div className={'d-flex justify-content-between'}>
                             <select name=""
                                     {...register('brandId', {required: false})}
@@ -638,7 +638,7 @@ function Taxrirlash({
                         </div>
                     </div>
                     <div className="col-md-4 mt-2">
-                        <label htmlFor={'bol'}>{t('ProductList.4')}</label>
+                        <label className="mb-1" htmlFor={'bol'}>{t('ProductList.4')}</label>
                         <div className={'d-flex select-group'}>
                             <select name="" className={'form-control'}
                                     {...register('categoryId', {
@@ -660,7 +660,7 @@ function Taxrirlash({
                         </div>
                     </div>
                     <div className="col-md-4 mt-2">
-                        <label htmlFor={'minQuantity'}>{t('ProductEdit.8')}</label>
+                        <label className="mb-1" htmlFor={'minQuantity'}>{t('ProductEdit.8')}</label>
                         <input type="number"
                                {...register('minQuantity', {
                                    required: {
@@ -681,7 +681,7 @@ function Taxrirlash({
                     {
                         changedtype === "SINGLE" &&
                         <div className="col-md-4 mt-2">
-                            <label htmlFor={'code'}>Kod</label>
+                            <label className="mb-1" htmlFor={'code'}>Kod</label>
                             <input type="number"
                                    {...register('code', )}
                                    placeholder={'Kod'}
@@ -696,7 +696,7 @@ function Taxrirlash({
                     <div className="col-md-6">
                         <div className={'col-md-12 col-sm-12'}>
                             <p className={"p-0 m-0"}>{t('ProductEdit.10')}</p>
-                            <label htmlFor={'productPicture'} style={{width: "100%"}}>
+                            <label className="mb-1" htmlFor={'productPicture'} style={{width: "100%"}}>
                                 <p className={'btn btn-outline-primary form-control'}>{t('ProductEdit.10')}</p>
                             </label>
                             <input type="file" className={'form-control d-none'} value={input.mahsulotrasmi}
@@ -711,101 +711,86 @@ function Taxrirlash({
                         </div>
                     </div>
                 </div>
-                <div className="row mt-5 p-3">
+                <div className="mt-5">
                     {
-                        console.log(errors)
+                        changedtype === 'SINGLE' ? <div className="row">
+                            <div className="col-12 col-md-6 col-xl-3 p-2">
+                                <label className="mb-1" htmlFor={'foy'}>{t('ProductEdit.17')}(%)</label>
+                                <input type="number" id={'foy'}
+                                       {...register("profitPercent", {
+                                           required: {value: true, message: (t('as.71'))},
+                                           onChange: (e) => {
+                                               setValue('salePrice', (parseFloat(e.target.value * getValues('buyPrice') / 100 + parseFloat(getValues('buyPrice')))).toFixed(2))
+                                           }
+                                       })}
+                                       placeholder={t('as.72')}
+                                       className='taxrirlashInputValudetion form-control'/>
+                                {
+                                  errors.profitPercent && !getValues('profitPercent') &&
+                                  <div>
+                                      <p
+                                        className={'text-danger text-center p-0 m-0'}>{errors.profitPercent.message}</p>
+                                  </div>}
+                            </div>
+                            <div className="col-12 col-md-6 col-xl-3 p-2">
+                                <label className="mb-1" htmlFor={'sotishNarxi'}>{t('ProductList.11')}</label>
+                                <input type="number" step="any" id='sotishNarxi'
+                                       {...register("buyPrice", {
+                                           required: {value: true, message: (t('as.73'))},
+                                           onChange: (e) => {
+                                               setValue('salePrice', (parseFloat(e.target.value * getValues('profitPercent') / 100 + parseFloat(e.target.value))).toFixed(2))
+                                           }
+                                       })}
+                                       placeholder={t('as.74')}
+                                       className='taxrirlashInputValudetion form-control'/>
+                                {
+                                  errors.buyPrice && !getValues('buyPrice') &&
+                                  <div>
+                                      <p className={'text-danger text-center p-0 m-0'}>{errors.buyPrice.message}</p>
+                                  </div>}
+                            </div>
+                            <div className="col-12 col-md-6 col-xl-3 p-2">
+                                <label className="mb-1" htmlFor={'sotibOlishNarxi'}>{t('ProductList.12')}</label>
+                                <input type="number" step="any" id='sotibOlishNarxi'
+                                       className={'form-control'}
+                                       {...register('salePrice', {
+                                           required: {value: true, message: (t('as.73'))},
+                                           onChange: (e) => {
+                                               setValue('profitPercent', Math.round(parseFloat(e.target.value / getValues('buyPrice') - 1) * 100))
+                                           }
+                                       })}
+                                       placeholder={t('as.75')}
+                                />
+                                {
+                                  errors.salePrice && !getValues('salePrice') &&
+                                  <div>
+                                      <p
+                                        className={'text-danger text-center p-0 m-0'}>{errors.salePrice.message}</p>
+                                  </div>}
+                            </div>
+                            <div className="col-12 col-md-6 col-xl-3 p-2">
+                                <label className="mb-1" htmlFor={'sotibOlishNarxi'}>{t('as.70')}</label>
+                                <input type="number" step="any" id='sotibOlishNarxi'
+                                       className={'form-control'}
+                                       {...register('grossPrice', {
+                                           required: {
+                                               value: true,
+                                               message: (t('as.73'))
+                                           }
+                                       })}
+
+                                       placeholder={t('as.76')}
+                                />
+                                {
+                                  errors.grossPrice &&
+                                  <div>
+                                      <p className={'text-danger text-center p-0 m-0'}>{errors.grossPrice.message}</p>
+                                  </div>}
+                            </div>
+                        </div> : null
                     }
-                    <div>
-                        {changedtype === 'SINGLE' ? <div className="table-responsive">
-                            <table className={'table'}>
-                                <thead>
-                                <tr>
-                                    <th>{t('ProductEdit.17')}(%)</th>
-                                    <th>{t('ProductList.11')}</th>
-                                    <th>{t('ProductList.12')}</th>
-                                    <th>{t('as.70')}</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="number" id={'foy'}
-                                               {...register("profitPercent", {
-                                                   required: {value: true, message: (t('as.71'))},
-                                                   onChange: (e) => {
-                                                       setValue('salePrice', (parseFloat(e.target.value * getValues('buyPrice') / 100 + parseFloat(getValues('buyPrice')))).toFixed(2))
-                                                   }
-                                               })}
-                                               placeholder={t('as.72')}
-                                               className='taxrirlashInputValudetion form-control'/>
-                                        {
-                                            errors.profitPercent && !getValues('profitPercent') &&
-                                            <div>
-                                                <p className={'text-danger text-center p-0 m-0'}>{errors.profitPercent.message}</p>
-                                            </div>}
-                                    </td>
-                                    <td>
-                                        <input type="number" step="any" id='sotishNarxi'
-                                               {...register("buyPrice", {
-                                                   required: {value: true, message: (t('as.73'))},
-                                                   onChange: (e) => {
-                                                       setValue('salePrice', (parseFloat(e.target.value * getValues('profitPercent') / 100 + parseFloat(e.target.value))).toFixed(2))
-                                                   }
-                                               })}
-                                               placeholder={t('as.74')}
-                                               className='taxrirlashInputValudetion form-control'/>
-                                        {
-                                            errors.buyPrice && !getValues('buyPrice') &&
-                                            <div>
-                                                <p className={'text-danger text-center p-0 m-0'}>{errors.buyPrice.message}</p>
-                                            </div>}
-
-                                    </td>
-                                    <td>
-                                        <input type="number" step="any" id='sotibOlishNarxi'
-                                               className={'form-control'}
-                                               {...register('salePrice', {
-                                                   required: {value: true, message: (t('as.73'))},
-                                                   onChange: (e) => {
-                                                       setValue('profitPercent', Math.round(parseFloat(e.target.value / getValues('buyPrice') - 1) * 100))
-                                                   }
-                                               })}
-                                               placeholder={t('as.75')}
-                                        />
-                                        {
-                                            errors.salePrice && !getValues('salePrice') &&
-                                            <div>
-                                                <p className={'text-danger text-center p-0 m-0'}>{errors.salePrice.message}</p>
-                                            </div>}
-                                    </td>
-                                    <td>
-                                        <input type="number" step="any" id='sotibOlishNarxi'
-                                               className={'form-control'}
-                                               {...register('grossPrice', {
-                                                   required: {
-                                                       value: true,
-                                                       message: (t('as.73'))
-                                                   }
-                                               })}
-
-                                               placeholder={t('as.76')}
-                                        />
-                                        {
-                                            errors.grossPrice &&
-                                            <div>
-                                                <p className={'text-danger text-center p-0 m-0'}>{errors.grossPrice.message}</p>
-                                            </div>}
-                                    </td>
-
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div> : ''}
-
-                    </div>
-
-                    {changedtype === 'MANY' ? <div>
-
+                    {
+                        changedtype === 'MANY' ? <div>
                         <div className={'d-flex align-items-center'}>
                             <h4>{t('as.77')} </h4>
                         </div>
@@ -899,7 +884,7 @@ function Taxrirlash({
                                                                    name={'profitPercent'}
                                                                    required
                                                                    value={val.profitPercent}
-                                                                   placeholder={t('as.87')} 
+                                                                   placeholder={t('as.87')}
                                                                    type="number"/>
 
                                                             {index === 0 ? <div>
@@ -987,13 +972,11 @@ function Taxrirlash({
                         </div>
 
 
-                    </div> : ''
-
+                    </div> : null
                     }
-                    <div className='d-flex justify-content-end'>
-                        <button className={'btn btn-success mt-4'} type={"submit"}>{t('Buttons.6')}</button>
+                    <div className='d-md-flex justify-content-md-end'>
+                        <button className={'btn btn-success mt-4 w-100'} type={"submit"}>{t('Buttons.6')}</button>
                     </div>
-
                 </div>
             </form>
             <Modal isOpen={activeMeasurement} toggle={toggleMeasurement}>

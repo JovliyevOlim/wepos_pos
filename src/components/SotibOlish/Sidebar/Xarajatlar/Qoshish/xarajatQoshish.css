@@ -4,23 +4,12 @@
     border-radius: 5px;
     border: 1px solid silver;
 }
-.bnoutlay{
-    background: transparent;
-    transition: 0.5s all ease-in-out;
-    font-size: 26px;
-    color: #000;
-}
-.bnoutlay:hover{
-    transform: scale(1.5) rotateY(360deg);
-}
 .contenerX{
-    
     border-radius: 8px;
-    padding: 20px 24px 20px 24px;
+    padding: 20px 24px;
     background-color: #FFFFFF;
     justify-content: center;
     margin: 20px;
-    
 }
 #qoshim::placeholder{
     color: red;

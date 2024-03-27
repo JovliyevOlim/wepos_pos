@@ -1,4 +1,3 @@
-import React from 'react';
 import './cardbody.css'
 function CardBody({children}) {
     return (

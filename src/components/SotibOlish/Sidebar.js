@@ -218,7 +218,7 @@ const Sidebar = ({users}) => {
               className={`sidebar-scroll ${widthWidth < 1024 && (collapsed ? 'd-none' : '')}`}
               collapsible
               collapsedWidth={widthWidth >= 1024 ? 100 : 0}
-              width={widthWidth <= 1024 ? (collapsed ? 0 : '100%') : (collapsed ? 80 : 250)}
+              width={widthWidth <= 1024 ? (collapsed ? 0 : '100%') : (collapsed ? 100 : 250)}
               collapsed={collapsed}
             >
                 <div className="demo-logo-vertical">
@@ -257,7 +257,7 @@ const Sidebar = ({users}) => {
                   items={items}/>
             </Sider>
             <Layout style={{
-                marginLeft: widthWidth <=1024 ? (collapsed ? 0 : '100%') : (collapsed ? 80 : 250),
+                marginLeft: widthWidth <=1024 ? (collapsed ? 0 : '100%') : (collapsed ? 100 : 250),
                 overflowX: 'hidden'
             }}>
                 <Header className={'sidebar-header'}>
