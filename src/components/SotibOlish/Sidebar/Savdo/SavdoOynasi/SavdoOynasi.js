@@ -1326,14 +1326,14 @@ function SavdoOynasi({
                                              onClick={() => setPaymentTypeCheck('turli')}><img src={turliTolov}
                                                                                                className={'shopping-btn-icon'}
                                                                                                alt="waiting"/>
-                                            <p style={{color: '#38CB89'}} className={'shopping-btn-text'}>Turli to'lov</p>
+                                            <p style={{color: '#38CB89'}} className={'shopping-btn-text'}>To'lov turi</p>
                                         </div>
                                     : <div className={'shopping-btn-top2'}
                                            style={{border: paymentTypeCheck === 'turli' ? '3px solid red' : 'none'}}
                                            onClick={() => setPaymentTypeCheck('turli')}><img src={turliTolov}
                                                                                              className={'shopping-btn-icon'}
                                                                                              alt="waiting"/>
-                                        <p style={{color: '#38CB89'}} className={'shopping-btn-text'}>Turli to'lov</p></div>
+                                        <p style={{color: '#38CB89'}} className={'shopping-btn-text'}>To'lov turi</p></div>
                             }
                             {
                                 tradeIdForEdit ? editActiveButton === "turli" ? "" :
@@ -1362,7 +1362,7 @@ function SavdoOynasi({
                         <div className={'d-flex justify-content-between flex-wrap   align-items-center w-100'}>
                             {
                                 PayReducer.paymethod &&
-                                PayReducer.paymethod.map(item =>
+                                PayReducer.paymethod.filter(value=>value.main === true).map((item,index) =>
                                     match.params.remainId || tradeIdForEdit ?
                                         editActiveButton === item.id &&
                                         <button key={item.id}

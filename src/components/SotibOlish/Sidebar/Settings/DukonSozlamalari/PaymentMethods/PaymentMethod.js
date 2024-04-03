@@ -12,14 +12,15 @@ import MainHeaderText from "../../../../../Components/MainHeaderText";
 import {ButtonAnt} from "../../../../../Components/SelectAnt";
 import CardBody from "../../../../../Components/CardBody";
 import CommonTable from "../../../../../Components/CommonTable";
+import { Checkbox } from 'antd';
 import 'moment/locale/uz-latn'
 import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
-import PayReducer, {getPay, AddPaymentMethod, DeletePaymentMethod,EditPaymentMethod} from "../../../../../../reducer/PayReducer";
+import PayReducer, {getPay, AddPaymentMethod, DeletePaymentMethod,EditPaymentMethod,EditPaymentMethodMain} from "../../../../../../reducer/PayReducer";
 
 function PaymentMethod({
                            users,
                            PayReducer,
-                           getPay, AddPaymentMethod, DeletePaymentMethod,EditPaymentMethod
+                           getPay, AddPaymentMethod, DeletePaymentMethod,EditPaymentMethod,EditPaymentMethodMain
                        }) {
 
     const [active, setActive] = useState(false)
@@ -34,6 +35,20 @@ function PaymentMethod({
             dataIndex: 'name',
             key: 'name',
             width: '50px'
+        },
+        {
+            title:'Asosiyligi',
+            dataIndex: 'main',
+            key: 'main',
+            width: '50px',
+            render:(item,value)=><Checkbox checked={item} onChange={()=>{
+                EditPaymentMethodMain({
+                    id:value.id,
+                    params:{
+                        main:!item
+                    }
+                })
+            }}></Checkbox>
         },
         {
             title: t('ol.20'),
@@ -194,5 +209,5 @@ function PaymentMethod({
 }
 
 export default connect((users, PayReducer), {
-    getPay, AddPaymentMethod, DeletePaymentMethod,EditPaymentMethod
+    getPay, AddPaymentMethod, DeletePaymentMethod,EditPaymentMethod,EditPaymentMethodMain
 })(PaymentMethod)

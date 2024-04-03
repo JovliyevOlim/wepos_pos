@@ -55,6 +55,13 @@ export const EditPaymentMethod = (data) => apiCall({
     onSuccess: slice.actions.save.type,
     onFail: slice.actions.save.type,
 });
+export const EditPaymentMethodMain = (data) => apiCall({
+    url: '/payment-method/edit-main'+data.id,
+    method: 'put',
+    params:data.params,
+    onSuccess: slice.actions.save.type,
+    onFail: slice.actions.save.type,
+});
 
 export const DeletePaymentMethod = (data) => apiCall({
     url: '/payment-method/'+data,
