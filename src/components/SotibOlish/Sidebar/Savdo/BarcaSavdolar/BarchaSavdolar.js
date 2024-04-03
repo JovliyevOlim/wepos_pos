@@ -34,6 +34,8 @@ import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../Components/SelectAnt"
 import CardBody from "../../../../Components/CardBody";
 import CommonTable from "../../../../Components/CommonTable";
 import {DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined} from "@ant-design/icons";
+import {DatePicker} from "antd";
+import dayjs from "dayjs";
 
 function BarchaSavdolar({
                             XodimReducer,
@@ -73,6 +75,7 @@ function BarchaSavdolar({
     const [userId, setUserId] = useState(null)
     const [paymentStatus, setPaymentStatus] = useState(null)
     const [backing, setBacking] = useState('true')
+    const [startDate, setStartDate] = useState(null)
 
     const columns = [
         {
@@ -160,9 +163,10 @@ function BarchaSavdolar({
                     } icon={<EditOutlined/>}/>
                 }
                 {
-                    users.deleteTrade && values.editable && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'}
-                                                                       onClick={() => values?.customerName ? deleteTradeByIdIsCustomer(item.id) : deleteTradeById(item.id)}
-                                                                       icon={<DeleteOutlined/>}/>
+                    users.deleteTrade && values.editable &&
+                    <ButtonAnt text={t('button.delete')} danger={true} type={'primary'}
+                               onClick={() => values?.customerName ? deleteTradeByIdIsCustomer(item.id) : deleteTradeById(item.id)}
+                               icon={<DeleteOutlined/>}/>
                 }
 
             </div>,
@@ -176,15 +180,16 @@ function BarchaSavdolar({
     }
 
     const handlePageChange = (newPage) => {
-        setPage(newPage-1);
+        setPage(newPage - 1);
     };
-    const handleLimitChange = (event,size) => {
+    const handleLimitChange = (event, size) => {
         setPage(0)
         setLimit(size);
     };
 
 
     useEffect(() => {
+        // console.log(dayjs(item).format("YYYY-MM-DD HH:mm:ss"))
         setLoading(false)
         if (users.getTradeAdmin && !mainBranch) {
             getTradeByBusiness({
@@ -193,7 +198,8 @@ function BarchaSavdolar({
                     page: page,
                     size: limit,
                     customerId, paymentStatus, userId,
-                    invoice: search
+                    invoice: search,
+                    startDate:startDate ? dayjs(startDate).format("YYYY/MM/DD") :null
                 }
             })
         } else if (users.getTrade) {
@@ -203,11 +209,12 @@ function BarchaSavdolar({
                     page: page,
                     size: limit,
                     customerId, paymentStatus, userId,
-                    invoice: search
+                    invoice: search,
+                    startDate: startDate ? dayjs(startDate).format("YYYY/MM/DD") :null
                 }
             })
         }
-    }, [SavdoQoshishReducer.current, limit, page, customerId, userId, paymentStatus, mainBranch, search])
+    }, [SavdoQoshishReducer.current, limit, page, customerId, userId, paymentStatus, mainBranch, search, startDate])
 
 
     useEffect(() => {
@@ -227,7 +234,7 @@ function BarchaSavdolar({
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-            setLoading(true)
+        setLoading(true)
     }, [SavdoQoshishReducer.getTradeBool])
 
     useEffect(() => {
@@ -345,6 +352,11 @@ function BarchaSavdolar({
                                         {id: 'TOLANMAGAN', name: (t('ol.7'))},
                                         {id: 'QISMAN_TOLANGAN', name: (t('ol.8'))},
                                     ]}/>
+                            </div>
+                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                                <h5 className={'selectLabel'}>Sana</h5>
+                                <DatePicker
+                                    onChange={(e) => setStartDate(e === '' ? null : e)}/>
                             </div>
                             <div className="col-md-12">
                                 <SearchAnt name={t('mah.35')}
