@@ -180,3 +180,30 @@ th,tr{
 :where(.css-dev-only-do-not-override-18iikkb).ant-table-wrapper .ant-table-tbody >tr >th{
     background-color: transparent
 }
+
+@media screen and (max-width: 768px){
+    .ant-select {
+        height: 36px !important;
+        border-radius: 6px;
+    }
+    .selectLabel {
+        font-size: 14px;
+    }
+    .ant-input-search {
+        height: 36px !important;
+    }
+    .ant-input-search input {
+        padding: 3px 5px !important;
+    }
+    .ant-input-clear-icon svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
+    .ant-input-search-button {
+        height: 36px !important;
+    }
+    .ant-input-search-button svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
+}

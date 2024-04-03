@@ -1,22 +1,24 @@
-import './qoldiqlarXisoboti.css'
+import {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 import {useTranslation} from "react-i18next";
-import React, {useEffect, useState} from 'react'
+import {ModalHeader, Modal, ModalFooter, ModalBody} from "reactstrap";
+import {toast} from "react-toastify";
+import moment from "moment";
+import 'moment/locale/uz-latn'
+
+import users from "../../../../../reducer/users";
 import QoldiqlarxisobotiReducer, {
     getWarehouseByBranch, getWarehouseByBusiness, resetWarehouse
 } from '../reducer/QoldiqlarxisobotiReducer'
-import users from "../../../../../reducer/users";
+import MaxsulotlarRoyxariReducer, {getBarcodeAndName} from "../../Maxsulotlar/reducer/MaxsulotlarRoyxariReducer";
 import formatDate, {prettify} from "../../../../../util";
 import Loading from "../../../../Loading";
-import {ModalHeader, Modal, ModalFooter, ModalBody} from "reactstrap";
-import {toast} from "react-toastify";
-import MaxsulotlarRoyxariReducer, {getBarcodeAndName} from "../../Maxsulotlar/reducer/MaxsulotlarRoyxariReducer";
-import moment from "moment";
-import 'moment/locale/uz-latn'
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import CardBody from "../../../../Components/CardBody";
 import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
+
+import './qoldiqlarXisoboti.css'
 
 function QoldiqlarXisoboti({
                                users,
@@ -27,8 +29,6 @@ function QoldiqlarXisoboti({
                                getWarehouseByBusiness,
                                resetWarehouse
                            }) {
-
-
     const {t} = useTranslation()
     const [mainBranchId, setMainBranchId] = useState(null)
     const [field, setField] = useState("price")
@@ -114,11 +114,6 @@ function QoldiqlarXisoboti({
         setIsView(false)
     }
 
-    function removeProduct() {
-        setSearch('')
-        setProductId(null)
-    }
-
     function changeSearch(e) {
         setSearch(e.target.value)
         setIsView(true)
@@ -174,16 +169,16 @@ function QoldiqlarXisoboti({
 
 
     return (<div>
-        <div className="col-md-12 mb-4">
+        <div className="col-md-12 mb-3">
             <MainHeaderText text={'Mahsulotlar qoldig\'i'}/>
         </div>
         <CardBody>
-            <div className="col-md-12 d-flex flex-wrap row-gap-4 justify-content-start ">
-                <div className="col-md-3 p-2 col-sm-12">
+            <div className="col-md-12 d-flex flex-wrap row-gap-2 justify-content-start">
+                <div className="col-12 col-sm-6 col-lg-4 p-2">
                     <SelectAnt name={'Filiallar'} permission={users.getInfoAdmin} selectList={users.branches}
                                onChange={(e) => setMainBranchId(e === "" ? null : e)}/>
                 </div>
-                <div className="col-md-3 p-2 col-sm-12">
+                <div className="col-12 col-sm-6 col-lg-4 p-2">
                     <SelectAnt name={'Ma\'lumot'} permission={false}
                                selectList={[
                                    {id: 'price', name: 'Narx'},
@@ -194,14 +189,14 @@ function QoldiqlarXisoboti({
                                ]}
                                onChange={(e) => setField(e)}/>
                 </div>
-                <div className="col-md-3 p-2 col-sm-12">
+                <div className="col-12 col-sm-6 col-lg-4 p-2">
                     <SelectAnt name={'Tartibi'} onChange={ChangeIncrease} permission={false} selectList={[
                         {id: 'false', name: 'Kamayish tartibida'},
                         {id: 'true', name: 'O\'sish tartibida'}
                     ]}/>
                 </div>
                 {
-                    mainBranchId && <div className="col-md-6 p-2">
+                    mainBranchId && <div className="col-12 p-2">
                         <SearchAnt name={'Mahsulotni qidirish'} onChange={changeSearch}/>
                         {
                             isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?
@@ -214,16 +209,12 @@ function QoldiqlarXisoboti({
                                         )
                                     }
                                 </div>
-                                : ''
+                                : null
                         }
                     </div>
-
                 }
             </div>
-
         </CardBody>
-
-
         <CardBody>
             <Loading spinning={loading}>
                 {
@@ -231,7 +222,7 @@ function QoldiqlarXisoboti({
                         <>
                             <div>
                                 <div className={'d-flex justify-content-end'}>
-                                    <h4 className={'report-text'}>Statiskani boshlangan
+                                    <h4 className={'report-text mb-3'}>Statiskani boshlangan
                                         sanasi: {formatDate(QoldiqlarxisobotiReducer?.warehouse?.reset)}</h4>
                                 </div>
                                 <div className={'d-flex justify-content-end'}>
@@ -252,8 +243,6 @@ function QoldiqlarXisoboti({
                 }
             </Loading>
         </CardBody>
-
-
         <Modal isOpen={resetActive} toggle={() => setResetActive(prevState => !prevState)}>
             <ModalHeader> Statistikani tozalash</ModalHeader>
             <ModalBody>

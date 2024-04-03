@@ -1,18 +1,20 @@
-import React, {useState, useEffect} from "react";
+import {useState, useEffect} from "react";
 import {connect} from "react-redux";
-import users from "../../../../../reducer/users";
-import MaxsulotlarRoyxariReducer, {getBarcodeAndName} from "../../Maxsulotlar/reducer/MaxsulotlarRoyxariReducer";
 import {useTranslation} from "react-i18next";
-import Loading from "../../../../Loading";
-import XodimReducer, {getUserForFiltering, getUserForFilteringBusiness} from "../../Hodimlar/reducer/XodimReducer";
-import MaxsulotxisobotReducer,{getLossProductByBusiness,getLossProductByBranch} from "../reducer/MaxsulotxisobotReducer";
 import moment from "moment";
 import 'moment/locale/uz-latn'
+
+import users from "../../../../../reducer/users";
+import MaxsulotlarRoyxariReducer, {getBarcodeAndName} from "../../Maxsulotlar/reducer/MaxsulotlarRoyxariReducer";
+import XodimReducer, {getUserForFiltering, getUserForFilteringBusiness} from "../../Hodimlar/reducer/XodimReducer";
+import MaxsulotxisobotReducer,{getLossProductByBusiness,getLossProductByBranch} from "../reducer/MaxsulotxisobotReducer";
+import Loading from "../../../../Loading";
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import CardBody from "../../../../Components/CardBody";
 import SelectAnt, {SearchAnt} from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
 import {prettify} from "../../../../../util";
+
 function MaxsulotMiqdoriQoldigi({
                                     users, XodimReducer, getUserForFiltering, getUserForFilteringBusiness,
                                     MaxsulotxisobotReducer,getLossProductByBusiness,getLossProductByBranch,
@@ -27,7 +29,6 @@ function MaxsulotMiqdoriQoldigi({
     const [isView, setIsView] = useState(false)
     const [productId, setProductId] = useState(null)
     const [loading, setLoading] = useState(false)
-
 
     const columns = [
         {
@@ -69,12 +70,7 @@ function MaxsulotMiqdoriQoldigi({
             key: 'createdAt',
             render: (item) => <p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>
         },
-
-
-
-
     ];
-
 
     const handlePageChange = (newPage) => {
         setPage(newPage-1);
@@ -124,6 +120,7 @@ function MaxsulotMiqdoriQoldigi({
             })
         }
     }, [mainBranchId, page, size,  userId, productId])
+
     useEffect(() => {
         setPage(0)
     }, [mainBranchId, size, userId])
@@ -136,7 +133,6 @@ function MaxsulotMiqdoriQoldigi({
         }
     }, [mainBranchId])
 
-
     useEffect(() => {
             setLoading(true)
     }, [MaxsulotxisobotReducer.getBoolean])
@@ -145,18 +141,17 @@ function MaxsulotMiqdoriQoldigi({
         setLoading(false)
     }, [])
 
-
     return (
         <div>
-            <div className="col-md-12 mb-5">
+            <div className="col-md-12 mb-3">
                 <MainHeaderText text={'Yo\'qotilgan maxsulotlar'}/>
             </div>
             <CardBody>
                 <div className="col-md-12 d-flex justify-content-start flex-wrap">
-                    <div className="col-md-3 p-2">
+                    <div className="col-12 col-sm-6 col-lg-3 p-2">
                         <SelectAnt name={'Filiallar'} selectList={users.branches} permission={users.branches} onChange={(e) => setMainBranchId(e === "" ? null : e)}/>
                     </div>
-                    <div className="col-md-3 p-2">
+                    <div className="col-12 col-sm-6 col-lg-3 p-2">
                         <SelectAnt name={'Hodimlar'} selectList={XodimReducer.usersFiltering?.map((item) => ({
                             id: item.id,
                             name: item.fio
@@ -165,7 +160,7 @@ function MaxsulotMiqdoriQoldigi({
                     </div>
                     {
                         mainBranchId &&
-                        <div className="col-md-6 p-2">
+                        <div className="col-12 col-lg-6 p-2">
                             <SearchAnt name={'Mahsulotni qidirish'} onChange={changeSearch}/>
                             {
                                 isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?

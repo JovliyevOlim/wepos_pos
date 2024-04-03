@@ -109,116 +109,113 @@ function XarajatQoshish({
                 <div className="col-12  mt-4">
                     <form onSubmit={handleSubmit(saqla)}>
                         <div className="row">
-                            <div className="col-md-12 d-flex flex-wrap align-items-start">
-                                <div style={{minHeight: "100px"}} className="col-md-4 col-sm-12 ">
-                                    <label htmlFor="branchId">{t('ProductList.8')}</label>
-                                    <select className={'form-control'} id='branchId'
-                                            {...register('branchId', {
-                                                required: {
-                                                    value: true,
-                                                    message: 'Filial tanlang'
-                                                }
-                                            })}
-                                            disabled={match.params.id}
-                                            >
-                                        <option value={''}>Tanlang</option>
-                                        {
-                                            users.branches.map(item =>
-                                                <option value={item.id}>{item.name}</option>)
-                                        }
-                                    </select>
+                            <div className="col-md-6 col-lg-4 col-sm-12 p-2">
+                                <label className="mb-1" htmlFor="branchId">{t('ProductList.8')}</label>
+                                <select className={'form-control'} id='branchId'
+                                        {...register('branchId', {
+                                            required: {
+                                                value: true,
+                                                message: 'Filial tanlang'
+                                            }
+                                        })}
+                                        disabled={match.params.id}
+                                >
+                                    <option value={''}>Tanlang</option>
                                     {
-                                        errors.branchId &&
-                                        <p className="text-danger text-center m-0 p-0">{errors.branchId.message}</p>
+                                        users.branches.map(item =>
+                                          <option value={item.id}>{item.name}</option>)
                                     }
-                                </div>
-                                <div style={{minHeight: "100px"}} className="col-md-4 col-sm-12 ">
-                                    <label htmlFor={'date'}>{t('Trade.4')}</label>
-                                    <input type="date" id={'date'} defaultValue={formatDateMinus(new Date())}
-                                           className={'form-control'}   {...register('date', {required: true})}/>
-
-                                </div>
-                                <div style={{minHeight: "100px"}} className="col-md-4 col-sm-12 ">
-                                    <label htmlFor={'outlayCategoryId'}>{t('Trade.24')}</label>
-                                    <select
-                                        id="outlayCategoryId"   {...register('outlayCategoryId', {
-                                        required: {
-                                            value: true,
-                                            message: 'Xarajat turi tanlang'
-                                        }
-                                    })}
-                                        className={'form-control'}>
-                                        <option value={''}>Tanlang</option>
-                                        {
-                                            XarajatTurlariReducer.xarajatturlari ?
-                                                XarajatTurlariReducer.xarajatturlari.map((item, index) =>
-                                                    <option key={index} value={item.id}>{item.name}</option>) : ''
-                                        }
-                                    </select>
-                                    {
-                                        errors.outlayCategoryId &&
-                                        <p className="text-danger text-center m-0 p-0">{errors.outlayCategoryId.message}</p>
-                                    }
-                                </div>
-                                <div style={{minHeight: "100px"}} className="col-md-4 col-sm-12 ">
-                                    <label htmlFor={'paymentMethodId'}>To'lov turi</label>
-                                    <select className={'form-control'}
-                                            id='paymentMethodId'  {...register('paymentMethodId', {
-                                        required: {
-                                            value: true,
-                                            message: 'To\'lov turini tanlang'
-                                        }
-                                    })}
-                                            disabled={match.params.id}
-                                    >
-                                        <option value="">Tanlang</option>
-                                        {
-                                            PayReducer.paymethod ?
-                                                PayReducer.paymethod.map(item => <option
-                                                    value={item.id}>{item.name}</option>) : ''
-                                        }
-                                    </select>
-                                    {
-                                        errors.paymentMethodId &&
-                                        <p className="text-danger text-center m-0 p-0">{errors.paymentMethodId.message}</p>
-                                    }
-                                </div>
-                                <div style={{minHeight: "100px"}} className="col-md-4 col-sm-12 "><label
-                                    htmlFor={'description'}>{t('Buttons.17')}</label>
-                                    <input type="text" className={'form-control'}
-                                           id='description'   {...register('description', {
-                                        required: {
-                                            value: true,
-                                            message: 'Eslatmani kiriting'
-                                        }
-                                    })}
-                                           placeholder={'Eslatma'}/>
-                                    {
-                                        errors.description &&
-                                        <p className="text-danger text-center m-0 p-0">{errors.description.message}</p>
-                                    }
-                                </div>
-                                <div style={{minHeight: "100px"}} className="col-md-4 col-sm-12">
-                                    <label htmlFor={'sum'}>{t('Expenses.6')}</label>
-                                    <input type="number" className={'form-control'}
-                                           {...register('sum', {
-                                               required: {
-                                                   value: true,
-                                                   message: 'Miqdorni kiriting'
-                                               }
-                                           })}
-                                           placeholder={'Miqdor'}
-                                           id={'sum'}/>
-                                    {
-                                        errors.sum &&
-                                        <p className="text-danger text-center m-0 p-0">{errors.sum.message}</p>
-                                    }
-                                </div>
+                                </select>
+                                {
+                                  errors.branchId &&
+                                  <p className="text-danger text-center m-0 p-0">{errors.branchId.message}</p>
+                                }
                             </div>
+                            <div className="col-md-6 col-lg-4 col-sm-12 p-2">
+                                <label className="mb-1" htmlFor={'date'}>{t('Trade.4')}</label>
+                                <input type="date" id={'date'} defaultValue={formatDateMinus(new Date())}
+                                       className={'form-control'}   {...register('date', {required: true})}/>
 
-
-                            <div className="col-md-12 mt-3 d-flex justify-content-end">
-                                <button className={'btn btn-success'} type={'submit'}>{t('Buttons.2')}</button>
+                            </div>
+                            <div className="col-md-6 col-lg-4 col-sm-12 p-2">
+                                <label className="mb-1" htmlFor={'outlayCategoryId'}>{t('Trade.24')}</label>
+                                <select
+                                  id="outlayCategoryId"   {...register('outlayCategoryId', {
+                                    required: {
+                                        value: true,
+                                        message: 'Xarajat turi tanlang'
+                                    }
+                                })}
+                                  className={'form-control'}>
+                                    <option value={''}>Tanlang</option>
+                                    {
+                                        XarajatTurlariReducer.xarajatturlari ?
+                                          XarajatTurlariReducer.xarajatturlari.map((item, index) =>
+                                            <option key={index} value={item.id}>{item.name}</option>) : ''
+                                    }
+                                </select>
+                                {
+                                  errors.outlayCategoryId &&
+                                  <p className="text-danger text-center m-0 p-0">{errors.outlayCategoryId.message}</p>
+                                }
+                            </div>
+                            <div className="col-md-6 col-lg-4 col-sm-12 p-2">
+                                <label className="mb-1" htmlFor={'paymentMethodId'}>To'lov turi</label>
+                                <select className={'form-control'}
+                                        id='paymentMethodId'  {...register('paymentMethodId', {
+                                    required: {
+                                        value: true,
+                                        message: 'To\'lov turini tanlang'
+                                    }
+                                })}
+                                        disabled={match.params.id}
+                                >
+                                    <option value="">Tanlang</option>
+                                    {
+                                        PayReducer.paymethod ?
+                                          PayReducer.paymethod.map(item => <option
+                                            value={item.id}>{item.name}</option>) : ''
+                                    }
+                                </select>
+                                {
+                                  errors.paymentMethodId &&
+                                  <p className="text-danger text-center m-0 p-0">{errors.paymentMethodId.message}</p>
+                                }
+                            </div>
+                            <div className="col-md-6 col-lg-4 col-sm-12 p-2">
+                                <label className="mb-1"
+                              htmlFor={'description'}>{t('Buttons.17')}</label>
+                                <input type="text" className={'form-control'}
+                                       id='description'   {...register('description', {
+                                    required: {
+                                        value: true,
+                                        message: 'Eslatmani kiriting'
+                                    }
+                                })}
+                                       placeholder={'Eslatma'}/>
+                                {
+                                  errors.description &&
+                                  <p className="text-danger text-center m-0 p-0">{errors.description.message}</p>
+                                }
+                            </div>
+                            <div className="col-md-6 col-lg-4 col-sm-12 p-2">
+                                <label className="mb-1" htmlFor={'sum'}>{t('Expenses.6')}</label>
+                                <input type="number" className={'form-control'}
+                                       {...register('sum', {
+                                           required: {
+                                               value: true,
+                                               message: 'Miqdorni kiriting'
+                                           }
+                                       })}
+                                       placeholder={'Miqdor'}
+                                       id={'sum'}/>
+                                {
+                                  errors.sum &&
+                                  <p className="text-danger text-center m-0 p-0">{errors.sum.message}</p>
+                                }
+                            </div>
+                            <div className="col-md-12 mt-3 w-100">
+                                <button className={'btn btn-success w-100'} type={'submit'}>{t('Buttons.2')}</button>
                             </div>
                         </div>
                     </form>
@@ -231,7 +228,7 @@ function XarajatQoshish({
 }
 
 export default connect((
-    XarajatTurlariReducer, PayReducer, users, XarajatlarReducer), {
+  XarajatTurlariReducer, PayReducer, users, XarajatlarReducer), {
     editXarajatlar,
     getPay,
     getXarajatlarTurlari,

@@ -1,21 +1,23 @@
-import './maxsulotxisoboti.css'
-import React, {useState, useEffect} from "react";
+import {useState, useEffect} from "react";
 import {connect} from 'react-redux'
 import {useTranslation} from "react-i18next";
+import moment from "moment";
+import 'moment/locale/uz-latn'
+
 import users from "../../../../../reducer/users";
 import XodimReducer, {getUserForFilteringBusiness, getUserForFiltering} from "../../Hodimlar/reducer/XodimReducer";
-import Loading from "../../../../Loading";
 import MaxsulotlarRoyxariReducer, {getBarcodeAndName} from "../../Maxsulotlar/reducer/MaxsulotlarRoyxariReducer";
 import MaxsulotxisobotReducer, {
     getProductHistoryByBusiness,
     getProductHistoryByBranch
 } from "../reducer/MaxsulotxisobotReducer";
-import moment from "moment";
-import 'moment/locale/uz-latn'
+import Loading from "../../../../Loading";
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import CardBody from "../../../../Components/CardBody";
 import SelectAnt, {SearchAnt} from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
+
+import './maxsulotxisoboti.css'
 
 function MaxsulotXisoboti({
                               users,
@@ -29,8 +31,6 @@ function MaxsulotXisoboti({
 ) {
 
     const {t} = useTranslation()
-
-
     const [mainBranchId, setMainBranchId] = useState(null)
     const [userId, setUserId] = useState(null)
     const [productId, setProductId] = useState(null)
@@ -89,7 +89,6 @@ function MaxsulotXisoboti({
         },
     ];
 
-
     function changeSearch(e) {
         setSearch(e.target.value)
         setIsView(true)
@@ -108,6 +107,7 @@ function MaxsulotXisoboti({
     const handlePageChange = (newPage) => {
         setPage(newPage - 1);
     };
+
     const handleLimitChange = (event, size) => {
         setPage(0)
         setSize(size);
@@ -117,11 +117,6 @@ function MaxsulotXisoboti({
         setSearch(name)
         setProductId(id)
         setIsView(false)
-    }
-
-    function removeProduct() {
-        setSearch('')
-        setProductId(null)
     }
 
     useEffect(() => {
@@ -145,9 +140,11 @@ function MaxsulotXisoboti({
             })
         }
     }, [page, size, userId, productId, mainBranchId])
+
     useEffect(() => {
         setPage(0)
     }, [size, userId, productId])
+
     useEffect(() => {
         if (users.getUserAdmin && !mainBranchId) {
             getUserForFilteringBusiness(users.businessId)
@@ -172,13 +169,13 @@ function MaxsulotXisoboti({
             </div>
             <CardBody>
                 <div className="col-md-12 d-flex row-gap-4 flex-wrap">
-                    <div className="col-md-3 p-2">
+                    <div className="col-12 col-sm-6 col-lg-3 p-2">
                         <SelectAnt name={'Filiallar'} onChange={(e) => setMainBranchId(e === '' ? null : e)}
                                    permission={users.getInfoAdmin}
                                    selectList={users?.branches}
                         />
                     </div>
-                    <div className="col-md-3 p-2">
+                    <div className="col-12 col-sm-6 col-lg-3 p-2">
                         <SelectAnt name={'Xodimlar'} onChange={(e) => setUserId(e === '' ? null : e)}
                                    permission={users.getInfoAdmin}
                                    selectList={XodimReducer.usersFiltering?.map((item) => ({
@@ -189,7 +186,7 @@ function MaxsulotXisoboti({
                     </div>
                     {
                         mainBranchId &&
-                        <div className="col-md-6 p-2">
+                        <div className="col-lg-6 col-12 p-2">
                             <SearchAnt name={'Mahsulotni qidirish'} onChange={changeSearch}/>
                             {
                                 isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?
@@ -202,14 +199,12 @@ function MaxsulotXisoboti({
                                             )
                                         }
                                     </div>
-                                    : ''
+                                    : null
                             }
                         </div>
                     }
                 </div>
             </CardBody>
-
-
             <CardBody>
                 <Loading spinning={loading}>
                     {

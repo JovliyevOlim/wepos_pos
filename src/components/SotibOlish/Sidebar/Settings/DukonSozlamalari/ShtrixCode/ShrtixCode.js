@@ -1,6 +1,5 @@
 import {connect} from "react-redux";
 import users from "../../../../../../reducer/users";
-import {ImCancelCircle} from "react-icons/im";
 import React, {useEffect, useRef, useState} from "react";
 import {toast} from "react-toastify";
 import {useReactToPrint} from "react-to-print";
@@ -11,7 +10,7 @@ import MaxsulotlarRoyxariReducer, {getBarcodeAndName} from "../../../Maxsulotlar
 import MainHeaderText from "../../../../../Components/MainHeaderText";
 import CardBody from "../../../../../Components/CardBody";
 import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../../Components/SelectAnt";
-import {Input, Checkbox, DatePicker, InputNumber} from 'antd';
+import {Checkbox, DatePicker, InputNumber} from 'antd';
 import CommonTable from "../../../../../Components/CommonTable";
 import {CloseCircleOutlined} from "@ant-design/icons";
 import moment from "moment";
@@ -159,7 +158,7 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
 
 
     return (
-        <div>
+        <div className="shtrixcode">
             <div className="col-md-12 d-flex mb-4">
                 <MainHeaderText text={t('mah.5')}/>
             </div>
@@ -203,7 +202,7 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
             }
 
             <CardBody>
-                <div className={'col-md-12 d-flex gap-4 align-items-center'}>
+                <div className={'col-md-12 d-flex gap-2 gap-md-4 align-items-center flex-wrap'}>
                     <div className={'col-md-3 d-flex flex-column'}>
                         <label className='barcode-text' htmlFor='grid'>Shrift o'lchami</label>
                         <InputNumber value={fontSize} onChange={(e) => setFontSize(e)} className={'barcode-input'}
@@ -306,7 +305,7 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                         })
                     }
                 </div>
-                <div className={`d-flex mt-2 justify-content-between flex-wrap gap-2 align-items-center w-100`}>
+                <div className={`d-flex mt-4 justify-content-between flex-wrap gap-2 align-items-center w-100`}>
                     {
                         XaridArrayPost.map((item) => <div
                                 style={{

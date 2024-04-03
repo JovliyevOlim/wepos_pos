@@ -1,23 +1,23 @@
-import React, {useState, useEffect} from "react";
+import {useState, useEffect} from "react";
 import {connect} from "react-redux";
-import users from "../../../../../reducer/users";
 import {useTranslation} from "react-i18next";
-import Loading from "../../../../Loading";
-import XodimReducer, {getUserForFiltering, getUserForFilteringBusiness} from "../../Hodimlar/reducer/XodimReducer";
-import UserHistoryReducer,{getUserHistoryByBranch,getUserHistoryByBusiness} from "../reducer/UserHistoryReducer";
 import moment from "moment";
 import 'moment/locale/uz-latn'
+
+import users from "../../../../../reducer/users";
+import XodimReducer, {getUserForFiltering, getUserForFilteringBusiness} from "../../Hodimlar/reducer/XodimReducer";
+import UserHistoryReducer,{getUserHistoryByBranch,getUserHistoryByBusiness} from "../reducer/UserHistoryReducer";
+import Loading from "../../../../Loading";
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import CardBody from "../../../../Components/CardBody";
 import SelectAnt from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
 import {prettify} from "../../../../../util";
+
 function XodimlarNazorati({users, XodimReducer, getUserForFiltering, getUserForFilteringBusiness,
                               UserHistoryReducer,getUserHistoryByBranch,getUserHistoryByBusiness
                           }) {
     const {t} = useTranslation()
-
-
     const [mainBranchId, setMainBranchId] = useState(null)
     const [name, setName] = useState(null)
     const [userId, setUserId] = useState(null)
@@ -73,9 +73,11 @@ function XodimlarNazorati({users, XodimReducer, getUserForFiltering, getUserForF
             width: '200px'
         },
     ];
+
     const handlePageChange = (newPage) => {
         setPage(newPage-1);
     };
+
     const handleLimitChange = (event,size) => {
         setPage(0)
         setSize(size);
@@ -114,8 +116,6 @@ function XodimlarNazorati({users, XodimReducer, getUserForFiltering, getUserForF
         }
     }, [mainBranchId])
 
-
-
     useEffect(() => {
             setLoading(true)
     }, [UserHistoryReducer.getBoolean])
@@ -124,27 +124,24 @@ function XodimlarNazorati({users, XodimReducer, getUserForFiltering, getUserForF
         setLoading(false)
     }, [])
 
-
-
-
     return (
         <div>
-            <div className="col-md-12 mb-5">
+            <div className="col-md-12 mb-3">
                 <MainHeaderText text={'Hodimlar Nazorati'}/>
             </div>
             <CardBody>
                 <div className="col-md-12 d-flex flex-wrap">
-                    <div className="col-md-3 p-2">
+                    <div className="col-12 col-sm-6 col-lg-4 p-2">
                         <SelectAnt selectList={users?.branches} permission={users.getInfoAdmin} name={'Filiallar'} onChange={(e) => setMainBranchId(e === '' ? null : e)}/>
                     </div>
-                    <div className="col-md-3 p-2">
+                    <div className="col-12 col-sm-6 col-lg-4 p-2">
                         <SelectAnt selectList={XodimReducer.usersFiltering?.map((item) => ({
                             id: item.id,
                             name: item.fio
                         }))} permission={true}
                                    name={'Hodimlar'} onChange={(e) => setUserId(e === '' ? null : e)}/>
                     </div>
-                    <div className="col-md-3 p-2">
+                    <div className="col-12 col-sm-6 col-lg-4 p-2">
                         <SelectAnt selectList={[
                             {id:'SAVDO',name:'Savdo'},
                             {id:'XARID',name:'Xarid'},

@@ -584,24 +584,27 @@ function Taxrirlash({
             editl2()
         }
     }, [LavozimReducer.getBoolean])
+
     useEffect(() => {
         if (match.params.id) {
             getLavozimById(match.params.id)
         }
     }, [])
+
     useEffect(() => {
         if (LavozimReducer.saveRoleBool) {
             history.push('/main/role')
         }
         setSaveModal(false)
     }, [LavozimReducer.current])
+
     return (
-        <div className={'row mt-5'}>
+        <div className={'row mt-3 mt-md-5'}>
             <h4 className={'text-center'}>{t('Roles.4')}</h4>
             <div className="col-md-12">
                 <div className="row justify-content-center ">
-                    <div className="l1 p-4 mt-5 col-sm-10 col-md-10 d-flex col-10 border">
-                        <div className="col-md-6"><label htmlFor={'name'}>{t('Roles.5')}</label>
+                    <div className="l1 p-2 p-md-4 mt-3 mt-md-5 col-10 col-md-10 d-flex border flex-column flex-md-row">
+                        <div className="col-12 col-md-6 p-2"><label htmlFor={'name'}>{t('Roles.5')}</label>
                             <input type="text" className={'form-control mt-2'} id={'name'} value={input.name}
                                    onChange={changeName}
                                    placeholder={t('ol.80')}/>
@@ -612,7 +615,7 @@ function Taxrirlash({
                                 </div>
                             }
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-12 col-md-6 p-2">
                             <label htmlFor={'description'}>{t('ol.82')}</label>
                             <input type="text" className={'form-control mt-2'} id={'description'}
                                    value={input.description}
@@ -621,7 +624,7 @@ function Taxrirlash({
                         </div>
 
                     </div>
-                    <div className="l1 p-4 mt-5 col-sm-10 col-md-4 col-5 border">
+                    <div className="l1 p-4 mt-3 mt-md-5 col-10 col-md-5 border">
                         <label htmlFor={'l'}>{t('ol.9')}</label>
                         <div className="ruxsat mt-4">
                             <label htmlFor={'ch'}>{t('Roles.7')}</label>
@@ -664,7 +667,7 @@ function Taxrirlash({
                             </div>
                         </div>
                     </div>
-                    <div className="l1 mt-5 col-sm-10 col-5 col-md-4 p-4 border">
+                    <div className="l1 mt-3 mt-md-5 col-10 col-md-5 p-4 border">
                         <label htmlFor={'l'}>{t('Roles.1')}</label>
                         <div className="ruxsat mt-4">
                             <label htmlFor={'chch'}>{t('Roles.7')}</label>
@@ -700,7 +703,7 @@ function Taxrirlash({
                             </div>
                         </div>
                     </div>
-                    <div className="l1 mt-5 col-sm-10 col-5 col-md-4 p-4 border">
+                    <div className="l1 mt-3 mt-md-5 col-10 col-md-5 p-4 border">
                         <label htmlFor={'l'}>{t('Roles.15')}</label>
                         <div className="ruxsat mt-4">
                             <label htmlFor={'xabb'}>{t('Roles.7')}</label>
@@ -743,7 +746,7 @@ function Taxrirlash({
                             </div>
                         </div>
                     </div>
-                    <div className="l1 mt-5 col-sm-10 col-5 col-md-4 p-4 border">
+                    <div className="l1 mt-3 mt-md-5 col-10 col-md-5 p-4 border">
                         <label htmlFor={'l'}>{t('Roles.20')}</label>
                         <div className="ruxsat mt-4">
                             <label htmlFor={'barchasiBazaId'}>{t('Roles.7')}</label>
@@ -782,7 +785,7 @@ function Taxrirlash({
                             </div>
                         </div>
                     </div>
-                    <div className="l1 mt-5 col-sm-10 col-5 col-md-4 p-4 border">
+                    <div className="l1 mt-3 mt-md-5 col-10 col-md-5 p-4 border">
                         <label htmlFor={'l'}>{t('Roles.25')}</label>
                         <div className="ruxsat mt-4">
                             <label htmlFor={'xarjatBarchId'}>{t('Roles.7')}</label>
@@ -825,7 +828,7 @@ function Taxrirlash({
                             </div>
                         </div>
                     </div>
-                    <div className="l1 mt-5 col-sm-10 col-5 col-md-4 p-4 border">
+                    <div className="l1 mt-3 mt-md-5 col-10 col-md-5 p-4 border">
                         <label htmlFor={'l'}>{t('Roles.30')}</label>
                         <div className="ruxsat mt-4">
                             <label htmlFor={'savdoBarId'}>{t('Roles.7')}</label>
@@ -867,7 +870,7 @@ function Taxrirlash({
                             </div>
                         </div>
                     </div>
-                    <div className="l1 mt-5 p-4 col-sm-10 col-md-4 col-5 border">
+                    <div className="l1 mt-3 mt-md-5 p-4 col-10 col-md-5 border">
                         <div>
                             <label htmlFor={'l'}>{t('Roles.35')}</label>
 
@@ -911,7 +914,7 @@ function Taxrirlash({
                             </div>
                         </div>
                     </div>
-                    <div className="l1 mt-5 p-4 col-sm-10 col-md-4 col-5 border">
+                    <div className="l1 mt-3 mt-md-5 p-4 col-10 col-md-5 border">
                         <label htmlFor={'l'}>{t('Roles.40')}</label>
 
                         <div className="ruxsat mt-4">
@@ -954,7 +957,7 @@ function Taxrirlash({
                         </div>
 
                     </div>
-                    <div className="l1 mt-5 p-4 col-sm-10 col-md-4 col-5 border">
+                    <div className="l1 mt-3 mt-md-5 p-4 col-10 col-md-5 border">
                         <div>
                             <label htmlFor={'l'}>{t('ol.88')}</label>
 
@@ -1004,7 +1007,7 @@ function Taxrirlash({
                             </div>
                         </div>
                     </div>
-                    <div className="l1 mt-5 p-4 col-sm-10 col-md-4 col-5 border">
+                    <div className="l1 mt-3 mt-md-5 p-4 col-10 col-md-5 border">
 
                         <div className="ruxsat mt-4">
                             <div className={'mt-4'}>
@@ -1036,7 +1039,7 @@ function Taxrirlash({
                         </div>
 
                     </div>
-                    <div className="l1 mt-5 p-4 col-sm-10 col-md-4 col-5 border">
+                    <div className="l1 mt-3 mt-md-5 p-4 col-10 col-md-5 border">
                         <div>
                             <label htmlFor={'l'}>{t('ol.96')} </label>
 
@@ -1070,7 +1073,7 @@ function Taxrirlash({
                             </div>
                         </div>
                     </div>
-                    <div className="l1 mt-5 p-4 col-sm-10 col-md-4 col-5 border">
+                    <div className="l1 mt-3 mt-md-5 p-4 col-10 col-md-5 border">
                         <div>
                             <label htmlFor={'l'}>{t('ol.97')} </label>
 
@@ -1104,7 +1107,7 @@ function Taxrirlash({
                             </div>
                         </div>
                     </div>
-                    <div className="l1 mt-5 p-4 col-sm-10 col-md-4 col-5 border">
+                    <div className="l1 mt-3 mt-md-5 p-4 col-10 col-md-5 border">
                         <div>
                             <label htmlFor={'l'}>{t('ol.98')} </label>
 
@@ -1139,7 +1142,7 @@ function Taxrirlash({
                             </div>
                         </div>
                     </div>
-                    <div className="l1 mt-5 p-4 col-sm-10 col-md-4 col-5 border">
+                    <div className="l1 mt-3 mt-md-5 p-4 col-10 col-md-5 border">
                         <div>
                             <div className="ruxsat mt-4">
                                 <div>

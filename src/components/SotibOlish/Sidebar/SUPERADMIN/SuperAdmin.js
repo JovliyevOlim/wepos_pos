@@ -1,6 +1,8 @@
 import {lazy} from "react";
 import { Route, Switch, Link } from 'react-router-dom'
+
 import './superadmin.css'
+
 const SuperAdminPages = lazy(() => import('./pages/superadmin/SuperAdminPage'))
 const AllBusenesses = lazy(() => import('./pages/all-buseness/AllBusenesses'))
 const PackageSubscription = lazy(() => import('./pages/package-subscription/PackageSubscripton'))
