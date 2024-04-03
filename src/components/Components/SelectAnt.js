@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import {Image, Select, Input, Space, Button, Tooltip} from 'antd';
-import './selectAnt.css'
-import arrowDown from "../../img/direction-down 01.svg";
-import {camelize} from "../../util";
 import {useTranslation} from "react-i18next";
+import {Image, Select, Input, Button, Tooltip} from 'antd';
+
+import {camelize} from "../../util";
+import arrowDown from "../../img/direction-down 01.svg";
+
+import './selectAnt.css'
 
 const {Search} = Input;
 
-
 function SelectAnt({name, permission, selectList, onChange, all, disabled, value}) {
 
-    const {t, i18n} = useTranslation()
+    const {t} = useTranslation()
 
 
     const selectOption = permission ? [{value: '', label: all ? all : t('ol.21')},
@@ -46,7 +46,6 @@ export default SelectAnt;
 
 export function SearchAnt({name, onChange, value}) {
     const {t} = useTranslation()
-
     return (
         <>
             <h5 className={'selectLabel'}>{name}:</h5>
@@ -60,20 +59,7 @@ export function SearchAnt({name, onChange, value}) {
     );
 }
 
-export function InputAnt({name, type, items}) {
-
-
-    return (
-        <>
-            <label htmlFor={name} className={'selectLabel'}>{name}:</label>
-            <Input rootClassName={'input-ant'} id={name} type={type} {...items}/>
-        </>
-    );
-}
-
 export function ButtonAnt({onClick, icon, type, text, bgColor, danger, value}) {
-
-
     return (
         <>
             <Button onClick={onClick} className={'button-ant'} icon={icon} danger={danger} type={type}
@@ -86,14 +72,11 @@ export function ButtonAnt({onClick, icon, type, text, bgColor, danger, value}) {
 }
 
 export function TableButton({onClick, icon, type, danger, title, color}) {
-
-
     return (
         <>
             <Tooltip title={title} color={color} key={color}>
                 <Button type={type} onClick={onClick} shape="round" icon={icon} size={'large'} danger={danger}/>
             </Tooltip>
-
         </>
     );
 }

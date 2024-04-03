@@ -1,13 +1,14 @@
-import React, {lazy, useEffect, useState} from "react";
+import {lazy, useEffect, useState} from "react";
+import {connect} from "react-redux";
 import {Route, Switch, Redirect, useLocation, useHistory} from "react-router-dom";
 import {toast} from "react-toastify";
-import {connect} from "react-redux";
-import users, {saveusers} from "./reducer/users"
-import './App.css'
-import Sidebar from "./components/SotibOlish/Sidebar";
-import {LoadingOutlined, WifiOutlined} from '@ant-design/icons';
 import {Spin} from 'antd';
+
+import users, {saveusers} from "./reducer/users"
+import Sidebar from "./components/SotibOlish/Sidebar";
 import wifi from './img/icons8-wi-fi.gif'
+
+import './App.css'
 
 const Home = lazy(() => import("./components/Hbody/Home"))
 const SavdoOynasi = lazy(() => import("./components/SotibOlish/Sidebar/Savdo/SavdoOynasi/SavdoOynasi"))
@@ -77,11 +78,10 @@ function App({users, saveusers}) {
             history.push('/main/dashboard')
         }
     }, [])
+
     return (
-        <div>
-
-
-            <Spin
+          <div>
+              <Spin
                 style={{maxHeight: '100%'}}
                 spinning={!isOnline}
                 indicator={
@@ -90,38 +90,34 @@ function App({users, saveusers}) {
                         <p>No Internet</p>
                     </div>
                 }
-            >
-
-                    <Switch>
-                        <Route path={'/login'} component={Home}/>
-                        <Route path={'/shopDetails/:tariffId'} component={ShopInfo}/>
-                        <Route path={'/success'} component={Error500}/>
-                        <Route path={'/tariffs'} component={SecondPage}/>
-                        {
-                            auth ? <Route path={'/'}>
-                                <Route path={'/main'} component={Sidebar}/>
-                                {
-                                    users.getTrade || users.editTrade ?
-                                        <Route path={'/shopping/:id'} exact component={SavdoOynasi}/> : ''
-                                }
-                                {
-                                    users.addTrade || users.getTrade ?
-                                        <Route path={'/shopping'} exact component={SavdoOynasi}/> : ''
-                                }
-                                {
-                                    users.addTrade || users.getTrade ?
-                                        <Route path={'/repeatProducts/:id/:remainId'}
-                                               component={SavdoOynasi}/> : ''
-                                }
-
-                            </Route> : <Redirect to={'/login'}/>
-                        }
-                        <Route path={'*'} component={Error409}/>
-                    </Switch>
-            </Spin>
-
-        </div>
-
+              >
+                  <Switch>
+                      <Route path={'/login'} component={Home}/>
+                      <Route path={'/shopDetails/:tariffId'} component={ShopInfo}/>
+                      <Route path={'/success'} component={Error500}/>
+                      <Route path={'/tariffs'} component={SecondPage}/>
+                      {
+                          auth ? <Route path={'/'}>
+                              <Route path={'/main'} component={Sidebar}/>
+                              {
+                                  users.getTrade || users.editTrade ?
+                                    <Route path={'/shopping/:id'} exact component={SavdoOynasi}/> : ''
+                              }
+                              {
+                                  users.addTrade || users.getTrade ?
+                                    <Route path={'/shopping'} exact component={SavdoOynasi}/> : ''
+                              }
+                              {
+                                  users.addTrade || users.getTrade ?
+                                    <Route path={'/repeatProducts/:id/:remainId'}
+                                           component={SavdoOynasi}/> : ''
+                              }
+                          </Route> : <Redirect to={'/login'}/>
+                      }
+                      <Route path={'*'} component={Error409}/>
+                  </Switch>
+              </Spin>
+          </div>
     );
 }
 

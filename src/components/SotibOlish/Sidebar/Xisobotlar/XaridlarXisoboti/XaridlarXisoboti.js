@@ -1,22 +1,24 @@
-import './xaridxisobot.css'
-import React, {useState, useEffect} from "react";
+import {useState, useEffect} from "react";
 import {connect} from "react-redux";
+import {useTranslation} from "react-i18next";
+import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import moment from "moment";
+import 'moment/locale/uz-latn'
+
 import users from "../../../../../reducer/users";
 import TaminotReducer, {getAllSupplier} from "../../Hamkorlar/reducer/TaminotReducer";
 import MaxsulotlarRoyxariReducer, {getBarcodeAndName} from "../../Maxsulotlar/reducer/MaxsulotlarRoyxariReducer";
-import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
-import {useTranslation} from "react-i18next";
 import XaridlarXisobotiReducer, {
     getOneXaridXisobot, getPurchaseReportByBusiness, getPurchaseReportByBranch
 } from "../reducer/XaridlarXisobotiReducer";
-import Loading from "../../../../Loading";
 import XodimReducer, {getUserForFiltering, getUserForFilteringBusiness} from "../../Hodimlar/reducer/XodimReducer";
-import moment from "moment";
-import 'moment/locale/uz-latn'
+import Loading from "../../../../Loading";
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import CardBody from "../../../../Components/CardBody";
-import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../Components/SelectAnt";
+import SelectAnt, {SearchAnt} from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
+
+import './xaridxisobot.css'
 
 function XaridlarXisoboti({
                               users, XaridlarXisobotiReducer, TaminotReducer, getAllSupplier,
@@ -24,8 +26,6 @@ function XaridlarXisoboti({
                               getPurchaseReportByBusiness, getPurchaseReportByBranch, getBarcodeAndName
                           }) {
     const {t} = useTranslation()
-
-
     const [mainBranchId, setMainBranchId] = useState(null)
     const [supplierId, setSupplierId] = useState(null)
     const [userId, setUserId] = useState(null)
@@ -183,20 +183,20 @@ function XaridlarXisoboti({
 
     return (
         <div>
-            <div className="col-md-12 d-flex justify-content-between align-items-center mb-5">
+            <div className="col-md-12 d-flex justify-content-between align-items-center mb-3 mb-md-5">
                 <MainHeaderText text={'Xaridlar xisoboti'}/>
             </div>
             <CardBody>
                 <div className="col-md-12 d-flex align-items-end flex-wrap">
-                    <div className="col-md-4 p-2">
+                    <div className="col-md-4 p-2 col-12">
                         <SelectAnt name={'Filiallar'} selectList={users.branches} permission={users.getInfoAdmin}
                                    onChange={(e) => setMainBranchId(e === "" ? null : e)}/>
                     </div>
-                    <div className="col-md-4 p-2">
+                    <div className="col-md-4 p-2 col-12">
                         <SelectAnt name={'Ta\'minotchilar'} selectList={TaminotReducer.AllSupplier} permission={true}
                                    onChange={(e) => setSupplierId(e === "" ? null : e)}/>
                     </div>
-                    <div className="col-md-4 p-2">
+                    <div className="col-md-4 p-2 col-12">
                         <SelectAnt name={'Hodimlar'} selectList={XodimReducer.usersFiltering?.map((item) => ({
                             id: item.id,
                             name: item.fio
@@ -205,7 +205,7 @@ function XaridlarXisoboti({
                     </div>
                     {
                         mainBranchId
-                        && <div className="my-3 col-md-6">
+                        && <div className="my-3 p-2 col-12">
                             <SearchAnt onChange={changeSearch} name={'Mahsulotni barcode yoki nomi orqali izlash'}/>
                             {
                                 isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?
@@ -218,10 +218,9 @@ function XaridlarXisoboti({
                                             )
                                         }
                                     </div>
-                                    : ''
+                                    : null
                             }
                         </div>
-
                     }
                 </div>
             </CardBody>

@@ -1,22 +1,24 @@
-import './savdoqilingantulov.css'
-import React, {useState, useEffect, useRef} from "react";
-import SavdodagiTulovReducer, {getTradeReportByBranch, getTradeReportByBusiness} from '../reducer/SavdodagiTulovReducer'
+import {useState, useEffect} from "react";
 import {connect} from 'react-redux'
 import {useTranslation} from "react-i18next";
+import moment from "moment";
+import 'moment/locale/uz-latn'
+
 import users from "../../../../../reducer/users";
+import SavdodagiTulovReducer, {getTradeReportByBranch, getTradeReportByBusiness} from '../reducer/SavdodagiTulovReducer'
 import CustomerReducer, {
     getCustomersForTrade,
     getCustomersForTradeBusiness
 } from "../../Hamkorlar/reducer/CustomerReducer";
 import XodimReducer, {getUserForFilteringBusiness, getUserForFiltering} from "../../Hodimlar/reducer/XodimReducer";
-import Loading from "../../../../Loading";
 import MaxsulotlarRoyxariReducer, {getBarcodeAndName} from "../../Maxsulotlar/reducer/MaxsulotlarRoyxariReducer";
-import moment from "moment";
-import 'moment/locale/uz-latn'
+import Loading from "../../../../Loading";
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import CardBody from "../../../../Components/CardBody";
 import SelectAnt, {SearchAnt} from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
+
+import './savdoqilingantulov.css'
 
 function SavdodaTulov({
                           users,
@@ -31,8 +33,6 @@ function SavdodaTulov({
                       }) {
 
     const {t} = useTranslation()
-
-
     const [mainBranchId, setMainBranchId] = useState(null)
     const [customerId, setCustomerId] = useState(null)
     const [userId, setUserId] = useState(null)
@@ -152,11 +152,6 @@ function SavdodaTulov({
         setIsView(false)
     }
 
-    function removeProduct() {
-        setSearch('')
-        setProductId(null)
-    }
-
     useEffect(() => {
         setLoading(false)
         if (users.getInfoAdmin && !mainBranchId) {
@@ -180,9 +175,11 @@ function SavdodaTulov({
             })
         }
     }, [page, size, backing, customerId, userId, productId, mainBranchId])
+
     useEffect(() => {
         setPage(0)
     }, [size, backing, customerId, userId, productId, mainBranchId])
+
     useEffect(() => {
         if (users.getUserAdmin && !mainBranchId) {
             getUserForFilteringBusiness(users.businessId)
@@ -212,21 +209,21 @@ function SavdodaTulov({
             </div>
             <CardBody>
                 <div className="col-md-12 d-flex row-gap-4 flex-wrap">
-                    <div className="col-md-3 p-2">
+                    <div className="col-12 col-sm-6 col-lg-3 p-2">
                         <SelectAnt selectList={users?.branches} permission={users.getInfoAdmin} name={'Filiallar'} onChange={(e) => setMainBranchId(e === '' ? null : e)}/>
                     </div>
-                    <div className="col-md-3 p-2">
+                    <div className="col-12 col-sm-6 col-lg-3 p-2">
                         <SelectAnt selectList={CustomerReducer.customersTrade} permission={true}
                                    name={'Mijozlar'} onChange={(e) => setCustomerId(e === "" ? null : e)}/>
                     </div>
-                    <div className="col-md-3 p-2">
+                    <div className="col-12 col-sm-6 col-lg-3 p-2">
                         <SelectAnt selectList={XodimReducer.usersFiltering?.map((item) => ({
                             id: item.id,
                             name: item.fio
                         }))} permission={true}
                                    name={'Hodimlar'} onChange={(e) => setUserId(e === '' ? null : e)}/>
                     </div>
-                    <div className="col-md-3 p-2">
+                    <div className="col-12 col-sm-6 col-lg-3 p-2">
                         <SelectAnt selectList={[{id:'true',name:'Qaytarilgan'}]} permission={true}
                                    name={'Mahsulotlar'} onChange={changeBacking}/>
                     </div>
@@ -245,7 +242,7 @@ function SavdodaTulov({
                                             )
                                         }
                                     </div>
-                                    : ''
+                                    : null
                             }
                         </div>
                     }
@@ -265,90 +262,6 @@ function SavdodaTulov({
                                 </div>
                     }
                 </Loading>
-
-
-
-                {/*// <Modal isOpen={check} toggle={checktoggle} size={'xl'}>*/}
-                {/*//     <ModalHeader>*/}
-                {/*//         Savdo ma'lumotlari*/}
-                {/*//     </ModalHeader>*/}
-                {/*//     <ModalBody>*/}
-                {/*//         <div className={'table-responsive'}>*/}
-                {/*//             <table className={'table table-striped table-primary table-hover border border-1'}>*/}
-                {/*//                 <thead>*/}
-                {/*//                 <tr>*/}
-                {/*//                     <th>T/R</th>*/}
-                {/*//                     <th>To'lov holati</th>*/}
-                {/*//                     <th>Mijoz</th>*/}
-                {/*//                     <th>Mijoz qarzi</th>*/}
-                {/*//                     <th>Tel raqam:</th>*/}
-                {/*//                 </tr>*/}
-                {/*//                 </thead>*/}
-                {/*//                 <tbody>*/}
-                {/*//                 {*/}
-                {/*//                     SavdodagiTulovReducer.savdoOne?*/}
-                {/*//                     SavdodagiTulovReducer.savdoOne.map((item, index) => <tr key={index}>*/}
-                {/*//                         <td>{index + 1}</td>*/}
-                {/*//                         <td> {item.paymentStatus?.status}</td>*/}
-                {/*//                         <td>{item.customer?.name}</td>*/}
-                {/*//                         <td>{item.customer?.debt.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",")}</td>*/}
-                {/*//                         <td>{item.customer?.phoneNumber}</td>*/}
-                {/*//                     </tr>):''*/}
-                {/*//                 }*/}
-                {/*//                 </tbody>*/}
-                {/*//             </table>*/}
-                {/*//*/}
-                {/*//         </div>*/}
-                {/*//         <div className={'table-responsive'}>*/}
-                {/*//             <table className={'table mt-2 border border-1 table-striped table-hover'}>*/}
-                {/*//                 <thead>*/}
-                {/*//                 <tr>*/}
-                {/*//                     <th>T/R</th>*/}
-                {/*//                     <th>Mahsulot</th>*/}
-                {/*//                     <th>Miqdor</th>*/}
-                {/*//                     <th>Sotish narxi</th>*/}
-                {/*//                     /!*<th>Chegirma</th>*!/*/}
-                {/*//                     /!*<th>Soliq</th>*!/*/}
-                {/*//                     <th>Jami</th>*/}
-                {/*//                 </tr>*/}
-                {/*//                 </thead>*/}
-                {/*//                 <tbody>*/}
-                {/*//                 {*/}
-                {/*//                     SavdodagiTulovReducer.savdoTwo.map((item, index) => <tr key={index}>*/}
-                {/*//                         <td>{index + 1}</td>*/}
-                {/*//                         <td>{item.product ?  item.product?.name : item.productTypePrice?.name}</td>*/}
-                {/*//                         <td>{item.tradedQuantity}</td>*/}
-                {/*//                         <td>{item.product ?  item.product?.salePrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",") : item.productTypePrice?.salePrice}</td>*/}
-                {/*//                         /!*<td>0</td>*!/*/}
-                {/*//                         /!*<td>{item.product?.tax}</td>*!/*/}
-                {/*//                         <td>{(item.tradedQuantity * (item.product ?  item.product?.salePrice : item.productTypePrice?.salePrice)).toString().replace(/\B(?=(\d{3})+(?!\d))/g,",")}</td>*/}
-                {/*//                     </tr>)*/}
-                {/*//*/}
-                {/*//                 }*/}
-                {/*//                 </tbody>*/}
-                {/*//*/}
-                {/*//             </table>*/}
-                {/*//         </div>*/}
-                {/*//*/}
-                {/*//         {*/}
-                {/*//             SavdodagiTulovReducer.savdoOne.map((item, index) => <div className={'text-end'} key={index}>*/}
-                {/*//                 JAMI: {item.totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",")} so'm*/}
-                {/*//             </div>)*/}
-                {/*//         }*/}
-                {/*//*/}
-                {/*//     </ModalBody>*/}
-                {/*//     <ModalFooter>*/}
-                {/*/!*        /!*<button className={'btn btn-outline-primary'}>Print</button>*!/*!/*/}
-                {/*/!*        <button onClick={print} className={'btn btn-outline-primary'}>*!/*/}
-                {/*/!*            /!*<ReactToPrint*!/*!/*/}
-                {/*/!*            /!*    trigger={() => <p style={{marginBottom: 0}}>Print (Chek)</p>*!/*!/*/}
-                {/*/!*            /!*    }*!/*!/*/}
-                {/*/!*            /!*    content={() => componentRef.current}*!/*!/*/}
-                {/*/!*            /!*//*!/*/}
-                {/*/!*        </button>*!/*/}
-                {/*/!*        <button onClick={checktoggle} className={'btn btn-outline-primary'}>Chiqish</button>*!/*/}
-                {/*/!*    </ModalFooter>*!/*/}
-                {/*/!*</Modal>*!/*/}
             </CardBody>
         </div>
     )

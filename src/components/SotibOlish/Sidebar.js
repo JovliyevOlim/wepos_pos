@@ -1,16 +1,15 @@
-import {useState} from 'react';
-import Icon from '@ant-design/icons';
-import './sidebar.css'
+import {lazy, useState} from 'react';
+import {connect} from "react-redux";
+import {useTranslation} from "react-i18next";
+import {Route, Switch, useHistory, useLocation} from "react-router-dom";
 import {Button, Layout, Menu} from 'antd';
-import {Route, Switch, useHistory} from "react-router-dom";
+import Icon from '@ant-design/icons';
+
+import MainHeader from "./header/MainHeader";
+import useWindowWidth from "../Components/useWindowWidth";
 import ProtectedRoute from "./ThirdPage/ProtectedRoute";
-import Profil from "./header/Profil";
-import RecentActivity from "./header/ViewProfile/RecentActivity";
-import Third from "./ThirdPage/Third";
-import Error409 from "../../dashboard/jsx/pages/Error409";
 import {routes} from './headerthird';
 import users from "../../reducer/users";
-import {connect} from "react-redux";
 import Logo from "../../img/g14.svg"
 import OpenMenu from "../../img/align-right.svg"
 import {
@@ -19,18 +18,26 @@ import {
     MainMenu,
     OutlayIcon,
     ProductIcon,
-    PurchaseIcon, ReportIcon, SettingIcon,
+    PurchaseIcon,
+    ReportIcon,
+    SettingIcon,
     SuperAdminIcon,
     TradeIcon,
     UsersIcon
 } from "../Components/svg";
-import MainHeader from "./header/MainHeader";
-import {useTranslation} from "react-i18next";
-import useWindowWidth from "../Components/useWindowWidth";
+
+import './sidebar.css'
+
+const Third = lazy(() => import("./ThirdPage/Third"))
+const Profil = lazy(() => import("./header/Profil"))
+const RecentActivity = lazy(() => import("./header/ViewProfile/RecentActivity"))
+const Error409 = lazy(() => import("../../dashboard/jsx/pages/Error409"))
+
 const {Header, Content, Footer, Sider} = Layout;
 
 
 const Sidebar = ({users}) => {
+    const location = useLocation()
     const widthWidth = useWindowWidth()
     const history = useHistory()
     const {t} = useTranslation()
@@ -202,9 +209,7 @@ const Sidebar = ({users}) => {
             check: users.editInvoice || users.editMyBusiness || users.getBranch || users.addBranch || users.getProduct,
             icon: <Icon component={SettingIcon}/>,
         },
-
     ].filter(item => item.check === true);
-
 
     return (
         <Layout
@@ -230,7 +235,7 @@ const Sidebar = ({users}) => {
                     }
                     <Button
                         type="text"
-                        icon={<img src={OpenMenu} alt="w"/>}
+                        icon={<img src={OpenMenu} alt="burger menu icon"/>}
                         onClick={() => setCollapsed(!collapsed)}
                         style={{
                             display: 'flex',
@@ -245,8 +250,8 @@ const Sidebar = ({users}) => {
                 <Menu
                   colorText={'#1AA6E1'}
                   onOpenChange={onOpenChange}
-                  openKeys={openKeys}
-                  defaultSelectedKeys={['/main/dashboard']}
+                  defaultOpenKeys={openKeys}
+                  defaultSelectedKeys={[location.pathname]}
                   onClick={(e) => {
                     history.push(e.key)
                     if (widthWidth < 1024) {
@@ -271,7 +276,6 @@ const Sidebar = ({users}) => {
                                                 roles={item.permissions}/>
                             )
                         }
-                        {/*<Route path={'/main/shtrixcode'} component={ShtrixCode}/>*/}
                         <Route path={'/main/profil/edit'} component={Profil}/>
                         <Route path={'/main/profil/:id'} component={RecentActivity}/>
                         <Route path={'/main/profil'} component={RecentActivity}/>

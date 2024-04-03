@@ -1,8 +1,10 @@
-import './mijozlarxisoboti.css'
-import React, {useState, useEffect} from "react";
-import {connect} from "react-redux";
-import users from "../../../../../reducer/users";
+import {useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
+import {connect} from "react-redux";
+import moment from "moment";
+import 'moment/locale/uz-latn'
+
+import users from "../../../../../reducer/users";
 import Loading from "../../../../Loading";
 import MijozHisobotiReducer, {
     getCustomerReportByBusiness,
@@ -13,13 +15,14 @@ import CustomerReducer, {
     getCustomersForTradeBusiness
 } from "../../Hamkorlar/reducer/CustomerReducer";
 import PayReducer, {getPay} from "../../../../../reducer/PayReducer";
-import moment from "moment";
-import 'moment/locale/uz-latn'
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import CardBody from "../../../../Components/CardBody";
 import SelectAnt from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
 import {prettify} from "../../../../../util";
+
+import './mijozlarxisoboti.css'
+
 function MijozlarXisoboti({
                               users, CustomerReducer, getCustomersForTrade, getCustomersForTradeBusiness,
                               MijozHisobotiReducer, getCustomerReportByBusiness, getCustomerReportByBranch,
@@ -138,30 +141,30 @@ function MijozlarXisoboti({
 
     return (
         <div>
-            <div className="col-md-12 d-flex justify-content-between align-items-end mb-5">
+            <div className="col-md-12 d-flex justify-content-between align-items-end mb-3 mb-md-5">
                 <MainHeaderText text={'Mijozlar xisoboti'}/>
             </div>
             <CardBody>
                 <div className="col-md-12 d-flex flex-wrap">
-                    <div className="col-md-3 p-2">
+                    <div className="col-lg-3 p-2 col-12 col-sm-6">
                         <SelectAnt name={'Filiallar'} selectList={users.branches}
                                    onChange={(e) => setMainBranchId(e === "" ? null : e)}
                                 permission={users.getInfoAdmin}
                         />
                     </div>
-                    <div className="col-md-3 p-2">
+                    <div className="col-lg-3 p-2 col-12 col-sm-6">
                         <SelectAnt name={'Mijozlar'} selectList={CustomerReducer.customersTrade}
                                    onChange={(e) => setCustomerId(e === "" ? null : e)}
                                    permission={true}
                         />
                     </div>
-                    <div className="col-md-3 p-2">
+                    <div className="col-lg-3 p-2 col-12 col-sm-6">
                         <SelectAnt name={'To\'lov turlari'} selectList={PayReducer.paymethod}
                                    onChange={(e) => setPaymentMethodId(e === "" ? null : e)}
                                    permission={true}
                         />
                     </div>
-                    <div className="col-md-3 p-2">
+                    <div className="col-lg-3 p-2 col-12 col-sm-6">
                         <SelectAnt name={'Kirim-Chiqim'} selectList={[{id:'true',name:'Kirim'},{id:'false',name:'Chiqim'}]}
                                    onChange={(e) => setPlus(e === "" ? null : e)}
                                    permission={true}

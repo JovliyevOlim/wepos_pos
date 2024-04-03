@@ -5,15 +5,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
 }
-.loader{
-  position: relative;
-}
-.load{
-  position: absolute;
-  /*top: 40%;*/
-  margin-top: 15%;
-  left: 30%;
-}
 .z-index{
   width: 100%;
   z-index: 10000;
