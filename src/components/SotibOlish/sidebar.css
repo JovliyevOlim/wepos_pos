@@ -9,6 +9,9 @@ body::-webkit-scrollbar-thumb {
 body::-webkit-scrollbar-track {
     background: #ccc;
 }
+.sidebar-header.ant-layout-header{
+    line-height: initial;
+}
 .sidebar-scroll{
     background:#FFFFFF !important;
     borderRight: 2px solid #F1F2F3 !important;
@@ -211,12 +214,13 @@ body::-webkit-scrollbar-track {
     }
     .sidebar-header{
         padding: 12px;
+        height: 64px;
     }
     .content {
         padding: 0.75rem 0.5rem;
     }
 }
-@media (min-width: 426px) and (max-width: 768px){
+@media screen and (max-width: 768px){
     .content {
         padding: 1rem 0.75rem;
     }

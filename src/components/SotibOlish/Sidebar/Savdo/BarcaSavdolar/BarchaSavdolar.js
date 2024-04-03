@@ -356,9 +356,10 @@ function BarchaSavdolar({
                             <div className="col-12 col-sm-6 col-md-3 p-sm-2">
                                 <h5 className={'selectLabel'}>Sana</h5>
                                 <DatePicker
+                                    className="w-100"
                                     onChange={(e) => setStartDate(e === '' ? null : e)}/>
                             </div>
-                            <div className="col-md-12">
+                            <div className="col-12">
                                 <SearchAnt name={t('mah.35')}
                                            onChange={(e) => setSearch(e.target.value === '' ? null : e.target.value)}/>
                             </div>

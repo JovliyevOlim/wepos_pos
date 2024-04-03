@@ -20,7 +20,7 @@
     position: relative !important;
     display: flex;
     justify-content: space-between;
-    align-items: end;
+    align-items: center;
 }
 .main-notification-img{
     cursor: pointer;

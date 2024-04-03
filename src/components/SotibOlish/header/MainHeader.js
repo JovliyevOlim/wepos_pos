@@ -1,12 +1,17 @@
-import './mainHeader.css'
 import {useState, useEffect} from "react";
 import {connect} from "react-redux";
+import {Link, useHistory, useLocation} from "react-router-dom";
+import {useTranslation} from "react-i18next";
+import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import {Button, Select} from "antd";
+import Icon, {DeleteOutlined} from "@ant-design/icons";
+import {MdOutlineFiberNew} from "react-icons/md"
+import {BsCheckAll} from 'react-icons/bs'
+import moment from "moment";
+import 'moment/locale/uz-latn'
+
 import {active} from "../../../reducer/functionreducer";
 import users, {logOutUser} from "../../../reducer/users";
-import {Link, useHistory, useLocation} from "react-router-dom";
-import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
-import {useTranslation} from "react-i18next";
-import {BaseUrl} from "../../../middleware";
 import notificationReducer, {
     getNotification,
     getNotificationAll,
@@ -14,19 +19,16 @@ import notificationReducer, {
     deleteAllNotification,
     isReadNotification,
 } from "../../../reducer/notificationReducer";
-import {MdOutlineFiberNew} from "react-icons/md"
-import {BsCheckAll} from 'react-icons/bs'
-import moment from "moment";
-import 'moment/locale/uz-latn'
+import {BaseUrl} from "../../../middleware";
+import useWindowWidth from "../../Components/useWindowWidth";
+import {BurgerIcon, EditIcon, LogOutIcon, PersonIcon} from "../../Components/svg";
 import avatar from "../../../img/defaul-user-profile.svg"
 import notificationActive from '../../../img/notification-active.svg'
 import notification from '../../../img/notification.svg'
 import uzLanguage from '../../../img/uz.svg'
 import rusLanguage from '../../../img/ru.svg'
-import Icon, {DeleteOutlined} from "@ant-design/icons";
-import {BurgerIcon, EditIcon, LogOutIcon, PersonIcon} from "../../Components/svg";
-import {Button, Select} from "antd";
-import useWindowWidth from "../../Components/useWindowWidth";
+
+import './mainHeader.css'
 
 function MainHeader({
                         deleteNotification,
