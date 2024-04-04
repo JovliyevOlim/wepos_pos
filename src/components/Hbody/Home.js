@@ -1,26 +1,25 @@
+import {useState, useEffect} from "react";
+import {connect} from "react-redux";
+import {useTranslation} from "react-i18next";
+import {useHistory} from 'react-router-dom'
+import axios from "axios";
+
+import users, {saveusers, changeerror, rememberMe, login} from "../../reducer/users";
+import {active} from "../../reducer/functionreducer";
+import {BaseUrl} from "../../middleware";
+import Header from "../header/Header";
 import img from '../../img/animation_lma7k2rb.mp4'
 import person from '../../img/user.svg'
 import password from '../../img/lock 01.svg'
+
 import './home.css'
-import React, {useState, useEffect, useContext} from "react";
-import Header from "../header/Header";
-import {useHistory} from 'react-router-dom'
-import {connect} from "react-redux";
-import {active} from "../../reducer/functionreducer";
-import users, {saveusers, changeerror, rememberMe, login} from "../../reducer/users";
-import axios from "axios";
-import {BaseUrl} from "../../middleware";
-import {useTranslation} from "react-i18next";
 
 
 function Home({saveusers, users, changeerror, rememberMe}) {
-
-
     const [inputlogin, setLogin] = useState('')
     const [inputparol, setparol] = useState('')
-    const [disabled, setdisabled] = useState(false)
     const history = useHistory()
-    const {t, i18n} = useTranslation();
+    const {t} = useTranslation();
 
     function login(event) {
         setLogin(event.target.value)
@@ -65,7 +64,6 @@ function Home({saveusers, users, changeerror, rememberMe}) {
         })
     }
 
-
     useEffect(() => {
         let user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user'))
         let tokenname = localStorage.getItem('tokenname') || sessionStorage.getItem('tokenname')
@@ -79,16 +77,14 @@ function Home({saveusers, users, changeerror, rememberMe}) {
         }
     }, [])
 
-
     return (
-
         <div>
             <div id={'home'}>
                 <Header/>
                 <div className={'home-body'}>
                     <div className="col-md-12 d-flex justify-content-center justify-content-lg-between align-items-center">
                         <div className="d-none d-lg-flex justify-content-lg-center col-md-6">
-                            <video className={'home-video'} loop muted autoPlay={'autoPlay'}>
+                            <video className={'home-video d-none d-lg-block'} loop muted autoPlay={'autoPlay'}>
                                 <source src={img} type="video/mp4"/>
                             </video>
                         </div>
@@ -127,7 +123,6 @@ function Home({saveusers, users, changeerror, rememberMe}) {
                                     <input onChange={changechecked} checked={users.rememberme} type="checkbox"
                                            id={'check'}/>
                                     <label htmlFor={'check'} className={'check-label'}>
-
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                                 <title>ionicons-v5-l</title>
                                                 <path
@@ -138,16 +133,13 @@ function Home({saveusers, users, changeerror, rememberMe}) {
                                         <label  htmlFor={'check'}>{t('login.remember')}</label>
                                     </div>
                                 </div>
-                                <button onClick={testusers} disabled={disabled}
+                                <button onClick={testusers}
                                         className={'kirish-button'}>{t('login.enter')}
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
-                {/*<div className={'mt-5'}>*/}
-                {/*    <Bottom/>*/}
-                {/*</div>*/}
             </div>
         </div>
     )

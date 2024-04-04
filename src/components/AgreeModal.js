@@ -1,10 +1,6 @@
-import React from 'react';
 import {Modal, ModalBody, ModalFooter} from "reactstrap";
 
 function AgreeModal({deletemodal,deleteModaltoggle,deleteFunc,children}) {
-
-
-
     return (
         <Modal isOpen={deletemodal} toggle={deleteModaltoggle}>
             <ModalBody>

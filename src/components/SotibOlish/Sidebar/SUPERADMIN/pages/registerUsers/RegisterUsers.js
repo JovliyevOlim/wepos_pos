@@ -24,7 +24,7 @@ export function EditButton({buttonText, ...props}) {
   </Button>
 }
 
-function UserRegister({registerUserReducer,getRegisterUsers}) {
+function UserRegister({registerUserReducer,getRegisterUsers,editRegisterUsers}) {
   const {t} = useTranslation()
   const [form] = Form.useForm();
   const [pageData, setPageData] = useState({
@@ -94,6 +94,7 @@ function UserRegister({registerUserReducer,getRegisterUsers}) {
           onClick={() => {
             setPageData( (prev) => ({...prev, editId: record.id, openModal: true}))
             form.setFieldValue("fullName", record.fullName)
+            form.setFieldValue("phoneNumber", record.phoneNumber)
           }}
           buttonText={"Taxrirlash"} />
       </div>,
@@ -109,7 +110,7 @@ function UserRegister({registerUserReducer,getRegisterUsers}) {
   };
 
   return (
-    <div className="container">
+    <div className="px-2">
       <h4 className="mb-4 text-center">Ro&apos;yxatdan o&apos;tgan mijozlar</h4>
       <Modal
         open={pageData.openModal}
@@ -181,4 +182,4 @@ function UserRegister({registerUserReducer,getRegisterUsers}) {
   );
 }
 
-export default connect((registerUserReducer), {getRegisterUsers}) (UserRegister);
+export default connect((registerUserReducer), {getRegisterUsers, editRegisterUsers}) (UserRegister);

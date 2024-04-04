@@ -41,7 +41,7 @@ export const getRegisterUsers = (item) => apiCall({
 });
 
 export const editRegisterUsers = (data) => apiCall({
-  url: '/tariff/' + data.id,
+  url: `/suggestions/updateSuggestion/${data.id}`,
   method: 'put',
   data,
   onSuccess: slice.actions.savefrom.type,

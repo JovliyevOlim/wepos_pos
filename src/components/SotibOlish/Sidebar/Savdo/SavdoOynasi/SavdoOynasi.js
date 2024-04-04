@@ -374,8 +374,7 @@ function SavdoOynasi({
             } else {
                 setIsSearchProduct([])
             }
-
-        }, 1000)
+        }, 500)
 
         return () => clearTimeout(searchPro)
     }, [search])
@@ -1395,10 +1394,10 @@ function SavdoOynasi({
                         }
                         <div className={'shop-totalSum'}>
                             <p>{t('Trade.14')}: </p>
-                            <p>{jamixisob} {t('mah.39')}</p>
+                            <p>{Math.round(jamixisob)} {t('mah.39')}</p>
                         </div>
-                        <div className={'d-flex justify-content-between align-items-center w-100'}>
-                            <p className='shop-productSum'>{t('Trade.15')}:{xisob}</p>
+                        <div className={'d-flex justify-content-end align-items-center w-100'}>
+                            {/*<p className='shop-productSum'>{t('Trade.15')}:{xisob}</p>*/}
                             <div className={'discount-percent'}>
                                 <p>{t('Trade.28')}: {customerPercent} %</p>
                             </div>

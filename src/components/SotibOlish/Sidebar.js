@@ -220,7 +220,7 @@ const Sidebar = ({users}) => {
         >
             <Sider
               trigger={null}
-              className={`sidebar-scroll ${widthWidth < 1024 && (collapsed ? 'd-none' : '')}`}
+              className={`sidebar-scroll ${widthWidth <= 1024 && (collapsed ? 'd-none' : '')}`}
               collapsible
               collapsedWidth={widthWidth >= 1024 ? 100 : 0}
               width={widthWidth <= 1024 ? (collapsed ? 0 : '100%') : (collapsed ? 100 : 250)}
@@ -254,7 +254,7 @@ const Sidebar = ({users}) => {
                   defaultSelectedKeys={[location.pathname]}
                   onClick={(e) => {
                     history.push(e.key)
-                    if (widthWidth < 1024) {
+                    if (widthWidth <= 1024) {
                         setCollapsed(!collapsed)
                     }
                   }}
