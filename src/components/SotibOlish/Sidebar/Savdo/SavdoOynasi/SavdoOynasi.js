@@ -33,7 +33,7 @@ import moment from "moment";
 import CustomerReducer, {getCustomersForTrade, saveCustomer} from "../../Hamkorlar/reducer/CustomerReducer";
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
-import {InputNumber} from "antd";
+import {InputNumber, QRCode} from "antd";
 import allbusinessreducer, {getOneBusiness} from "../../SUPERADMIN/reducers/allbusinessreducer";
 import Edit from "../../../../../img/Edit.png";
 import Loading from "../../../../Loading";
@@ -2263,6 +2263,13 @@ function SavdoOynasi({
                             </div>
                             : ''
                     }
+                    <div className="d-flex align-items-center justify-content-center">
+                        <QRCode
+                          value={checkReducer.check.qrCode || '-'}
+                          errorLevel={"Q"}
+                          size={200}
+                        />
+                    </div>
                 </div>
 
             </div>

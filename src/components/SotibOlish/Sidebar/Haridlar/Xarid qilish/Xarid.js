@@ -1,28 +1,30 @@
-import './xarid.css'
-import React, {useEffect, useState,useRef} from "react";
+import {useEffect, useState,useRef} from "react";
 import {ModalBody, ModalHeader, ModalFooter, Modal} from "reactstrap";
 import {connect} from "react-redux";
+import {useTranslation} from "react-i18next";
+import {ImCancelCircle} from "react-icons/im";
+import {useForm} from "react-hook-form";
+import PhoneInput from 'react-phone-number-input'
+import {useHistory} from 'react-router-dom'
+import {DatePicker} from "antd";
+import {toast} from "react-toastify";
+
+import users from "../../../../../reducer/users";
 import XaridReducer, {
     getPurchaseById,
     saveXarid,
     editXarid
 } from '../reducer/XaridReducer'
-import users from "../../../../../reducer/users";
-import {useHistory} from 'react-router-dom'
-import {toast} from "react-toastify";
 import TaminotReducer, {
     saveTaminot,
     getAllSupplier
 } from "../../Hamkorlar/reducer/TaminotReducer";
 import PayReducer, {getPay} from "../../../../../reducer/PayReducer";
-import {useTranslation} from "react-i18next";
-import {ImCancelCircle} from "react-icons/im";
-import {useForm} from "react-hook-form";
 import ModalLoading from "../../../../ModalLoading";
-import PhoneInput from 'react-phone-number-input'
-import 'react-phone-number-input/style.css'
 import MaxsulotlarRoyxariReducer, {getBarcodeAndName} from "../../Maxsulotlar/reducer/MaxsulotlarRoyxariReducer";
 
+import './xarid.css'
+import 'react-phone-number-input/style.css'
 
 function Xarid({
                    getPurchaseById,
@@ -131,8 +133,6 @@ function Xarid({
 
         setXaridArrayPost(a)
     }
-
-    const [deleteEdit, setDeleteEdit] = useState(false)
 
     function DeleteXaridArrayPost(indx, purchasesId) {
         if (purchasesId) {
@@ -412,6 +412,8 @@ function Xarid({
                                             <th>{t('Purchase.21')}</th>
                                             <th>{t('Purchase.22')}</th>
                                             <th>{t('ProductList.12')}</th>
+                                            <th>Tugash sanasi</th>
+                                            <th>Eslatma sanasi</th>
                                             <th>x</th>
                                         </tr>
                                         </thead>
@@ -419,54 +421,66 @@ function Xarid({
                                         {
                                             XaridArrayPost.map((item, index) =>
                                                 !item.delete &&
-                                                <tr className={'text-center'}>
-                                                    <td>
-                                                        <div>
-                                                            <h4>{item.name}</h4>
-                                                            <p>{item.amount} {item.measurement}</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div
-                                                            className={'d-flex justify-content-center align-items-center'}>
-                                                            <input className={'form-control'}
-                                                                   step="any"
-                                                                   name={'quantity'}
-                                                                   value={item.quantity}
-                                                                   onChange={(e) => ComboChangeAmount(e, index)}
-                                                                   type="number"
-                                                                   min={0}
-                                                            />
-                                                            <input className={'form-control'} type="text"
-                                                                   disabled={true}
-                                                                   value={item.measurement}/>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div className={'d-flex align-items-center'}>
-                                                            <input type="number" min={0} className={'form-control'}
-                                                                   name={"buyPrice"}
-                                                                   onChange={(e) => ComboChangeAmount(e, index)}
-                                                                   value={item.buyPrice} placeholder={item.buyPrice}/>
-                                                        </div>
+                                              <tr className={'text-center'}>
+                                                  <td>
+                                                      <div>
+                                                          <h4>{item.name}</h4>
+                                                          <p>{item.amount} {item.measurement}</p>
+                                                      </div>
+                                                  </td>
+                                                  <td>
+                                                      <div
+                                                        className={'d-flex justify-content-center align-items-center'}>
+                                                          <input className={'form-control'}
+                                                                 step="any"
+                                                                 name={'quantity'}
+                                                                 value={item.quantity}
+                                                                 onChange={(e) => ComboChangeAmount(e, index)}
+                                                                 type="number"
+                                                                 min={0}
+                                                          />
+                                                          <input className={'form-control'} type="text"
+                                                                 disabled={true}
+                                                                 value={item.measurement}/>
+                                                      </div>
+                                                  </td>
+                                                  <td>
+                                                      <div className={'d-flex align-items-center'}>
+                                                          <input type="number" min={0} className={'form-control'}
+                                                                 name={"buyPrice"}
+                                                                 onChange={(e) => ComboChangeAmount(e, index)}
+                                                                 value={item.buyPrice} placeholder={item.buyPrice}/>
+                                                      </div>
 
-                                                    </td>
-                                                    <td>
-                                                        {item.quantity * item.buyPrice}
-                                                    </td>
-                                                    <td>
+                                                  </td>
+                                                  <td>
+                                                      {item.quantity * item.buyPrice}
+                                                  </td>
+                                                  <td>
 
-                                                        <div className={'d-flex align-items-center'}>
-                                                            <input type="number" min={0} className={'form-control'}
-                                                                   name={"salePrice"}
-                                                                   onChange={(e) => ComboChangeAmount(e, index)}
-                                                                   value={item.salePrice}/>
-                                                        </div>
-                                                    </td>
-                                                    <td className={'text-danger'}><ImCancelCircle
-                                                        onClick={() => DeleteXaridArrayPost(index, item.id)}
-                                                        style={{width: '30px', height: '30px'}}/></td>
-                                                </tr>
+                                                      <div className={'d-flex align-items-center'}>
+                                                          <input type="number" min={0} className={'form-control'}
+                                                                 name={"salePrice"}
+                                                                 onChange={(e) => ComboChangeAmount(e, index)}
+                                                                 value={item.salePrice}/>
+                                                      </div>
+                                                  </td>
+                                                  <td>
+                                                      <input type="date" className={'form-control'}
+                                                             name={"endDate"}
+                                                             onChange={(e) => ComboChangeAmount(e, index)}
+                                                             value={item.endDate}/>
+                                                  </td>
+                                                  <td>
+                                                      <input type="number" min={0} className={'form-control'}
+                                                             name={"warningDay"}
+                                                             onChange={(e) => ComboChangeAmount(e, index)}
+                                                             value={item.warningDay}/>
+                                                  </td>
+                                                  <td className={'text-danger'}><ImCancelCircle
+                                                    onClick={() => DeleteXaridArrayPost(index, item.id)}
+                                                    style={{width: '30px', height: '30px'}}/></td>
+                                              </tr>
                                             )
                                         }
                                         </tbody>

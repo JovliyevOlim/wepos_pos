@@ -1,23 +1,24 @@
-import './chek.css'
-import React, {useEffect, useState} from 'react'
-import {useForm} from "react-hook-form";
-import { Editor } from '@tinymce/tinymce-react'
+import {useEffect, useState} from 'react'
 import {connect} from "react-redux";
+import {useTranslation} from "react-i18next";
+import {QRCode} from "antd";
+import { Editor } from '@tinymce/tinymce-react'
+
 import photoreducer,{savephoto,clearPhotoId,deletePhoto} from "../../../../../../reducer/photoreducer";
 import checkReducer,{getInvoice,editInvoice} from "../../../../../../reducer/checkReducer";
 import users from "../../../../../../reducer/users";
 import Imagecom from "../../../../../Imagecom";
-import {useTranslation} from "react-i18next";
+
+import './chek.css'
 
 function Chek({savephoto,photoreducer,checkReducer,getInvoice,editInvoice,users,deletePhoto}){
-
     const [name,setName] = useState('')
     const [chekHead,setchekHead] = useState('')
     const [chekFooter,setFooter] = useState('')
+    const [chekQrCode,setQrCode] = useState('')
     const [photo,setPhoto] = useState(null)
     const [branch,setbranch] = useState(null)
     const {t} = useTranslation()
-
 
     useEffect(()=>{
         getInvoice(users.branchId)
@@ -26,10 +27,11 @@ function Chek({savephoto,photoreducer,checkReducer,getInvoice,editInvoice,users,
 
     useEffect(()=>{
         if (checkReducer.check){
-            const {name,footer,description,photoId} = checkReducer.check
+            const {name,footer,description,photoId, qrCode} = checkReducer.check
             setName(name)
             setchekHead(description)
             setFooter(footer)
+            setQrCode(qrCode)
             setPhoto(photoId)
         }
     },[checkReducer.getBoolean])
@@ -57,15 +59,18 @@ function Chek({savephoto,photoreducer,checkReducer,getInvoice,editInvoice,users,
         data.append('file', e.target.files[0]);
         savephoto(data)
     }
+
      function onSubmit2(){
         editInvoice({
             name,
             footer:chekFooter,
             description:chekHead,
             photoId:photo,
+            qrCode: chekQrCode,
             branchId:branch ? branch : users.branchId
         })
     }
+
     function onChangeHeadText(e){
         setchekHead(e.target.getContent())
     }
@@ -101,12 +106,17 @@ function Chek({savephoto,photoreducer,checkReducer,getInvoice,editInvoice,users,
                     <div className="col-md-6">
                         <div className="col-sm-12 mb-2">
                             <label htmlFor={'login1'}>Name</label>
-                            <input type="text" id={'login1'} value={name} onChange={(e)=>setName(e.target.value)}
+                            <input type="text" id={'login1'} value={name} onChange={(e) => setName(e.target.value)}
+                                   className={'form-control'}/>
+                        </div>
+                        <div className="col-sm-12 mb-2">
+                            <label htmlFor={'qrcode'}>QrCode link</label>
+                            <input type="text" id={'qrcode'} value={chekQrCode} onChange={(e) => setQrCode(e.target.value)}
                                    className={'form-control'}/>
                         </div>
                         <div className={'col-md-12 col-sm-12'}>
                             <p className={"p-0 m-0"}>Logo</p>
-                            <label htmlFor={'mahRasm'}  style={{width: "100%"}}>
+                            <label htmlFor={'mahRasm'} style={{width: "100%"}}>
                                 <p className={'btn btn-outline-primary form-control'}>Add Picture</p>
                             </label>
                             <input type="file" className={'form-control d-none'}
@@ -118,23 +128,31 @@ function Chek({savephoto,photoreducer,checkReducer,getInvoice,editInvoice,users,
                         <Imagecom id={photo}/>
                     </div>
 
-                        <div className="col-sm-12  mb-2">
-                            <h4>{t('set.25')}</h4>
-                                    <Editor
+                    <div className="col-sm-12  mb-2">
+                        <h4>{t('set.25')}</h4>
+                        <Editor
+                                        apiKey='kkjjryyh1qoiepsxtam1vtgslftwdprq3whrt32rc1gloupt'
                                         initialValue={chekHead}
                                         onChange={onChangeHeadText}
-
                                     />
                         </div>
                     <div className="col-sm-12  mb-2">
                         <h4>{t('set.26')}</h4>
                         <Editor
+                            apiKey='kkjjryyh1qoiepsxtam1vtgslftwdprq3whrt32rc1gloupt'
                             initialValue={chekFooter}
                             onChange={onChangeFooterText}/>
                     </div>
                     <div dangerouslySetInnerHTML={{__html: chekHead}}>
                     </div>
                     <div dangerouslySetInnerHTML={{__html: chekFooter}}>
+                    </div>
+                    <div>
+                        <QRCode
+                            value={chekQrCode || '-'}
+                            errorLevel={"Q"}
+                            size={300}
+                        />
                     </div>
                 </div>
                 <div className={'d-flex justify-content-end'}>
@@ -143,4 +161,5 @@ function Chek({savephoto,photoreducer,checkReducer,getInvoice,editInvoice,users,
         </div>
     )
 }
+
 export default connect((photoreducer,checkReducer,users),{savephoto,getInvoice,editInvoice,deletePhoto}) (Chek)
