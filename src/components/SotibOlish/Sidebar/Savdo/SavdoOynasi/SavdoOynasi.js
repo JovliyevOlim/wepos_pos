@@ -194,7 +194,6 @@ function SavdoOynasi({
     const [categoryId, setCategoryId] = useState('')
     const [state, dispatch] = useReducer(reducer, {
         name: '',
-        branchId: '',
         phoneNumber: '',
         percent: ''
     })
@@ -248,10 +247,10 @@ function SavdoOynasi({
     }
 
     function addCustomer() {
-        if (!state.name || !state.branchId || !state.phoneNumber || !state.percent) {
+        if (!state.name || !state.phoneNumber || !state.percent) {
             setIsCheck(true)
         } else {
-            saveCustomer(state)
+            saveCustomer({...state,branchId:mainBranchId ? mainBranchId : users.branchId})
             addCustomerToggle()
         }
 
@@ -365,18 +364,27 @@ function SavdoOynasi({
     }
 
     useEffect(() => {
-        const searchPro = setTimeout(() => {
-            if (search) {
-                getBarcodeAndName({
-                    branchId: mainBranchId ? mainBranchId : users.branchId,
-                    name: search
-                })
+        if (search) {
+            if (6 < search?.length) {
+                const searchPro = setTimeout(() => {
+                    getBarcodeAndName({
+                        branchId: mainBranchId ? mainBranchId : users.branchId,
+                        name: search
+                    })
+                }, 10)
+                return () => clearTimeout(searchPro)
             } else {
-                setIsSearchProduct([])
+                const searchPro = setTimeout(() => {
+                    getBarcodeAndName({
+                        branchId: mainBranchId ? mainBranchId : users.branchId,
+                        name: search
+                    })
+                }, 500)
+                return () => clearTimeout(searchPro)
             }
-        }, 500)
-
-        return () => clearTimeout(searchPro)
+        } else {
+            setIsSearchProduct([])
+        }
     }, [search])
 
     useEffect(() => {
@@ -531,7 +539,7 @@ function SavdoOynasi({
                 setCustomerPercent(customer.percent)
             }
         }
-        setarr1([])
+        xisobkitob(arr1)
     }
 
     const [saveModal, setSaveModal] = useState(false)
@@ -1018,8 +1026,6 @@ function SavdoOynasi({
     }
 
 
-
-
     return (
         <div>
             <div className={"shopping"}>
@@ -1361,7 +1367,7 @@ function SavdoOynasi({
                         <div className={'d-flex justify-content-between flex-wrap   align-items-center w-100'}>
                             {
                                 PayReducer.paymethod &&
-                                PayReducer.paymethod.filter(value=>value.main === true).map((item,index) =>
+                                PayReducer.paymethod.filter(value => value.main === true).map((item, index) =>
                                     match.params.remainId || tradeIdForEdit ?
                                         editActiveButton === item.id &&
                                         <button key={item.id}
@@ -1845,16 +1851,16 @@ function SavdoOynasi({
                             />
                             {IsCheck && !state.name && <p
                                 className={'text-danger text-center p-0 m-0'}>{t('mah.92')}</p>}
-                            <label className={'mt-1'} htmlFor={'filial'}>{t('CustomAll.5')}</label>
-                            <Select
-                                required={true}
-                                onChange={(e) => dispatch({type: 'branchId', payload: e.value})}
-                                placeholder={t('mah.93')}
-                                options={users.branches.map(item => ({label: item.name, value: item.id}))}
-                                isClearable={true}
-                            />
-                            {IsCheck && !state.branchId && <p
-                                className={'text-danger text-center p-0 m-0'}>{t('mah.94')}</p>}
+                            {/*<label className={'mt-1'} htmlFor={'filial'}>{t('CustomAll.5')}</label>*/}
+                            {/*<Select*/}
+                            {/*    required={true}*/}
+                            {/*    onChange={(e) => dispatch({type: 'branchId', payload: e.value})}*/}
+                            {/*    placeholder={t('mah.93')}*/}
+                            {/*    options={users.branches.map(item => ({label: item.name, value: item.id}))}*/}
+                            {/*    isClearable={true}*/}
+                            {/*/>*/}
+                            {/*{IsCheck && !state.branchId && <p*/}
+                            {/*    className={'text-danger text-center p-0 m-0'}>{t('mah.94')}</p>}*/}
                             <label className={'mt-1'} htmlFor={'tel'}>{t('Buttons.14')}</label>
                             <PhoneInput
                                 placeholder={t('mah.95')}
@@ -1862,7 +1868,7 @@ function SavdoOynasi({
                                 onChange={(e) => dispatch({type: 'phoneNumber', payload: e})}/>
                             {IsCheck && !state.phoneNumber && <p
                                 className={'text-danger text-center p-0 m-0'}>{t('mah.95')}</p>}
-                            <label htmlFor={'foizda'}>{t('Buttons.15')}</label>
+                            <label htmlFor={'foizda'}>Chegirma</label>
                             <input type="text"
                                    onChange={(e) => dispatch({type: 'percent', payload: e.target.value})}
                                    placeholder={t('mah.96')}
