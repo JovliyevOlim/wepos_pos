@@ -1,23 +1,24 @@
+import React, {useState, useEffect} from "react";
 import {connect} from "react-redux";
+import {useTranslation} from "react-i18next";
+import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+
 import MahsulotTurlariReducer, {
     deleteProductType,
     editProductType,
     getProductType,
     saveProductType
 } from "../reducer/MahsulotTurlariReducer";
-import React, {useState, useEffect} from "react";
-import {useTranslation} from "react-i18next";
-import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
-import './mahsulotturlari.css'
 import users from "../../../../../reducer/users";
 import Loading from "../../../../Loading";
 import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
 import MainHeaderText, {AddOrEditText} from "../../../../Components/MainHeaderText";
-import {ButtonAnt} from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
 import CommonTable from "../../../../Components/CommonTable";
-import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
+import {AddButton, DeleteButton, EditButton} from "../../../../Components/Buttons";
+
+import './mahsulotturlari.css'
 
 function MahsulotTurlari({
                              saveProductType,
@@ -29,8 +30,6 @@ function MahsulotTurlari({
                          }) {
 
     const {t} = useTranslation()
-
-
     const [typeName, setTypeName] = useState('')
     const [valueList, setValueList] = useState([{
         name: '',
@@ -38,7 +37,9 @@ function MahsulotTurlari({
     }])
     const [saveModal, setSaveModal] = useState(false)
     const [active, setActive] = useState(false)
-    const [isCheck, setIsCheck] = useState(false)
+    const [deletemodal, setdeletemodal] = useState(false)
+    const [editId, setEditId] = useState(null)
+    const [loading, setLoading] = useState(false)
 
 
     const columns = [
@@ -50,7 +51,6 @@ function MahsulotTurlari({
         },
         {
             title: t('ProductType.1'),
-            width: 50,
             dataIndex: 'name',
             key: 'name',
         },
@@ -59,7 +59,6 @@ function MahsulotTurlari({
             title: t('ProductType.2'),
             dataIndex: 'values',
             key: 'values',
-            width: 100,
             render: (item) => <p className={'m-0'}>
                 {item.map(item2 =>
                     <span className={'p-0 m-0'}>{item2.name}, </span>
@@ -70,25 +69,14 @@ function MahsulotTurlari({
         {
             title: t('ol.20'),
             key: 'operation',
-            width: 150,
-            render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
+            render: (item, values) => <div className={'d-flex justify-content-center gap-2 flex-wrap'}>
                 {
-                    users.productTypeRoles &&
-                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
-                        editt(values.id)
-                    }
-                    } icon={<EditOutlined/>}/>
+                    users.productTypeRoles && <EditButton onClick={() => {editt(values.id)}}/>
                 }
                 {
-                    users.productTypeRoles &&
-                    <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
-                        deleteProductTypeById(values.id)
-                    }
-                    } icon={<DeleteOutlined/>}/>
+                    users.productTypeRoles && <DeleteButton onClick={() => {deleteProductTypeById(values.id)}}/>
                 }
-
             </div>,
-
         },
     ];
 
@@ -176,13 +164,6 @@ function MahsulotTurlari({
         setValueList(newArr)
     }
 
-
-    const [deletemodal, setdeletemodal] = useState(false)
-
-
-    const [editId, setEditId] = useState(null)
-
-
     function editt(id) {
         setActive(true)
         setEditId(id)
@@ -212,8 +193,6 @@ function MahsulotTurlari({
         getProductType(users.businessId)
     }, [MahsulotTurlariReducer.current])
 
-    const [loading, setLoading] = useState(false)
-
     useEffect(() => {
             setLoading(true)
     }, [MahsulotTurlariReducer.getBoolean])
@@ -227,9 +206,8 @@ function MahsulotTurlari({
         <div>
             <div className="col-md-12 d-flex align-items-center justify-content-between">
                 <MainHeaderText text={t('sidebar.addType')}/>
-                <ButtonAnt onClick={toggle} type={'primary'} icon={<PlusOutlined/>} text={t('button.add')}/>
+                <AddButton onClick={toggle} text={t('button.add')} />
             </div>
-
             <CardBody>
                 <Loading spinning={loading}>
                     {
@@ -272,14 +250,11 @@ function MahsulotTurlari({
                                                             onClick={() => handleDelete(index, data?.id ? data?.id : null)}>x
                                                     </button>
                                             }
-
-                                        </div> : ''
+                                        </div> : null
                                 )
                             })
-
                         }
                     </div>
-
                 </ModalBody>
                 <ModalFooter>
                     <button className={'btn btn-danger'}
@@ -287,7 +262,6 @@ function MahsulotTurlari({
                     <button className={'btn btn-success'} onClick={save}>{t('Buttons.6')}</button>
                 </ModalFooter>
             </Modal>
-
             <ModalLoading isOpen={saveModal}/>
             <AgreeModal deleteModaltoggle={() => setdeletemodal(prevState => !prevState)} deleteFunc={deleteFunc}
                         deletemodal={deletemodal}/>

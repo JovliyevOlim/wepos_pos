@@ -110,7 +110,7 @@ function Chek({savephoto,photoreducer,checkReducer,getInvoice,editInvoice,users,
                                    className={'form-control'}/>
                         </div>
                         <div className="col-sm-12 mb-2">
-                            <label htmlFor={'qrcode'}>QrCode link</label>
+                            <label htmlFor={'qrcode'}>Qr Ma'lumot</label>
                             <input type="text" id={'qrcode'} value={chekQrCode} onChange={(e) => setQrCode(e.target.value)}
                                    className={'form-control'}/>
                         </div>
@@ -131,6 +131,7 @@ function Chek({savephoto,photoreducer,checkReducer,getInvoice,editInvoice,users,
                     <div className="col-sm-12  mb-2">
                         <h4>{t('set.25')}</h4>
                         <Editor
+
                                         apiKey='kkjjryyh1qoiepsxtam1vtgslftwdprq3whrt32rc1gloupt'
                                         initialValue={chekHead}
                                         onChange={onChangeHeadText}

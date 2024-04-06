@@ -1,26 +1,27 @@
-import './HodimlarRoyhati.css';
+import {useEffect, useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
-import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
+import {useTranslation} from "react-i18next";
+import {Avatar} from "antd";
+
 import users from "../../../../../reducer/users";
 import XodimReducer, {
     getXodim,
     deleteXodim, getUserByBranch
 } from "../reducer/XodimReducer";
-import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
 import ModalLoading from "../../../../ModalLoading";
-import {BaseUrl} from "../../../../../middleware";
 import photoreducer, {savephoto} from "../../../../../reducer/photoreducer";
 import AgreeModal from "../../../../AgreeModal";
 import LavozimReducer, {getLavozim} from "../reducer/LavozimReducer";
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import CardBody from "../../../../Components/CardBody";
-import SelectAnt, {ButtonAnt, SearchAnt, TableButton} from "../../../../Components/SelectAnt";
+import SelectAnt, {SearchAnt} from "../../../../Components/SelectAnt";
+import {AddButton, DeleteButton, EditButton} from "../../../../Components/Buttons";
 import CommonTable from "../../../../Components/CommonTable";
-import {Avatar} from "antd";
-import {DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined} from "@ant-design/icons";
+import {BaseUrl} from "../../../../../middleware";
 
+import './HodimlarRoyhati.css';
 
 function HodimlarRoyhati({
                              getXodim,
@@ -49,13 +50,11 @@ function HodimlarRoyhati({
         },
         {
             title: t('ol.74'),
-            width: 50,
             dataIndex: 'username',
             key: 'username',
         },
         {
             title: t('ol.75'),
-            width: 80,
             dataIndex: 'fio',
             key: 'fio',
             render: (item, values) => <div className={'d-flex gap-2 justify-content-between align-items-center'}>
@@ -76,38 +75,24 @@ function HodimlarRoyhati({
             title: t('ol.76'),
             dataIndex: 'roleName',
             key: 'roleName',
-            width: 50,
         },
         {
             title: t('ol.77'),
             dataIndex: 'phoneNumber',
             key: 'phoneNumber',
-            width: 100,
         },
         {
             title: t('ol.20'),
             key: 'operation',
-            width: 150,
-            render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
-                {/*<TableButton type={'primary'} title={'Ko\'rish'} onClick={() => {*/}
-                {/*    history.push('/main/profil/' + values.id)*/}
-                {/*}*/}
-                {/*} icon={<EyeOutlined/>}/>*/}
+            render: (item, values) => <div className={'d-flex justify-content-center gap-3 flex-wrap'}>
                 {
-                    users.editUser &&
-                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
-                        history.push('/main/addUser/' + values.id)
-                    }
-                    } icon={<EditOutlined/>}/>
+                    users.editUser && <EditButton
+                        onClick={() => {history.push('/main/addUser/' + values.id)}}
+                    />
                 }
                 {
-                    users.deleteUser &&
-                    <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
-                        deleteUserById(values.id)
-                    }
-                    } icon={<DeleteOutlined/>}/>
+                    users.deleteUser && <DeleteButton onClick={() => {deleteUserById(values.id)}}/>
                 }
-
             </div>,
         },
     ];
@@ -194,7 +179,7 @@ function HodimlarRoyhati({
                 {
                     users.addUser ?
                         <Link to={'/main/addUser'}>
-                            <ButtonAnt text={t('button.add')} icon={<PlusOutlined/>} type={'primary'}/>
+                            <AddButton text={t('button.add')} />
                         </Link> : ''
                 }
             </div>
@@ -242,7 +227,7 @@ function HodimlarRoyhati({
                             }
                         </Loading>
                     </CardBody>
-                    : ''
+                    :  null
             }
 
             <ModalLoading isOpen={saveModal}/>
@@ -252,7 +237,6 @@ function HodimlarRoyhati({
         </>
     )
 }
-
 
 export default connect((XodimReducer, users, photoreducer, LavozimReducer), {
     getXodim, getUserByBranch,

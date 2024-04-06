@@ -1,19 +1,20 @@
-import './bolimlar.css'
 import {useState, useEffect} from "react";
-import {useForm} from "react-hook-form";
-import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import {connect} from "react-redux";
+import {useForm} from "react-hook-form";
+import {useTranslation} from "react-i18next";
+import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+
 import BolimReducer, {deleteBolim, editBolim, getBolim, saveBolim,} from "../reducer/BolimReducer";
 import users from "../../../../../reducer/users";
-import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
 import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
 import MainHeaderText from "../../../../Components/MainHeaderText";
-import {ButtonAnt} from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
-import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 import CardBody from "../../../../Components/CardBody";
+import {AddButton, DeleteButton, EditButton} from "../../../../Components/Buttons";
+
+import './bolimlar.css'
 
 function Bolimlar({
                       editBolim,
@@ -25,10 +26,13 @@ function Bolimlar({
                   }) {
 
     const {t} = useTranslation()
-    const {resetField, reset, setValue, handleSubmit, register, formState: {errors}} = useForm()
+    const {resetField, setValue, handleSubmit, register, formState: {errors}} = useForm()
     const [loading, setLoading] = useState(false)
     const [active, setActive] = useState(false)
     const [editId, setEditId] = useState(null)
+    const [deletemodal, setdeletemodal] = useState(false)
+    const [deleteID, setdeletID] = useState('')
+    const [saveModal, setSaveModal] = useState(false)
 
     const columns = [
         {
@@ -39,7 +43,6 @@ function Bolimlar({
         },
         {
             title: t('as.4'),
-            width: 50,
             dataIndex: 'name',
             key: 'name',
         },
@@ -47,29 +50,17 @@ function Bolimlar({
             title: t('as.5'),
             dataIndex: 'description',
             key: 'description',
-            width: 50,
         },
         {
             title: t('ol.20'),
             key: 'operation',
-            width: 150,
-            render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
-
+            render: (item, values) => <div className={'d-flex justify-content-start gap-2 flex-wrap'}>
                 {
-                    users.categoryRoles &&
-                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
-                        editBolimF(values.id)
-                    }
-                    } icon={<EditOutlined/>}/>
+                    users.categoryRoles && <EditButton onClick={() => {editBolimF(values.id)}}/>
                 }
                 {
-                    users.categoryRoles &&
-                    <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
-                        deleteCategoryById(values.id)
-                    }
-                    } icon={<DeleteOutlined/>}/>
+                    users.categoryRoles && <DeleteButton onClick={() => {deleteCategoryById(values.id)}}/>
                 }
-
             </div>,
         },
     ];
@@ -81,7 +72,6 @@ function Bolimlar({
         setEditId('')
     }
 
-
     function editBolimF(id) {
         setActive(true)
         setEditId(id)
@@ -89,10 +79,6 @@ function Bolimlar({
         setValue('name', a[0].name)
         setValue('description', a[0].description)
     }
-
-
-    const [deletemodal, setdeletemodal] = useState(false)
-    const [deleteID, setdeletID] = useState('')
 
     function deleteFunc() {
         deleteBolim(deleteID)
@@ -106,8 +92,6 @@ function Bolimlar({
     useEffect(() => {
         getBolim(users.businessId)
     }, [BolimReducer.current])
-
-    const [saveModal, setSaveModal] = useState(false)
 
     useEffect(() => {
         if (BolimReducer.saveBoolean) {
@@ -153,9 +137,7 @@ function Bolimlar({
             <div className="col-md-12 d-flex justify-content-between align-items-center mb-5">
                 <MainHeaderText text={t('sidebar.category')}/>
                 {
-                    users.categoryRoles ?
-                        <ButtonAnt onClick={toggle} type={'primary'} icon={<PlusOutlined/>}
-                                   text={t('button.add')}/> : ''
+                    users.categoryRoles ? <AddButton onClick={toggle} text={t('button.add')} /> : null
                 }
             </div>
 

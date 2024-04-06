@@ -1,36 +1,34 @@
-import React from 'react'
-import "./lavozimlar.css"
-import {Link, useHistory} from 'react-router-dom'
 import {useEffect, useState} from "react";
 import {connect} from "react-redux";
+import {Link, useHistory} from 'react-router-dom'
+import {useTranslation} from "react-i18next";
+
 import LavozimReducer, {getLavozim, saveLavozim, editLavozim, deleteLavozim} from "../reducer/LavozimReducer";
 import users from "../../../../../reducer/users";
-import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
 import AgreeModal from "../../../../AgreeModal";
 import ModalLoading from "../../../../ModalLoading";
 import MainHeaderText from "../../../../Components/MainHeaderText";
-import {ButtonAnt} from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
-import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 import CardBody from "../../../../Components/CardBody";
+import {AddButton, DeleteButton, EditButton} from "../../../../Components/Buttons";
+
+import "./lavozimlar.css"
 
 function Lavozimlar({getLavozim, users, deleteLavozim, LavozimReducer}) {
-
-
     const {t} = useTranslation()
     const history = useHistory();
+    const [saveModal, setSaveModal] = useState(false)
+    const [deletemodal, setdeletemodal] = useState(false)
+    const [deleteID, setdeletID] = useState(null)
+    const [loading, setLoading] = useState(false)
+
     useEffect(() => {
         if (users.getRole) {
             getLavozim(users.businessId)
         }
     }, [LavozimReducer.current])
 
-    const [saveModal, setSaveModal] = useState(false)
-    const [deletemodal, setdeletemodal] = useState(false)
-    const [deleteID, setdeletID] = useState(null)
-
-    const [loading, setLoading] = useState(false)
     const columns = [
         {
             title: 'Id',
@@ -40,7 +38,6 @@ function Lavozimlar({getLavozim, users, deleteLavozim, LavozimReducer}) {
         },
         {
             title: t('Roles.1'),
-            width: 50,
             dataIndex: 'name',
             key: 'name',
         },
@@ -48,27 +45,19 @@ function Lavozimlar({getLavozim, users, deleteLavozim, LavozimReducer}) {
             title: t('ol.103'),
             dataIndex: 'description',
             key: 'description',
-            width: 50,
         },
         {
             title: t('ol.20'),
             key: 'operation',
-            width: 150,
-            render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
-                {users.editRole &&
-                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
-                        history.push('/main/addRole/' + values.id)
-                    }
-                    } icon={<EditOutlined/>}/>
+            render: (item, values) => <div className={'d-flex justify-content-start gap-2 flex-wrap'}>
+                {
+                    users.editRole && <EditButton
+                        onClick={() => {history.push('/main/addRole/' + values.id)}}
+                    />
                 }
                 {
-                    users.deleteRole &&
-                    <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
-                        deleteRoleById(values.id)
-                    }
-                    } icon={<DeleteOutlined/>}/>
+                    users.deleteRole && <DeleteButton onClick={() => {deleteRoleById(values.id)}}/>
                 }
-
             </div>,
         },
     ];
@@ -109,8 +98,8 @@ function Lavozimlar({getLavozim, users, deleteLavozim, LavozimReducer}) {
                 <MainHeaderText text={t('sidebar.roles')}/>
                 {
                     users.addRole ? <Link to={'/main/addRole'}>
-                        <ButtonAnt text={t('button.add')} icon={<PlusOutlined/>} type={'primary'}/>
-                    </Link> : ''
+                        <AddButton text={t('button.add')} />
+                    </Link> : null
                 }
             </div>
             {
@@ -128,7 +117,7 @@ function Lavozimlar({getLavozim, users, deleteLavozim, LavozimReducer}) {
                             }
                         </Loading>
                     </CardBody>
-                    : ''
+                    : null
             }
             <AgreeModal deletemodal={deletemodal} deleteFunc={deleteFunc}
                         deleteModaltoggle={() => setdeletemodal(prevState => !prevState)}/>

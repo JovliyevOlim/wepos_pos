@@ -1,0 +1,72 @@
+.buttonClass{
+    border-radius: 5px;
+    background: #EEF0FF;
+    border: 1px solid transparent;
+}
+
+.smallButton{
+    width:36px;
+    height:36px;
+    padding: 5px;
+}
+
+.bigButton{
+    width:44px;
+    height:44px;
+    padding: 10px;
+}
+
+.smallButton img{
+    width: 16px;
+    height: 16px;
+    margin: auto
+}
+
+.bigButton img{
+    width: 22px;
+    height: 22px;
+    margin: auto
+}
+
+.addButton{
+    background: #377dff;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.addButton.smallButton, .addButton.bigButton{
+    width: auto;
+    padding: 5px 10px;
+}
+
+.addButton:hover{
+    opacity: .8;
+}
+
+.deleteButton{
+    background: #FFEDED;
+}
+
+.deleteButton:hover{
+    border-color: #ff7272;
+}
+
+.editButton{
+    background: #EEF0FF;
+}
+
+.editButton:hover{
+    border-color: #377dff;
+}
+
+
+.viewButton{
+    background: #EEFAE8;
+}
+
+.viewButton:hover{
+    border-color: #57ca22;
+}
+

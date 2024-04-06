@@ -1,28 +1,30 @@
-import React from 'react'
 import {useState, useEffect} from "react";
 import {connect} from "react-redux";
-import './firmalar.css'
+import {useTranslation} from "react-i18next";
 import {Modal, ModalHeader, ModalFooter, ModalBody} from "reactstrap";
+
 import FirmaReducer, {deleteFirma, editFirma, getFirma, saveFirma,} from "../reducer/FirmaReducer";
 import users from "../../../../../reducer/users";
-import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
 import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
 import MainHeaderText from "../../../../Components/MainHeaderText";
-import {ButtonAnt} from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
 import CardBody from "../../../../Components/CardBody";
-import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
+import {AddButton, DeleteButton, EditButton} from "../../../../Components/Buttons";
 
-function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma, FirmaReducer,}) {
+import './firmalar.css'
 
+function Firmalar({getFirma, users, saveFirma, editFirma, deleteFirma, FirmaReducer,}) {
     const {t} = useTranslation()
     const [name, setName] = useState('')
     const [editId, setEditId] = useState(null)
     const [loading, setLoading] = useState(false)
     const [saveModal, setSaveModal] = useState(false)
     const [isCheck, setIsCheck] = useState(false)
+    const [deletemodal, setdeletemodal] = useState(false)
+    const [deleteID, setdeletID] = useState('')
+    const [active, setActive] = useState(false)
 
     const columns = [
         {
@@ -33,34 +35,23 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
         },
         {
             title: t('Firms.1'),
-            width: 50,
             dataIndex: 'name',
             key: 'name',
         },
         {
             title: t('ol.20'),
             key: 'operation',
-            width: 150,
-            render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
+            render: (item, values) => <div className={'d-flex justify-content-start gap-2 flex-wrap'}>
                 {
-                    users.brandRoles &&
-                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
-                        editB(values.id)
-                    }
-                    } icon={<EditOutlined/>}/>
+                    users.brandRoles && <EditButton onClick={() => {editB(values.id)}}/>
                 }
                 {
-                    users.brandRoles &&
-                    <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
-                        deleteBrandById(values.id)
-                    }
-                    } icon={<DeleteOutlined/>}/>
+                    users.brandRoles && <DeleteButton onClick={() => {deleteBrandById(values.id)}}/>
                 }
 
             </div>,
         },
     ];
-
 
     function editB(id) {
         setActive(true)
@@ -71,7 +62,6 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
             }
         })
     }
-
 
     function saqla() {
         if (!name) {
@@ -97,8 +87,6 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
         }
     }
 
-    const [active, setActive] = useState(false)
-
     function toggle() {
         setActive(!active)
         setName('')
@@ -106,15 +94,9 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
         setIsCheck(false)
     }
 
-
-    const [deletemodal, setdeletemodal] = useState(false)
-    const [deleteID, setdeletID] = useState('')
-
-
     function deleteFunc() {
         deleteFirma(deleteID)
     }
-
 
     function deleteBrandById(item) {
         setdeletemodal(!deletemodal)
@@ -150,9 +132,7 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
             <div className="col-md-12 d-flex justify-content-between align-items-center">
                 <MainHeaderText text={t('sidebar.brand')}/>
                 {
-                    users.brandRoles ?
-                        <ButtonAnt type={'primary'} icon={<PlusOutlined/>} text={t('button.add')}
-                                   onClick={toggle}/> : ''
+                    users.brandRoles ? <AddButton onClick={toggle} text={t('button.add')} /> : null
                 }
             </div>
             <CardBody>
@@ -189,13 +169,11 @@ function Firmalar({getFirma, users, firmalar, saveFirma, editFirma, deleteFirma,
                     <button className={'btn btn-danger'} onClick={toggle}>{t('Buttons.7')}</button>
                     <button className={'btn btn-success'} onClick={saqla}>{t('Buttons.6')}</button>
                 </ModalFooter>
-
             </Modal>
             <ModalLoading isOpen={saveModal}/>
             <AgreeModal deleteModaltoggle={() => setdeletemodal(prevState => !prevState)} deleteFunc={deleteFunc}
                         deletemodal={deletemodal}/>
         </div>
-
     )
 }
 

@@ -1,12 +1,10 @@
-import React from 'react'
 import {useState, useEffect} from "react";
 import {connect} from "react-redux";
-import './measurement.css'
-import {Modal, ModalHeader, ModalFooter, ModalBody} from "reactstrap";
-import users from "../../../../../reducer/users";
 import {useTranslation} from "react-i18next";
+import {Modal, ModalHeader, ModalFooter, ModalBody} from "reactstrap";
+
+import users from "../../../../../reducer/users";
 import Loading from "../../../../Loading";
-import {toast} from "react-toastify";
 import ModalLoading from "../../../../ModalLoading";
 import MeasurementReducer, {
     saveMeasurement,
@@ -16,12 +14,13 @@ import MeasurementReducer, {
 } from "../../../../../reducer/MeasurementReducer";
 import AgreeModal from "../../../../AgreeModal";
 import MainHeaderText from "../../../../Components/MainHeaderText";
-import {ButtonAnt} from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
 import CardBody from "../../../../Components/CardBody";
-import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
-function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement, deleteMeasurement, editMeasurement}) {
+import {AddButton, DeleteButton, EditButton} from "../../../../Components/Buttons";
 
+import './measurement.css'
+
+function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement, deleteMeasurement, editMeasurement}) {
     const {t} = useTranslation()
     const [addMeasureActive, setAddMeasureActive] = useState(false)
     const [name, setName] = useState('')
@@ -29,6 +28,8 @@ function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement
     const [loading, setLoading] = useState(false)
     const [editId, setEditId] = useState(null)
     const [isCheck, setIsCheck] = useState(false)
+    const [deleteModal, setDeleteModal] = useState(false)
+    const [deleteID, setdeletID] = useState('')
 
     const columns = [
         {
@@ -39,30 +40,19 @@ function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement
         },
         {
             title: t('as.4'),
-            width: 50,
             dataIndex: 'name',
             key: 'name',
         },
         {
             title: t('ol.20'),
             key: 'operation',
-            width: 150,
-            render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
-
+            render: (item, values) => <div className={'d-flex justify-content-start gap-2 flex-wrap'}>
                 {
-                    users.measurementRoles &&
-                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
-                        editB(values.id)
-                    }
-                    } icon={<EditOutlined/>}/>
+                    users.measurementRoles && <EditButton onClick={() => {editB(values.id)}}/>
                 }
                 {
-                    users.measurementRoles && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
-                        deleteMeasureById(values.id)
-                    }
-                    } icon={<DeleteOutlined/>}/>
+                    users.measurementRoles && <DeleteButton  onClick={() => {deleteMeasureById(values.id)}}/>
                 }
-
             </div>,
         },
     ];
@@ -122,10 +112,6 @@ function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement
         setDeleteModal(false)
     }, [MeasurementReducer.current])
 
-
-    const [deleteModal, setDeleteModal] = useState(false)
-    const [deleteID, setdeletID] = useState('')
-
     function deleteFunc() {
         setLoading(false)
         deleteMeasurement(deleteID)
@@ -135,7 +121,6 @@ function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement
         setDeleteModal(!deleteModal)
         setdeletID(id)
     }
-
 
     useEffect(() => {
             setLoading(true)
@@ -150,15 +135,12 @@ function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement
             <div className="col-md-12 d-flex justify-content-between align-items-center">
                 <MainHeaderText text={t('sidebar.measurement')}/>
                 {
-                    users.measurementRoles &&
-                    <ButtonAnt onClick={() => setAddMeasureActive(true)} icon={<PlusOutlined />} type={'primary'} text={t('button.add')} />
+                    users.measurementRoles && <AddButton onClick={() => setAddMeasureActive(true)} text={t('button.add')} />
                 }
-
             </div>
             <CardBody>
                 <Loading spinning={loading}>
                     {
-
                             MeasurementReducer.measurements.length > 0 ?
                                 <div>
                                     <div className="table-responsive table-wrapper-scroll-y my-custom-scrollbar pb-4">
@@ -191,9 +173,7 @@ function Measurement({users, saveMeasurement, MeasurementReducer, getMeasurement
                     <button className={'btn btn-danger'} onClick={toggle}>{t('Buttons.7')}</button>
                     <button className={'btn btn-success'} onClick={saqla}>{t('Buttons.6')}</button>
                 </ModalFooter>
-
             </Modal>
-
             <ModalLoading isOpen={activeModal}/>
             <AgreeModal deleteFunc={deleteFunc} deleteModaltoggle={() => setDeleteModal(prevState => !prevState)}
                         deletemodal={deleteModal}/>

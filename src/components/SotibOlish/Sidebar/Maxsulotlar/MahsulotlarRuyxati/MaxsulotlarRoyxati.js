@@ -34,6 +34,7 @@ import {FileExcelOutlined, PlusOutlined} from "@ant-design/icons";
 import {Button, Tag} from "antd";
 import {prettify} from "../../../../../util";
 import CommonTable from "../../../../Components/CommonTable";
+import {DeleteButton, EditButton, ViewButton} from "../../../../Components/Buttons";
 
 function MaxsulotlarRoyxati({
                                 getBolim,
@@ -161,26 +162,16 @@ function MaxsulotlarRoyxati({
             render: (item, values) => <div className={'d-flex justify-content-center gap-3'}>
 
                 {
-                    users.getProduct &&
-                    <button style={{background: '#EEFAE8'}} onClick={() => {
-                        korishsh(item?.id)
-                    }} className={'productList-Button'}><img src={eye} alt="eye"/></button>
+                    users.getProduct && <ViewButton onClick={() => {korishsh(item?.id)}} size="big" />
                 }
                 {
-                    users.editProduct &&
-                    <button style={{background: '#EEF0FF'}} onClick={() => {
-                        history.push('/main/addProduct/' + values.id)
-                    }
-                    } className={'productList-Button'}><img src={edit} alt="edit"/></button>
+                    users.editProduct && <EditButton
+                        onClick={() => {history.push('/main/addProduct/' + values.id)}}
+                        size="big"
+                    />
                 }
                 {
-                    users.deleteProduct &&
-
-                    <button style={{background: '#FFEDED'}} onClick={() => {
-                        deleteProductById(values.id)
-                    }
-                    } className={'productList-Button'}><img src={trashIcon}
-                                                            alt="delete"/></button>
+                    users.deleteProduct && <DeleteButton onClick={() => {deleteProductById(values.id)}} size="big" />
                 }
             </div>,
         },

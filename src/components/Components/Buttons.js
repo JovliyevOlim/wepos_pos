@@ -1,0 +1,60 @@
+import {useTranslation} from "react-i18next";
+import {Tooltip} from "antd";
+
+import trashIcon from "../../img/Trash-danger.svg";
+import edit from "../../img/pencil.svg"
+import eye from "../../img/eye.svg"
+import {PlusOutlined} from "@ant-design/icons";
+
+import "./buttons.css"
+
+const AddButton = ({ onClick = () => {}, size= "small", text , ...props}) => {
+    return <button
+        onClick={() => onClick()}
+        className={`buttonClass addButton ${size === "big" ? "bigButton" : "smallButton"}`}
+        {...props}>
+        <PlusOutlined />
+        {text}
+    </button>
+}
+
+const DeleteButton = ({ onClick, size= "small" , ...props}) => {
+    const {t} = useTranslation();
+
+    return <Tooltip placement="bottom" title={t('button.delete')}>
+        <button
+            onClick={() => onClick()}
+            className={`buttonClass deleteButton ${size === "big" ? "bigButton" : "smallButton"}`}
+            {...props}>
+            <img src={trashIcon} alt="delete"/>
+        </button>
+    </Tooltip>
+}
+
+const EditButton = ({onClick, size = "small", ...props}) => {
+    const {t} = useTranslation();
+
+    return <Tooltip placement="bottom" title={t('button.edit')}>
+        <button
+            onClick={() => onClick()}
+            className={`buttonClass editButton ${size === "big" ? "bigButton" : "smallButton"}`}
+            {...props}>
+            <img src={edit} alt="edit"/>
+        </button>
+    </Tooltip>
+}
+
+const ViewButton = ({onClick, size = "small", ...props}) => {
+    const {t} = useTranslation();
+
+    return <Tooltip placement="bottom" title={t('button.view')}>
+        <button
+            onClick={() => onClick()}
+            className={`buttonClass viewButton ${size === "big" ? "bigButton" : "smallButton"}`}
+            {...props}>
+            <img src={eye} alt="view"/>
+        </button>
+    </Tooltip>
+}
+
+export {DeleteButton, EditButton, ViewButton, AddButton}

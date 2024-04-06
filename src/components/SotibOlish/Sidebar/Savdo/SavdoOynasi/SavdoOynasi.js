@@ -2261,15 +2261,17 @@ function SavdoOynasi({
                         checkReducer.check ?
                             <div dangerouslySetInnerHTML={{__html: checkReducer.check.footer}}>
                             </div>
-                            : ''
+                            :  null
                     }
-                    <div className="d-flex align-items-center justify-content-center">
-                        <QRCode
-                          value={checkReducer.check.qrCode || '-'}
-                          errorLevel={"Q"}
-                          size={200}
-                        />
-                    </div>
+                    {
+                        checkReducer?.check?.qrCode ? <div className="d-flex align-items-center justify-content-center">
+                            <QRCode
+                                value={checkReducer?.check?.qrCode || '-'}
+                                errorLevel={"Q"}
+                                size={200}
+                            />
+                        </div> : null
+                    }
                 </div>
 
             </div>
