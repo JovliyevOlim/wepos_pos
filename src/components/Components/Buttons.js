@@ -8,11 +8,11 @@ import {PlusOutlined} from "@ant-design/icons";
 
 import "./buttons.css"
 
-const CustomButton = ({ onClick, size= "small", text= "", img, icon , ...props}) => {
+const CustomButton = ({ onClick, className, size= "small", text= "", img, icon , ...props}) => {
     return <Tooltip placement="bottom" title={text}>
         <button
           onClick={() => onClick()}
-          className={`buttonClass viewButton ${size === "big" ? "bigButton" : "smallButton"}`}
+          className={`buttonClass viewButton ${className} ${size === "big" ? "bigButton" : "smallButton"}`}
           {...props}>
             {
                 icon ? icon : <img src={img} alt="custom button"/>

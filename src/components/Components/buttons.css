@@ -45,6 +45,14 @@
     opacity: .8;
 }
 
+.yellowButton{
+    background: #FFF6E8 !important;
+}
+
+.yellowButton:hover{
+    border-color: #FFB736 !important;
+}
+
 .deleteButton{
     background: #FFEDED;
 }

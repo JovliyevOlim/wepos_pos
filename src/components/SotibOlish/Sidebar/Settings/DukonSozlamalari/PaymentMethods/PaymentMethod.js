@@ -1,46 +1,48 @@
-import './paymentMethod.css'
-import {Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
-import {useForm} from "react-hook-form";
-import React, {useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import {connect} from "react-redux";
+import {useForm} from "react-hook-form";
+import {useTranslation} from "react-i18next";
+import {Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
+import { Checkbox } from 'antd';
+import 'moment/locale/uz-latn'
+
 import users from "../../../../../../reducer/users";
+import PayReducer,
+    {getPay, AddPaymentMethod, DeletePaymentMethod,EditPaymentMethod,EditPaymentMethodMain}
+    from "../../../../../../reducer/PayReducer";
 import Loading from "../../../../../Loading";
 import ModalLoading from "../../../../../ModalLoading";
 import AgreeModal from "../../../../../AgreeModal";
-import {useTranslation} from "react-i18next";
 import MainHeaderText from "../../../../../Components/MainHeaderText";
 import {ButtonAnt} from "../../../../../Components/SelectAnt";
 import CardBody from "../../../../../Components/CardBody";
 import CommonTable from "../../../../../Components/CommonTable";
-import { Checkbox } from 'antd';
-import 'moment/locale/uz-latn'
-import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
-import PayReducer, {getPay, AddPaymentMethod, DeletePaymentMethod,EditPaymentMethod,EditPaymentMethodMain} from "../../../../../../reducer/PayReducer";
+import {AddButton, DeleteButton, EditButton} from "../../../../../Components/Buttons";
+
+import './paymentMethod.css'
 
 function PaymentMethod({
                            users,
                            PayReducer,
                            getPay, AddPaymentMethod, DeletePaymentMethod,EditPaymentMethod,EditPaymentMethodMain
                        }) {
-
     const [active, setActive] = useState(false)
     const [saveModal, setSaveModal] = useState(false)
     const {register, reset, setValue, handleSubmit, formState: {errors}, resetField} = useForm();
     const [editID, setEditID] = useState(null)
     const [loading, setLoading] = useState(false)
     const {t} = useTranslation()
+
     const columns = [
         {
             title: t('set.5'),
             dataIndex: 'name',
             key: 'name',
-            width: '50px'
         },
         {
             title:'Asosiyligi',
             dataIndex: 'main',
             key: 'main',
-            width: '50px',
             render:(item,value)=><Checkbox checked={item} onChange={()=>{
                 EditPaymentMethodMain({
                     id:value.id,
@@ -53,21 +55,9 @@ function PaymentMethod({
         {
             title: t('ol.20'),
             key: 'operation',
-            width: 150,
-            render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
-
-
-                <ButtonAnt text={t('ol.78')} type={'primary'} onClick={() => {
-                    editPaymentMethodById(values.id)
-                }
-                } icon={<EditOutlined/>}/>
-
-                <ButtonAnt text={t('ol.79')} danger={true} type={'primary'} onClick={() => {
-                    deletePaymentMethodById(values.id)
-                }
-                } icon={<DeleteOutlined/>}/>
-
-
+            render: (item, values) => <div className={'d-flex justify-content-start gap-2 flex-wrap'}>
+                <EditButton onClick={() => {editPaymentMethodById(values.id)}} />
+                <DeleteButton onClick={() => {deletePaymentMethodById(values.id)}} />
             </div>,
         },
     ];
@@ -157,7 +147,7 @@ function PaymentMethod({
         <div>
             <div className={'d-flex col-md-12 mb-5 align-items-center justify-content-between'}>
                 <MainHeaderText text={"To'lov turlari"}/>
-                <ButtonAnt text={t('ol.2')} type={'primary'} onClick={toggle}/>
+                <AddButton text={t('button.add')} onClick={toggle} />
             </div>
 
             <CardBody>

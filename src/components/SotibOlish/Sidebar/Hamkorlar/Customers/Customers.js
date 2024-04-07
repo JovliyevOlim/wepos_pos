@@ -1,14 +1,16 @@
-import React from 'react'
-import {useForm} from 'react-hook-form'
-import './Customers.css'
 import {useState, useEffect} from 'react'
 import {connect} from "react-redux";
-import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
-import users from "../../../../../reducer/users";
+import {useForm} from 'react-hook-form'
 import {useTranslation} from "react-i18next";
-import Loading from "../../../../Loading";
-import ModalLoading from "../../../../ModalLoading";
+import {toast} from "react-toastify";
+import PhoneInput from 'react-phone-number-input'
+import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import {DeleteOutlined, DollarOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
+import {Typography} from 'antd';
+
+import users from "../../../../../reducer/users";
 import PayReducer, {getPay} from "../../../../../reducer/PayReducer";
+import allbusinessreducer, {getOneBusiness} from "../../SUPERADMIN/reducers/allbusinessreducer";
 import CustomerReducer, {
     getCustomers,
     getCustomersByBranch,
@@ -18,21 +20,20 @@ import CustomerReducer, {
     customerGetPayment,
     customerReturnPayment
 } from "../reducer/CustomerReducer";
-import {toast} from "react-toastify";
+import Loading from "../../../../Loading";
+import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
-import {use} from "i18next";
-import PhoneInput from 'react-phone-number-input'
-import 'react-phone-number-input/style.css'
-import {camelize, prettify} from "../../../../../util";
-import allbusinessreducer, {getOneBusiness} from "../../SUPERADMIN/reducers/allbusinessreducer";
 import MainHeaderText, {AddOrEditText} from "../../../../Components/MainHeaderText";
-import SelectAnt, {ButtonAnt, SearchAnt, TableButton} from "../../../../Components/SelectAnt";
+import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
 import CommonTable from "../../../../Components/CommonTable";
-import {DeleteOutlined, DollarOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
-import {Space, Typography} from 'antd';
+import {camelize, prettify} from "../../../../../util";
 
-const {Text, Link} = Typography;
+import './Customers.css'
+import 'react-phone-number-input/style.css'
+import {AddButton, CustomButton, DeleteButton, EditButton} from "../../../../Components/Buttons";
+
+const {Text} = Typography;
 
 function Customers({
                        getCustomers,
@@ -47,16 +48,12 @@ function Customers({
                        CustomerReducer,
                        getPay, PayReducer,
                    }) {
-
-
     const [active, setActive] = useState(false);
     const {t} = useTranslation()
     const {register, setValue, resetField, reset, handleSubmit, formState: {errors}} = useForm()
     const {
         register: register1,
-        setValue: setValue1,
         resetField: resetField1,
-        reset: reset1,
         handleSubmit: handleSubmit1,
         formState: {errors: errors1}
     } = useForm()
@@ -72,6 +69,7 @@ function Customers({
     const [customerGetPay, setCustomerGetPay] = useState(false)
     const [phoneNumber, setPhoneNumber] = useState('')
     const [isCheck, setIsCheck] = useState(false)
+    const [saveModal, setSaveModal] = useState(false)
 
     const columns = [
         {
@@ -121,23 +119,22 @@ function Customers({
             title: t('bal.27'),
             key: 'operation',
             width: 200,
-            render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
-                {users.editSupplier &&
-                    <ButtonAnt color={'blue'} type={'primary'} onClick={() => editM(values.id)} text={t('button.edit')}
-                               icon={<EditOutlined/>}/>
-                }
+            render: (item, values) => <div className={'d-flex justify-content-start gap-2 flex-wrap'}>
+                {users.editSupplier && <EditButton onClick={() => editM(values.id)}/>}
                 {
-                    users.deleteSupplier &&
-                    <ButtonAnt color={'red'} danger={true} type={'primary'} text={t('button.delete')}
-                               onClick={() => deleteCustomerById(values.id)}
-                               icon={<DeleteOutlined/>}/>
+                    users.deleteSupplier && <DeleteButton onClick={() => deleteCustomerById(values.id)} />
                 }
-                <ButtonAnt color={'blue'} text={t('button.returnMoney')} type={'primary'} bgColor={'green'}
-                           onClick={() => customerReturnPayFunc(values.id)}
-                           icon={<DollarOutlined/>}/>
-                <ButtonAnt color={'success'} text={t('button.payDebt')} type={'primary'} bgColor={'orange'}
-                           onClick={() => customerGetPayFunc(values.id)}
-                           icon={<DollarOutlined/>}/>
+                <CustomButton
+                  text={t('button.returnMoney')}
+                  icon={<DollarOutlined style={{color: "#57ca22", fontSize: 16}}/>}
+                  onClick={() => customerReturnPayFunc(values.id)}
+                />
+                <CustomButton
+                  className="yellowButton"
+                  text={t('button.payDebt')}
+                  icon={<DollarOutlined style={{color: "#FFB736", fontSize: 16}}/>}
+                  onClick={() => customerGetPayFunc(values.id)}
+                />
             </div>,
 
         },
@@ -151,7 +148,6 @@ function Customers({
         setRowsPerPage(parseInt(size));
     };
 
-
     function editM(id) {
         setActive(true)
         setEditId(id)
@@ -162,11 +158,9 @@ function Customers({
         setPhoneNumber(a[0].phoneNumber)
     }
 
-
     useEffect(() => {
         getPay(users.businessId)
     }, [])
-
 
     function toggle() {
         setActive(!active)
@@ -178,14 +172,12 @@ function Customers({
         setIsCheck(false)
     }
 
-
     function toggle2() {
         setDebtActive(!debtActive)
         setEditId(null)
         resetField1('sum', '')
         resetField1('paymentMethodId', 'all')
     }
-
 
     function deleteFunc() {
         deleteCustomer(deleteID)
@@ -197,13 +189,11 @@ function Customers({
         setdeletID(item)
     }
 
-
     function save(data) {
         saveCustomer({
             ...data, phoneNumber
         })
     }
-
 
     function customerGetPayFunc(id) {
         setEditId(id)
@@ -216,9 +206,6 @@ function Customers({
         setDebtActive(true)
         setCustomerGetPay(false)
     }
-
-
-    const [saveModal, setSaveModal] = useState(false)
 
     function onSubmit(data) {
         if (!phoneNumber) {
@@ -276,7 +263,6 @@ function Customers({
         setSaveModal(false)
     }, [CustomerReducer.current])
 
-
     useEffect(() => {
         setLoading(false)
         if (users.getCustomerAdmin && !mainBranchId) {
@@ -311,16 +297,12 @@ function Customers({
         setLoading(false)
     }, [])
 
-    console.log(errors)
-
     return (
         <>
             <div className="d-flex align-items-center mb-5 justify-content-between">
                 <MainHeaderText text={t('sidebar.customer')}/>
                 {
-                    users.addCustomer ?
-                        <ButtonAnt onClick={toggle} text={t('button.add')} icon={<PlusOutlined/>}
-                                   type={'primary'}/> : ''
+                    users.addCustomer ? <AddButton onClick={toggle} text={t('button.add')} /> : null
                 }
             </div>
             {
@@ -335,9 +317,8 @@ function Customers({
                                 <SearchAnt name={t('bal.22')} onChange={(e) => setSearch(e.target.value)}/>
                             </div>
                         </div>
-                    </CardBody> : ''
+                    </CardBody> : null
             }
-
             {
                 users.getCustomerAdmin || users.getCustomer ?
                     <CardBody>
@@ -353,10 +334,9 @@ function Customers({
                                     <div>
                                         <h4 className={'text-center'}>{CustomerReducer.message}</h4>
                                     </div>
-
                             }
                         </Loading>
-                    </CardBody> : ''
+                    </CardBody> : null
             }
             <Modal size={'md'} isOpen={active} toggle={toggle}>
                 <form onSubmit={handleSubmit(onSubmit)}>
@@ -450,11 +430,8 @@ function Customers({
                                 onClick={toggle}>{t('Buttons.7')}</button>
                         <button className={'btn btn-success'} type={"submit"}>{t('Buttons.6')}</button>
                     </ModalFooter>
-
                 </form>
-
             </Modal>
-
             <Modal isOpen={debtActive} toggle={toggle2}>
                 <form onSubmit={handleSubmit1(onSubmitDebt)}>
                     <ModalHeader>
@@ -489,7 +466,6 @@ function Customers({
                                 </select>
                             </div>
                         </div>
-
                     </ModalBody>
                     <ModalFooter>
                         <button type="button"
@@ -498,9 +474,7 @@ function Customers({
                         <button type={'submit'} className={'btn btn-success'}>{t('Buttons.6')}</button>
                     </ModalFooter>
                 </form>
-
             </Modal>
-
             <ModalLoading isOpen={saveModal}/>
             <AgreeModal deleteFunc={deleteFunc} deletemodal={deletemodal}
                         deleteModaltoggle={() => setdeletemodal(prevState => !prevState)}/>
