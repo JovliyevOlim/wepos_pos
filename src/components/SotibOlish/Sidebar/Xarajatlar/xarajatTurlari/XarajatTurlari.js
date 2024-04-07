@@ -1,7 +1,9 @@
-import './xarajatTurlari.css'
-import React, {useState, useEffect} from "react";
-import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import {useState, useEffect} from "react";
 import {connect} from "react-redux";
+import {useTranslation} from "react-i18next";
+import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+
+import users from "../../../../../reducer/users";
 import XarajatTurlariReducer, {
     deleteXarajatlarTurlari,
     editXarajatlarTurlari,
@@ -9,17 +11,16 @@ import XarajatTurlariReducer, {
     saveXarajatlarTurlari,
 } from "../reducer/XarajatTurlariReducer";
 import branchreducer, {getbranch} from "../../../../../reducer/branchreducer";
-import users from "../../../../../reducer/users";
 import XarajatlarReducer, {editXarajatlar, getXarajatlar, saveXarajatlar,} from "../reducer/XarajatlarReducer";
-import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
 import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
 import MainHeaderText from "../../../../Components/MainHeaderText";
-import {ButtonAnt} from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
 import CommonTable from "../../../../Components/CommonTable";
-import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
+import {AddButton, DeleteButton, EditButton} from "../../../../Components/Buttons";
+
+import './xarajatTurlari.css'
 
 function XarajatTurlari({
                             getXarajatlarTurlari,
@@ -29,16 +30,14 @@ function XarajatTurlari({
                             saveXarajatlarTurlari,
                             deleteXarajatlarTurlari
                         }) {
-
-
     const {t} = useTranslation()
     const [name, setName] = useState('')
     const [loading, setLoading] = useState(false)
     const [active, setActive] = useState(false)
     const [editId, setEditId] = useState(null)
-    const [search, setSearch] = useState('')
     const [deletemodal, setdeletemodal] = useState(false)
     const [deleteID, setdeletID] = useState(null)
+    const [saveModal, setSaveModal] = useState(false)
 
     const columns = [
         {
@@ -51,32 +50,22 @@ function XarajatTurlari({
             title: 'Nomi',
             dataIndex: 'name',
             key: 'name',
-            width: '100px'
         },
         {
             title: t('ol.20'),
             dataIndex: 'name',
             key: 'name',
             width: 150,
-            render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
+            render: (item, values) => <div className={'d-flex justify-content-center gap-2 flex-wrap'}>
                 {
-                    users.editOutlay &&
-                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
-                        edit(values.id)
-                    }
-                    } icon={<EditOutlined/>}/>
+                    users.editOutlay && <EditButton onClick={() => {edit(values.id)}}/>
                 }
                 {
-                    users.deleteOutlay  && <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
-                        deleteOutlayCategoryById(values.id)
-                    }
-                    } icon={<DeleteOutlined/>}/>
+                    users.deleteOutlay  && <DeleteButton onClick={() => {deleteOutlayCategoryById(values.id)}}/>
                 }
-
             </div>,
         },
     ];
-
 
     function toggle() {
         setActive(!active)
@@ -90,9 +79,6 @@ function XarajatTurlari({
         let a = XarajatTurlariReducer.xarajatturlari.filter(item => item.id === id)
         setName(a[0].name)
     }
-
-    const [saveModal, setSaveModal] = useState(false)
-
 
     function saqla() {
         if (editId) {
@@ -112,11 +98,9 @@ function XarajatTurlari({
         setSaveModal(true)
     }
 
-
     function deleteFunc() {
         deleteXarajatlarTurlari(deleteID)
     }
-
 
     function deleteOutlayCategoryById(item) {
         setdeletemodal(true)
@@ -152,12 +136,10 @@ function XarajatTurlari({
             <div className={'d-flex col-md-12 mb-5 align-items-center justify-content-between'}>
                 <MainHeaderText text={t('sidebar.outlayCategory')}/>
                 {
-                    users.addOutlay ?
-                        <ButtonAnt text={t('button.add')}  icon={<PlusOutlined />} type={'primary'} onClick={toggle}/>
-                    : ''
+                    users.addOutlay ? <AddButton onClick={toggle} text={t('button.add')} />
+                    : null
                 }
             </div>
-
             <CardBody>
                 <Loading spinning={loading}>
                     {
@@ -191,7 +173,6 @@ function XarajatTurlari({
                     <button className={'btn btn-success'} onClick={saqla}>{t('Buttons.6')}</button>
                 </ModalFooter>
             </Modal>
-
             <ModalLoading isOpen={saveModal}/>
             <AgreeModal deleteModaltoggle={() => setdeletemodal(prevState => !prevState)} deleteFunc={deleteFunc}
                         deletemodal={deletemodal}/>

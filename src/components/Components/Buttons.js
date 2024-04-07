@@ -8,6 +8,19 @@ import {PlusOutlined} from "@ant-design/icons";
 
 import "./buttons.css"
 
+const CustomButton = ({ onClick, size= "small", text= "", img, icon , ...props}) => {
+    return <Tooltip placement="bottom" title={text}>
+        <button
+          onClick={() => onClick()}
+          className={`buttonClass viewButton ${size === "big" ? "bigButton" : "smallButton"}`}
+          {...props}>
+            {
+                icon ? icon : <img src={img} alt="custom button"/>
+            }
+        </button>
+    </Tooltip>
+}
+
 const AddButton = ({ onClick = () => {}, size= "small", text , ...props}) => {
     return <button
         onClick={() => onClick()}
@@ -57,4 +70,4 @@ const ViewButton = ({onClick, size = "small", ...props}) => {
     </Tooltip>
 }
 
-export {DeleteButton, EditButton, ViewButton, AddButton}
+export {DeleteButton, EditButton, ViewButton, AddButton, CustomButton}

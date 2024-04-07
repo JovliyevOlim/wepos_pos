@@ -1,26 +1,28 @@
+import {useEffect, useState} from "react";
 import {Link, useHistory} from 'react-router-dom'
-import './xarajatlarRoyxati.css'
-import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
+import {useTranslation} from "react-i18next";
+import moment from "moment";
+import 'moment/locale/uz-latn'
+
 import XarajatlarReducer, {
     deleteXarajatlar,
     getOutlayByBusiness, getOutlayByBranch
 } from "../reducer/XarajatlarReducer";
-import users from '../../../../../reducer/users'
-import {useTranslation} from "react-i18next";
-import Loading from "../../../../Loading";
-import AgreeModal from "../../../../AgreeModal";
 import XarajatTurlariReducer, {getXarajatlarTurlari} from "../reducer/XarajatTurlariReducer";
 import PayReducer, {getPay} from "../../../../../reducer/PayReducer";
 import XodimReducer, {getUserForFilteringBusiness, getUserForFiltering} from "../../Hodimlar/reducer/XodimReducer";
-import moment from "moment";
-import 'moment/locale/uz-latn'
+import users from '../../../../../reducer/users'
+import Loading from "../../../../Loading";
+import AgreeModal from "../../../../AgreeModal";
 import MainHeaderText from "../../../../Components/MainHeaderText";
-import SelectAnt, {ButtonAnt} from "../../../../Components/SelectAnt";
+import SelectAnt from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
 import CommonTable from "../../../../Components/CommonTable";
-import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
+import {AddButton, DeleteButton, EditButton} from "../../../../Components/Buttons";
 import {prettify} from "../../../../../util";
+
+import './xarajatlarRoyxati.css'
 
 function XarajatlarRoyxati({
                                getOutlayByBusiness,
@@ -34,7 +36,6 @@ function XarajatlarRoyxati({
                                XarajatTurlariReducer,
                                getXarajatlarTurlari
                            }) {
-
     const {t} = useTranslation();
     const history = useHistory();
     const [page, setPage] = useState(0);
@@ -43,6 +44,9 @@ function XarajatlarRoyxati({
     const [outlayCategoryId, setOutlayCategoryId] = useState(null)
     const [paymentMethodId, setPaymentMethodId] = useState(null)
     const [userId, setUserId] = useState(null)
+    const [deletemodal, setdeletemodal] = useState(false)
+    const [deleteID, setdeletID] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const columns = [
         {
@@ -87,7 +91,6 @@ function XarajatlarRoyxati({
             title: t('Expenses.8'),
             dataIndex: 'description',
             key: 'description',
-            width: '100px'
         },
         {
             title: t('ol.20'),
@@ -95,18 +98,10 @@ function XarajatlarRoyxati({
             width: 150,
             render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
                 {
-                    users.editOutlay &&
-                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
-                        history.push('/main/addOutlay/' + values.id)
-                    }
-                    } icon={<EditOutlined/>}/>
+                    users.editOutlay && <EditButton onClick={() => {history.push('/main/addOutlay/' + values.id)}}/>
                 }
                 {
-                    users.deleteOutlay &&
-                    <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
-                        deleteOutlayById(values.id)
-                    }
-                    } icon={<DeleteOutlined/>}/>
+                    users.deleteOutlay && <DeleteButton onClick={() => {deleteOutlayById(values.id)}} />
                 }
 
             </div>,
@@ -131,9 +126,6 @@ function XarajatlarRoyxati({
         setPage(0)
         setOutlayCategoryId(e === '' ? null : e);
     };
-
-    const [loading, setLoading] = useState(false)
-
 
     useEffect(() => {
         setLoading(false)
@@ -175,9 +167,6 @@ function XarajatlarRoyxati({
         }
     }, [XarajatlarReducer.current])
 
-    const [deletemodal, setdeletemodal] = useState(false)
-    const [deleteID, setdeletID] = useState('')
-
     function deleteFunc() {
         deleteXarajatlar(deleteID)
     }
@@ -186,7 +175,6 @@ function XarajatlarRoyxati({
         setdeletemodal(!deletemodal)
         setdeletID(item)
     }
-
 
     useEffect(() => {
             setLoading(true)
@@ -204,36 +192,36 @@ function XarajatlarRoyxati({
                 <MainHeaderText text={t('sidebar.outlay')}/>
                 {
                     users.addOutlay ? <Link to={'/main/addOutlay'}>
-                        <ButtonAnt text={t('button.add')} icon={<PlusOutlined/>} type={'primary'}/>
-                    </Link> : ''
+                        <AddButton text={t('button.add')} />
+                    </Link> : null
                 }
             </div>
             {
                 users.getOutlayAdmin || users.getOutlay ?
                     <CardBody>
                         <div className="col-md-12 gap-2 gap-sm-0 d-flex flex-wrap">
-                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                            <div className="col-12 col-sm-6 col-lg-3 p-sm-2">
                                 <SelectAnt
                                     name={t('ol.3')}
                                     onChange={handleBranchChange}
                                     permission={users.getPurchaseAdmin}
                                     selectList={users.branches}/>
                             </div>
-                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                            <div className="col-12 col-sm-6 col-lg-3 p-sm-2">
                                 <SelectAnt
                                     name={t('Expenses.3')}
                                     onChange={handleOutlayCategoryChange}
                                     permission={true}
                                     selectList={XarajatTurlariReducer.xarajatturlari}/>
                             </div>
-                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                            <div className="col-12 col-sm-6 col-lg-3 p-sm-2">
                                 <SelectAnt
                                     name={t('To\'lov turi')}
                                     onChange={(e) => setPaymentMethodId(e === "" ? null : e)}
                                     permission={true}
                                     selectList={PayReducer.paymethod}/>
                             </div>
-                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                            <div className="col-12 col-sm-6 col-lg-3 p-sm-2">
                                 <SelectAnt
                                     name={t('ol.9')}
                                     onChange={(e) => setUserId(e === "" ? null : e)}
@@ -245,9 +233,8 @@ function XarajatlarRoyxati({
                             </div>
                         </div>
                     </CardBody>
-                    : ''
+                    : null
             }
-
             {
                 users.getOutlayAdmin || users.getOutlay ?
                     <CardBody>
@@ -269,10 +256,8 @@ function XarajatlarRoyxati({
                             }
                         </Loading>
                     </CardBody>
-                    : ''
+                    : null
             }
-
-
             <AgreeModal deletemodal={deletemodal} deleteFunc={deleteFunc}
                         deleteModaltoggle={() => setdeletemodal(prevState => !prevState)}/>
         </div>

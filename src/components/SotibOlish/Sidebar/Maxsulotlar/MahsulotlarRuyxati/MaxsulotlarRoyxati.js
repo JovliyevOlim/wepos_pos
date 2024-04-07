@@ -1,7 +1,11 @@
-import "./maxsulotlarRoyxati.css"
-import {Link, useHistory} from "react-router-dom"
+import {useEffect, useState} from 'react'
+import {useHistory} from "react-router-dom"
 import {connect} from 'react-redux'
-import React, {useEffect, useState} from 'react'
+import {useTranslation} from "react-i18next";
+import axios from "axios";
+import {FileExcelOutlined} from "@ant-design/icons";
+import {Button, Tag} from "antd";
+
 import users from "../../../../../reducer/users";
 import MaxsulotlarRoyxariReducer, {
     deleteMaxsulotRuyxati,
@@ -11,30 +15,25 @@ import MaxsulotlarRoyxariReducer, {
 import FirmaReducer, {getFirma} from "../reducer/FirmaReducer";
 import BolimReducer, {getBolim} from "../reducer/BolimReducer";
 import branchreducer, {getbranch} from "../../../../../reducer/branchreducer";
-import {useTranslation} from "react-i18next";
-import Loading from "../../../../Loading";
+import MeasurementReducer, {getMeasurement} from "../../../../../reducer/MeasurementReducer";
 import {BaseUrl} from "../../../../../middleware";
 import KorishM from "./Taxrirlash/Korish";
+import Loading from "../../../../Loading";
 import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
-import MeasurementReducer, {getMeasurement} from "../../../../../reducer/MeasurementReducer";
-import axios from "axios";
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../Components/SelectAnt";
+import CommonTable from "../../../../Components/CommonTable";
+import {AddButton, DeleteButton, EditButton, ViewButton} from "../../../../Components/Buttons";
 import CardBody from "../../../../Components/CardBody";
+import {prettify} from "../../../../../util";
 import storeProduct from "../../../../../img/storeProduct.svg"
 import cartProduct from "../../../../../img/cartProduct.svg"
 import moneyBagProduct from "../../../../../img/money bag coinProduct.svg"
 import percentProduct from "../../../../../img/invoice.svg"
 import defaultProduct from "../../../../../img/image 3.jpg"
-import eye from "../../../../../img/eye.svg"
-import edit from "../../../../../img/pencil.svg"
-import trashIcon from "../../../../../img/Trash-danger.svg"
-import {FileExcelOutlined, PlusOutlined} from "@ant-design/icons";
-import {Button, Tag} from "antd";
-import {prettify} from "../../../../../util";
-import CommonTable from "../../../../Components/CommonTable";
-import {DeleteButton, EditButton, ViewButton} from "../../../../Components/Buttons";
+
+import "./maxsulotlarRoyxati.css"
 
 function MaxsulotlarRoyxati({
                                 getBolim,
@@ -57,8 +56,6 @@ function MaxsulotlarRoyxati({
     const [deletemodal, setdeletemodal] = useState(false)
     const [deleteID, setdeletID] = useState('')
     const [active, setActive] = useState(false)
-
-
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [filter, setFilter] = useState(null);
@@ -68,9 +65,17 @@ function MaxsulotlarRoyxati({
     const [categoryId, setCategoryId] = useState(null)
     const [measurementId, setMeasurementId] = useState(null)
     const [search, setSearch] = useState('')
-
+    const [saveModal, setSaveModal] = useState(false)
     const history = useHistory()
-
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const onSelectChange = (newSelectedRowKeys) => {
+        setSelectedRowKeys(newSelectedRowKeys);
+    };
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange,
+    };
+    const hasSelected = selectedRowKeys.length > 0;
 
     const columns = [
         {
@@ -177,16 +182,6 @@ function MaxsulotlarRoyxati({
         },
     ];
 
-    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-    const onSelectChange = (newSelectedRowKeys) => {
-        setSelectedRowKeys(newSelectedRowKeys);
-    };
-    const rowSelection = {
-        selectedRowKeys,
-        onChange: onSelectChange,
-    };
-    const hasSelected = selectedRowKeys.length > 0;
-
     useEffect(() => {
         getFirma(users.businessId)
         getBolim(users.businessId)
@@ -225,7 +220,6 @@ function MaxsulotlarRoyxati({
 
     }, [brandId, mainBranchId, categoryId, search, rowsPerPage, page, measurementId, MaxsulotlarRoyxariReducer.current, filter, ascend])
 
-
     function tableFilter(pagination, filter, sorter) {
         console.log(sorter)
         if (sorter.order) {
@@ -245,7 +239,6 @@ function MaxsulotlarRoyxati({
         toggle()
     }
 
-
     function toggle() {
         setActive(!active)
     }
@@ -260,7 +253,6 @@ function MaxsulotlarRoyxati({
         setdeletID(item)
     }
 
-
     useEffect(() => {
         setLoading(true)
     }, [MaxsulotlarRoyxariReducer.getBoolean])
@@ -268,21 +260,19 @@ function MaxsulotlarRoyxati({
     useEffect(() => {
         setLoading(false)
     }, [])
+
     const handleChangePage = (newPage) => {
         setPage(newPage - 1);
     };
+
     const handleChangeRowsPerPage = (event, size) => {
         setPage(0);
         setRowsPerPage(size);
     };
 
-
     const togglePush = () => {
         history.push('/main/addProduct')
     }
-
-
-    const [saveModal, setSaveModal] = useState(false)
 
     useEffect(() => {
         if (MaxsulotlarRoyxariReducer.saveBoolean) {
@@ -295,7 +285,6 @@ function MaxsulotlarRoyxati({
             setSaveModal(false)
         }, 200)
     }, [MaxsulotlarRoyxariReducer.current])
-
 
     function getFilesById() {
         axios.get(`${BaseUrl}/excel/${mainBranchId ? mainBranchId : users.businessId}`, {
@@ -316,15 +305,12 @@ function MaxsulotlarRoyxati({
         });
     }
 
-
     return (
         <div>
             <div className="d-flex col-md-12 align-items-center mb-5 justify-content-between">
                 <MainHeaderText text={t('sidebar.product')}/>
                 {
-                    users.addProduct ?
-                        <ButtonAnt onClick={togglePush} icon={<PlusOutlined/>} text={t('button.add')}
-                                   type={'primary'}/> : ''
+                    users.addProduct ? <AddButton onClick={togglePush} text={t('button.add')} /> : null
                 }
             </div>
             <>
@@ -421,7 +407,6 @@ function MaxsulotlarRoyxati({
                         </div>
                     </CardBody>
                 }
-
             </>
             {
                 users.getProductAdmin || users.getProduct ?
@@ -467,7 +452,7 @@ function MaxsulotlarRoyxati({
                                     </div>
                             }
                         </Loading>
-                    </CardBody> : ''
+                    </CardBody> : null
             }
             {
                 active ?

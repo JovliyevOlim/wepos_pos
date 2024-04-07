@@ -1,24 +1,26 @@
-import '../BarcaSavdolar/barcasavdolar.css'
-import React, {useState, useEffect, useRef} from "react";
+import {useState, useEffect} from "react";
 import {connect} from "react-redux";
-import users from "../../../../../reducer/users";
-import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import {Link} from "react-router-dom";
 import {useTranslation} from "react-i18next";
-import Loading from "../../../../Loading";
+import moment from "moment";
+import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import 'moment/locale/uz-latn'
+
+import users from "../../../../../reducer/users";
 import lossReducer, {
     getLossProductByBusiness,
     getLossProductByBranch,
     getLossProductOne
 } from "../../../../../reducer/lossReducer";
 import XodimReducer, {getUserForFiltering, getUserForFilteringBusiness} from "../../Hodimlar/reducer/XodimReducer";
-import moment from "moment";
-import 'moment/locale/uz-latn'
+import Loading from "../../../../Loading";
 import MainHeaderText from "../../../../Components/MainHeaderText";
-import {Link} from "react-router-dom";
-import SelectAnt, {ButtonAnt} from "../../../../Components/SelectAnt";
+import SelectAnt from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
 import CommonTable from "../../../../Components/CommonTable";
-import {EyeOutlined, PlusOutlined} from "@ant-design/icons";
+import {AddButton, ViewButton} from "../../../../Components/Buttons";
+
+import '../BarcaSavdolar/barcasavdolar.css'
 
 function LossProducts({
                           lossReducer,
@@ -27,12 +29,14 @@ function LossProducts({
                           getUserForFiltering, getUserForFilteringBusiness,
                           users
                       }) {
-
     const {t} = useTranslation()
     const [pageData, setPageData] = useState(0)
     const [sizeData, setSizeData] = useState(5)
     const [mainBranch, setMainBranch] = useState(null)
     const [userId, setUserId] = useState(null)
+    const [loading, setLoading] = useState(false)
+    const [viewOneLoss, setViewOneLoss] = useState(false)
+
     const columns = [
         {
             title: 'Id',
@@ -66,18 +70,13 @@ function LossProducts({
             title: t('ol.20'),
             key: 'operation',
             width: 150,
-            render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
+            render: (item, values) => <div className={'d-flex justify-content-center gap-2 flex-wrap'}>
                 {
-                    users.getLoss &&
-                    <ButtonAnt type={'primary'} text={t('button.view')} bgColor={'aqua'} onClick={() => {
-                        getOneById(values.id)
-                    }
-                    } icon={<EyeOutlined/>}/>
+                    users.getLoss && <ViewButton onClick={() => {getOneById(values.id)}} />
                 }
             </div>,
         },
     ];
-
 
     useEffect(() => {
         setLoading(false)
@@ -109,8 +108,6 @@ function LossProducts({
         }
     }, [mainBranch])
 
-    const [loading, setLoading] = useState(false)
-
     useEffect(() => {
         setLoading(true)
     }, [lossReducer.getBoolean])
@@ -119,27 +116,13 @@ function LossProducts({
         setLoading(false)
     }, [])
 
-    const [deletemodal, setdeletemodal] = useState(false)
-    const [deleteID, setdeletID] = useState('')
-
-    function deleteFunc() {
-        deleteModaltoggle('')
-    }
-
-    function deleteModaltoggle(item) {
-        setdeletemodal(!deletemodal)
-        setdeletID(item)
-    }
-
     const onShowSizeChange = (event, size) => {
         setSizeData(size)
     };
+
     const changePage = (newPage) => {
         setPageData(newPage)
     };
-
-    const [viewOneLoss, setViewOneLoss] = useState(false)
-
 
     function viewOneLossToggle() {
         setViewOneLoss(!viewOneLoss)
@@ -150,31 +133,28 @@ function LossProducts({
         viewOneLossToggle()
     }
 
-
     return (
         <div>
             <div className={'d-flex col-md-12 mb-5 align-items-center justify-content-between'}>
                 <MainHeaderText text={t('sidebar.tableLossProduct')}/>
                 {
                     users.addLoss ? <Link to={'/main/addLossProducts'}>
-                        <ButtonAnt text={t('button.add')} icon={<PlusOutlined/>} type={'primary'}/>
-                    </Link> : ''
+                        <AddButton text={t('button.add')} />
+                    </Link> : null
                 }
             </div>
-
-
             <CardBody>
                 {
                     users.getLoss || users.getLossAdmin ?
                         <div className="col-md-12 gap-2 gap-sm-0 d-flex flex-wrap">
-                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                            <div className="col-12 col-sm-6 col-lg-3 p-sm-2">
                                 <SelectAnt
                                     name={t('ol.3')}
                                     onChange={(e) => setMainBranch(e === "" ? null : e)}
                                     permission={users.getLossAdmin}
                                     selectList={users.branches}/>
                             </div>
-                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                            <div className="col-12 col-sm-6 col-lg-3 p-sm-2">
                                 <SelectAnt
                                     name={t('ol.9')}
                                     onChange={(e) => setUserId(e === "" ? null : e)}
@@ -185,10 +165,9 @@ function LossProducts({
                                     }))}/>
                             </div>
                         </div>
-                        : ''
+                        : null
                 }
             </CardBody>
-
             {
                 users.getLoss || users.getLossAdmin ?
                     <CardBody>
@@ -210,22 +189,8 @@ function LossProducts({
                             }
                         </Loading>
                     </CardBody>
-                    : ''
-
+                    : null
             }
-            <Modal isOpen={deletemodal} toggle={deleteModaltoggle}>
-                <ModalBody>
-                    <h5>{t('Buttons.12')} ?</h5>
-                </ModalBody>
-                <ModalFooter>
-                    <button onClick={deleteFunc}
-                            className={'btn btn-outline-primary'}>{t('Buttons.3')}</button>
-                    <button onClick={() => deleteModaltoggle('')}
-                            className={'btn btn-outline-primary'}>{t('Buttons.7')}</button>
-                </ModalFooter>
-            </Modal>
-
-
             <Modal isOpen={viewOneLoss} toggle={() => setViewOneLoss(!viewOneLoss)}>
                 <ModalHeader>
                     <h4>
@@ -233,7 +198,6 @@ function LossProducts({
                     </h4>
                 </ModalHeader>
                 <ModalBody>
-
                     {
                         lossReducer.oneLossProduct ?
                             lossReducer.oneLossProduct.map(item =>
@@ -266,7 +230,6 @@ function LossProducts({
                                                 </tr>
                                             )
                                         }
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -279,7 +242,6 @@ function LossProducts({
                             onClick={() => setViewOneLoss(!viewOneLoss)}>{t('mah.108')}</button>
                 </ModalFooter>
             </Modal>
-
         </div>
     )
 }

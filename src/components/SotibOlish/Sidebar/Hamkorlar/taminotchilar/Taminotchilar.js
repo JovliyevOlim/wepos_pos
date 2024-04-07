@@ -1,6 +1,12 @@
-import "./taminotchilar.css"
-import React, {useEffect} from "react";
+import {useEffect,useState} from "react";
 import {connect} from "react-redux";
+import {useForm} from "react-hook-form";
+import {useTranslation} from "react-i18next";
+import PhoneInput from 'react-phone-number-input'
+import {Typography} from 'antd';
+import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import {DollarOutlined} from "@ant-design/icons";
+
 import TaminotReducer, {
     getTaminot,
     saveTaminot,
@@ -9,26 +15,22 @@ import TaminotReducer, {
     debtSupplier
 } from "../reducer/TaminotReducer";
 import users from "../../../../../reducer/users";
-import {useState} from 'react'
-import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
-import {useForm} from "react-hook-form";
-import {useTranslation} from "react-i18next";
-import Loading from "../../../../Loading";
-import ModalLoading from "../../../../ModalLoading";
 import branchreducer, {getbranch} from "../../../../../reducer/branchreducer";
 import PayReducer, {getPay} from "../../../../../reducer/PayReducer";
+import Loading from "../../../../Loading";
+import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
-import PhoneInput from 'react-phone-number-input'
-import 'react-phone-number-input/style.css'
 import MainHeaderText, {AddOrEditText} from "../../../../Components/MainHeaderText";
-import {ButtonAnt, SearchAnt, TableButton} from "../../../../Components/SelectAnt";
+import {SearchAnt} from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
 import {camelize, prettify} from "../../../../../util";
-import {DeleteOutlined, DollarOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons";
 import CommonTable from "../../../../Components/CommonTable";
-import {Space, Typography} from 'antd';
+import {AddButton, CustomButton, DeleteButton, EditButton} from "../../../../Components/Buttons";
 
-const {Text, Link} = Typography;
+import "./taminotchilar.css"
+import 'react-phone-number-input/style.css'
+
+const {Text} = Typography;
 
 function Taminotchilar({
                            getTaminot,
@@ -39,15 +41,12 @@ function Taminotchilar({
                            TaminotReducer,
                            debtSupplier
                        }) {
-
-
     const [active, setActive] = useState(false);
     const [page, setPage] = useState(0);
     const [limit, setLimit] = useState(5);
     const {
         register: register1,
         setValue: setValue1,
-        reset: reset1,
         handleSubmit: handleSubmit1,
         resetField: resetField1,
         formState: {errors: errors1}
@@ -60,6 +59,8 @@ function Taminotchilar({
     const [phoneNumber, setPhoneNumber] = useState('')
     const [name, setName] = useState('')
     const [isCheck, setIsCheck] = useState(false)
+    const [saveModal, setSaveModal] = useState(false)
+    const [loading, setLoading] = useState(false)
     const {t} = useTranslation()
 
 
@@ -72,19 +73,16 @@ function Taminotchilar({
         },
         {
             title: t('bal.47'),
-            width: 80,
             dataIndex: 'name',
             key: 'name',
         },
         {
             title: t('bal.48'),
-            width: 100,
             dataIndex: 'phoneNumber',
             key: 'phoneNumber',
         },
         {
             title: t('bal.25'),
-            width: 100,
             dataIndex: 'debt',
             key: 'debt',
             render: (item) => <div>
@@ -97,26 +95,21 @@ function Taminotchilar({
         {
             title: t('bal.27'),
             key: 'operation',
-            width: 200,
-            render: (item, values) => <div className={'d-flex justify-content-start gap-1 flex-wrap'}>
-                {users.editSupplier &&
-                    <ButtonAnt type={'primary'} onClick={() => editt(values.id)} text={t('button.edit')}
-                               icon={<EditOutlined/>}/>
+            render: (item, values) => <div className={'d-flex justify-content-start gap-2 flex-wrap'}>
+                <CustomButton
+                  text={t('button.payDebt')}
+                  icon={<DollarOutlined style={{color: "#57ca22", fontSize: 16}}/>}
+                  onClick={() => debt2(values.id)}
+                />
+                {users.editSupplier && <EditButton onClick={() => editt(values.id)}/>
                 }
-
-                <ButtonAnt color={'white'} bgColor={'green'} type={'primary'} text={t('button.payDebt')}
-                           onClick={() => debt2(values.id)}
-                           icon={<DollarOutlined/>}/>
                 {
-                    users.deleteSupplier && <ButtonAnt danger={true} type={'primary'} text={t('ol.79')}
-                                                       onClick={() => deleteSupplierById(values.id)}
-                                                       icon={<DeleteOutlined/>}/>
+                    users.deleteSupplier && <DeleteButton onClick={() => deleteSupplierById(values.id)} />
                 }
             </div>,
 
         },
     ];
-
 
     function toggle() {
         setActive(!active)
@@ -138,7 +131,6 @@ function Taminotchilar({
 
     }
 
-
     function debt2(id) {
         setqarz(true)
         setEditId(id)
@@ -156,7 +148,6 @@ function Taminotchilar({
         setEditId(null)
     }
 
-
     const handlePageChange = (newPage) => {
         setPage(newPage - 1);
     };
@@ -164,9 +155,6 @@ function Taminotchilar({
     const handleLimitChange = (event, size) => {
         setLimit(parseInt(size));
     };
-
-
-    const [saveModal, setSaveModal] = useState(false)
 
     function deleteFunc() {
         deleteTaminot(deleteID)
@@ -222,7 +210,6 @@ function Taminotchilar({
         )
     }
 
-
     useEffect(() => {
         setLoading(false)
         if (users.getSupplier) {
@@ -237,8 +224,6 @@ function Taminotchilar({
         }
     }, [TaminotReducer.current, page, limit, search])
 
-    const [loading, setLoading] = useState(false)
-
     useEffect(() => {
             setLoading(true)
     }, [TaminotReducer.getBoolean])
@@ -248,19 +233,14 @@ function Taminotchilar({
         getPay(users.businessId)
     }, [])
 
-
     return (
         <>
             <div className={'d-flex align-items-center justify-content-between mb-5'}>
                 <MainHeaderText text={t('sidebar.supplier')}/>
-
                 {
-                    users.addSupplier ?
-                        <ButtonAnt onClick={() => setActive(true)} icon={<PlusOutlined/>} text={t('button.add')}
-                                   type={'primary'}/> : ''
+                    users.addSupplier ? <AddButton onClick={() => setActive(true)} text={t('button.add')} /> : null
                 }
             </div>
-
             {
                 users.getSupplier &&
                 <CardBody>
@@ -275,7 +255,6 @@ function Taminotchilar({
                         <Loading spinning={loading}>
                             {
                                 TaminotReducer.supplier?.list?.length > 0 ?
-
                                     <CommonTable columns={columns} page={page} size={limit}
                                                  handleLimitChange={handleLimitChange}
                                                  handlePageChange={handlePageChange}
@@ -288,7 +267,7 @@ function Taminotchilar({
                                     </div>}
                         </Loading>
                     </CardBody>
-                    : ''
+                    : null
             }
             <Modal isOpen={qarz} toggle={toggle3}>
                 <form onSubmit={handleSubmit1(onSubmitDebt)}>

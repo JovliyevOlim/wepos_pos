@@ -1,7 +1,11 @@
-import {Link, useHistory} from 'react-router-dom'
-import './haridlarRoyxati.css'
+import {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import React, {useEffect, useState} from "react";
+import {Link, useHistory} from 'react-router-dom'
+import {useTranslation} from "react-i18next";
+import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import moment from "moment";
+import 'moment/locale/uz-latn'
+
 import XaridReducer, {
     getPurchaseByBranch,
     getPurchaseByBusiness,
@@ -10,21 +14,19 @@ import XaridReducer, {
     saveXarid, getPurchaseView,
 } from "../reducer/XaridReducer";
 import TaminotReducer, {getAllSupplier} from "../../Hamkorlar/reducer/TaminotReducer";
+import XodimReducer, {getUserForFiltering, getUserForFilteringBusiness} from "../../Hodimlar/reducer/XodimReducer";
 import users from "../../../../../reducer/users";
-import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
-import {useTranslation} from "react-i18next";
 import Loading from "../../../../Loading";
 import ModalLoading from "../../../../ModalLoading";
 import AgreeModal from "../../../../AgreeModal";
-import XodimReducer, {getUserForFiltering, getUserForFilteringBusiness} from "../../Hodimlar/reducer/XodimReducer";
-import moment from "moment";
-import 'moment/locale/uz-latn'
 import MainHeaderText from "../../../../Components/MainHeaderText";
-import SelectAnt, {ButtonAnt} from "../../../../Components/SelectAnt";
+import SelectAnt from "../../../../Components/SelectAnt";
 import CardBody from "../../../../Components/CardBody";
 import CommonTable from "../../../../Components/CommonTable";
-import {DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined} from "@ant-design/icons";
+import {AddButton, DeleteButton, EditButton, ViewButton} from "../../../../Components/Buttons";
 import {prettify} from "../../../../../util";
+
+import './haridlarRoyxati.css'
 
 function HaridlarRoyxati({
                              getAllSupplier,
@@ -39,7 +41,6 @@ function HaridlarRoyxati({
                              users,
                              getPurchaseView
                          }) {
-
     const {t} = useTranslation()
     const history = useHistory()
     const [mainBranchId, setMainBranchId] = useState(null)
@@ -49,6 +50,10 @@ function HaridlarRoyxati({
     const [page, setPage] = useState(0);
     const [limit, setLimit] = useState(5);
     const [saveModal, setSaveModal] = useState(false)
+    const [deletemodal, setdeletemodal] = useState(false)
+    const [deleteID, setdeletID] = useState('')
+    const [viewOnePurchase, setViewOnePurchase] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const columns = [
         {
@@ -116,31 +121,19 @@ function HaridlarRoyxati({
         {
             title: t('ol.20'),
             key: 'operation',
-            width: 150,
-            render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
+            width: 170,
+            render: (item, values) => <div className={'d-flex justify-content-center gap-2 flex-wrap'}>
                 {
-                    users.getPurchase &&
-                    <ButtonAnt type={'primary'} text={t('button.view')} bgColor={'aqua'} onClick={() => {
-                        getOneById(values.id)
-                    }
-                    } icon={<EyeOutlined/>}/>
-                }
-
-                {
-                    users.editPurchase && values.editable &&
-                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
-                        history.push('/main/addPurchase/' + values.id)
-                    }
-                    } icon={<EditOutlined/>}/>
+                    users.getPurchase && <ViewButton onClick={() => {getOneById(values.id)}}/>
                 }
                 {
-                    users.deletePurchase && values.editable &&
-                    <ButtonAnt text={t('button.delete')} danger={true} type={'primary'} onClick={() => {
-                        deletePurchaseById(values.id)
-                    }
-                    } icon={<DeleteOutlined/>}/>
+                    users.editPurchase && values.editable && <EditButton
+                        onClick={() => {history.push('/main/addPurchase/' + values.id)}}
+                    />
                 }
-
+                {
+                    users.deletePurchase && values.editable && <DeleteButton onClick={() => {deletePurchaseById(values.id)}}/>
+                }
             </div>,
         },
     ];
@@ -148,6 +141,7 @@ function HaridlarRoyxati({
     const handlePageChange = (newPage) => {
         setPage(newPage - 1);
     };
+
     const handleLimitChange = (page, size) => {
         setPage(0)
         setLimit(size);
@@ -193,9 +187,6 @@ function HaridlarRoyxati({
         }
     }, [mainBranchId])
 
-    const [deletemodal, setdeletemodal] = useState(false)
-    const [deleteID, setdeletID] = useState('')
-
     function deletePurchaseById(item) {
         setdeletemodal(!deletemodal)
         setdeletID(item)
@@ -206,9 +197,6 @@ function HaridlarRoyxati({
         setSaveModal(true)
     }
 
-    const [viewOnePurchase, setViewOnePurchase] = useState(false)
-
-
     function viewOnePurchaseToggle() {
         setViewOnePurchase(!viewOnePurchase)
     }
@@ -217,7 +205,6 @@ function HaridlarRoyxati({
         getPurchaseView(id)
         viewOnePurchaseToggle()
     }
-
 
     useEffect(() => {
         if (XaridReducer.saveBoolean) {
@@ -228,12 +215,9 @@ function HaridlarRoyxati({
         setSaveModal(false)
     }, [XaridReducer.current])
 
-    const [loading, setLoading] = useState(false)
-
     useEffect(() => {
             setLoading(true)
     }, [XaridReducer.getBoolean])
-
 
     useEffect(() => {
         setLoading(false)
@@ -245,8 +229,8 @@ function HaridlarRoyxati({
                 <MainHeaderText text={t('sidebar.purchases')}/>
                 {
                     users.addPurchase ? <Link to={'/main/addPurchase'}>
-                        <ButtonAnt text={t('button.add')} icon={<PlusOutlined/>} type={'primary'}/>
-                    </Link> : ''
+                        <AddButton text={t('button.add')} />
+                    </Link> : null
                 }
             </div>
             {
@@ -290,7 +274,7 @@ function HaridlarRoyxati({
                             </div>
                         </div>
                     </CardBody>
-                    : ''
+                    : null
             }
             <CardBody>
                 {
@@ -316,11 +300,9 @@ function HaridlarRoyxati({
                                         </div>
                                 }
                             </Loading>
-                        </CardBody> : ''
+                        </CardBody> : null
                 }
             </CardBody>
-
-
             <Modal isOpen={viewOnePurchase} size={'xl'} toggle={() => setViewOnePurchase(!viewOnePurchase)}>
                 <ModalHeader>
                     <h4>
@@ -368,7 +350,6 @@ function HaridlarRoyxati({
                                                         <strong>{item.debtSum} {t('ol.34')}</strong>
                                                     </p>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -400,32 +381,26 @@ function HaridlarRoyxati({
                                                             <div>
                                                                 <h6>{item.buyPrice} {t('ol.34')}</h6>
                                                             </div>
-
                                                         </th>
                                                         <th>
                                                             <div>
                                                                 <h6>{item.salePrice} {t('ol.34')}</h6>
                                                             </div>
-
                                                         </th>
                                                         {/*<th>{item?.profit}</th>*/}
                                                         <th>
                                                             <div>
                                                                 <h6>{item?.profit} {t('ol.34')}</h6>
                                                             </div>
-
                                                         </th>
-
                                                         <th>
                                                             <div>
                                                                 <h6>{item.totalSum} {t('ol.34')}</h6>
                                                             </div>
-
                                                         </th>
                                                     </tr>
                                                 )
                                             }
-
                                             </tbody>
                                         </table>
                                     </div>
