@@ -57,8 +57,9 @@ import {Button, Drawer, Radio, Space} from 'antd';
 import {BaseUrl} from "../../../../../middleware";
 import defaultProduct from '../../../../../img/image 3.jpg'
 import {AddOrEditText} from "../../../../Components/MainHeaderText";
-import {DeleteOutlined, EditOutlined, EyeOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, EnterOutlined, EyeOutlined} from "@ant-design/icons";
 import CommonTable from "../../../../Components/CommonTable";
+import {CustomButton, DeleteButton, EditButton} from "../../../../Components/Buttons";
 
 
 function SavdoOynasi({
@@ -250,7 +251,7 @@ function SavdoOynasi({
         if (!state.name || !state.phoneNumber || !state.percent) {
             setIsCheck(true)
         } else {
-            saveCustomer({...state,branchId:mainBranchId ? mainBranchId : users.branchId})
+            saveCustomer({...state, branchId: mainBranchId ? mainBranchId : users.branchId})
             addCustomerToggle()
         }
 
@@ -523,6 +524,7 @@ function SavdoOynasi({
                 }
             })
         }
+        setChangesId(null)
         let a = [...arr1]
         setarr1(a)
     }
@@ -539,8 +541,19 @@ function SavdoOynasi({
                 setCustomerPercent(customer.percent)
             }
         }
-        xisobkitob(arr1)
+
     }
+
+    useEffect(() => {
+        const productsArray = arr1.map(item => {
+            let mainPrice = item.noChangesPrice - (item.noChangesPrice * customerPercent / 100)
+            let totalPrice = item.noChangesTotalSalePrice - (item.noChangesTotalSalePrice * customerPercent / 100)
+            return {...item, price: mainPrice,totalSalePrice:totalPrice}
+        })
+        console.log(productsArray)
+        setarr1(productsArray)
+    }, [customerPercent]);
+    console.log(customerPercent)
 
     const [saveModal, setSaveModal] = useState(false)
     const [printDisplay, setPrintDisplay] = useState('none')
@@ -569,6 +582,7 @@ function SavdoOynasi({
                 setDescriptionHoldOn('')
                 setChangesId(null)
                 clearSuccess()
+                setPayForm([])
                 if (SavdoQoshishReducer.editBoolean) {
                     history.push('/main/tradeList')
                 }
@@ -1300,10 +1314,10 @@ function SavdoOynasi({
                                 <img src={plus} alt="plus" className={'btn-change-icon'}/>
                                 <p className={'btn-change-text'} style={{color: '#377DFF'}}>Qo'shish</p>
                             </div>
-                            <div className={'btn-change'} onClick={deleteM}>
+                            <button className={'btn-change border-0'} disabled={changesId  ? false :true} onClick={deleteM}>
                                 <img src={remove} alt="remove" className={'btn-change-icon'}/>
                                 <p className={'btn-change-text'} style={{color: '#B0B7C3'}}>O'chirish</p>
-                            </div>
+                            </button>
                         </div>
                         <div className={'d-flex justify-content-between flex-wrap  align-items-center w-100'}>
                             {
@@ -1805,16 +1819,15 @@ function SavdoOynasi({
                                         <td>{item?.description}</td>
                                         <td>{item?.totalSum} {grossPriceType === "DOLLAR" ? '$' : "so'm"}</td>
                                         <td>{item?.quantity} </td>
-                                        <td>
+                                        <td className={'d-flex gap-2'}>
                                             {
                                                 users.editTrade &&
-                                                <button onClick={() => savdooynakochirish(item.id)} className={'kv'}> |
-                                                </button>
+                                                <CustomButton icon={<EnterOutlined />} size={'small'} text={'Savdo oynaga ko\'chirish'} onClick={() => savdooynakochirish(item.id)} />
                                             }
                                             {
                                                 users.deleteTrade &&
-                                                <button onClick={() => deleteHoldOn(item.id)} className={'ocbutton'}>X
-                                                </button>
+                                                <DeleteButton onClick={() => deleteHoldOn(item.id)}/>
+
                                             }
 
                                         </td>
@@ -1921,9 +1934,7 @@ function SavdoOynasi({
                                     {
                                         item.edit && <div className="col-md-3">
                                             <label htmlFor=""></label>
-                                            <button onClick={() => deletePayForm(index)}
-                                                    className={'btn btn-danger mt-2'}>{t('mah.101')}
-                                            </button>
+                                            <DeleteButton size={'big'} onClick={() => deletePayForm(index)}/>
                                         </div>
                                     }
 
@@ -2086,13 +2097,9 @@ function SavdoOynasi({
                                                                                 <div className={'d-flex'}>
                                                                                     {
                                                                                         users.editTrade && item?.editable ?
-                                                                                            <button
+                                                                                            <EditButton
                                                                                                 onClick={() => getTradeByForEdit(item.id)}
-                                                                                                className='taxrirlash'>
-                                                                                                <img
-                                                                                                    src={Edit}
-                                                                                                    alt=""/> {t('Buttons.1')}
-                                                                                            </button>
+                                                                                                    />
                                                                                             : ''
                                                                                     }
                                                                                 </div>
@@ -2261,7 +2268,7 @@ function SavdoOynasi({
                         checkReducer.check ?
                             <div dangerouslySetInnerHTML={{__html: checkReducer.check.footer}}>
                             </div>
-                            :  null
+                            : null
                     }
                     {
                         checkReducer?.check?.qrCode ? <div className="d-flex align-items-center justify-content-center">
