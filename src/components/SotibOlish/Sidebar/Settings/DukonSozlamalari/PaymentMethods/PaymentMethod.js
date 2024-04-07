@@ -14,7 +14,6 @@ import Loading from "../../../../../Loading";
 import ModalLoading from "../../../../../ModalLoading";
 import AgreeModal from "../../../../../AgreeModal";
 import MainHeaderText from "../../../../../Components/MainHeaderText";
-import {ButtonAnt} from "../../../../../Components/SelectAnt";
 import CardBody from "../../../../../Components/CardBody";
 import CommonTable from "../../../../../Components/CommonTable";
 import {AddButton, DeleteButton, EditButton} from "../../../../../Components/Buttons";
@@ -28,9 +27,11 @@ function PaymentMethod({
                        }) {
     const [active, setActive] = useState(false)
     const [saveModal, setSaveModal] = useState(false)
-    const {register, reset, setValue, handleSubmit, formState: {errors}, resetField} = useForm();
+    const {register, reset, setValue, handleSubmit, formState: {errors}} = useForm();
     const [editID, setEditID] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [deletemodal, setdeletemodal] = useState(false)
+    const [deleteID, setdeletID] = useState('')
     const {t} = useTranslation()
 
     const columns = [
@@ -62,7 +63,6 @@ function PaymentMethod({
         },
     ];
 
-
     function toggle() {
         setActive(!active)
         setEditID(null)
@@ -79,17 +79,9 @@ function PaymentMethod({
         })
     }
 
-
-
-
     useEffect(() => {
         getPay(users.businessId)
     }, [PayReducer.current])
-
-
-    const [deletemodal, setdeletemodal] = useState(false)
-    const [deleteID, setdeletID] = useState('')
-
 
     function deletePaymentMethodById(id) {
         setdeletemodal(!deletemodal)
@@ -100,9 +92,6 @@ function PaymentMethod({
         DeletePaymentMethod(deleteID)
         setSaveModal(true)
     }
-
-
-
 
     function onSubmit(data) {
         if (editID) {
@@ -149,7 +138,6 @@ function PaymentMethod({
                 <MainHeaderText text={"To'lov turlari"}/>
                 <AddButton text={t('button.add')} onClick={toggle} />
             </div>
-
             <CardBody>
                 <Loading spinning={loading}>
                     {
@@ -162,8 +150,6 @@ function PaymentMethod({
                     }
                 </Loading>
             </CardBody>
-
-
             <Modal isOpen={active} toggle={toggle}>
                 <form action="" onSubmit={handleSubmit(onSubmit)}>
                     <ModalHeader>

@@ -3,3 +3,15 @@
     padding: 32px;
     border-radius: 8px;
 }
+
+.bgGary{
+    background-color: gray;
+}
+
+.checkTop{
+    margin-top: -32px;
+}
+
+.checkBottom{
+    margin-bottom: -25px;
+}

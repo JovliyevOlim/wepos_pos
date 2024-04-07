@@ -2174,23 +2174,24 @@ function SavdoOynasi({
                             }
                         </div>
                     </div>
-                    <div className={'d-flex align-items-center justify-content-between'}>
-                        <h1 style={{fontSize: 12, fontWeight: 600}}>{t('mah.42')} </h1>
                         {
-                            CustomerReducer.customersTrade ?
-                                CustomerReducer.customersTrade.filter(val => {
-                                    if (val.id === customer) {
-                                        return val
-                                    }
-                                })?.map(item => <h1 style={{fontSize: 12, fontWeight: 600}}
-                                                    key={item.id}> {item.name}</h1>) : ''
+                            customer ?
+                              <div className={'d-flex align-items-center justify-content-between'}>
+                                  <h1 style={{fontSize: 12, fontWeight: 600}}>{t('mah.42')} </h1>
+                                  {
+                                      CustomerReducer.customersTrade?.filter(val => {
+                                          if (val.id === customer) {
+                                              return val
+                                          }
+                                      })?.map(item => <h1 style={{fontSize: 12, fontWeight: 600}}
+                                                          key={item.id}> {item.name}</h1>)}
+                              </div> : null
                         }
-                    </div>
                     <div style={{borderBottom: "1px dashed #000"}}></div>
                     <div className={'mt-3 table-responsive'}>
                         {
                             traderArray.filter(itemDelete => itemDelete.delete === false).map((item, index) => <div
-                                key={item.id}>
+                              key={item.id}>
                                 <h1 style={{fontSize: 12, fontWeight: 600}}>{index + 1}{".  "}{item.name}</h1>
                                 <div style={{marginLeft: 20, marginTop: -7}}
                                      className={"d-flex align-items-center justify-content-between"}>
@@ -2274,7 +2275,7 @@ function SavdoOynasi({
                         checkReducer?.check?.qrCode ? <div className="d-flex align-items-center justify-content-center">
                             <QRCode
                                 value={checkReducer?.check?.qrCode || '-'}
-                                errorLevel={"Q"}
+                                errorLevel={"H"}
                                 size={200}
                             />
                         </div> : null
