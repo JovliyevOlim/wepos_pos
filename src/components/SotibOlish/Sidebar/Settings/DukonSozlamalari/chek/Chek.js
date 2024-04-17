@@ -132,18 +132,25 @@ function Chek({savephoto,photoreducer,checkReducer,getInvoice,editInvoice,users,
                 <div className="col-sm-12  mb-2">
                     <h4>{t('set.25')}</h4>
                     <Editor
-
-                      apiKey='kkjjryyh1qoiepsxtam1vtgslftwdprq3whrt32rc1gloupt'
-                      initialValue={chekHead}
-                      onChange={onChangeHeadText}
+                        init={{
+                            height:150,
+                            menubar: "null",
+                        }}
+                          apiKey='kkjjryyh1qoiepsxtam1vtgslftwdprq3whrt32rc1gloupt'
+                          initialValue={chekHead}
+                          onChange={onChangeHeadText}
                     />
                 </div>
                 <div className="col-sm-12 mb-2">
                     <h4>{t('set.26')}</h4>
                     <Editor
-                      apiKey='kkjjryyh1qoiepsxtam1vtgslftwdprq3whrt32rc1gloupt'
-                      initialValue={chekFooter}
-                      onChange={onChangeFooterText}/>
+                        init={{
+                            height:150,
+                            menubar: "null",
+                        }}
+                        apiKey='kkjjryyh1qoiepsxtam1vtgslftwdprq3whrt32rc1gloupt'
+                        initialValue={chekFooter}
+                        onChange={onChangeFooterText}/>
                 </div>
                 <div className="col-12">
                     <div className="d-flex justify-content-center bgGary py-3">

@@ -134,7 +134,7 @@ function PaymentMethod({
 
     return (
         <div>
-            <div className={'d-flex col-md-12 mb-5 align-items-center justify-content-between'}>
+            <div className={'d-flex col-md-12 mb-5 align-items-center justify-content-between px-3'}>
                 <MainHeaderText text={"To'lov turlari"}/>
                 <AddButton text={t('button.add')} onClick={toggle} />
             </div>

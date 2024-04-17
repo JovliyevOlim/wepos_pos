@@ -10,76 +10,111 @@ import ChangeTariff from "./changeTariff/ChangeTariff";
 import Bazalar from "../bazalar/Bazalar";
 import ShtrixCode from "./ShtrixCode/ShrtixCode";
 import PaymentMethod from "./PaymentMethods/PaymentMethod";
+import EtiketkaList from "./Etiketka/EtiketkaList";
+import EtiketkaCreate from "./Etiketka/EtiketkaCreate";
 
  function Dukon({users}) {
      const {t} = useTranslation()
 
      return (
-        <div className={'containerSet'}>
-                <div className="dashboardBox">
-                    {
-                        users.editMyBusiness &&
-                        <Link to={'/main/shopSetting/1'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.settingBusiness')}</button></Link>
-                    }
+         <div className={'containerSet'}>
+             <div className="dashboardBox px-2 px-md-3">
+                 {
+                     users.editMyBusiness &&
+                     <Link to={'/main/shopSetting/1'}>
+                         <button
+                             className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.settingBusiness')}</button>
+                     </Link>
+                 }
 
-                    {
-                        users.editMyBusiness  ?
-                            <Link to={'/main/shopSetting/2'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.settingChangeTariff')}</button></Link>
-                            :''
-                    }
-                    {
-                        users.editMyBusiness  ?
-                            <Link to={'/main/shopSetting/3'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.trade')}</button></Link>
-                            :''
-                    }
-                    {
-                        users.editInvoice ?
-                        <Link to={'/main/shopSetting/4'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.settingCheck')}</button></Link>
-                                :''
-                    }
-                    {
-                        users.getBranch ?
-                            <Link to={'/main/shopSetting/5'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.settingBranch')}</button></Link>
-                            :''
-                    }
-                    {
-                        users.getProduct ?
-                            <Link to={'/main/shopSetting/6'}><button className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.settingBarcode')}</button></Link>
-                            :''
-                    } {
-                    users.getProduct ?
-                        <Link to={'/main/shopSetting/7'}><button className={'btn btn-outline-primary form-control mt-2'}>To'lov turlari</button></Link>
-                        :''
-                }
-                </div>
-                
-                <div className="blokSet">
-                   
-                    <Switch>
-                        {
-                            users.editMyBusiness && <Route path={'/main/shopSetting/1'} component={Business}/>
-                        }
-                        {
-                            users.editMyBusiness && <Route path={'/main/shopSetting/2'} component={ChangeTariff}/>
-                        }
-                        {
-                            users.editMyBusiness && <Route path={'/main/shopSetting/3'} component={BusinessSetting}/>
-                        }
-                        {
-                            users.editInvoice && <Route path={'/main/shopSetting/4'} component={Chek}/>
-                        }
-                        {
-                            users.getBranch && <Route path={'/main/shopSetting/5'} component={Bazalar}/>
-                        }
-                        {
-                            users.getProduct && <Route path={'/main/shopSetting/6'} component={ShtrixCode}/>
-                        }
-                        {
-                            users.getProduct && <Route path={'/main/shopSetting/7'} component={PaymentMethod}/>
-                        }
-                    </Switch>
-                </div>
-            </div>
-    )
-}
-export default connect((users),{}) (Dukon)
+                 {
+                     users.editMyBusiness ?
+                         <Link to={'/main/shopSetting/2'}>
+                             <button
+                                 className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.settingChangeTariff')}</button>
+                         </Link>
+                         : ''
+                 }
+                 {
+                     users.editMyBusiness ?
+                         <Link to={'/main/shopSetting/3'}>
+                             <button
+                                 className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.trade')}</button>
+                         </Link>
+                         : ''
+                 }
+                 {
+                     users.editInvoice ?
+                         <Link to={'/main/shopSetting/4'}>
+                             <button
+                                 className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.settingCheck')}</button>
+                         </Link>
+                         : ''
+                 }
+                 {
+                     users.getBranch ?
+                         <Link to={'/main/shopSetting/5'}>
+                             <button
+                                 className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.settingBranch')}</button>
+                         </Link>
+                         : ''
+                 }
+                 {
+                     users.getProduct ?
+                         <Link to={'/main/shopSetting/6'}>
+                             <button
+                                 className={'btn btn-outline-primary form-control mt-2'}>{t('sidebar.settingBarcode')}</button>
+                         </Link>
+                         : ''
+                 }
+                 {
+                     users.getProduct ?
+                         <Link to={'/main/shopSetting/7'}>
+                             <button className={'btn btn-outline-primary form-control mt-2'}>To'lov turlari</button>
+                         </Link>
+                         : ''
+                 }
+                 {
+                     users.getProduct ?
+                         <Link to={'/main/shopSetting/8'}>
+                             <button className={'btn btn-outline-primary form-control mt-2'}>Etiketka</button>
+                         </Link>
+                         : null
+                 }
+             </div>
+             <div className="blokSet">
+                 <Switch>
+                     {
+                         users.editMyBusiness && <Route path={'/main/shopSetting/1'} component={Business}/>
+                     }
+                     {
+                         users.editMyBusiness && <Route path={'/main/shopSetting/2'} component={ChangeTariff}/>
+                     }
+                     {
+                         users.editMyBusiness && <Route path={'/main/shopSetting/3'} component={BusinessSetting}/>
+                     }
+                     {
+                         users.editInvoice && <Route path={'/main/shopSetting/4'} component={Chek}/>
+                     }
+                     {
+                         users.getBranch && <Route path={'/main/shopSetting/5'} component={Bazalar}/>
+                     }
+                     {
+                         users.getProduct && <Route path={'/main/shopSetting/6'} component={ShtrixCode}/>
+                     }
+                     {
+                         users.getProduct && <Route path={'/main/shopSetting/7'} component={PaymentMethod}/>
+                     }
+                     {
+                         users.getProduct && <Route path={'/main/shopSetting/8'} component={EtiketkaList}/>
+                     }
+                     {
+                         users.getProduct && <Route path={'/main/shopSetting/label-create'} component={EtiketkaCreate}/>
+                     }
+                 </Switch>
+             </div>
+         </div>
+     )
+ }
+
+export default connect((users), {})(Dukon)

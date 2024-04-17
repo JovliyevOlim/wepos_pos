@@ -1,16 +1,12 @@
 .containerSet{
     display:flex;
-    /* background: #FFFFFF; */
-    /* height: 100vh; */
-    margin: 32px 11px 0px 11px;
 }
 .containerSet .dashboardBox{
     display: block;
     width: 20%;
     background-color: #FFFFFF;
     margin-right: 12px;
-    padding: 12px;
-    
+
 }
 .containerSet .blokSet{
     width: 80%;
@@ -37,8 +33,7 @@
         grid-gap: 4px;
         grid-template-columns: 50% 50%;
         width: 100%;
-        margin-right: 0px;
-        padding: 12px;
+        margin-right: 0;
         margin-bottom: 10px;
     }
     .containerSet .dashboardBox button{
@@ -59,7 +54,6 @@
         grid-gap: 4px;
         width: 100%;
         margin-right: 0px;
-        padding: 12px;
         margin-bottom: 10px;
     }
     .containerSet .blokSet{
@@ -79,8 +73,7 @@
         grid-template-columns: 24% 24% 24% 24%;
         grid-gap: 4px;
         width: 100%;
-        margin-right: 0px;
-        padding: 12px;
+        margin-right: 0;
         margin-bottom: 10px;
     }
     .containerSet .blokSet{
@@ -89,6 +82,6 @@
     .containerSet .dashboardBox button{
         font-size: 12px;
     }
-    
+
 }
 

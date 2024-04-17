@@ -3,7 +3,7 @@ import axios from "axios";
 export  const  BaseUrl = 'https://backend.miro.uz/api'
 
 // export  const  BaseUrl = 'http://localhost:8080/api'
-// export  const  BaseUrl = 'http://192.168.50.62:8080/api'
+// export  const  BaseUrl = 'http://192.168.1.245:8080/api'
 
 
 export const axiosCreate = axios.create({

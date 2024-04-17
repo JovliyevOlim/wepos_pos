@@ -9,11 +9,11 @@ import XodimReducer, {
     getXodim,
     deleteXodim, getUserByBranch
 } from "../reducer/XodimReducer";
+import photoreducer, {savephoto} from "../../../../../reducer/photoreducer";
+import LavozimReducer, {getLavozim} from "../reducer/LavozimReducer";
 import Loading from "../../../../Loading";
 import ModalLoading from "../../../../ModalLoading";
-import photoreducer, {savephoto} from "../../../../../reducer/photoreducer";
 import AgreeModal from "../../../../AgreeModal";
-import LavozimReducer, {getLavozim} from "../reducer/LavozimReducer";
 import MainHeaderText from "../../../../Components/MainHeaderText";
 import CardBody from "../../../../Components/CardBody";
 import SelectAnt, {SearchAnt} from "../../../../Components/SelectAnt";
@@ -40,6 +40,9 @@ function HodimlarRoyhati({
     const [saveModal, setSaveModal] = useState(false)
     const [deleteModal, setDeleteModal] = useState(false)
     const [deleteId, setDeleteId] = useState(null)
+    const [page, setPage] = useState(0);
+    const [limit, setLimit] = useState(5);
+    const [query, setQuery] = useState(null)
 
     const columns = [
         {
@@ -97,7 +100,6 @@ function HodimlarRoyhati({
         },
     ];
 
-
     function deleteUserById(id) {
         setDeleteModal(true)
         setDeleteId(id)
@@ -107,11 +109,6 @@ function HodimlarRoyhati({
         deleteXodim(deleteId)
         setSaveModal(true)
     }
-
-
-    const [page, setPage] = useState(0);
-    const [limit, setLimit] = useState(5);
-    const [query, setQuery] = useState(null)
 
     const handlePageChange = (newPage) => {
         setPage(newPage - 1)
@@ -170,7 +167,6 @@ function HodimlarRoyhati({
         }
         setLoading(false)
     }, [])
-
 
     return (
         <>
