@@ -132,61 +132,161 @@ const TextComp = ({shapeProps, isSelected, onSelect, onChange, width, height}) =
         }
     }, [isSelected]);
 
-    console.log(shapeProps)
+
+    function handleResize() {
+        if (shapeRef.current !== null) {
+            // const textNode = shapeRef.current;
+            // const box = shapeRef.current.getClientRect();
+            // const absPos = shapeRef.current.getAbsolutePosition();
+            // const offsetX = box.x - absPos.x;
+            // const newAbsPos = {...absPos}
+            // const newWidth = textNode.width() * textNode.scaleX();
+            // console.log(box.x, "box x", absPos.x, "abspos x", textNode.scaleX(), "scaleX",textNode.width(), "Text width", offsetX, "offsetX" )
+            // if (box.x < 0) {
+            //     newAbsPos.x = -offsetX;
+            // }
+            // if (box.x + box.width > width){
+            //     console.log(newWidth, textNode.width(), width - box.width - offsetX)
+            //     newAbsPos.x = width - box.width - offsetX;
+            //     textNode.setAttrs({
+            //         width: textNode.width(),
+            //         scaleX: 1,
+            //     });
+            // } else {
+            //     textNode.setAttrs({
+            //         width: newWidth,
+            //         scaleX: 1
+            //     });
+            // }
+            // textNode.setAbsolutePosition(newAbsPos)
+            // onResize(newWidth, newHeight);
+            const textNode = shapeRef.current;
+            const box = shapeRef.current.getClientRect();
+            const absPos = shapeRef.current.getAbsolutePosition();
+            const offsetX = box.x - absPos.x;
+
+            const newWidth = textNode.width() * textNode.scaleX() ;
+            const newAbsPos = {...absPos}
+            if (box.x < 0) {
+                console.log("asas", offsetX)
+                newAbsPos.x = -offsetX;
+            }
+            if (box.x + box.width > width) {
+                // newAbsPos.x = width - box.width - offsetX;
+                console.log("bbbbbb",textNode.width())
+                if (box.x > 0 && box.width === textNode.width()){
+                    textNode.setAttrs({
+                        width: textNode.width() - box.x,
+                        scaleX: 1,
+                    });
+                } else {
+                    textNode.setAttrs({
+                        width: textNode.width(),
+                        scaleX: 1,
+                    });
+                }
+            } else {
+                console.log("ccccc")
+                if (box.x >= 0){
+                    textNode.setAttrs({
+                        width: newWidth,
+                        scaleX: 1
+                    });
+                } else {
+                    textNode.setAttrs({
+                        width: textNode.width(),
+                        scaleX: 1
+                    });
+                }
+
+            }
+            textNode.setAbsolutePosition(newAbsPos)
+        }
+    }
 
     return (
         <Fragment>
             <Text
                 text='Hello React-Konva!'
-                fontSize={40}
-                fill='black'
-                align='center'
+                fontSize={25}
+                fill='blue'
+                // align='center'
                 onClick={onSelect}
                 onTap={onSelect}
                 ref={shapeRef}
                 {...shapeProps}
                 draggable
-                onDragEnd={(e) => {
-                    if(width - shapeProps.width - Math.round(e.target.x()) > 0) {
-                        console.log("1")
-                        onChange({
-                            ...shapeProps,
-                            x: Math.round(e.target.x()),
-                            y: Math.round(e.target.y()),
-                        });
-                    } else {
-                        console.log("2")
-                        onChange({
-                            ...shapeProps,
-                            x: 0,
-                            y: 0,
-                        });
-                    }
-                }}
-                onTransformEnd={(e) => {
+                onDragMove={()=>{
                     const node = shapeRef.current;
-                    const scaleX = node.scaleX();
-                    const scaleY = node.scaleY();
-                    node.scaleX(1);
-                    node.scaleY(1);
-                    onChange({
-                        ...shapeProps,
-                        x: Math.round(node.x()),
-                        y: Math.round(node.y()),
-                        width: Math.max(5, node.width() * scaleX),
-                        height: Math.max(node.height() * scaleY),
-                    });
+                    const box = shapeRef.current.getClientRect();
+                    const absPos = shapeRef.current.getAbsolutePosition();
+                    const offsetX = box.x - absPos.x;
+                    const offsetY = box.y - absPos.y;
+
+                    const newAbsPos = {...absPos}
+                    if (box.x < 0) {
+                        newAbsPos.x = -offsetX;
+                    }
+                    if (box.y < 0) {
+                        newAbsPos.y = -offsetY;
+                    }
+                    if (box.x + box.width > width) {
+                        newAbsPos.x = width - box.width - offsetX;
+                    }
+                    if (box.y + box.height > height) {
+                        newAbsPos.y = height - box.height - offsetY;
+                    }
+                    node.setAbsolutePosition(newAbsPos)
                 }}
+                onTransform={handleResize}
+
+                // onDragEnd={(e) => {
+                //     if(width - shapeProps.width - Math.round(e.target.x()) > 0) {
+                //         console.log("1")
+                //         onChange({
+                //             ...shapeProps,
+                //             x: Math.round(e.target.x()),
+                //             y: Math.round(e.target.y()),
+                //         });
+                //     } else {
+                //         console.log("2")
+                //         onChange({
+                //             ...shapeProps,
+                //             x: 0,
+                //             y: 0,
+                //         });
+                //     }
+                // }}
+                // onTransform={(e) => {
+                //     const node = shapeRef.current;
+                //     // const scaleX = node.scaleX();
+                //     // const scaleY = node.scaleY();
+                //     onChange({
+                //         ...shapeProps,
+                //         // x: node.x(),
+                //         // y: node.y(),
+                //         width: Math.max(5,node.width() * node.scaleX),
+                //         scaleX: 1,
+                //         scaleY: 1,
+                //         // height: Math.max(node.height() * scaleY),
+                //     });
+                //     // node.setAttrs({
+                //     //     width:Math.max(node.width() * node.scaleX),
+                //     //     scaleX:1
+                //     // })
+                // }}
             />
             {isSelected && (
                 <Transformer
                     ref={trRef}
                     flipEnabled={false}
+                    enabledAnchors={['middle-left', 'middle-right']}
                     boundBoxFunc={(oldBox, newBox) => {
                         // limit resize
-                        if (Math.abs(newBox.width) < 5 || Math.abs(newBox.height) < 5) {
-                            return oldBox;
-                        }
+                        // if (Math.abs(newBox.width) < 5) {
+                        //     return oldBox;
+                        // }
+                        newBox.width = Math.max(5,newBox.width)
                         return newBox;
                     }}
                 />
@@ -279,7 +379,7 @@ const EtiketkaCreate = () => {
                                 )
                             })
                         }
-                        <LionImage />
+                        {/*<LionImage />*/}
                         {rectangles.map((rect, i) => {
                             return (
                                 <Rectangle
