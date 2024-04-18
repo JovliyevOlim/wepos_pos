@@ -283,11 +283,11 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                                                         }}>so'm</h1>
                                                     </div>
                                                 </div>
-                                                {
-                                                    isName &&
-                                                    <h1 className={"barcode-card-text mt-2"}
-                                                        style={{fontSize: `${fontSize / 2.5}px`}}>{item.name}</h1>
-                                                }
+                                                {/*{*/}
+                                                {/*    isName &&*/}
+                                                {/*    <h1 className={"barcode-card-text mt-2"}*/}
+                                                {/*        style={{fontSize: `${fontSize / 2.5}px`}}>{item.name}</h1>*/}
+                                                {/*}*/}
                                                 <div className={'d-flex col-md-12 mt-2 p-1 justify-content-between'}>
                                                     <div className="col-md-8 barcode-icon" style={{
                                                         width: `${cardSize.width * 2 / 3}mm`,
@@ -297,12 +297,12 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                                                             options={{format: item.barcode.length == 13 ? 'ean13' : 'code128'}}
                                                             renderer="svg" value={item.barcode}/>
                                                     </div>
-                                                    {
-                                                        isDate && <div className="col-md-4 d-flex align-items-end"
-                                                                       style={{fontSize: `${fontSize / 2.5}px`}}>
-                                                            {date}
-                                                        </div>
-                                                    }
+                                                    {/*{*/}
+                                                    {/*    isDate && <div className="col-md-4 d-flex align-items-end"*/}
+                                                    {/*                   style={{fontSize: `${fontSize / 2.5}px`}}>*/}
+                                                    {/*        {date}*/}
+                                                    {/*    </div>*/}
+                                                    {/*}*/}
                                                 </div>
                                             </div>
                                         </div>
@@ -322,42 +322,42 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                                     padding: `$5mm`
                                 }}
                                 className={'barcode-card'}>
-                                {
-                                    isBranchName && <p style={{
-                                        fontSize: `${fontSize / 3}px`,
-                                        textAlign: 'center',
-                                        margin: 0
-                                    }}>{branchName}</p>
+                                {/*{*/}
+                                {/*    isBranchName && <p style={{*/}
+                                {/*        fontSize: `${fontSize / 3}px`,*/}
+                                {/*        textAlign: 'center',*/}
+                                {/*        margin: 0*/}
+                                {/*    }}>{branchName}</p>*/}
 
-                                }
-                                <div className={'d-flex gap-2 align-items-stretch mt-1'}>
-                                    <div className="col-md-6">
-                                        <p className={"barcode-card-price"}
-                                           style={{
-                                               fontSize: `${fontSize}px`,
-                                               lineHeight: `${fontSize}px`
-                                           }}>{item.price.toString().substring(0, item.price.toString().length - 3)}</p>
-                                    </div>
-                                    <div className="col-md-5 d-flex flex-column align-items-start justify-content-center">
-                                        <p className={"barcode-card-price"}
-                                           style={{
-                                               fontSize: `${fontSize / 2}px`,
-                                               textAlign: 'start',
-                                               lineHeight: `${fontSize / 2}px`
-                                           }}>{item.price.toString().substring(item.price.toString().length - 3, item.price.toString().length)}</p>
-                                        <p className={"barcode-card-price"} style={{
-                                            fontSize: `${fontSize / 2.25}px`,
-                                            textAlign: 'start',
-                                            lineHeight: `${fontSize / 2.5}px`
-                                        }}>so'm</p>
-                                    </div>
-                                </div>
+                                {/*}*/}
+                                {/*<div className={'d-flex gap-2 align-items-stretch mt-1'}>*/}
+                                {/*    <div className="col-md-6">*/}
+                                {/*        <p className={"barcode-card-price"}*/}
+                                {/*           style={{*/}
+                                {/*               fontSize: `${fontSize}px`,*/}
+                                {/*               lineHeight: `${fontSize}px`*/}
+                                {/*           }}>{item.price.toString().substring(0, item.price.toString().length - 3)}</p>*/}
+                                {/*    </div>*/}
+                                {/*    <div className="col-md-5 d-flex flex-column align-items-start justify-content-center">*/}
+                                {/*        <p className={"barcode-card-price"}*/}
+                                {/*           style={{*/}
+                                {/*               fontSize: `${fontSize / 2}px`,*/}
+                                {/*               textAlign: 'start',*/}
+                                {/*               lineHeight: `${fontSize / 2}px`*/}
+                                {/*           }}>{item.price.toString().substring(item.price.toString().length - 3, item.price.toString().length)}</p>*/}
+                                {/*        <p className={"barcode-card-price"} style={{*/}
+                                {/*            fontSize: `${fontSize / 2.25}px`,*/}
+                                {/*            textAlign: 'start',*/}
+                                {/*            lineHeight: `${fontSize / 2.5}px`*/}
+                                {/*        }}>so'm</p>*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
 
-                                {
-                                    isName &&
-                                    <p className={"barcode-card-text mt-2"}
-                                       style={{fontSize: `${fontSize / 2.5}px`}}>{item.name}</p>
-                                }
+                                {/*{*/}
+                                {/*    isName &&*/}
+                                {/*    <p className={"barcode-card-text mt-2"}*/}
+                                {/*       style={{fontSize: `${fontSize / 2.5}px`}}>{item.name}</p>*/}
+                                {/*}*/}
                                 <div className={'d-flex col-md-12 mt-2 p-1 justify-content-between'}>
                                     <div className="col-md-8 barcode-icon" style={{
                                         width: `${cardSize.width * 2 / 3}mm`,
@@ -366,12 +366,12 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                                         <Barcode options={{format: item.barcode.length == 13 ? 'ean13' : 'code128'}}
                                                  renderer="svg" value={item.barcode}/>
                                     </div>
-                                    {
-                                        isDate && <div className="col-md-4 d-flex align-items-end"
-                                                       style={{fontSize: `${fontSize / 2.5}px`}}>
-                                            {date}
-                                        </div>
-                                    }
+                                    {/*{*/}
+                                    {/*    isDate && <div className="col-md-4 d-flex align-items-end"*/}
+                                    {/*                   style={{fontSize: `${fontSize / 2.5}px`}}>*/}
+                                    {/*        {date}*/}
+                                    {/*    </div>*/}
+                                    {/*}*/}
                                 </div>
                             </div>
                         )
