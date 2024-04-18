@@ -232,7 +232,7 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                 </div>
                 <div className="d-none">
                     <div
-                        className={`${display} d-flex justify-content-between flex-wrap align-items-center w-100`}
+                        className={`d-flex justify-content-between flex-wrap align-items-center w-100`}
                         ref={componentRef}>
                         {
                             XaridArrayPost.map((item) => {
@@ -248,50 +248,50 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                                         >
                                             <div
                                                 style={{
-                                                    width: `${cardSize.width - 1}mm`,
-                                                    height: `${cardSize.height - 1}mm`,
-                                                    padding: `5mm`,
+                                                    width: `${cardSize.width - 2}mm`,
+                                                    height: `${cardSize.height - 2}mm`,
+                                                    // padding: `2mm`,
                                                 }}
                                                 className={'barcode-card'}>
-                                                {
-                                                    isBranchName &&  <h1 style={{
-                                                        fontSize: `${fontSize / 3}px`,
-                                                        textAlign: 'center',
-                                                        margin: 0
-                                                    }}>{branchName}</h1>
-                                                }
-                                                <div className={'d-flex gap-2 align-items-stretch mt-1'}>
-                                                    <div className="col-md-6">
-                                                        <h1 className={"barcode-card-price"}
-                                                           style={{
-                                                               fontSize: `${fontSize}px`,
-                                                               lineHeight: `${fontSize}px`
-                                                           }}>{item.price.toString().substring(0, item.price.toString().length - 3)}</h1>
-                                                    </div>
-                                                    <div
-                                                        className="col-md-5 d-flex flex-column align-items-start justify-content-center">
-                                                        <h1 className={"barcode-card-price"}
-                                                           style={{
-                                                               fontSize: `${fontSize / 2}px`,
-                                                               textAlign: 'start',
-                                                               lineHeight: `${fontSize / 2}px`
-                                                           }}>{item.price.toString().substring(item.price.toString().length - 3, item.price.toString().length)}</h1>
-                                                        <h1 className={"barcode-card-price"} style={{
-                                                            fontSize: `${fontSize / 2.25}px`,
-                                                            textAlign: 'start',
-                                                            lineHeight: `${fontSize / 2.5}px`
-                                                        }}>so'm</h1>
-                                                    </div>
-                                                </div>
+                                                {/*{*/}
+                                                {/*    isBranchName &&  <h1 style={{*/}
+                                                {/*        fontSize: `${fontSize / 3}px`,*/}
+                                                {/*        textAlign: 'center',*/}
+                                                {/*        margin: 0*/}
+                                                {/*    }}>{branchName}</h1>*/}
+                                                {/*}*/}
+                                                {/*<div className={'d-flex gap-2 align-items-stretch mt-1'}>*/}
+                                                {/*    <div className="col-md-6">*/}
+                                                {/*        <h1 className={"barcode-card-price"}*/}
+                                                {/*           style={{*/}
+                                                {/*               fontSize: `${fontSize}px`,*/}
+                                                {/*               lineHeight: `${fontSize}px`*/}
+                                                {/*           }}>{item.price.toString().substring(0, item.price.toString().length - 3)}</h1>*/}
+                                                {/*    </div>*/}
+                                                {/*    <div*/}
+                                                {/*        className="col-md-5 d-flex flex-column align-items-start justify-content-center">*/}
+                                                {/*        <h1 className={"barcode-card-price"}*/}
+                                                {/*           style={{*/}
+                                                {/*               fontSize: `${fontSize / 2}px`,*/}
+                                                {/*               textAlign: 'start',*/}
+                                                {/*               lineHeight: `${fontSize / 2}px`*/}
+                                                {/*           }}>{item.price.toString().substring(item.price.toString().length - 3, item.price.toString().length)}</h1>*/}
+                                                {/*        <h1 className={"barcode-card-price"} style={{*/}
+                                                {/*            fontSize: `${fontSize / 2.25}px`,*/}
+                                                {/*            textAlign: 'start',*/}
+                                                {/*            lineHeight: `${fontSize / 2.5}px`*/}
+                                                {/*        }}>so'm</h1>*/}
+                                                {/*    </div>*/}
+                                                {/*</div>*/}
                                                 {/*{*/}
                                                 {/*    isName &&*/}
                                                 {/*    <h1 className={"barcode-card-text mt-2"}*/}
                                                 {/*        style={{fontSize: `${fontSize / 2.5}px`}}>{item.name}</h1>*/}
                                                 {/*}*/}
-                                                <div className={'d-flex col-md-12 mt-2 p-1 justify-content-between'}>
+                                                <div className={'d-flex col-md-12 justify-content-between'}>
                                                     <div className="col-md-8 barcode-icon" style={{
-                                                        width: `${cardSize.width * 2 / 3}mm`,
-                                                        height: `${cardSize.height / 3}mm`
+                                                        width: `${cardSize.width - 2}mm`,
+                                                        height: `${cardSize.height - 2}mm`
                                                     }}>
                                                         <Barcode
                                                             options={{format: item.barcode.length == 13 ? 'ean13' : 'code128'}}
@@ -319,7 +319,7 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                                 style={{
                                     width: `${cardSize.width}mm`,
                                     height: `${cardSize.height}mm`,
-                                    padding: `$5mm`
+                                    padding: `2mm`
                                 }}
                                 className={'barcode-card'}>
                                 {/*{*/}
@@ -358,10 +358,10 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                                 {/*    <p className={"barcode-card-text mt-2"}*/}
                                 {/*       style={{fontSize: `${fontSize / 2.5}px`}}>{item.name}</p>*/}
                                 {/*}*/}
-                                <div className={'d-flex col-md-12 mt-2 p-1 justify-content-between'}>
+                                <div className={'d-flex col-md-12 justify-content-between'}>
                                     <div className="col-md-8 barcode-icon" style={{
-                                        width: `${cardSize.width * 2 / 3}mm`,
-                                        height: `${cardSize.height / 3}mm`
+                                        width: `${cardSize.width - 5}mm`,
+                                        height: `${cardSize.height - 5}mm`
                                     }}>
                                         <Barcode options={{format: item.barcode.length == 13 ? 'ean13' : 'code128'}}
                                                  renderer="svg" value={item.barcode}/>
