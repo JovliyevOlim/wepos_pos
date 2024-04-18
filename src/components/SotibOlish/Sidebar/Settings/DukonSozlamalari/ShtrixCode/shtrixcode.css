@@ -19,9 +19,11 @@
 
 
 .barcode-card{
-    padding: 2px;
-    border:1px solid gray;
-    border-radius:10px
+    /*border:1px solid gray;*/
+    /*border-radius:10px*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .barcode-card-check{
     width: 100%;
@@ -44,6 +46,21 @@
 .barcode-icon svg{
     width: 100%;
     height: 100%;
+}
+.Combo-array{
+    width: 100%;
+    border: 1px solid gray;
+    background-color: #FFFFFF;
+    position: relative;
+}
+.Combo-array p{
+    padding: 1px 5px;
+    margin: 0;
+}
+.Combo-array p:hover{
+    background-color: #0c63e4;
+    color: #FFFFFF;
+    cursor: pointer;
 }
 @media screen and (max-width: 768px){
     .barcode-input{
