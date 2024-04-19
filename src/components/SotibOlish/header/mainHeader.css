@@ -206,6 +206,11 @@
     width: 20px;
     height: 40px;
 }
+.notification-icon-table{
+    color: #ee4f16;
+    width: 20px;
+    height: 40px;
+}
 @keyframes notification {
     from{
         color: transparent;

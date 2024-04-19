@@ -4,7 +4,7 @@ import {Link, useHistory, useLocation} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import {Button, Select} from "antd";
-import Icon, {DeleteOutlined} from "@ant-design/icons";
+import Icon, {DeleteOutlined, TableOutlined} from "@ant-design/icons";
 import {MdOutlineFiberNew} from "react-icons/md"
 import {BsCheckAll} from 'react-icons/bs'
 import moment from "moment";
@@ -45,7 +45,7 @@ function MainHeader({
     const {t, i18n} = useTranslation()
     const location = useLocation()
     const history = useHistory()
-    const appLang =  localStorage.getItem("miroLang") || "uz"
+    const appLang = localStorage.getItem("miroLang") || "uz"
     const [lang, setLang] = useState(appLang)
     const [activeN, setactiveN] = useState(false)
     const [exit, setExit] = useState(false)
@@ -65,11 +65,11 @@ function MainHeader({
         setactiveN(!activeN)
     }
 
-  function ChangeLanguage(e) {
-    setLang(e)
-    localStorage.setItem("appLang", e)
-    i18n.changeLanguage(e)
-  }
+    function ChangeLanguage(e) {
+        setLang(e)
+        localStorage.setItem("appLang", e)
+        i18n.changeLanguage(e)
+    }
 
 
     function isRead(id) {
@@ -95,79 +95,80 @@ function MainHeader({
             <div className={'main-header-left'}>
                 <div className="main-header-icon">
                     <Button
-                      type="text"
-                      icon={<Icon component={BurgerIcon}/>}
-                      onClick={setCollapsed}
-                      style={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          padding: '10px',
-                      }}
+                        type="text"
+                        icon={<Icon component={BurgerIcon}/>}
+                        onClick={setCollapsed}
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            padding: '10px',
+                        }}
                     />
                 </div>
-              <button title={t("sidebar.shopWindow")} onClick={() => history.push('/shopping')} className="savdoOynasiBtn">
-                {
-                  widthWidth >= 768 ? <span>{t("sidebar.shopWindow")}</span> : null
-                }
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
-                  <path d="M7 18.5C7 17.3954 7.89543 16.5 9 16.5C10.1046 16.5 11 17.3954 11 18.5V22.5H7V18.5Z"
-                        stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
-                  <path
-                    d="M22 8.75V6.5C22 4.29086 20.2091 2.5 18 2.5H6C3.79086 2.5 2 4.29086 2 6.5V8.75C2 10.8211 3.49238 12.5 5.33333 12.5C7.17428 12.5 8.66667 10.8211 8.66667 8.75C8.66667 10.8211 10.1591 12.5 12 12.5C13.841 12.5 15.3333 10.8211 15.3333 8.75C15.3333 10.8211 16.8257 12.5 18.6667 12.5C20.5076 12.5 22 10.8211 22 8.75Z"
-                    stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
-                  <path
-                    d="M14 15.5C14 14.9477 14.4477 14.5 15 14.5H17C17.5523 14.5 18 14.9477 18 15.5V16.5C18 17.0523 17.5523 17.5 17 17.5H15C14.4477 17.5 14 17.0523 14 16.5V15.5Z"
-                    stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
-                  <path d="M21 11.5V18.5C21 20.7091 19.2091 22.5 17 22.5H7C4.79086 22.5 3 20.7091 3 18.5V11.5"
-                        stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
-                </svg>
-              </button>
+                <button title={t("sidebar.shopWindow")} onClick={() => history.push('/shopping')}
+                        className="savdoOynasiBtn">
+                    {
+                        widthWidth >= 768 ? <span>{t("sidebar.shopWindow")}</span> : null
+                    }
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
+                        <path d="M7 18.5C7 17.3954 7.89543 16.5 9 16.5C10.1046 16.5 11 17.3954 11 18.5V22.5H7V18.5Z"
+                              stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
+                        <path
+                            d="M22 8.75V6.5C22 4.29086 20.2091 2.5 18 2.5H6C3.79086 2.5 2 4.29086 2 6.5V8.75C2 10.8211 3.49238 12.5 5.33333 12.5C7.17428 12.5 8.66667 10.8211 8.66667 8.75C8.66667 10.8211 10.1591 12.5 12 12.5C13.841 12.5 15.3333 10.8211 15.3333 8.75C15.3333 10.8211 16.8257 12.5 18.6667 12.5C20.5076 12.5 22 10.8211 22 8.75Z"
+                            stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
+                        <path
+                            d="M14 15.5C14 14.9477 14.4477 14.5 15 14.5H17C17.5523 14.5 18 14.9477 18 15.5V16.5C18 17.0523 17.5523 17.5 17 17.5H15C14.4477 17.5 14 17.0523 14 16.5V15.5Z"
+                            stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
+                        <path d="M21 11.5V18.5C21 20.7091 19.2091 22.5 17 22.5H7C4.79086 22.5 3 20.7091 3 18.5V11.5"
+                              stroke="white" strokeWidth="1.5" strokeLinejoin="round"/>
+                    </svg>
+                </button>
             </div>
-          <div className={'main-header-right'}>
-            <div>
-              <Select
-                style={{width: widthWidth >= 768 ? 150 : 70}}
-                size={"large"}
-                onChange={ChangeLanguage}
-                value={lang}
-                options={[
-                  {
-                    value: 'uz',
-                    label: <div className="d-flex align-items-center gap-2">
-                      {
-                        widthWidth >= 768 ?  <>
-                          <img src={uzLanguage} alt="uz"/>
-                          <span>O'zbekcha</span>
-                        </> : <span>O'z</span>
-                      }
-                    </div>,
-                  },
-                  {
-                    value: 'ki',
-                    label: <div className="d-flex align-items-center gap-2">
-                      {
-                        widthWidth >= 768 ? <>
-                          <img src={uzLanguage} alt="kr"/>
-                          <span>Ўзбекча</span>
-                        </> : <span>Ўз</span>
-                      }
+            <div className={'main-header-right'}>
+                <div>
+                    <Select
+                        style={{width: widthWidth >= 768 ? 150 : 70}}
+                        size={"large"}
+                        onChange={ChangeLanguage}
+                        value={lang}
+                        options={[
+                            {
+                                value: 'uz',
+                                label: <div className="d-flex align-items-center gap-2">
+                                    {
+                                        widthWidth >= 768 ? <>
+                                            <img src={uzLanguage} alt="uz"/>
+                                            <span>O'zbekcha</span>
+                                        </> : <span>O'z</span>
+                                    }
+                                </div>,
+                            },
+                            {
+                                value: 'ki',
+                                label: <div className="d-flex align-items-center gap-2">
+                                    {
+                                        widthWidth >= 768 ? <>
+                                            <img src={uzLanguage} alt="kr"/>
+                                            <span>Ўзбекча</span>
+                                        </> : <span>Ўз</span>
+                                    }
 
-                    </div>,
-                  },
-                  {
-                    value: 'ru',
-                    label: <div className="d-flex align-items-center gap-2">
-                      {
-                        widthWidth >= 768 ? <>
-                          <img src={rusLanguage} alt="ru"/>
-                          <span>Русский</span>
-                        </> : <span>Ру</span>
-                      }
-                    </div>,
-                  },
-                ]}
-              />
+                                </div>,
+                            },
+                            {
+                                value: 'ru',
+                                label: <div className="d-flex align-items-center gap-2">
+                                    {
+                                        widthWidth >= 768 ? <>
+                                            <img src={rusLanguage} alt="ru"/>
+                                            <span>Русский</span>
+                                        </> : <span>Ру</span>
+                                    }
+                                </div>,
+                            },
+                        ]}
+                    />
                 </div>
                 <div>
                     <div className={'main-notification-img'} onClick={openNotification}>
@@ -232,6 +233,10 @@ function MainHeader({
                                         <p className={'p-0 m-0 notification-date'}>{moment(new Date(item?.createdAt)).format('LLLL')}</p>
                                         <div className={'d-flex gap-2 justify-content-end align-items-center'}>
                                             {
+                                                item?.productLifetimes.length > 0 &&
+                                                <TableOutlined className={'notification-icon-table'}/>
+                                            }
+                                            {
                                                 !item.read ?
                                                     <MdOutlineFiberNew onClick={() => isRead(item.id)}
                                                                        className={'notification-icon'}/> :
@@ -257,7 +262,7 @@ function MainHeader({
     )
 }
 
-export default  connect((users, notificationReducer), {
+export default connect((users, notificationReducer), {
     logOutUser,
     deleteNotification,
     active,
