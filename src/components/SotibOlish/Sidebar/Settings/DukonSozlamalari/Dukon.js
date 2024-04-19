@@ -74,13 +74,13 @@ import EtiketkaCreate from "./Etiketka/EtiketkaCreate";
                          </Link>
                          : ''
                  }
-                 {
-                     users.getProduct ?
-                         <Link to={'/main/shopSetting/8'}>
-                             <button className={'btn btn-outline-primary form-control mt-2'}>Etiketka</button>
-                         </Link>
-                         : null
-                 }
+                 {/*{*/}
+                 {/*    users.getProduct ?*/}
+                 {/*        <Link to={'/main/shopSetting/8'}>*/}
+                 {/*            <button className={'btn btn-outline-primary form-control mt-2'}>Etiketka</button>*/}
+                 {/*        </Link>*/}
+                 {/*        : null*/}
+                 {/*}*/}
              </div>
              <div className="blokSet">
                  <Switch>

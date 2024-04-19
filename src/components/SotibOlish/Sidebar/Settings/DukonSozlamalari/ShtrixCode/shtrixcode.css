@@ -19,7 +19,7 @@
 
 
 .barcode-card{
-    /*border:1px solid gray;*/
+    border:1px solid gray;
     /*border-radius:10px*/
     display: flex;
     align-items: center;
@@ -33,9 +33,9 @@
     padding: 15px 20px;
 }
 .barcode-card-text{
-    text-align: start;
+    text-align: center;
     font-weight:600;
-    margin: 0;
+    margin: 10px;
 }
 .barcode-card-price{
     text-align: end;
@@ -48,13 +48,16 @@
     height: 100%;
 }
 .Combo-array{
-    width: 100%;
+    width: 90%;
+    max-height: 200px;
+    overflow: scroll;
     border: 1px solid gray;
     background-color: #FFFFFF;
-    position: relative;
+    position: absolute;
+    z-index: 10000;
 }
 .Combo-array p{
-    padding: 1px 5px;
+    padding: 2px 15px;
     margin: 0;
 }
 .Combo-array p:hover{
