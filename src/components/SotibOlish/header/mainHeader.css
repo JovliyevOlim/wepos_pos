@@ -166,6 +166,54 @@
     align-items: center;
     gap: 12px;
 }
+
+.notification-btn{
+    background: rgba(13, 110, 253, 0.78);
+    color: white;
+    font-size: 18px;
+    border-radius: 20px;
+    padding: 10px 15px;
+}
+.notification-date{
+    font-style: italic;
+    font-size: 14px;
+    color: white;
+    opacity: 0.8;
+}
+.notification-icon{
+    cursor: pointer;
+    color: red;
+    width: 50px;
+    height: 40px;
+    animation-name: notification;
+    animation-duration: 0.7s;
+    animation-direction: alternate-reverse;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease;
+}
+.notification-text{
+    font-size: 14px;
+    font-weight: bold;
+}
+.notification-icon2{
+    color: green;
+    width: 50px;
+    height: 40px;
+}
+.notification-icon3{
+    cursor: pointer;
+    color: #eaf800;
+    width: 20px;
+    height: 40px;
+}
+@keyframes notification {
+    from{
+        color: transparent;
+    }
+    to{
+        color: red;
+    }
+}
 @media screen and (max-width: 330px) {
     .savdoOynasiBtn{
         font-size: 14px;

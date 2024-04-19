@@ -230,7 +230,7 @@ function MainHeader({
                                     </div>
                                     <div className={'d-flex justify-content-between align-items-center'}>
                                         <p className={'p-0 m-0 notification-date'}>{moment(new Date(item?.createdAt)).format('LLLL')}</p>
-                                        <div className={'d-flex gap-2 justify-content-between align-items-center'}>
+                                        <div className={'d-flex gap-2 justify-content-end align-items-center'}>
                                             {
                                                 !item.read ?
                                                     <MdOutlineFiberNew onClick={() => isRead(item.id)}

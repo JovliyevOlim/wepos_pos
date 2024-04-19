@@ -205,6 +205,7 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                 <div className={'col-md-12 d-flex gap-2 gap-md-4 align-items-center flex-wrap'}>
                     <div className={'col-md-3'}>
                         <SelectAnt name={'O\'lchami'} permission={false} selectList={[
+                            {id: '1010', name: 'Tanlang'},
                             // {id: '5858', name: '58x58'},
                             {id: '5830', name: '58x30'},
                             // {id: '4325', name: '43x25'},
@@ -265,7 +266,7 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                                                                 height: `${cardSize.height - 5}mm`
                                                             }}>
                                                                 <Barcode options={{
-                                                                    format: item.barcode.length === 13 ? 'ean13' : 'auto',
+                                                                    format: item.barcode.length === 13 ? 'ean13' : 'code128',
                                                                 }}
                                                                          renderer="svg" value={item.barcode}/>
                                                             </div>
@@ -306,9 +307,9 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                                                                 >
                                                                     <Barcode
                                                                         options={{
-                                                                            format: item.barcode.length === 13 ? 'ean13' : 'auto',
+                                                                            format: item.barcode.length === 13 ? 'ean13' : 'code128',
                                                                             fontOptions: 'bold',
-                                                                            fontSize:30
+                                                                            fontSize: 30
                                                                         }}
                                                                         renderer="svg" value={item.barcode}/>
                                                                 </div>
@@ -353,10 +354,12 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                                                     width: `${cardSize.width - 5}mm`,
                                                     height: `${cardSize.height - 5}mm`
                                                 }}>
-                                                    <Barcode options={{
-                                                        format: item.barcode.length === 13 ? 'ean13' : 'auto',
-                                                    }}
-                                                             renderer="svg" value={item.barcode}/>
+                                                    <Barcode
+                                                        options={{
+                                                            format: item.barcode.length === 13 ? 'ean13' : 'code128'
+                                                        }}
+                                                        renderer="svg" value={item.barcode}/>
+
                                                 </div>
                                             </div>
 
@@ -395,9 +398,9 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                                                     >
                                                         <Barcode
                                                             options={{
-                                                                format: item.barcode.length === 13 ? 'ean13' : 'auto',
+                                                                format: item.barcode.length === 13 ? 'ean13' : 'code128',
                                                                 fontOptions: 'bold',
-                                                                fontSize:30
+                                                                fontSize: 30
                                                             }}
                                                             renderer="svg" value={item.barcode}/>
                                                     </div>
@@ -426,14 +429,6 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
 
 export default connect((users, MaxsulotlarRoyxariReducer),
     {getBarcodeAndName})(ShtrixCode)
-
-
-
-
-
-
-
-
 
 
 {/*<div className={'d-flex gap-1 align-items-stretch justify-content-center'}>*/
