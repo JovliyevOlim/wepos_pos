@@ -234,7 +234,11 @@ function MainHeader({
                                         <div className={'d-flex gap-2 justify-content-end align-items-center'}>
                                             {
                                                 item?.productLifetimes.length > 0 &&
-                                                <TableOutlined className={'notification-icon-table'}/>
+                                                <Link to={'/main/productLifeTime'} onClick={()=>{
+                                                    setactiveN(false)
+                                                }}>
+                                                    <TableOutlined className={'notification-icon-table'}/>
+                                                </Link>
                                             }
                                             {
                                                 !item.read ?

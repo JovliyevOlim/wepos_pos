@@ -53,14 +53,16 @@ import products from "../../../../../img/package box 07shop.svg"
 import minus from "../../../../../img/minus.svg"
 import plus from "../../../../../img/plus.svg"
 import remove from "../../../../../img/remove.svg"
-import {Button, Drawer, Radio, Space} from 'antd';
-import {BaseUrl} from "../../../../../middleware";
 import defaultProduct from '../../../../../img/image 3.jpg'
 import {AddOrEditText} from "../../../../Components/MainHeaderText";
-import {DeleteOutlined, EditOutlined, EnterOutlined, EyeOutlined} from "@ant-design/icons";
+import {DeleteOutlined, EditOutlined, EnterOutlined, EyeOutlined, RetweetOutlined} from "@ant-design/icons";
 import CommonTable from "../../../../Components/CommonTable";
 import {CustomButton, DeleteButton, EditButton} from "../../../../Components/Buttons";
+import XodimReducer, {getUserForFiltering} from "../../Hodimlar/reducer/XodimReducer";
+import {BaseUrl} from "../../../../../middleware";
+import {Input, Space, Typography} from 'antd';
 
+const {Title} = Typography;
 
 function SavdoOynasi({
                          allbusinessreducer,
@@ -82,7 +84,7 @@ function SavdoOynasi({
                          editSavdolar, SavdoQoshishReducer, saveSavdolar,
                          users, savdooynasi,
                          getFirma, MaxsulotlarRoyxariReducer,
-                         getBarcodeAndName, match, getTradeById, getTradeByBranch
+                         getBarcodeAndName, match, getTradeById, getTradeByBranch, getUserForFiltering, XodimReducer
                      }) {
     const {t} = useTranslation();
     const history = useHistory();
@@ -182,6 +184,10 @@ function SavdoOynasi({
     ];
 
     const [open, setOpen] = useState(false);
+    const [pinCode, setPinCode] = useState('')
+    const [confirmedOpen, setConfirmedOpen] = useState(true);
+
+
     const showDrawer = () => {
         setOpen(!open);
     };
@@ -190,6 +196,7 @@ function SavdoOynasi({
     const [changesId, setChangesId] = useState(null);
     const [paymentTypeCheck, setPaymentTypeCheck] = useState(null);
     const [mainBranchId, setMainBranchId] = useState(null)
+    const [userId, setUserId] = useState({})
     const [thisDay, setThisDay] = useState(formatDateMinus(new Date()))
     const [IsCheck, setIsCheck] = useState(false)
     const [categoryId, setCategoryId] = useState('')
@@ -206,6 +213,32 @@ function SavdoOynasi({
     const [noChangesPaidSum, setNoChangesPaidSum] = useState(0)
     const [tradeIdSearch, setTradeIdSearch] = useState('')
     const [tradeIdForEdit, setTradeIdForEdit] = useState(null)
+
+
+    const onCheckedPinCode = (text) => {
+        setPinCode(text)
+    };
+    const sharedProps = {
+        onChange: onCheckedPinCode,
+    };
+
+
+    function toEnter() {
+        console.log(userId)
+        if (userId?.pinCode == pinCode) {
+            setConfirmedOpen(false)
+        } else {
+            if (pinCode) {
+                toast.error('Kodni to\'g\'ri kiriting !!!')
+            } else {
+                toast.warning('Kodni  kiriting !!!')
+            }
+        }
+    }
+
+    useEffect(() => {
+        getUserForFiltering(mainBranchId ? mainBranchId : users.branchId)
+    }, [mainBranchId]);
 
     function reducer(state, action) {
         switch (action.type) {
@@ -233,8 +266,6 @@ function SavdoOynasi({
         setIsGross(!allbusinessreducer.onebusiness?.gross)
     }, [allbusinessreducer.businessMinusSHopBoolean])
 
-
-    const [userHoldOn, setUserHoldOn] = useState(null)
 
     const [addCustomerActive, setAddCustomerActive] = useState(false)
 
@@ -325,7 +356,8 @@ function SavdoOynasi({
                 if (id == val.id) {
                     let holdOnArray = []
                     changeGrossPriceType(val.gross ? (t('mah.65')) : (t('mah.66')))
-                    setUserHoldOn(val.userId)
+                    const findUser = XodimReducer.usersFiltering?.find(item => item.id === userId)
+                    setUserId(findUser)
                     setushlanumber(val.id)
                     setjamixisob(val.totalSum)
                     setxisob(val.quantity)
@@ -548,7 +580,7 @@ function SavdoOynasi({
         const productsArray = arr1.map(item => {
             let mainPrice = item.noChangesPrice - (item.noChangesPrice * customerPercent / 100)
             let totalPrice = item.noChangesTotalSalePrice - (item.noChangesTotalSalePrice * customerPercent / 100)
-            return {...item, price: mainPrice,totalSalePrice:totalPrice}
+            return {...item, price: mainPrice, totalSalePrice: totalPrice}
         })
         console.log(productsArray)
         setarr1(productsArray)
@@ -572,7 +604,6 @@ function SavdoOynasi({
                 setTrader([])
                 setThisDay(formatDateMinus(new Date()))
                 setturli(false)
-                setUserHoldOn(null)
                 setactiveqarz(false)
                 setCustomerPercent(0)
                 setCustomer(null)
@@ -663,7 +694,7 @@ function SavdoOynasi({
                 paymentStatus: paymentStatus,
                 totalSum: totalSum,
                 tradeProductDtoList: traderArrayDto,
-                userId: userHoldOn ? userHoldOn : users.id,
+                userId: userId.id,
             })
         } else {
             saveSavdolar({
@@ -678,7 +709,7 @@ function SavdoOynasi({
                 paymentStatus: paymentStatus,
                 totalSum: totalSum,
                 tradeProductDtoList: traderArrayDto,
-                userId: userHoldOn ? userHoldOn : users.id,
+                userId: userId.id,
             })
         }
     }
@@ -887,7 +918,8 @@ function SavdoOynasi({
                 setMainBranchId(branchId)
                 setCustomer(SavdoQoshishReducer.tradeOne?.customerId)
                 setCustomerPercent(SavdoQoshishReducer.tradeOne?.customerPercent)
-                setUserHoldOn(userId)
+                const findUser = XodimReducer.usersFiltering?.find(item => item.id === userId)
+                setUserId(findUser)
                 setThisDay(formatDateMinus(date))
                 setNoChangesPaidSum(paidSum)
                 SavdoQoshishReducer.tradeOne?.tradeProductDtoList?.map(val =>
@@ -1045,17 +1077,15 @@ function SavdoOynasi({
             <div className={"shopping"}>
                 <div className="shopping-header">
                     <div className="shopping-header-item">
-                        <h5 className={'shop-header-text'}>Filial</h5>
                         <div>
-                            <SelectAnt disabled={match.params.remainId || tradeIdForEdit ? true : false}
-                                       value={mainBranchId ? mainBranchId : users.branchId} permission={false}
-                                       selectList={users.branches} onChange={(e) => {
-                                setMainBranchId(e)
-                                setarr1([])
-                                setSearch('')
-                                setIsSearchProduct([])
-                            }}/>
+                            <h6 className={'shop-header-text'}>{userId?.fio}</h6>
+                            <p className={'m-0 p-0'}
+                               style={{fontSize: '14px'}}>{users.branches?.find(item => item.id === mainBranchId ? mainBranchId : users.branchId)?.name}
+                            </p>
                         </div>
+
+                        <CustomButton size={'small'} icon={<RetweetOutlined/>}
+                                      onClick={() => setConfirmedOpen(!confirmedOpen)}/>
                         {
                             (tradeIdForEdit) && match.params.remainId ? <h5>
                                     <h5 className={'shop-header-text'}>{t('mah.74')}</h5>
@@ -1314,7 +1344,8 @@ function SavdoOynasi({
                                 <img src={plus} alt="plus" className={'btn-change-icon'}/>
                                 <p className={'btn-change-text'} style={{color: '#377DFF'}}>Qo'shish</p>
                             </div>
-                            <button className={'btn-change border-0'} disabled={changesId  ? false :true} onClick={deleteM}>
+                            <button className={'btn-change border-0'} disabled={changesId ? false : true}
+                                    onClick={deleteM}>
                                 <img src={remove} alt="remove" className={'btn-change-icon'}/>
                                 <p className={'btn-change-text'} style={{color: '#B0B7C3'}}>O'chirish</p>
                             </button>
@@ -1822,7 +1853,9 @@ function SavdoOynasi({
                                         <td className={'d-flex gap-2'}>
                                             {
                                                 users.editTrade &&
-                                                <CustomButton icon={<EnterOutlined />} size={'small'} text={'Savdo oynaga ko\'chirish'} onClick={() => savdooynakochirish(item.id)} />
+                                                <CustomButton icon={<EnterOutlined/>} size={'small'}
+                                                              text={'Savdo oynaga ko\'chirish'}
+                                                              onClick={() => savdooynakochirish(item.id)}/>
                                             }
                                             {
                                                 users.deleteTrade &&
@@ -2099,7 +2132,7 @@ function SavdoOynasi({
                                                                                         users.editTrade && item?.editable ?
                                                                                             <EditButton
                                                                                                 onClick={() => getTradeByForEdit(item.id)}
-                                                                                                    />
+                                                                                            />
                                                                                             : ''
                                                                                     }
                                                                                 </div>
@@ -2129,6 +2162,55 @@ function SavdoOynasi({
                     </ModalFooter>
                 </Modal>
                 <ModalLoading isOpen={saveModal}/>
+                <Modal isOpen={confirmedOpen} size={'lg'}>
+                    <ModalHeader>
+                        Ma'lumotlarni kiriting !
+                    </ModalHeader>
+                    <ModalBody>
+                        <div className="row">
+                            <h5 className={'shop-header-text'}>Filial</h5>
+                            <div>
+                                <SelectAnt value={mainBranchId ? mainBranchId : users.branchId} permission={false}
+                                           selectList={users.branches} onChange={(e) => {
+                                    setMainBranchId(e)
+                                    setarr1([])
+                                    setSearch('')
+                                    setIsSearchProduct([])
+                                }}/>
+                            </div>
+                        </div>
+                        <div className="row mt-2">
+                            <h5 className={'shop-header-text'}>Xodimlar</h5>
+                            <div>
+                                <SelectAnt value={userId.id} permission={false}
+                                           selectList={XodimReducer.usersFiltering.map((item) => ({
+                                               id: item.id,
+                                               name: item.fio
+                                           }))}
+                                           onChange={(e) => {
+                                               const findUser = XodimReducer.usersFiltering?.find(item => item.id === e)
+                                               setUserId(findUser)
+                                               setarr1([])
+                                               setSearch('')
+                                               setIsSearchProduct([])
+                                           }}/>
+                            </div>
+                        </div>
+                        <div className="row mt-2">
+                            <h5 className={'shop-header-text text-center'}>PinCode kiriting</h5>
+                            <div className={'mt-2 text-center'}>
+                                <Space direction="vertical">
+                                    <Input.OTP size={'large'} length={4} type={'number'}
+                                               formatter={(str) => str.toUpperCase()} {...sharedProps} />
+                                </Space>
+                            </div>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter>
+                        <button onClick={toEnter} className={'btn btn-success'}>{t('Kirish')} </button>
+                    </ModalFooter>
+                </Modal>
+
             </div>
             <div style={{display: 'none'}}>
                 <div ref={componentRef}>
@@ -2174,24 +2256,24 @@ function SavdoOynasi({
                             }
                         </div>
                     </div>
-                        {
-                            customer ?
-                              <div className={'d-flex align-items-center justify-content-between'}>
-                                  <h1 style={{fontSize: 12, fontWeight: 600}}>{t('mah.42')} </h1>
-                                  {
-                                      CustomerReducer.customersTrade?.filter(val => {
-                                          if (val.id === customer) {
-                                              return val
-                                          }
-                                      })?.map(item => <h1 style={{fontSize: 12, fontWeight: 600}}
-                                                          key={item.id}> {item.name}</h1>)}
-                              </div> : null
-                        }
+                    {
+                        customer ?
+                            <div className={'d-flex align-items-center justify-content-between'}>
+                                <h1 style={{fontSize: 12, fontWeight: 600}}>{t('mah.42')} </h1>
+                                {
+                                    CustomerReducer.customersTrade?.filter(val => {
+                                        if (val.id === customer) {
+                                            return val
+                                        }
+                                    })?.map(item => <h1 style={{fontSize: 12, fontWeight: 600}}
+                                                        key={item.id}> {item.name}</h1>)}
+                            </div> : null
+                    }
                     <div style={{borderBottom: "1px dashed #000"}}></div>
                     <div className={'mt-3 table-responsive'}>
                         {
                             traderArray.filter(itemDelete => itemDelete.delete === false).map((item, index) => <div
-                              key={item.id}>
+                                key={item.id}>
                                 <h1 style={{fontSize: 12, fontWeight: 600}}>{index + 1}{".  "}{item.name}</h1>
                                 <div style={{marginLeft: 20, marginTop: -7}}
                                      className={"d-flex align-items-center justify-content-between"}>
@@ -2289,7 +2371,7 @@ function SavdoOynasi({
 }
 
 export default connect((checkReducer, holdOnReducer, MaxsulotlarRoyxariReducer, CustomerReducer, BolimReducer,
-    PayReducer, users, SavdoQoshishReducer, allbusinessreducer), {
+    PayReducer, users, SavdoQoshishReducer, allbusinessreducer, XodimReducer), {
     getCustomersForTrade,
     getInvoice,
     getFirma,
@@ -2307,5 +2389,6 @@ export default connect((checkReducer, holdOnReducer, MaxsulotlarRoyxariReducer, 
     getTradeById,
     editSavdolar,
     getOneBusiness,
-    getTradeByBranch
+    getTradeByBranch,
+    getUserForFiltering
 })(SavdoOynasi)

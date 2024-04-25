@@ -201,6 +201,7 @@ const Sidebar = ({users}) => {
                 {label:  t("sidebar.productRemain"), key: '/main/remainProductReport', check: true},
                 {label:  t("sidebar.usersControl"), key: '/main/usersReport', check: true},
                 {label:  t("sidebar.tableLossProduct"), key: '/main/lostProductsReport', check: true},
+                {label:'Mahsulotlar muddati', key: '/main/productLifeTime', check:true},
             ].filter(item => item.check === true)
         },
         {

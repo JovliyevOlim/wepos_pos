@@ -8,6 +8,8 @@ const slice = createSlice({
         productTableSearch:{},
         productSearch: [],
         productForShopping:[],
+        productLifeTime:[],
+        OneProductLifeTime:[],
         isClearInput:false,
         product: {},
         productView:{},
@@ -25,6 +27,16 @@ const slice = createSlice({
                 state.productTableSearch = action.payload.object
             } else {
                 state.productTableSearch = null
+                state.message = action.payload.message
+            }
+            state.getBoolean=!state.getBoolean
+            state.saveBoolean = false
+        },
+        getFromForTableLifeTime: (state, action) => {
+            if (action.payload.success) {
+                state.productLifeTime = action.payload.object
+            } else {
+                state.productLifeTime = null
                 state.message = action.payload.message
             }
             state.getBoolean=!state.getBoolean
@@ -103,6 +115,18 @@ export const getProductTableSearch = (data) => apiCall({
     params:data.params,
     onSuccess: slice.actions.getFromForTable.type,
     onFail: slice.actions.getFromForTable.type
+});
+export const getProductTableLifeTime = (id) => apiCall({
+    url: `/product-lifetime/view-lifetime/${id}`,
+    method: 'get',
+    onSuccess: slice.actions.getFromForTableLifeTime.type,
+    onFail: slice.actions.getFromForTableLifeTime.type
+});
+export const getProductTableLifeTimeEndDate = (id) => apiCall({
+    url: `/product-lifetime/view-end-date/${id}`,
+    method: 'get',
+    onSuccess: slice.actions.getFromForTableLifeTime.type,
+    onFail: slice.actions.getFromForTableLifeTime.type
 });
 export const getProductTableSearchBranch = (data) => apiCall({
     url: `/product/get-by-branch/${data.branchId}`,

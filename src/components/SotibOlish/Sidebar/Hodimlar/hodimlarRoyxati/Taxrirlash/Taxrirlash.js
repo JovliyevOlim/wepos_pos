@@ -79,6 +79,7 @@ function Taxrirlash({
         setValue('username', XodimReducer.oneXodim?.username);
         setValue('fio', XodimReducer.oneXodim?.fio);
         setValue('roleId', XodimReducer.oneXodim?.roleId);
+        setValue('pinCode', XodimReducer.oneXodim?.pinCode);
         setPhoneNumber(XodimReducer.oneXodim?.phoneNumber)
         setPhotoId(XodimReducer.oneXodim?.photoId)
         input.selectvalue = XodimReducer.oneXodim.branches?.map(({
@@ -191,8 +192,8 @@ function Taxrirlash({
                                        defaultValue={''}
                                        className={'form-control'}/>
                                 {
-                                  errors.fio &&
-                                  <p className={'text-danger text-center m-0 p-0'}>{errors.fio.message}</p>
+                                    errors.fio &&
+                                    <p className={'text-danger text-center m-0 p-0'}>{errors.fio.message}</p>
                                 }
                             </div>
                             <div className="col-md-6 p-2">
@@ -202,19 +203,19 @@ function Taxrirlash({
                                        placeholder={t('ol.65')}
                                        className={'form-control'}/>
                                 {
-                                  errors.username &&
-                                  <p className={'text-danger text-center m-0 p-0'}>{errors.username.message}</p>
+                                    errors.username &&
+                                    <p className={'text-danger text-center m-0 p-0'}>{errors.username.message}</p>
                                 }
                             </div>
                             <div className="col-md-6 p-2">
                                 <label className="mb-1" htmlFor="phoneNumber">{t('ol.66')}</label>
                                 <Input
-                                  placeholder={t('ol.59')}
-                                  value={phoneNumber}
-                                  className={'form-control'}
-                                  onChange={setPhoneNumber}/>
+                                    placeholder={t('ol.59')}
+                                    value={phoneNumber}
+                                    className={'form-control'}
+                                    onChange={setPhoneNumber}/>
                                 {isCheck && !phoneNumber && <p
-                                  className={'text-danger text-center p-0 m-0'}>{t('ol.58')}</p>}
+                                    className={'text-danger text-center p-0 m-0'}>{t('ol.58')}</p>}
                             </div>
                             <div className="col-md-6 p-2">
                                 <label className="mb-1" htmlFor={'roleId'}>{t('Employ.18')}</label>
@@ -224,13 +225,13 @@ function Taxrirlash({
                                         className={'form-control'}>
                                     {
                                         LavozimReducer.roles.length > 0 ?
-                                          LavozimReducer.roles.map((item, index) =>
-                                            <option value={item.id}>{item.name}</option>) : ''
+                                            LavozimReducer.roles.map((item, index) =>
+                                                <option value={item.id}>{item.name}</option>) : ''
                                     }
                                 </select>
                                 {
-                                  errors.roleId &&
-                                  <p className={'text-danger text-center m-0 p-0'}>{errors.roleId.message}</p>
+                                    errors.roleId &&
+                                    <p className={'text-danger text-center m-0 p-0'}>{errors.roleId.message}</p>
                                 }
                             </div>
                             <div className="col-md-6 p-2">
@@ -240,29 +241,58 @@ function Taxrirlash({
                                         {...register('branches', {required: {value: false, message: (t('ol.67'))}})}
                                         class={'form-control'} onChange={changeselect}/>
                                 {isCheck && input.branchid?.length === 0 && <p
-                                  className={'text-danger text-center p-0 m-0'}>{t('ol.68')}</p>}
+                                    className={'text-danger text-center p-0 m-0'}>{t('ol.68')}</p>}
                             </div>
+                            <div className="col-md-6 p-2 ">
+                                <label className="mb-1" htmlFor={'pinCodes'}>{t('PinCode')}</label>
+                                <input type="number"
+                                       {...register("pinCode",
+                                           {
+                                               required: {
+                                                   value: true,
+                                                   message: (t('PinCodeni kiriting'))
+                                               },
+                                               maxLength: {value: 4, message: (t('PinCode 4 ta raqam bo\'lishi kerak'))},
+                                               minLength: {value: 4, message: (t('PinCode 4 ta raqam bo\'lishi kerak'))}
+                                           })}
+                                       placeholder={t('PinCode')}
+                                       defaultValue={''}
+                                       className={'form-control'} id={'pinCodes'}/>
+                                {
+                                    errors.pinCode && errors.pinCode.type === "required" &&
+                                    <p className={'text-danger text-center m-0 p-0'}>{errors.pinCode.message}</p>
+                                }
+                                {
+                                    errors.pinCode && errors.pinCode?.type === "maxLength" &&
+                                    <p className={'text-danger text-center m-0 p-0'}>{errors.pinCode.message}</p>
+                                }
+                                {
+                                    errors.pinCode && errors.pinCode?.type === "minLength" &&
+                                    <p className={'text-danger text-center m-0 p-0'}>{errors.pinCode.message}</p>
+                                }
+                            </div>
+                            {console.log(errors)}
                             <div className="col-md-6 p-2 ">
                                 <label className="mb-1" htmlFor={'password'}>{t('Employ.16')}</label>
                                 <input type="text"
                                        {...register("password",
-                                         {
-                                             required: {
-                                                 value: !match.params.id,
-                                                 message: (t('ol.69'))
-                                             },
-                                             minLength: {value: 5, message: (t('ol.70'))}
-                                         })}
+                                           {
+                                               required: {
+                                                   value: !match.params.id,
+                                                   message: (t('ol.69'))
+                                               },
+                                               minLength: {value: 5, message: (t('ol.70'))}
+                                           })}
                                        placeholder={t('ol.71')}
                                        defaultValue={''}
                                        className={'form-control'} id={'password'}/>
                                 {
-                                  errors.password && errors.password.type === "required" &&
-                                  <p className={'text-danger text-center m-0 p-0'}>{errors.password.message}</p>
+                                    errors.password && errors.password.type === "required" &&
+                                    <p className={'text-danger text-center m-0 p-0'}>{errors.password.message}</p>
                                 }
                                 {
-                                  errors.password && errors.password.type === "minLength" &&
-                                  <p className={'text-danger text-center m-0 p-0'}>{errors.password.message}</p>
+                                    errors.password && errors.password.type === "minLength" &&
+                                    <p className={'text-danger text-center m-0 p-0'}>{errors.password.message}</p>
                                 }
                             </div>
                             <div className="col-md-6 p-2 ">
@@ -278,8 +308,8 @@ function Taxrirlash({
                                        defaultValue={''}
                                        className={'form-control'} id={'confirmPassword'}/>
                                 {
-                                  errors.confirmPassword &&
-                                  <p className={'text-danger text-center m-0 p-0'}>{errors.confirmPassword.message}</p>
+                                    errors.confirmPassword &&
+                                    <p className={'text-danger text-center m-0 p-0'}>{errors.confirmPassword.message}</p>
                                 }
                             </div>
                         </div>

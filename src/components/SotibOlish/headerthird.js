@@ -1,4 +1,5 @@
 import {lazy} from 'react';
+import ProductLifeTime from "./Sidebar/Xisobotlar/ProductLifeTime/ProductLifeTime";
 // import HodimlarRoyhati from "./Sidebar/Hodimlar/hodimlarRoyxati/HodimlarRoyhati";
 // import Lavozimlar from "./Sidebar/Hodimlar/Lavozimlar/Lavozimlar";
 // import Taxrirlash from "./Sidebar/Hodimlar/hodimlarRoyxati/Taxrirlash/Taxrirlash";
@@ -83,6 +84,8 @@ export const routes = [
     {path: "addProduct",component:Taxrirlash3,permissions:['ADD_PRODUCT']},
     {path: "importProduct",component:MahsulotImport,permissions:['ADD_PRODUCT']},
     {path: "productList",component:MaxsulotlarRoyxati,permissions:['ADD_PRODUCT','GET_PRODUCT','GET_PRODUCT_ADMIN']},
+    /// product Lite fitime
+    {path: "productLifeTime",component:ProductLifeTime,permissions:['ADD_PRODUCT','GET_PRODUCT','GET_PRODUCT_ADMIN']},
     {path: "productType",component:MahsulotTurlari,permissions:['ALL_TYPE']},
     {path: "category",component:Bolimlar,permissions:['ALL_CATEGORY']},
     {path: "measurements",component:Measurement,permissions:['ALL_MEASUREMENT']},
