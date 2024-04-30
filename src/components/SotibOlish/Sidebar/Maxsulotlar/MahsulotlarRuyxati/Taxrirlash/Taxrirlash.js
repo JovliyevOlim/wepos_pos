@@ -604,6 +604,7 @@ function Taxrirlash({
                             <select name="" id={'measurement'}
                                     {...register('measurementId', {required: true})}
                                     className={'form-control'}>
+                                <option value={''}>{t('as.67')}</option>
                                 {MeasurementReducer.measurements.map((item) => <option key={item.id} value={item.id}>
                                     {item.name}
                                 </option>)}
@@ -770,7 +771,7 @@ function Taxrirlash({
                             </div>
                             <div className="col-12 col-md-6 col-xl-3 p-2">
                                 <label className="mb-1" htmlFor={'sotibOlishNarxi'}>{t('as.70')}</label>
-                                <input type="number" step="any" id='sotibOlishNarxi'
+                                <input type="number" step="any" id='sotibOlishNarxi' defaultValue={0}
                                        className={'form-control'}
                                        {...register('grossPrice', {
                                            required: {
@@ -912,7 +913,7 @@ function Taxrirlash({
                                                         <div className={'d-flex align-items-start'}>
                                                             <input className={'manytype-input'}
                                                                    onChange={(e) => changeTypeForm(e, index)}
-                                                                   name={'grossPrice'} value={val.grossPrice}
+                                                                   name={'grossPrice'} defaultValue={0} value={val.grossPrice}
                                                                    placeholder={t('as.70')} required
                                                                    type="number"/>
                                                             {index === 0 ? <div>
