@@ -1,4 +1,4 @@
-import {useEffect, useState,useRef} from "react";
+import {useEffect, useState, useRef} from "react";
 import {ModalBody, ModalHeader, ModalFooter, Modal} from "reactstrap";
 import {connect} from "react-redux";
 import {useTranslation} from "react-i18next";
@@ -75,7 +75,10 @@ function Xarid({
         setIsView(true)
         getBarcodeAndName({
             branchId: mainBranchId ? mainBranchId : users.branchId,
-            name: e.target.value
+            params: {
+                search: e.target.value,
+                isPurchase: true,
+            }
         })
     }
 
@@ -85,6 +88,7 @@ function Xarid({
             return false;
         }
     };
+
     function CalcTotalSum(array) {
         console.log(array)
         let totalSum = 0
@@ -96,7 +100,7 @@ function Xarid({
         )
         setTotalSumPurchase(totalSum)
         setTotalQuantity(totalQuantity)
-        setValue('paidSum',totalSum)
+        setValue('paidSum', totalSum)
         setPaidSum(totalSum)
     }
 
@@ -150,7 +154,7 @@ function Xarid({
         }
         let a = [...XaridArrayPost]
         setXaridArrayPost(a)
-        let sendArray = a.filter(item=>item.delete === false)
+        let sendArray = a.filter(item => item.delete === false)
         CalcTotalSum(sendArray)
     }
 
@@ -309,79 +313,78 @@ function Xarid({
     return (
         <div className='xaridQilishBox'>
             <form onSubmit={handleSubmit(saqla)}>
-                <div className={'row  mt-5 '}>
+                <div className={'row  mt-5 p-3 '}>
                     <h5 className={'text-center mt-3'}>{t('Purchase.10')}</h5>
-                    <div className="row d-flex justify-content-center">
-                        <div className="col-md-10 mt-4 d-flex justify-content-between align-items-center">
-                            <div className='col-md-4 col-sm-12'>
-                                <label htmlFor={'supplierId'}>{t('Purchase.2')}</label>
-                                <div className={'d-flex align-items-center'}>
-                                    {
-                                        <select name="" {...register('supplierId', {
-                                            required: {
-                                                value: true,
-                                                message: (t('ol.47'))
-                                            }
-                                        })}
-                                                id={'supplierId'}
-                                                disabled={match.params.id}
-                                                className={'form-control'}>
-                                            {
+                    <div
+                        className="col-md-12 p-2 px-lg-5 mt-4 gap-3 d-flex flex-wrap justify-content-between align-items-center">
+                        <div className='flex-grow-1'>
+                            <label htmlFor={'supplierId'}>{t('Purchase.2')}</label>
+                            <div className={'d-flex align-items-center'}>
+                                {
+                                    <select name="" {...register('supplierId', {
+                                        required: {
+                                            value: true,
+                                            message: (t('ol.47'))
+                                        }
+                                    })}
+                                            id={'supplierId'}
+                                            disabled={match.params.id}
+                                            className={'form-control'}>
+                                        {
 
-                                                TaminotReducer.AllSupplier?.map(item =>
-                                                    <option value={item.id}>{item.name}</option>)
-                                            }
-                                        </select>
-                                    }
-                                    {
-                                        !match.params.id &&
-                                        <button type={'button'} onClick={toggleSupplier} className={'addBtn'}
-                                                                   style={{width: "75px", height: '100%', background: "#6664e9"}}>
-                                            <h2 style={{color: "#fff"}}>+</h2>
-                                        </button>
-                                    }
+                                            TaminotReducer.AllSupplier?.map(item =>
+                                                <option value={item.id}>{item.name}</option>)
+                                        }
+                                    </select>
+                                }
+                                {
+                                    !match.params.id &&
+                                    <button type={'button'} onClick={toggleSupplier} className={'addBtn'}
+                                            style={{width: "75px", height: '100%', background: "#6664e9"}}>
+                                        <h2 style={{color: "#fff"}}>+</h2>
+                                    </button>
+                                }
 
+                            </div>
+                            {
+                                errors.supplierId &&
+                                <div>
+                                    <p className={'text-danger text-center p-0 m-0'}>{errors.supplierId.message}</p>
                                 </div>
+                            }
+                        </div>
+                        <div className="flex-grow-1">
+                            <label htmlFor={'description'}>{t('Buttons.17')}</label>
+                            <input type="text"
+                                   className={'form-control'} {...register('description', {required: false})}
+                                   placeholder={t('ol.48')}
+                                   id={'description'}/></div>
+                        <div className="flex-grow-1">
+                            <label htmlFor={'branchId'}>{t('ProductList.8')}</label>
+                            <select name="" id={'branchId'} disabled={match.params.id ? true : false}
+                                    {...register('branchId', {
+                                        required: {value: true, message: (t('ol.49'))}, onChange: (e) => {
+                                            setMainBranchId(e.target.value);
+                                            setXaridArrayPost([])
+                                        }
+                                    })}
+                                    className={'form-control'}>
                                 {
-                                    errors.supplierId &&
-                                    <div>
-                                        <p className={'text-danger text-center p-0 m-0'}>{errors.supplierId.message}</p>
-                                    </div>
+                                    users.branches?.map(item =>
+                                        <option value={item.id}>{item.name}</option>)
                                 }
-                            </div>
-                            <div className="col-md-4 col-sm-12">
-                                <label htmlFor={'description'}>{t('Buttons.17')}</label>
-                                <input type="text"
-                                       className={'form-control'} {...register('description', {required: false})}
-                                       placeholder={t('ol.48')}
-                                       id={'description'}/></div>
-                            <div className="col-md-4 col-sm-12">
-                                <label htmlFor={'branchId'}>{t('ProductList.8')}</label>
-                                <select name="" id={'branchId'} disabled={match.params.id ? true : false}
-                                        {...register('branchId', {
-                                            required: {value: true, message: (t('ol.49'))}, onChange: (e) => {
-                                                setMainBranchId(e.target.value);
-                                                setXaridArrayPost([])
-                                            }
-                                        })}
-                                        className={'form-control'}>
-                                    {
-                                        users.branches?.map(item =>
-                                            <option value={item.id}>{item.name}</option>)
-                                    }
-                                </select>
-                                {
-                                    errors.branchId &&
-                                    <div>
-                                        <p className={'text-danger text-center m-0 p-0'}>{errors.branchId.message}</p>
-                                    </div>
-                                }
-                            </div>
+                            </select>
+                            {
+                                errors.branchId &&
+                                <div>
+                                    <p className={'text-danger text-center m-0 p-0'}>{errors.branchId.message}</p>
+                                </div>
+                            }
                         </div>
                     </div>
-                    <div className={'col-md-10 mt-4 offset-1'}>
+                    <div className={'col-md-12 mt-4 p-2 px-lg-5'}>
                         <div className="row">
-                            <div className="col-md-12">
+                            <div className="col-md-12 position-relative">
                                 <input type="text"
                                        autoFocus
                                        onKeyPress={handleKeyPress}
@@ -392,11 +395,11 @@ function Xarid({
                                        placeholder={t('ol.50')}/>
                                 {
                                     isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?
-                                        <div className={'Combo-array'}>
+                                        <div className={'Combo-array scroll'}>
                                             {
                                                 MaxsulotlarRoyxariReducer.productSearch?.map(item =>
                                                     <p onClick={() => AddXaridArray(item)}>
-                                                        {item.name}  ({item.barcode})
+                                                        {item.name} ({item.barcode})
                                                     </p>
                                                 )
                                             }
@@ -421,66 +424,66 @@ function Xarid({
                                         {
                                             XaridArrayPost.map((item, index) =>
                                                 !item.delete &&
-                                              <tr className={'text-center'}>
-                                                  <td>
-                                                      <div>
-                                                          <h4>{item.name}</h4>
-                                                          <p>{item.amount} {item.measurement}</p>
-                                                      </div>
-                                                  </td>
-                                                  <td>
-                                                      <div
-                                                        className={'d-flex justify-content-center align-items-center'}>
-                                                          <input className={'form-control'}
-                                                                 step="any"
-                                                                 name={'quantity'}
-                                                                 value={item.quantity}
-                                                                 onChange={(e) => ComboChangeAmount(e, index)}
-                                                                 type="number"
-                                                                 min={0}
-                                                          />
-                                                          <input className={'form-control'} type="text"
-                                                                 disabled={true}
-                                                                 value={item.measurement}/>
-                                                      </div>
-                                                  </td>
-                                                  <td>
-                                                      <div className={'d-flex align-items-center'}>
-                                                          <input type="number" min={0} className={'form-control'}
-                                                                 name={"buyPrice"}
-                                                                 onChange={(e) => ComboChangeAmount(e, index)}
-                                                                 value={item.buyPrice} placeholder={item.buyPrice}/>
-                                                      </div>
+                                                <tr className={'text-center'}>
+                                                    <td>
+                                                        <div>
+                                                            <h4>{item.name}</h4>
+                                                            <p>{item.amount} {item.measurement}</p>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            className={'d-flex justify-content-center align-items-center'}>
+                                                            <input className={'form-control'}
+                                                                   step="any"
+                                                                   name={'quantity'}
+                                                                   value={item.quantity}
+                                                                   onChange={(e) => ComboChangeAmount(e, index)}
+                                                                   type="number"
+                                                                   min={0}
+                                                            />
+                                                            <input className={'form-control'} type="text"
+                                                                   disabled={true}
+                                                                   value={item.measurement}/>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div className={'d-flex align-items-center'}>
+                                                            <input type="number" min={0} className={'form-control'}
+                                                                   name={"buyPrice"}
+                                                                   onChange={(e) => ComboChangeAmount(e, index)}
+                                                                   value={item.buyPrice} placeholder={item.buyPrice}/>
+                                                        </div>
 
-                                                  </td>
-                                                  <td>
-                                                      {item.quantity * item.buyPrice}
-                                                  </td>
-                                                  <td>
+                                                    </td>
+                                                    <td>
+                                                        {item.quantity * item.buyPrice}
+                                                    </td>
+                                                    <td>
 
-                                                      <div className={'d-flex align-items-center'}>
-                                                          <input type="number" min={0} className={'form-control'}
-                                                                 name={"salePrice"}
-                                                                 onChange={(e) => ComboChangeAmount(e, index)}
-                                                                 value={item.salePrice}/>
-                                                      </div>
-                                                  </td>
-                                                  <td>
-                                                      <input type="date" className={'form-control'}
-                                                             name={"endDate"}
-                                                             onChange={(e) => ComboChangeAmount(e, index)}
-                                                             value={item.endDate}/>
-                                                  </td>
-                                                  <td>
-                                                      <input type="number" min={0} className={'form-control'}
-                                                             name={"warningDay"}
-                                                             onChange={(e) => ComboChangeAmount(e, index)}
-                                                             value={item.warningDay}/>
-                                                  </td>
-                                                  <td className={'text-danger'}><ImCancelCircle
-                                                    onClick={() => DeleteXaridArrayPost(index, item.id)}
-                                                    style={{width: '30px', height: '30px'}}/></td>
-                                              </tr>
+                                                        <div className={'d-flex align-items-center'}>
+                                                            <input type="number" min={0} className={'form-control'}
+                                                                   name={"salePrice"}
+                                                                   onChange={(e) => ComboChangeAmount(e, index)}
+                                                                   value={item.salePrice}/>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" className={'form-control'}
+                                                               name={"endDate"}
+                                                               onChange={(e) => ComboChangeAmount(e, index)}
+                                                               value={item.endDate}/>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" min={0} className={'form-control'}
+                                                               name={"warningDay"}
+                                                               onChange={(e) => ComboChangeAmount(e, index)}
+                                                               value={item.warningDay}/>
+                                                    </td>
+                                                    <td className={'text-danger'}><ImCancelCircle
+                                                        onClick={() => DeleteXaridArrayPost(index, item.id)}
+                                                        style={{width: '30px', height: '30px'}}/></td>
+                                                </tr>
                                             )
                                         }
                                         </tbody>
@@ -492,63 +495,61 @@ function Xarid({
                         </div>
                     </div>
                     <h5 className={'text-center mt-5'}>{t('Purchase.24')}</h5>
-
-                    <div className="row">
-                        <div className="col-md-10 offset-1  p-4 d-flex align-items-end">
-                            <div className="col-md-4 col-sm-12">
-                                {
-                                    match.params.id &&
-                                    <h6>{t('ol.52')} {totalLastSumPurchase} {t('ol.51')}</h6>
-                                }
-                                <label htmlFor={'paidSum'}>{t('Purchase.25')}</label>
-                                <input type="number" min={0} className={'form-control'}
-                                       inputMode="numeric" pattern="[0-9]*"
-                                       {...register('paidSum', {
-                                           required: {
-                                               value: true,
-                                               message: (t('ol.53'))
-                                           }, onChange: (e) => setPaidSum(parseFloat(e.target.value))
-                                       })}
-                                       id={'paisSum'}/>
-                                {
-                                    errors.paidSum &&
-                                    <div>
-                                        <p className={'text-danger text-center p-0 m-0'}>{errors.paidSum.message}</p>
-                                    </div>
-                                }
-                            </div>
-                            <div className="col-md-4 col-sm-12">
-                                <label htmlFor={'tol'}>{t('Purchase.26')}</label>
-                                <select id={'tol'} className={'form-control'}
-                                        {...register('paymentMethodId', {
-                                            required: {
-                                                value: true,
-                                                message: (t('ol.54'))
-                                            }
-                                        })}
-                                        disabled={match.params.id}
-                                >
-                                    {
-                                        PayReducer.paymethod?.map(item =>
-                                            <option value={item.id}>{item.name}</option>)
-                                    }
-                                </select>
-                                {
-                                    errors.paymentMethodId &&
-                                    <div>
-                                        <p className={'text-danger text-center p-0 m-0'}>{errors.paymentMethodId.message}</p>
-                                    </div>
-                                }
-                            </div>
-                            <div className="col-md-4 col-sm-12">
-                                <h5 className={'p-0 m-0 text-center'}>{t('Purchase.32')}!: {totalSumPurchase - paidSum} {t('ol.51')}</h5>
-                            </div>
-
+                    <div className="col-md-12 p-2 px-lg-5 gap-3 d-flex align-items-end">
+                        <div className="flex-grow-1">
+                            {
+                                match.params.id &&
+                                <h6>{t('ol.52')} {totalLastSumPurchase} {t('ol.51')}</h6>
+                            }
+                            <label htmlFor={'paidSum'}>{t('Purchase.25')}</label>
+                            <input type="number" min={0} className={'form-control'}
+                                   inputMode="numeric" pattern="[0-9]*"
+                                   {...register('paidSum', {
+                                       required: {
+                                           value: true,
+                                           message: (t('ol.53'))
+                                       }, onChange: (e) => setPaidSum(parseFloat(e.target.value))
+                                   })}
+                                   id={'paisSum'}/>
+                            {
+                                errors.paidSum &&
+                                <div>
+                                    <p className={'text-danger text-center p-0 m-0'}>{errors.paidSum.message}</p>
+                                </div>
+                            }
                         </div>
-                        <div className="col-md-10 offset-1  p-4 d-flex justify-content-end">
-                            <button type={'submit'} className={'btn btn-success'}>{t('Buttons.6')} </button>
+                        <div className="flex-grow-1">
+                            <label htmlFor={'tol'}>{t('Purchase.26')}</label>
+                            <select id={'tol'} className={'form-control'}
+                                    {...register('paymentMethodId', {
+                                        required: {
+                                            value: true,
+                                            message: (t('ol.54'))
+                                        }
+                                    })}
+                                    disabled={match.params.id}
+                            >
+                                {
+                                    PayReducer.paymethod?.map(item =>
+                                        <option value={item.id}>{item.name}</option>)
+                                }
+                            </select>
+                            {
+                                errors.paymentMethodId &&
+                                <div>
+                                    <p className={'text-danger text-center p-0 m-0'}>{errors.paymentMethodId.message}</p>
+                                </div>
+                            }
                         </div>
+                        <div className="flex-grow-1">
+                            <h5 className={'p-0 m-0 text-center'}>{t('Purchase.32')}!: {totalSumPurchase - paidSum} {t('ol.51')}</h5>
+                        </div>
+
                     </div>
+                    <div className="col-md-12 p-2 px-lg-5 d-flex justify-content-end">
+                        <button type={'submit'} className={'btn btn-success'}>{t('Buttons.6')} </button>
+                    </div>
+
                 </div>
             </form>
             <Modal isOpen={activeSupplier} toggle={toggleSupplier}>

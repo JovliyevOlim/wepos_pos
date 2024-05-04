@@ -29,14 +29,17 @@
     background: silver;
 }
 .Combo-array{
-    width: 100%;
+    width: 98%;
     border: 1px solid gray;
     background-color: #FFFFFF;
-    position: relative;
+    position:absolute;
+    max-height: 200px;
+    overflow-y: scroll;
 }
 .Combo-array p{
     padding: 1px 5px;
     margin: 0;
+    width: 90%;
 }
 .Combo-array p:hover{
     background-color: #0c63e4;

@@ -155,9 +155,7 @@ export const getMaxsulotByIdView = (data) => apiCall({
 export const getBarcodeAndName = (data) => apiCall({
     url: '/product/search-by-product/'+data.branchId,
     method: 'get',
-    params:{
-        search:data.name
-    },
+    params:data.params,
     onSuccess: slice.actions.getFromBarcodeAndName.type,
     onFail: slice.actions.getFromBarcodeAndName.type
 
