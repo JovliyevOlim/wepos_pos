@@ -88,57 +88,64 @@ function BarchaSavdolar({
             title: t('ol.11'),
             dataIndex: 'createdAt',
             key: 'createdAt',
-            render: (item) => <p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>
+            render: (item) => <p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>,
+            width: '10%',
         },
         {
             title: t('Trade.5'),
             dataIndex: 'invoice',
             key: 'invoice',
-            width: '80px'
+            width: '5%',
         },
         {
             title: t('Pagination.10'),
             dataIndex: 'customerName',
             key: 'customerName',
+            width: '10%',
         },
         {
             title: t('ol.10'),
             dataIndex: 'userFio',
             key: 'userFio',
+            width: '10%',
         },
         {
             title: t('ol.13'),
             dataIndex: 'branchName',
             key: 'branchName',
+            width: '10%',
         },
         {
             title: t('ol.18'),
             dataIndex: 'paymentStatus',
             key: 'paymentStatus',
+            width: '10%',
         },
         {
             title: t('ol.15'),
             dataIndex: 'totalSum',
             key: 'totalSum',
-            render: (item) => <p className={'m-0'}>{item} so'm</p>
+            render: (item) => <p className={'m-0'}>{item} so'm</p>,
+            width: '10%',
         },
         {
             title: t('ol.16'),
             dataIndex: 'paidSum',
             key: 'paidSum',
             render: (item) => <p className={'m-0'}>{item} so'm</p>,
-            width: '100px'
+            width: '10%',
         },
         {
             title: t('ol.17'),
             dataIndex: 'debtSum',
             key: 'debtSum',
-            render: (item) => <p className={'m-0'}>{item} so'm</p>
+            render: (item) => <p className={'m-0'}>{item} so'm</p>,
+            width: '10%',
         },
         {
             title: t('ol.20'),
             key: 'operation',
-            width: 150,
+            width: '20%',
             render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
                 {
                     users.getTrade &&

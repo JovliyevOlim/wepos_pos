@@ -10,27 +10,33 @@ import FirmaReducer, {getFirma} from "../../reducer/FirmaReducer";
 import {useTranslation} from "react-i18next";
 import "./korish.css"
 import {useEffect, useState} from "react";
-import Imagecom from "../../../../../Imagecom";
-import Block3 from "../maxsulotdizayn/Block3";
-import {Grid} from "@mui/material";
 import TarixiM from "../maxsulotdizayn/TarixiM";
-import Block1 from "../maxsulotdizayn/Block1";
-import ProductOneImage from "../maxsulotdizayn/ProductOneImage";
+import ProductImagePercent from "../maxsulotdizayn/ProductImagePercent";
 
-function Korish({active, toggle, MaxsulotlarRoyxariReducer, getMaxsulotByIdView, productId, id, users,getProductHistoryByProductByBusiness,
-                    getProductHistoryByProductByBranch}) {
+function Korish({
+                    active,
+                    toggle,
+                    MaxsulotlarRoyxariReducer,
+                    getMaxsulotByIdView,
+                    productId,
+                    id,
+                    users,
+                    getProductHistoryByProductByBusiness,
+                    getProductHistoryByProductByBranch
+                }) {
 
     const {t} = useTranslation()
 
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(5);
+    const [loading, setLoading] = useState(false)
 
-    const handleChangePage = (_event, newPage) => {
-        setPage(newPage);
+    const handleChangePage = (newPage) => {
+        setPage(newPage - 1);
     };
-    const handleChangeRowsPerPage = (event) => {
-        setPage(0);
-        setSize(parseInt(event.target.value, 10));
+    const handleChangeRowsPerPage = (event, size) => {
+        setPage(0)
+        setSize(size);
     };
 
     console.log(id)
@@ -67,25 +73,25 @@ function Korish({active, toggle, MaxsulotlarRoyxariReducer, getMaxsulotByIdView,
         }
     }, [productId, size, page])
 
+    useEffect(() => {
+        setLoading(true)
+    }, [MaxsulotlarRoyxariReducer.getBoolean])
+
+    useEffect(() => {
+        setLoading(false)
+    }, [])
 
     return (
-        <Modal isOpen={active} toggle={toggle} size={'xl'}>
-            <ProductOneImage/>
-            <Block3/>
-            <Grid container spacing={4} alignItems={'stretch'} style={{paddingTop: "20px"}}>
-
-                <Grid item xs={12} md={12}>
-                    <Block1/>
-                </Grid>
-                <Grid item xs={12} md={12}>
-                    <TarixiM page={page} row={size} changeRow={handleChangeRowsPerPage} changePage={handleChangePage}/>
-                </Grid>
-            </Grid>
-
-
-            <ModalFooter>
-                <button className={'btn btn-primary'}>{t('ProductEdit.19')}</button>
-                <button className={'btn btn-primary'} onClick={toggle}>{t('Buttons.7')}</button>
+        <Modal isOpen={active} toggle={toggle} size={'xl'} style={{borderRadius: '20px'}}>
+            <ModalBody style={{padding: '0', backgroundColor: '#F8F8F8'}}>
+                <ProductImagePercent/>
+                <TarixiM page={page} size={size} changeRow={handleChangeRowsPerPage} loading={loading}
+                         changePage={handleChangePage}/>
+            </ModalBody>
+            <ModalFooter className={'bg-white border-0 rounded-top-4'}>
+                <div>
+                    <button className={'btn btn-primary'} onClick={toggle}>{t('Buttons.7')}</button>
+                </div>
             </ModalFooter>
         </Modal>
     )

@@ -9,7 +9,28 @@ body{
     background: silver;
     height: auto;
 }
-
+body::-webkit-scrollbar {
+    border-radius: 2px;
+    width: 6px;
+}
+body::-webkit-scrollbar-thumb {
+    background:  #1AA6E1;
+    border-radius: 4px;
+}
+body::-webkit-scrollbar-track {
+    background: #ccc;
+}
+.scroll::-webkit-scrollbar {
+    border-radius: 2px;
+    width: 4px;
+}
+.scroll::-webkit-scrollbar-thumb {
+    background:  #1AA6E1;
+    border-radius: 8px;
+}
+.scroll::-webkit-scrollbar-track {
+    background: #ccc;
+}
 #root{
     height: 100%;
 }

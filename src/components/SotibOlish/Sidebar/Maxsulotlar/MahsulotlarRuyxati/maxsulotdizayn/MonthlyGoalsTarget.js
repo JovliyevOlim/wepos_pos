@@ -1,15 +1,17 @@
-import { Card, Box, Typography, useTheme } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import GaugeChart from 'react-gauge-chart';
 import {connect} from "react-redux";
 import MaxsulotlarRoyxariReducer from "../../reducer/MaxsulotlarRoyxariReducer";
 import users from "../../../../../../reducer/users";
+import {Space, Typography} from 'antd';
 
-function MonthlyGoalsTarget({active,toggle,MaxsulotlarRoyxariReducer}){
-  const { t } = useTranslation();
-  const theme = useTheme();
+const {Text, Title} = Typography;
 
-    const {profitPercent,many} = MaxsulotlarRoyxariReducer.productView
+
+function MonthlyGoalsTarget({active, toggle, MaxsulotlarRoyxariReducer}) {
+    const {t} = useTranslation();
+
+    const {profitPercent, many} = MaxsulotlarRoyxariReducer.productView
 
     function FindPercent() {
         let number = 0
@@ -19,83 +21,37 @@ function MonthlyGoalsTarget({active,toggle,MaxsulotlarRoyxariReducer}){
             MaxsulotlarRoyxariReducer?.productView?.productManyGetDtoList?.map(item => {
                 totalPercent += item.profitPercent
             })
-            number = totalPercent/averageNumber
+            number = totalPercent / averageNumber
         }
         return number
     }
 
 
     return (
-    <Card
-      sx={{
-        px: 4,
-        pt: 4,
-        pb: 1,
-        height: '400px'
-      }}
-    >
-      <Typography
-        gutterBottom
-        align="center"
-        variant="h3"
-        sx={{
-          fontSize: `${theme.typography.pxToRem(21)}`
-        }}
-      >
-        {t('as.43')}
-      </Typography>
-      <Typography align="center" variant="subtitle2">
-        {t('as.44')}
-      </Typography>
-      <Box
-        sx={{
-          mt: 3,
-          mb: 1,
-          mx: 'auto',
-          maxWidth: '480px'
-        }}
-      >
-        <GaugeChart
-          nrOfLevels={24}
-          hideText
-          cornerRadius={3}
-          needleColor={theme.colors.alpha.black[30]}
-          needleBaseColor={theme.colors.alpha.black[100]}
-          colors={[
-            theme.colors.error.main,
-            theme.colors.warning.main,
-            theme.colors.success.main
-          ]}
-          arcWidth={0.3}
-          percent={( !many ? profitPercent:FindPercent())/100}
-        />
-      </Box>
-      <Box
-        sx={{
-          textAlign: 'center'
-        }}
-      >
-        <Typography component="span" align="center" variant="h4">
-          {t('as.45')}
-        </Typography>
-        <Typography
-          component="span"
-          align="center"
-          variant="h2"
-          sx={{
-            px: 1,
-            color: `${theme.colors.warning.main}`
-          }}
-        >
-            { !many ? profitPercent: FindPercent()} %
-        </Typography>
-        <Typography component="span" align="center" variant="h4">
-          {t('as.46')}
-        </Typography>
-      </Box>
-    </Card>
-  );
+        <div className={'p-4 d-flex flex-column justify-content-center align-items-center'}>
+            <Title level={5}>
+                {t('as.43')}
+            </Title>
+            <div
+                style={{
+                    maxWidth: '250px',
+                }}
+            >
+                <GaugeChart
+                    nrOfLevels={24}
+                    hideText
+                    cornerRadius={3}
+                    arcWidth={0.3}
+                    percent={(!many ? profitPercent : FindPercent()) / 100}
+                />
+            </div>
+            <div className={'mt-3'}>
+                <Title level={5}>
+                    {t('as.45')} <strong className={'text-success'}>{!many ? profitPercent : FindPercent()} %</strong> {t('as.46')}
+                </Title>
+            </div>
+        </div>
+    );
 }
 
-export default connect((MaxsulotlarRoyxariReducer, users), {
-})(MonthlyGoalsTarget)
+export default connect((MaxsulotlarRoyxariReducer, users), {})(MonthlyGoalsTarget)

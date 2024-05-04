@@ -225,7 +225,7 @@ function SavdoOynasi({
 
     function toEnter() {
         console.log(userId)
-        if (userId?.pinCode == pinCode) {
+        if (userId?.pinCode == pinCode ||( userId?.pinCode === null && pinCode == 1111)) {
             setConfirmedOpen(false)
         } else {
             if (pinCode) {
@@ -2189,7 +2189,7 @@ function SavdoOynasi({
                                            }))}
                                            onChange={(e) => {
                                                const findUser = XodimReducer.usersFiltering?.find(item => item.id === e)
-                                               setUserId(findUser)
+                                               setUserId({...findUser})
                                                setarr1([])
                                                setSearch('')
                                                setIsSearchProduct([])

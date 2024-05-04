@@ -1,12 +1,8 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
     Box,
-    Card,
     Typography,
-
-    Button,
-
     Divider,
     ToggleButton,
     ToggleButtonGroup,
@@ -15,36 +11,19 @@ import {
     useTheme, TablePagination, TableContainer, TableRow, TableCell, Tooltip, Checkbox, TableBody, Avatar, TableHead
 } from '@mui/material';
 
-import Timeline from '@mui/lab/Timeline';
-import TimelineItem from '@mui/lab/TimelineItem';
-import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import TimelineConnector from '@mui/lab/TimelineConnector';
-import TimelineContent from '@mui/lab/TimelineContent';
-import TimelineDot from '@mui/lab/TimelineDot';
-import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 
-import { useTranslation } from 'react-i18next';
-import Scrollbar from '../../../../../../components/Scrollbar';
+import {useTranslation} from 'react-i18next';
 import {connect} from "react-redux";
 import MaxsulotlarRoyxariReducer from "../../reducer/MaxsulotlarRoyxariReducer";
-import {dayAndMonth} from "../../../../../../util";
-import MaxsulotxisobotReducer  from "../../../Xisobotlar/reducer/MaxsulotxisobotReducer";
-import {BaseUrl} from "../../../../../../middleware";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
+import MaxsulotxisobotReducer from "../../../Xisobotlar/reducer/MaxsulotxisobotReducer";
 import moment from "moment";
 import 'moment/locale/uz-latn'
+import MainHeaderText from "../../../../../Components/MainHeaderText";
+import CardBody from "../../../../../Components/CardBody";
+import Loading from "../../../../../Loading";
+import CommonTable from "../../../../../Components/CommonTable";
 
-const LabelWrapper = styled(Box)(
-  ({ theme }) => `
-    font-size: ${theme.typography.pxToRem(10)};
-    font-weight: bold;
-    text-transform: uppercase;
-    border-radius: ${theme.general.borderRadiusSm};
-    padding: ${theme.spacing(0.5, 1)};
-  `
-);
+
 const TableHeadWrapper = styled(TableHead)(
     ({theme}) => `
       .MuiTableCell-root {
@@ -60,134 +39,92 @@ const TableHeadWrapper = styled(TableHead)(
       }
   `
 );
-function TarixiM({MaxsulotlarRoyxariReducer,row,page,changePage,changeRow,MaxsulotxisobotReducer}) {
-  const { t } = useTranslation();
-  const theme = useTheme();
+
+function TarixiM({MaxsulotlarRoyxariReducer, size, page, changePage, changeRow, MaxsulotxisobotReducer, loading}) {
+    const {t} = useTranslation();
 
 
+    const columns = [
+            {
+                title: 'Id',
+                dataIndex: 'index',
+                rowScope: 'row',
+                width: '2%',
+            },
+            {
+                title: 'Mahsulot',
+                dataIndex: 'productName',
+                key: 'productName',
+                width: '15%'
+            },
+            {
+                title: t('as.49'),
+                dataIndex: 'userFio',
+                key: 'userFio',
+                width: '12%'
+            },
+            {
+                title: t('as.50'),
+                dataIndex: 'branchName',
+                key: 'branchName',
+                width: '12%',
 
-
-  return (
-    <Card>
-      <Box
-        p={2.5}
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-      >
-        <Box>
-          <Typography gutterBottom variant="h4">
-            {t('as.47')}
-          </Typography>
-
-        </Box>
-      </Box>
-      <Divider />
-      {MaxsulotxisobotReducer.productWorked?.list?.length> 0 ?
-        <>
-            <TableContainer>
-                <TableHeadWrapper>
-                    <TableRow>
-                        <TableCell>T/R</TableCell>
-                        <TableCell align="left">{t('as.48')}</TableCell>
-                        <TableCell align="left">{t('as.49')}</TableCell>
-                        <TableCell align="left">{t('as.50')}</TableCell>
-                        <TableCell align="center">{t('as.51')}</TableCell>
-                        <TableCell align="center">{t('as.52')}</TableCell>
-                        <TableCell align="center">{t('as.53')}</TableCell>
-                    </TableRow>
-                </TableHeadWrapper>
-                <TableBody>
+            },
+            {
+                title: t('as.51'),
+                dataIndex: 'quantity',
+                key: 'quantity',
+                width: '10%',
+                render: (item, value) => <>
                     {
-                        MaxsulotxisobotReducer.productWorked?.list?.map((item, index) => {
-
-                            return (
-                                <TableRow key={item.id}>
-                                    <TableCell>
-                                        <Box>
-                                            <Typography
-                                                variant="h4">#{(page * row) + index + 1}</Typography>
-                                        </Box>
-                                    </TableCell>
-                                    <TableCell align={'start'}>{item?.productName}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        {item?.userFio}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        {item?.branchName}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <Typography
-                                            sx={{
-                                                pr: 0.5
-                                            }}
-                                            component="span"
-                                            variant="h4"
-                                            color="text.primary"
-                                        >
-                                            {
-                                                item?.oldQuantity > 0 && <del>{item?.oldQuantity} {item?.measurementName}</del>
-                                            }
-                                            <p>{item?.quantity} {item?.measurementName}</p>
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <div>
-                                            <Typography
-                                                sx={{
-                                                    pr: 0.5
-                                                }}
-                                                component="span"
-                                                variant="h4"
-                                                color="text.primary"
-                                            >
-                                                {item?.description}
-                                            </Typography>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell align="center">
-                                            <Typography
-                                                sx={{
-                                                    pr: 0.5
-                                                }}
-                                                component="span"
-                                                variant="h4"
-                                                color="text.primary"
-                                            >
-                                                {moment(new Date(item?.createdAt)).format('LLLL')}
-                                            </Typography>
-
-                                    </TableCell>
-                                </TableRow>
-                            )
-                        })
+                        value?.oldQuantity > 0 &&
+                        <del>{value?.oldQuantity} {value?.measurementName}</del>
                     }
-                </TableBody>
-            </TableContainer>
+                    <p>{item} {value?.measurementName}</p>
+                </>
+            },
+            {
+                title: t('as.52'),
+                dataIndex: 'description',
+                key: 'description',
+                width: '20%',
 
-            <Divider />
-          <Box
-            p={2}
-            sx={{
-              textAlign: 'center'
-            }}
-          >
-              <TablePagination
-                  labelRowsPerPage={t('as.54')}
-                  count={MaxsulotxisobotReducer.productWorked?.totalItem}
-                  page={page}
-                  onPageChange={changePage}
-                  rowsPerPage={row}
-                  rowsPerPageOptions={[5,10,15]}
-                  onRowsPerPageChange={changeRow}
-              />
-          </Box>
-        </>:''
-      }
-    </Card>
-  );
+            },
+            {
+                title: t('ol.11'),
+                dataIndex: 'createdAt',
+                key: 'createdAt',
+                render: (item) => <p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>,
+                width: '15%'
+            },
+        ]
+    ;
+
+
+    return (
+        <div>
+            <CardBody>
+                <div className="col-md-12 d-flex mb-3">
+                    <MainHeaderText text={t('as.47')}/>
+                </div>
+                <Loading spinning={loading}>
+                    {
+                        MaxsulotxisobotReducer.productWorked?.list?.length > 0 ?
+                            <div className="table-responsive">
+                                <CommonTable size={size} page={page}
+                                             total={MaxsulotxisobotReducer.productWorked?.totalItem}
+                                             handleLimitChange={changeRow} columns={columns}
+                                             data={MaxsulotxisobotReducer.productWorked?.list}
+                                             handlePageChange={changePage} pagination={true}/>
+                            </div>
+                            : <div>
+                                <h4 className={'text-center'}>{MaxsulotlarRoyxariReducer.message}</h4>
+                            </div>
+                    }
+                </Loading>
+            </CardBody>
+        </div>
+    );
 }
 
-export default connect((MaxsulotlarRoyxariReducer,MaxsulotxisobotReducer),{
-}) (TarixiM);
+export default connect((MaxsulotlarRoyxariReducer, MaxsulotxisobotReducer), {})(TarixiM);

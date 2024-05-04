@@ -314,6 +314,51 @@ function MaxsulotlarRoyxati({
                 }
             </div>
             <>
+                {
+                    MaxsulotlarRoyxariReducer.productTableSearch?.profitDto &&
+                    <CardBody>
+                        <div className="col-md-12 gap-2 gap-sm-0 d-flex flex-wrap align-items-center flex-wrap">
+                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-3">
+                                <Tag className={'productStatistic'} color={'none'}>
+                                    <div className={'d-flex align-items-center gap-1 mb-3'}>
+                                        <img src={storeProduct} alt="store"/>
+                                        <p className={'p-0 m-2'}>{t('as.104')}</p>
+                                    </div>
+                                    <h5 style={{color: '#377DFF'}}>{prettify(MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice)} {t('as.21')}</h5>
+                                </Tag>
+                            </div>
+                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-3">
+                                <Tag className={'productStatistic'} color="none">
+                                    <div className={'d-flex align-items-center gap-1 mb-3'}>
+                                        <img src={cartProduct} alt="cart"/>
+                                        <p className={'p-0 m-2'}>{t('as.105')}</p>
+                                    </div>
+                                    <h5 style={{color: '#8962F8'}}>{prettify(MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice)} {t('as.21')}</h5>
+                                </Tag>
+                            </div>
+                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-3">
+                                <Tag className={'productStatistic'} color="none">
+                                    <div className={'d-flex align-items-center gap-1 mb-3'}>
+                                        <img src={moneyBagProduct} alt="money"/>
+                                        <p className={'p-0 m-2'}>{t('as.106')}</p>
+                                    </div>
+                                    <h5 style={{color: '#38CB89'}}>{prettify(MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice - MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice)} {t('as.21')}</h5>
+                                </Tag>
+                            </div>
+                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-3">
+                                <Tag className={'productStatistic'} color="none">
+                                    <div className={'d-flex align-items-center gap-1 mb-3'}>
+                                        <img src={percentProduct} alt="percentProduct"/>
+                                        <p className={'p-0 m-2'}>{t('as.107')}</p>
+                                    </div>
+                                    <h5 style={{color: '#EF8234'}}>
+                                        {prettify(((parseFloat(MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice / MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice) - 1) * 100).toFixed(2))} %
+                                    </h5>
+                                </Tag>
+                            </div>
+                        </div>
+                    </CardBody>
+                }
                 <CardBody>
                     <div className="col-md-12 d-flex align-items-end row-gap-4 flex-wrap">
                         <div className="col-12 col-sm-6 p-sm-2 col-md-6 col-lg-3">
@@ -362,51 +407,7 @@ function MaxsulotlarRoyxati({
                         </div>
                     </div>
                 </CardBody>
-                {
-                    MaxsulotlarRoyxariReducer.productTableSearch?.profitDto &&
-                    <CardBody>
-                        <div className="col-md-12 gap-2 gap-sm-0 d-flex flex-wrap align-items-center flex-wrap">
-                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-3">
-                                <Tag className={'productStatistic'} color={'none'}>
-                                    <div className={'d-flex align-items-center gap-1 mb-3'}>
-                                        <img src={storeProduct} alt="store"/>
-                                        <p className={'p-0 m-2'}>{t('as.104')}</p>
-                                    </div>
-                                    <h5 style={{color: '#377DFF'}}>{prettify(MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice)} {t('as.21')}</h5>
-                                </Tag>
-                            </div>
-                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-3">
-                                <Tag className={'productStatistic'} color="none">
-                                    <div className={'d-flex align-items-center gap-1 mb-3'}>
-                                        <img src={cartProduct} alt="cart"/>
-                                        <p className={'p-0 m-2'}>{t('as.105')}</p>
-                                    </div>
-                                    <h5 style={{color: '#8962F8'}}>{prettify(MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice)} {t('as.21')}</h5>
-                                </Tag>
-                            </div>
-                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-3">
-                                <Tag className={'productStatistic'} color="none">
-                                    <div className={'d-flex align-items-center gap-1 mb-3'}>
-                                        <img src={moneyBagProduct} alt="money"/>
-                                        <p className={'p-0 m-2'}>{t('as.106')}</p>
-                                    </div>
-                                    <h5 style={{color: '#38CB89'}}>{prettify(MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice - MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice)} {t('as.21')}</h5>
-                                </Tag>
-                            </div>
-                            <div className="col-12 col-sm-6 p-sm-2 col-md-12 col-lg-6 col-xl-3">
-                                <Tag className={'productStatistic'} color="none">
-                                    <div className={'d-flex align-items-center gap-1 mb-3'}>
-                                        <img src={percentProduct} alt="percentProduct"/>
-                                        <p className={'p-0 m-2'}>{t('as.107')}</p>
-                                    </div>
-                                    <h5 style={{color: '#EF8234'}}>
-                                        {prettify(((parseFloat(MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.salePrice / MaxsulotlarRoyxariReducer.productTableSearch?.profitDto?.buyPrice) - 1) * 100).toFixed(2))} %
-                                    </h5>
-                                </Tag>
-                            </div>
-                        </div>
-                    </CardBody>
-                }
+
             </>
             {
                 users.getProductAdmin || users.getProduct ?
