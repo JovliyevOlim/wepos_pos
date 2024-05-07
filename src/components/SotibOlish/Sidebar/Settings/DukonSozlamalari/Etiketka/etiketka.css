@@ -36,3 +36,26 @@
     transition: all 0.4s ease 0s;
     overflow: hidden;
 }
+
+
+.pageEtiketka{
+    min-height: calc(100vh - 200px);
+}
+
+.cardInputs{
+    width: 100%;
+    background: white;
+    padding: 8px 12px;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.width2{
+    border-width: 2px;
+    height: 32px;
+}
+
+.activeButtonEtiketka{
+    color: #0958d9;
+    border-color: #0958d9;
+}
