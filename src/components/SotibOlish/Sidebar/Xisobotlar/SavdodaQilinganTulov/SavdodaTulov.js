@@ -123,7 +123,10 @@ function SavdodaTulov({
         else{
             getBarcodeAndName({
                 branchId: mainBranchId ? mainBranchId : users.branchId,
-                name: e.target.value
+                params: {
+                    search: e.target.value,
+                    isPurchase: false,
+                }
             })
         }
     }
@@ -229,7 +232,7 @@ function SavdodaTulov({
                     </div>
                     {
                         mainBranchId &&
-                        <div className="col-md-6">
+                        <div className="col-md-6 position-relative z-3 p-0">
                             <SearchAnt onChange={changeSearch} name={'Mahsulotni qidirish'}/>
                             {
                                 isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?

@@ -67,7 +67,10 @@ function AddLossProducts({
         if (search) {
             getBarcodeAndName({
                 branchId: branch ? branch : users.branchId,
-                name: search
+                params: {
+                    search,
+                    isPurchase: false,
+                }
             })
         } else {
             setIsView(false)

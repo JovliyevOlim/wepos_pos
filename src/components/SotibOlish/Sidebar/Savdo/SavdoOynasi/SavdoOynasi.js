@@ -402,7 +402,10 @@ function SavdoOynasi({
                 const searchPro = setTimeout(() => {
                     getBarcodeAndName({
                         branchId: mainBranchId ? mainBranchId : users.branchId,
-                        name: search
+                        params: {
+                            search,
+                            isPurchase: false,
+                        }
                     })
                 }, 10)
                 return () => clearTimeout(searchPro)
@@ -410,7 +413,10 @@ function SavdoOynasi({
                 const searchPro = setTimeout(() => {
                     getBarcodeAndName({
                         branchId: mainBranchId ? mainBranchId : users.branchId,
-                        name: search
+                        params: {
+                            search,
+                            isPurchase: false,
+                        }
                     })
                 }, 500)
                 return () => clearTimeout(searchPro)

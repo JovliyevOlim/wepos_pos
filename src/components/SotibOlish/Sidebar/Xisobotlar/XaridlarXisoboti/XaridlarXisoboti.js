@@ -116,7 +116,10 @@ function XaridlarXisoboti({
         } else {
             getBarcodeAndName({
                 branchId: mainBranchId ? mainBranchId : users.branchId,
-                name: e.target.value
+                params: {
+                    search: e.target.value,
+                    isPurchase: false,
+                }
             })
         }
     }
@@ -205,7 +208,7 @@ function XaridlarXisoboti({
                     </div>
                     {
                         mainBranchId
-                        && <div className="my-3 p-2 col-12">
+                        && <div className="my-3 col-12 z-3 position-relative p-0">
                             <SearchAnt onChange={changeSearch} name={'Mahsulotni barcode yoki nomi orqali izlash'}/>
                             {
                                 isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?

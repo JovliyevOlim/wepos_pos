@@ -123,7 +123,10 @@ function QoldiqlarXisoboti({
         } else {
             getBarcodeAndName({
                 branchId: mainBranchId ? mainBranchId : users.branchId,
-                name: e.target.value
+                params: {
+                    search: e.target.value,
+                    isPurchase: false,
+                }
             })
         }
 
@@ -196,7 +199,7 @@ function QoldiqlarXisoboti({
                     ]}/>
                 </div>
                 {
-                    mainBranchId && <div className="col-12 p-2">
+                    mainBranchId && <div className="col-12 p-0 position-relative z-3">
                         <SearchAnt name={'Mahsulotni qidirish'} onChange={changeSearch}/>
                         {
                             isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?

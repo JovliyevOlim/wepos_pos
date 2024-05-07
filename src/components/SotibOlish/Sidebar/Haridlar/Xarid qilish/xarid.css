@@ -29,17 +29,20 @@
     background: silver;
 }
 .Combo-array{
-    width: 98%;
-    border: 1px solid gray;
-    background-color: #FFFFFF;
+    width: 100%;
+    border: 1px solid rgba(199, 199, 199, 0.69);
+    background-color: rgb(243, 240, 240);
+    box-shadow: 0px 3px 3px 1px #0c63e4;
     position:absolute;
     max-height: 200px;
     overflow-y: scroll;
+
 }
 .Combo-array p{
-    padding: 1px 5px;
+    padding: 5px 15px;
+    font-size: 16px;
+    font-weight: bold;
     margin: 0;
-    width: 90%;
 }
 .Combo-array p:hover{
     background-color: #0c63e4;

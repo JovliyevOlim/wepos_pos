@@ -384,7 +384,7 @@ function Xarid({
                     </div>
                     <div className={'col-md-12 mt-4 p-2 px-lg-5'}>
                         <div className="row">
-                            <div className="col-md-12 position-relative">
+                            <div className="col-md-12 position-relative m-0 p-0">
                                 <input type="text"
                                        autoFocus
                                        onKeyPress={handleKeyPress}
@@ -398,8 +398,16 @@ function Xarid({
                                         <div className={'Combo-array scroll'}>
                                             {
                                                 MaxsulotlarRoyxariReducer.productSearch?.map(item =>
-                                                    <p onClick={() => AddXaridArray(item)}>
+                                                    <p className={'d-flex justify-content-start gap-4  m-0'}
+                                                       onClick={() => AddXaridArray(item)}>
                                                         {item.name} ({item.barcode})
+                                                        {console.log(item?.branchIds, mainBranchId ? mainBranchId : users.branchId)}
+                                                        {console.log(item?.branchIds?.some(ids=>ids ===mainBranchId ? mainBranchId : users.branchId))}
+                                                        {
+                                                            !item?.branchIds?.some(ids=>ids ===( mainBranchId ? mainBranchId : users.branchId)) &&
+                                                            <strong className={'text-danger m-0'}>Yangi
+                                                                mahsulot</strong>
+                                                        }
                                                     </p>
                                                 )
                                             }

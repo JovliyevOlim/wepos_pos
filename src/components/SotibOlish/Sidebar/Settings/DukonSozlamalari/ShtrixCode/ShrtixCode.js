@@ -102,7 +102,10 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
         } else {
             getBarcodeAndName({
                 branchId: mainBranchId ? mainBranchId : users.branchId,
-                name: e.target.value
+                params: {
+                    search: e.target.value,
+                    isPurchase: false,
+                }
             })
         }
 

@@ -98,7 +98,10 @@ function MaxsulotXisoboti({
         } else {
             getBarcodeAndName({
                 branchId: mainBranchId ? mainBranchId : users.branchId,
-                name: e.target.value
+                params: {
+                    search: e.target.value,
+                    isPurchase: false,
+                }
             })
         }
 
@@ -186,7 +189,7 @@ function MaxsulotXisoboti({
                     </div>
                     {
                         mainBranchId &&
-                        <div className="col-lg-6 col-12 p-2">
+                        <div className="col-lg-6 col-12 p-2 ps-1  px-0 position-relative z-3">
                             <SearchAnt name={'Mahsulotni qidirish'} onChange={changeSearch}/>
                             {
                                 isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?

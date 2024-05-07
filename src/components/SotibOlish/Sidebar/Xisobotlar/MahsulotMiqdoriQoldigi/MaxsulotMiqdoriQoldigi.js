@@ -90,7 +90,10 @@ function MaxsulotMiqdoriQoldigi({
         else{
             getBarcodeAndName({
                 branchId: mainBranchId ? mainBranchId : users.branchId,
-                name: e.target.value
+                params: {
+                    search: e.target.value,
+                    isPurchase: false,
+                }
             })
         }
     }
@@ -160,7 +163,7 @@ function MaxsulotMiqdoriQoldigi({
                     </div>
                     {
                         mainBranchId &&
-                        <div className="col-12 col-lg-6 p-2">
+                        <div className="col-12 col-lg-6 p-2 px-0 ps-1 position-relative z-3">
                             <SearchAnt name={'Mahsulotni qidirish'} onChange={changeSearch}/>
                             {
                                 isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?
