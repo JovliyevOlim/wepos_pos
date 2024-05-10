@@ -338,18 +338,18 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                                                         }}
                                                         className={'barcode-card'}>
                                                         <div
-                                                            className={'d-flex flex-column justify-content-between align-items-center h-100'}>
+                                                            className={'d-flex flex-column align-items-center h-100'}>
                                                             <div>
                                                                 <p
                                                                     className={"barcode-card-text m-0"}
-                                                                    style={{fontSize: `3.5mm`}}
+                                                                    style={{fontSize: `4mm`}}
                                                                 >
                                                                     {branchName}
                                                                 </p>
                                                                 <p
                                                                     className={"barcode-card-text m-0"}
                                                                     style={{
-                                                                        fontSize: `3.1mm`,
+                                                                        fontSize: `3.6mm`,
                                                                         lineHeight: 1.1
                                                                     }}
                                                                 >
@@ -365,12 +365,12 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                                                                     {item.price} so'm
                                                                 </p>
                                                             </div>
-                                                            <div className="barcode-icon">
+                                                            <div className="barcode-icon" style={{width: "80%"}}>
                                                                 <Barcode
                                                                     options={{
                                                                         format: item.barcode.length === 13 ? 'ean13' : 'code128',
                                                                         fontOptions: 'bold',
-                                                                        fontSize: 30,
+                                                                        fontSize: 20,
                                                                         height: 40
                                                                     }}
                                                                     renderer="svg"
@@ -484,20 +484,20 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                                             }}
                                             className={'barcode-card'}>
                                             <div
-                                                className={'d-flex flex-column justify-content-between align-items-center h-100'}>
+                                                className={'d-flex flex-column align-items-center h-100'}>
                                                 <div>
                                                     <p
                                                         className={"barcode-card-text m-0"}
-                                                        style={{fontSize: `3.5mm`}}
+                                                        style={{fontSize: `4mm`}}
                                                     >
                                                         {branchName}
                                                     </p>
                                                     <p
                                                         className={"barcode-card-text m-0"}
                                                         style={{
-                                                            fontSize: `3.1mm`,
+                                                            fontSize: `3.6mm`,
                                                             lineHeight: 1.1
-                                                    }}
+                                                        }}
                                                     >
                                                         {item.name}
                                                     </p>
@@ -505,20 +505,19 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                                                         className={"barcode-card-text m-0"}
                                                         style={{
                                                             fontSize: `6mm`,
-                                                            fontWeight: 700,
-                                                            lineHeight: 1
+                                                            fontWeight: 700
                                                         }}
                                                     >
                                                         {item.price} so'm
                                                     </p>
                                                 </div>
-                                                <div className="barcode-icon">
+                                                <div className="barcode-icon" style={{width: "80%"}}>
                                                     <Barcode
                                                         options={{
                                                             format: item.barcode.length === 13 ? 'ean13' : 'code128',
                                                             fontOptions: 'bold',
-                                                                fontSize: 30,
-                                                                height: 40
+                                                            fontSize: 20,
+                                                            height: 40
                                                         }}
                                                         renderer="svg"
                                                         value={item.barcode}
