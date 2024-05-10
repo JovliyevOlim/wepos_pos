@@ -187,7 +187,6 @@ function SavdoOynasi({
     const [pinCode, setPinCode] = useState('')
     const [confirmedOpen, setConfirmedOpen] = useState(true);
 
-
     const showDrawer = () => {
         setOpen(!open);
     };
@@ -223,18 +222,28 @@ function SavdoOynasi({
     };
 
 
-    function toEnter() {
-        console.log(userId)
-        if (userId?.pinCode == pinCode) {
-            setConfirmedOpen(false)
-        } else {
-            if (pinCode) {
-                toast.error('Kodni to\'g\'ri kiriting !!!')
+
+    useEffect(() => {
+        console.log(pinCode, 'pincode')
+        if (pinCode.length === 4) {
+            if (userId?.pinCode) {
+                if (userId?.pinCode == pinCode) {
+                    setConfirmedOpen(false)
+                    setPinCode('')
+                } else {
+                    if (pinCode) {
+                        toast.error('Kodni to\'g\'ri kiriting !!!')
+                    } else {
+                        toast.warning('Kodni  kiriting !!!')
+                    }
+                }
             } else {
-                toast.warning('Kodni  kiriting !!!')
+                toast.warning('Xodimni tanglang')
+
             }
         }
-    }
+    }, [pinCode]);
+
 
     useEffect(() => {
         getUserForFiltering(mainBranchId ? mainBranchId : users.branchId)
@@ -2187,6 +2196,7 @@ function SavdoOynasi({
                                     setarr1([])
                                     setSearch('')
                                     setIsSearchProduct([])
+                                    setPinCode('')
                                 }}/>
                             </div>
                         </div>
@@ -2200,10 +2210,14 @@ function SavdoOynasi({
                                            }))}
                                            onChange={(e) => {
                                                const findUser = XodimReducer.usersFiltering?.find(item => item.id === e)
-                                               setUserId({...findUser,pinCode : (findUser?.pinCode ? findUser.pinCode : 1111)})
+                                               setUserId({
+                                                   ...findUser,
+                                                   pinCode: (findUser?.pinCode ? findUser.pinCode : 1111)
+                                               })
                                                setarr1([])
                                                setSearch('')
                                                setIsSearchProduct([])
+                                               setPinCode('')
                                            }}/>
                             </div>
                         </div>
@@ -2211,15 +2225,41 @@ function SavdoOynasi({
                             <h5 className={'shop-header-text text-center'}>PinCode kiriting</h5>
                             <div className={'mt-2 text-center'}>
                                 <Space direction="vertical">
-                                    <Input.OTP size={'large'} length={4} type={'number'}
-                                               formatter={(str) => str.toUpperCase()} {...sharedProps} />
+                                    <Input.OTP size={'large'} length={4} type={'number'} value={pinCode}
+                                               formatter={(str) => str.toUpperCase()}   {...sharedProps}
+
+                                    />
                                 </Space>
                             </div>
                         </div>
+                        <div className={'row mt-2'}>
+                            <div className="d-flex col-12 justify-content-center flex-wrap">
+                                <div className="col-12 col-md-6 col-lg-4 d-flex gap-2 flex-wrap justify-content-center">
+                                    {
+                                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map(item =>
+                                            <button disabled={pinCode.length === 4} onClick={() => {
+                                                setPinCode(`${pinCode}${item}`)
+                                            }} className={'btn btn-primary'}
+                                                    style={{
+                                                        width: '64px',
+                                                        height: '64px',
+                                                        fontSize: '32px'
+                                                    }}>{item}</button>
+                                        )
+                                    }
+                                    <button onClick={() => {
+                                        setPinCode('')
+                                    }} className={'btn btn-danger'}
+                                            style={{width: '136px', height: '64px', fontSize: '24px'}}>Tozalash
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
                     </ModalBody>
-                    <ModalFooter>
-                        <button onClick={toEnter} className={'btn btn-success'}>{t('Kirish')} </button>
-                    </ModalFooter>
+                    {/*<ModalFooter>*/}
+                    {/*    <button onClick={toEnter} className={'btn btn-success'}>{t('Kirish')} </button>*/}
+                    {/*</ModalFooter>*/}
                 </Modal>
 
             </div>

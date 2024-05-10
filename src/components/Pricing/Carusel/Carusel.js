@@ -1,4 +1,4 @@
-import React, {useState, StrictMode, useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import './carousel.css'
 import Carousel from "react-simply-carousel";
 import img from "../../../img/tick-circle.png";

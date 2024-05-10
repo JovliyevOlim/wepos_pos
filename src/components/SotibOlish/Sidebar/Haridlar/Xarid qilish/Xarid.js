@@ -337,6 +337,7 @@ function Xarid({
                                             id={'supplierId'}
                                             disabled={match.params.id}
                                             className={'form-control'}>
+                                        <option value={''}>Tanlang</option>
                                         {
 
                                             TaminotReducer.AllSupplier?.map(item =>
@@ -551,6 +552,7 @@ function Xarid({
                                     })}
                                     disabled={match.params.id}
                             >
+                                <option value={''}>Tanlang</option>
                                 {
                                     PayReducer.paymethod?.map(item =>
                                         <option value={item.id}>{item.name}</option>)

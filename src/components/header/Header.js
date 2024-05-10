@@ -78,17 +78,17 @@ function Header({id}) {
                           },
                       ]}
                     />
-                    {
-                        location.pathname === `/shopDetails/${id}` || location.pathname === "/tariffs" ?
-                            <Link to={'/login'}>
-                                <button className={'header-btn'} onClick={toggle}>{t('Welcome.7')}</button>
-                            </Link>
-                            : <Link to={'/tariffs'}>
-                                <button className={'header-btn'} onClick={toggle}>{t('login.tariffs')}</button>
-                            </Link>
+                    {/*{*/}
+                    {/*    location.pathname === `/shopDetails/${id}` || location.pathname === "/tariffs" ?*/}
+                    {/*        <Link to={'/login'}>*/}
+                    {/*            <button className={'header-btn'} onClick={toggle}>{t('Welcome.7')}</button>*/}
+                    {/*        </Link>*/}
+                    {/*        : <Link to={'/tariffs'}>*/}
+                    {/*            <button className={'header-btn'} onClick={toggle}>{t('login.tariffs')}</button>*/}
+                    {/*        </Link>*/}
 
 
-                    }
+                    {/*}*/}
                 </div>
             </div>
         </div>

@@ -3,12 +3,9 @@ import {Suspense} from 'react';
 import {Provider} from "react-redux";
 import {ToastContainer} from "react-toastify";
 import {BrowserRouter} from "react-router-dom";
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
 import App from './App';
 import LoadingComp from "./components/LoadingComp";
-import ThemeProvider from "./theme/ThemeProvider";
 import store from "./store";
 import './i18next'
 
@@ -17,8 +14,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import './index.css'
 
 ReactDOM.render(
-    <ThemeProvider>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Suspense fallback={<LoadingComp />}>
                 <Provider store={store}>
                     <ToastContainer
@@ -38,9 +33,6 @@ ReactDOM.render(
                         <App/>
                     </BrowserRouter>
                 </Provider>
-            </Suspense>
-        </LocalizationProvider>
-    </ThemeProvider>
-    ,
+            </Suspense>,
     document.getElementById('root')
 );

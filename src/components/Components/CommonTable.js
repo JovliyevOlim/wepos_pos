@@ -1,6 +1,5 @@
 import React from 'react';
-import {Table, Avatar} from 'antd';
-import {UserOutlined} from "@ant-design/icons";
+import {Table} from 'antd';
 import './selectAnt.css'
 
 

@@ -30,7 +30,7 @@ import './sidebar.css'
 
 const Third = lazy(() => import("./ThirdPage/Third"))
 const Profil = lazy(() => import("./header/Profil"))
-const RecentActivity = lazy(() => import("./header/ViewProfile/RecentActivity"))
+const RecentActivity = lazy(() => import("./header/ViewProfile/UserProfile"))
 const Error409 = lazy(() => import("../../dashboard/jsx/pages/Error409"))
 
 const {Header, Content, Footer, Sider} = Layout;
