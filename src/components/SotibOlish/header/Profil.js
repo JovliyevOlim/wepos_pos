@@ -52,6 +52,7 @@ function Profil({savephoto, getSelfInfo, users, photoreducer, clearPhotoId, dele
         let user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user'))
         setValue('fio', user?.fio)
         setValue('username', user?.username)
+        setValue('pinCode', user?.pinCode)
         setPhoneNumber(user?.phoneNumber)
         setPhotoId(user?.photoId)
     }
@@ -101,7 +102,7 @@ function Profil({savephoto, getSelfInfo, users, photoreducer, clearPhotoId, dele
                         </div>
                     </div>
                     <div className={'col-md-8 d-flex flex-wrap'}>
-                        <div className="col-md-12">
+                        <div className="col-md-6 p-2">
                             <label htmlFor={'fio'}>F.I.O</label>
                             <input type="text" id={'fio'}
                                    {...register('fio', {required: {value: true, message: 'F.I.O kiriting'}})}
@@ -113,7 +114,7 @@ function Profil({savephoto, getSelfInfo, users, photoreducer, clearPhotoId, dele
                                 <p className={'text-danger text-center m-0 p-0'}>{errors.fio.message}</p>
                             }
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-6 p-2">
                             <label htmlFor={'username'}>{t('Employ.7')}</label>
                             <input type="text" id={'username'}
                                    {...register('username', {required: {value: true, message: 'Loginni kiriting'}})}
@@ -124,7 +125,7 @@ function Profil({savephoto, getSelfInfo, users, photoreducer, clearPhotoId, dele
                                 <p className={'text-danger text-center m-0 p-0'}>{errors.username.message}</p>
                             }
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-6 p-2">
                             <label htmlFor="phoneNumber">Tel raqam:</label>
                             <PhoneInput
                                 placeholder="Enter phone number"
@@ -135,8 +136,36 @@ function Profil({savephoto, getSelfInfo, users, photoreducer, clearPhotoId, dele
                                 className={'text-danger text-center p-0 m-0'}>Telefon raqamni
                                 kiriting</p>}
                         </div>
-                        <div className="col-md-6 ">
-                            <label htmlFor={'password'} className={'mt-3'}>{t('Employ.16')}</label>
+                        <div className="col-md-6 p-2">
+                            <label htmlFor={'pinCode'}>PinCode</label>
+                            <input type="number"
+                                   {...register("pinCode",
+                                       {
+                                           required: {
+                                               value: false,
+                                               message: 'Pincode kiriting'
+                                           },
+                                           minLength: {value: 4, message: '4 ta raqam bo\'lishi kerak'},
+                                           maxLength: {value: 4, message: '4 ta raqam bo\'lishi kerak'}
+                                       })}
+                                   placeholder={"PinCode"}
+                                   defaultValue={''}
+                                   className={'form-control'} id={'pinCode'}/>
+                            {
+                                errors.pinCode && errors.pinCode.type === "required" &&
+                                <p className={'text-danger text-center m-0 p-0'}>{errors.pinCode.message}</p>
+                            }
+                            {
+                                errors.pinCode && errors.pinCode.type === "minLength" &&
+                                <p className={'text-danger text-center m-0 p-0'}>{errors.pinCode.message}</p>
+                            }
+                            {
+                                errors.pinCode && errors.pinCode.type === "maxLength" &&
+                                <p className={'text-danger text-center m-0 p-0'}>{errors.pinCode.message}</p>
+                            }
+                        </div>
+                        <div className="col-md-6 p-2">
+                            <label htmlFor={'password'}>{t('Employ.16')}</label>
                             <input type="text"
                                    {...register("password",
                                        {
@@ -158,8 +187,8 @@ function Profil({savephoto, getSelfInfo, users, photoreducer, clearPhotoId, dele
                                 <p className={'text-danger text-center m-0 p-0'}>{errors.password.message}</p>
                             }
                         </div>
-                        <div className="col-md-6 ">
-                            <label htmlFor={'confirmPassword'} className={'mt-3'}>{t('Employ.16')}</label>
+                        <div className="col-md-6 p-2">
+                            <label htmlFor={'confirmPassword'}>{t('Employ.16')}</label>
                             <input type="text"
                                    {...register("confirmPassword", {
                                        required: {

@@ -59,7 +59,6 @@ function Home({saveusers, users, changeerror, rememberMe}) {
         }).then(function (res) {
             saveusers(res?.data)
         }).catch(function (err) {
-            console.err(err)
             saveusers({...err?.response?.data})
         })
     }

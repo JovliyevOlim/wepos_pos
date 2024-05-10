@@ -289,7 +289,7 @@ const Sidebar = ({users}) => {
                         textAlign: 'center',
                     }}
                 >
-                    ©2023 Created by Olim Jovliyev
+                    © {new Date().getFullYear()} created by Jovliyev Olim.   All rights reserved
                 </Footer>
             </Layout>
         </Layout>

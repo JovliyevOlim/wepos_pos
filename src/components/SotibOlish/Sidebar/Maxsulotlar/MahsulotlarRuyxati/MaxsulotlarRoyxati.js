@@ -291,10 +291,13 @@ function MaxsulotlarRoyxati({
             method: 'GET',
             responseType: 'blob',
             headers: {
+                credentials: 'include',
                 "Content-Type": 'multipart/form-data',
                 Authorization: `Bearer ${localStorage.getItem('tokenname') || sessionStorage.getItem('tokenname')}`
             },
         }).then((response) => {
+            console.log("resp.data.length:", response);
+            console.log("content-length:", response.headers["content-length"]);
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
             link.href = url;

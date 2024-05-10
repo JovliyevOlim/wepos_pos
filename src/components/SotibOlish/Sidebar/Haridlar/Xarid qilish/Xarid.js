@@ -6,7 +6,6 @@ import {ImCancelCircle} from "react-icons/im";
 import {useForm} from "react-hook-form";
 import PhoneInput from 'react-phone-number-input'
 import {useHistory} from 'react-router-dom'
-import {DatePicker} from "antd";
 import {toast} from "react-toastify";
 
 import users from "../../../../../reducer/users";
@@ -25,6 +24,8 @@ import MaxsulotlarRoyxariReducer, {getBarcodeAndName} from "../../Maxsulotlar/re
 
 import './xarid.css'
 import 'react-phone-number-input/style.css'
+import {AddButton} from "../../../../Components/Buttons";
+
 
 function Xarid({
                    getPurchaseById,
@@ -119,6 +120,7 @@ function Xarid({
         setSearch('')
         let a = XaridArrayPost
         let find = XaridArrayPost.some(val => val.productId === item.id)
+        let isNew = item?.branchIds?.some(ids => ids === (mainBranchId ? mainBranchId : users.branchId))
         if (find) {
             toast.warning(t('ol.45'))
         } else {
@@ -131,7 +133,8 @@ function Xarid({
                 totalSum: 0,
                 amount: item.amount,
                 name: item.name,
-                measurement: item.measurementName
+                measurement: item.measurementName,
+                isNew
             })
         }
 
@@ -244,6 +247,8 @@ function Xarid({
             } else {
                 paymentStatus = 'QISMAN_TOLANGAN'
             }
+            let newProductDtoList = XaridArrayPost.filter(item => item.isNew === false)
+            let purchaseProductDtoList = XaridArrayPost.filter(item => item.isNew === true)
             if (match.params.id) {
                 editXarid(
                     {
@@ -252,7 +257,8 @@ function Xarid({
                         userId: userId,
                         debtSum: totalSumPurchase - paidSum,
                         totalSum: totalSumPurchase,
-                        purchaseProductDtoList: XaridArrayPost,
+                        purchaseProductDtoList,
+                        newProductDtoList,
                         id: match.params.id
                     })
             } else {
@@ -263,7 +269,8 @@ function Xarid({
                         userId: users.id,
                         debtSum: totalSumPurchase - paidSum,
                         totalSum: totalSumPurchase,
-                        purchaseProductDtoList: XaridArrayPost,
+                        purchaseProductDtoList,
+                        newProductDtoList,
                     })
             }
         }
@@ -319,7 +326,7 @@ function Xarid({
                         className="col-md-12 p-2 px-lg-5 mt-4 gap-3 d-flex flex-wrap justify-content-between align-items-center">
                         <div className='flex-grow-1'>
                             <label htmlFor={'supplierId'}>{t('Purchase.2')}</label>
-                            <div className={'d-flex align-items-center'}>
+                            <div className={'d-flex gap-2 align-items-center'}>
                                 {
                                     <select name="" {...register('supplierId', {
                                         required: {
@@ -339,10 +346,7 @@ function Xarid({
                                 }
                                 {
                                     !match.params.id &&
-                                    <button type={'button'} onClick={toggleSupplier} className={'addBtn'}
-                                            style={{width: "75px", height: '100%', background: "#6664e9"}}>
-                                        <h2 style={{color: "#fff"}}>+</h2>
-                                    </button>
+                                    <AddButton onClick={toggleSupplier}/>
                                 }
 
                             </div>
@@ -401,10 +405,8 @@ function Xarid({
                                                     <p className={'d-flex justify-content-start gap-4  m-0'}
                                                        onClick={() => AddXaridArray(item)}>
                                                         {item.name} ({item.barcode})
-                                                        {console.log(item?.branchIds, mainBranchId ? mainBranchId : users.branchId)}
-                                                        {console.log(item?.branchIds?.some(ids=>ids ===mainBranchId ? mainBranchId : users.branchId))}
                                                         {
-                                                            !item?.branchIds?.some(ids=>ids ===( mainBranchId ? mainBranchId : users.branchId)) &&
+                                                            !item?.branchIds?.some(ids => ids === (mainBranchId ? mainBranchId : users.branchId)) &&
                                                             <strong className={'text-danger m-0'}>Yangi
                                                                 mahsulot</strong>
                                                         }
@@ -432,46 +434,56 @@ function Xarid({
                                         {
                                             XaridArrayPost.map((item, index) =>
                                                 !item.delete &&
-                                                <tr className={'text-center'}>
+                                                <tr className={'text-start'}>
                                                     <td>
-                                                        <div>
-                                                            <h4>{item.name}</h4>
+                                                        <div style={{width: '120px'}}>
+                                                            <h5 style={{color: !item.isNew ? 'red' : 'black'}}>{item.name}</h5>
                                                             <p>{item.amount} {item.measurement}</p>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div
-                                                            className={'d-flex justify-content-center align-items-center'}>
-                                                            <input className={'form-control'}
-                                                                   step="any"
-                                                                   name={'quantity'}
-                                                                   value={item.quantity}
-                                                                   onChange={(e) => ComboChangeAmount(e, index)}
-                                                                   type="number"
-                                                                   min={0}
+                                                            className={'d-flex justify-content-start gap-2 align-items-center'}>
+                                                            <input
+                                                                className={'form-control'}
+                                                                style={{width: '80px'}}
+                                                                step="any"
+                                                                name={'quantity'}
+                                                                value={item.quantity}
+                                                                onChange={(e) => ComboChangeAmount(e, index)}
+                                                                type="number"
+                                                                min={0}
+                                                                size={10}
                                                             />
-                                                            <input className={'form-control'} type="text"
-                                                                   disabled={true}
-                                                                   value={item.measurement}/>
+                                                            <input
+                                                                className={'form-control'}
+                                                                style={{width: '90px'}}
+                                                                type="text"
+                                                                disabled={true}
+                                                                value={item.measurement}/>
+
                                                         </div>
+
                                                     </td>
                                                     <td>
                                                         <div className={'d-flex align-items-center'}>
                                                             <input type="number" min={0} className={'form-control'}
                                                                    name={"buyPrice"}
+                                                                   style={{width: '120px'}}
                                                                    onChange={(e) => ComboChangeAmount(e, index)}
                                                                    value={item.buyPrice} placeholder={item.buyPrice}/>
                                                         </div>
 
                                                     </td>
                                                     <td>
-                                                        {item.quantity * item.buyPrice}
+                                                        <h6>{item.quantity * item.buyPrice}</h6>
                                                     </td>
                                                     <td>
 
                                                         <div className={'d-flex align-items-center'}>
                                                             <input type="number" min={0} className={'form-control'}
                                                                    name={"salePrice"}
+                                                                   style={{width: '120px'}}
                                                                    onChange={(e) => ComboChangeAmount(e, index)}
                                                                    value={item.salePrice}/>
                                                         </div>
@@ -479,12 +491,14 @@ function Xarid({
                                                     <td>
                                                         <input type="date" className={'form-control'}
                                                                name={"endDate"}
+                                                               style={{width: '120px'}}
                                                                onChange={(e) => ComboChangeAmount(e, index)}
                                                                value={item.endDate}/>
                                                     </td>
                                                     <td>
                                                         <input type="number" min={0} className={'form-control'}
                                                                name={"warningDay"}
+                                                               style={{width: '60px'}}
                                                                onChange={(e) => ComboChangeAmount(e, index)}
                                                                value={item.warningDay}/>
                                                     </td>

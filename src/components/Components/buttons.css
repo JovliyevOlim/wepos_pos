@@ -62,11 +62,11 @@
 }
 
 .editButton{
-    background: #EEF0FF;
+    background: #EEF0FF !important;
 }
 
 .editButton:hover{
-    border-color: #377dff;
+    border-color: #377dff !important;
 }
 
 

@@ -225,7 +225,7 @@ function SavdoOynasi({
 
     function toEnter() {
         console.log(userId)
-        if (userId?.pinCode == pinCode ||( userId?.pinCode === null && pinCode == 1111)) {
+        if (userId?.pinCode == pinCode) {
             setConfirmedOpen(false)
         } else {
             if (pinCode) {
@@ -356,7 +356,7 @@ function SavdoOynasi({
                 if (id == val.id) {
                     let holdOnArray = []
                     changeGrossPriceType(val.gross ? (t('mah.65')) : (t('mah.66')))
-                    const findUser = XodimReducer.usersFiltering?.find(item => item.id === userId)
+                    const findUser = XodimReducer.usersFiltering?.find(item => item.id === userId?.id)
                     setUserId(findUser)
                     setushlanumber(val.id)
                     setjamixisob(val.totalSum)
@@ -1346,10 +1346,14 @@ function SavdoOynasi({
                                 <img src={minus} className={'btn-change-icon'} alt="minus"/>
                                 <p className={'btn-change-text'} style={{color: '#FF7272'}}>Kamaytirish</p>
                             </div>
-                            <div className={'btn-change'} onClick={() => setCount(changesId)}>
-                                <img src={plus} alt="plus" className={'btn-change-icon'}/>
-                                <p className={'btn-change-text'} style={{color: '#377DFF'}}>Qo'shish</p>
-                            </div>
+                            {
+                                !tradeIdForEdit &&
+                                <div className={'btn-change'} onClick={() => setCount(changesId)}>
+                                    <img src={plus} alt="plus" className={'btn-change-icon'}/>
+                                    <p className={'btn-change-text'} style={{color: '#377DFF'}}>Qo'shish</p>
+                                </div>
+                            }
+
                             <button className={'btn-change border-0'} disabled={changesId ? false : true}
                                     onClick={deleteM}>
                                 <img src={remove} alt="remove" className={'btn-change-icon'}/>
@@ -2128,6 +2132,7 @@ function SavdoOynasi({
                                                                     SavdoQoshishReducer.trades?.list?.map((item, index) =>
                                                                         <tr
                                                                             key={item?.id}>
+                                                                            {console.log(item)}
                                                                             <td>{index + 1}</td>
                                                                             <td>{moment(new Date(item?.createdAt)).format('lll')}</td>
                                                                             <td className={item.edit && 'bg-warning'}>{item?.invoice}</td>
@@ -2137,7 +2142,7 @@ function SavdoOynasi({
                                                                                     {
                                                                                         users.editTrade && item?.editable ?
                                                                                             <EditButton
-                                                                                                onClick={() => getTradeByForEdit(item.id)}
+                                                                                                onClick={() => getTradeByForEdit(item?.id)}
                                                                                             />
                                                                                             : ''
                                                                                     }
@@ -2188,14 +2193,14 @@ function SavdoOynasi({
                         <div className="row mt-2">
                             <h5 className={'shop-header-text'}>Xodimlar</h5>
                             <div>
-                                <SelectAnt value={userId.id} permission={false}
+                                <SelectAnt value={userId?.id} permission={true} all={'Tanlang'}
                                            selectList={XodimReducer.usersFiltering.map((item) => ({
                                                id: item.id,
                                                name: item.fio
                                            }))}
                                            onChange={(e) => {
                                                const findUser = XodimReducer.usersFiltering?.find(item => item.id === e)
-                                               setUserId({...findUser})
+                                               setUserId({...findUser,pinCode : (findUser?.pinCode ? findUser.pinCode : 1111)})
                                                setarr1([])
                                                setSearch('')
                                                setIsSearchProduct([])

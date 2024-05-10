@@ -22,7 +22,7 @@ const CustomButton = ({ onClick, className, size= "small", text= "", img, icon ,
 }
 
 const AddButton = ({ onClick = () => {}, size= "small", text , ...props}) => {
-    return <button
+    return <button type={'button'}
         onClick={() => onClick()}
         className={`buttonClass addButton ${size === "big" ? "bigButton" : "smallButton"}`}
         {...props}>

@@ -36,6 +36,9 @@ import CommonTable from "../../../../Components/CommonTable";
 import {DeleteOutlined, EditOutlined, EyeOutlined, PlusOutlined} from "@ant-design/icons";
 import {DatePicker} from "antd";
 import dayjs from "dayjs";
+import {CustomButton, DeleteButton, EditButton, ViewButton} from "../../../../Components/Buttons";
+
+import edit from "../../../../../img/pencil.svg"
 
 function BarchaSavdolar({
                             XodimReducer,
@@ -79,47 +82,43 @@ function BarchaSavdolar({
 
     const columns = [
         {
-            title: 'Id',
-            dataIndex: 'index',
-            rowScope: 'row',
-            width: '2%',
+            title: 'Chek',
+            dataIndex: 'invoice',
+            key: 'invoice',
+            width: '5%',
         },
         {
             title: t('ol.11'),
             dataIndex: 'createdAt',
             key: 'createdAt',
             render: (item) => <p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>,
-            width: '10%',
-        },
-        {
-            title: t('Trade.5'),
-            dataIndex: 'invoice',
-            key: 'invoice',
-            width: '5%',
+            width: '8%',
         },
         {
             title: t('Pagination.10'),
             dataIndex: 'customerName',
             key: 'customerName',
-            width: '10%',
+            width: '8%',
+            render: (item) => <p className={'m-0'}>{item ? item :'-----'}</p>,
         },
         {
             title: t('ol.10'),
             dataIndex: 'userFio',
             key: 'userFio',
-            width: '10%',
+            width: '7%',
         },
         {
             title: t('ol.13'),
             dataIndex: 'branchName',
             key: 'branchName',
-            width: '10%',
+            width: '8%',
         },
         {
             title: t('ol.18'),
             dataIndex: 'paymentStatus',
             key: 'paymentStatus',
             width: '10%',
+            render: (item) => <p className={'m-0'}>{item}</p>,
         },
         {
             title: t('ol.15'),
@@ -145,36 +144,56 @@ function BarchaSavdolar({
         {
             title: t('ol.20'),
             key: 'operation',
-            width: '20%',
+            width: '15%',
             render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
                 {
-                    users.getTrade &&
-                    <ButtonAnt type={'primary'} text={t('button.view')} bgColor={'aqua'} onClick={() => {
+                    users.getTrade && <ViewButton onClick={() => {
                         viewTradeInfoById(item?.id)
                     }
-                    } icon={<EyeOutlined/>}/>
+                    }/>
                 }
+                {
+                    users.editTrade && values.editable && <CustomButton
+                        className={"editButton"}
+                        img={edit}
+                        text={t('button.remain')}
+                        onClick={() => {
+                            history.push('/repeatProducts/' + values?.id + "/" + values?.id)
+                        }
+                        }
+                    />
+                }
+                {
+                    users.deleteTrade && values.editable && <DeleteButton onClick={() => values?.customerName ? deleteTradeByIdIsCustomer(item.id) : deleteTradeById(item.id)} />
+                }
+                {/*{*/}
+                {/*    users.getTrade &&*/}
+                {/*    <ButtonAnt type={'primary'} text={t('button.view')} bgColor={'aqua'} onClick={() => {*/}
+                {/*        viewTradeInfoById(item?.id)*/}
+                {/*    }*/}
+                {/*    } icon={<EyeOutlined/>}/>*/}
+                {/*}*/}
 
-                {
-                    users.editTrade && values.editable &&
-                    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {
-                        history.push('/shopping/' + values?.id)
-                    }
-                    } icon={<EditOutlined/>}/>
-                }
-                {
-                    users.editTrade && values.editable &&
-                    <ButtonAnt text={t('button.remain')} type={'primary'} bgColor={'green'} onClick={() => {
-                        history.push('/repeatProducts/' + values?.id + "/" + values?.id)
-                    }
-                    } icon={<EditOutlined/>}/>
-                }
-                {
-                    users.deleteTrade && values.editable &&
-                    <ButtonAnt text={t('button.delete')} danger={true} type={'primary'}
-                               onClick={() => values?.customerName ? deleteTradeByIdIsCustomer(item.id) : deleteTradeById(item.id)}
-                               icon={<DeleteOutlined/>}/>
-                }
+                {/*{*/}
+                {/*    users.editTrade && values.editable &&*/}
+                {/*    <ButtonAnt text={t('button.edit')} type={'primary'} onClick={() => {*/}
+                {/*        history.push('/shopping/' + values?.id)*/}
+                {/*    }*/}
+                {/*    } icon={<EditOutlined/>}/>*/}
+                {/*}*/}
+                {/*{*/}
+                {/*    users.editTrade && values.editable &&*/}
+                {/*    <ButtonAnt text={t('button.remain')} type={'primary'} bgColor={'green'} onClick={() => {*/}
+                {/*        history.push('/repeatProducts/' + values?.id + "/" + values?.id)*/}
+                {/*    }*/}
+                {/*    } icon={<EditOutlined/>}/>*/}
+                {/*}*/}
+                {/*{*/}
+                {/*    users.deleteTrade && values.editable &&*/}
+                {/*    <ButtonAnt text={t('button.delete')} danger={true} type={'primary'}*/}
+                {/*               onClick={() => values?.customerName ? deleteTradeByIdIsCustomer(item.id) : deleteTradeById(item.id)}*/}
+                {/*               icon={<DeleteOutlined/>}/>*/}
+                {/*}*/}
 
             </div>,
         },
