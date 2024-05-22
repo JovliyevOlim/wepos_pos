@@ -43,14 +43,13 @@ const slice = createSlice({
             state.saveBoolean = false
         },
         getFromBarcodeAndName: (state, action) => {
-            console.log(state.productSearch)
             if (action.payload.success) {
                 state.productSearch = action.payload.object
                 state.isClearInput = false
             } else {
                 state.isClearInput = true
                 state.productSearch = []
-                toast.warning(action.payload.message)
+                toast.error(action.payload.message)
             }
             state.getBoolean=!state.getBoolean
             state.saveBoolean = false

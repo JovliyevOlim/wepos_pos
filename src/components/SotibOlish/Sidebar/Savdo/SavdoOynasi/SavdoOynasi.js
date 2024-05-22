@@ -222,7 +222,6 @@ function SavdoOynasi({
     };
 
 
-
     useEffect(() => {
         console.log(pinCode, 'pincode')
         if (pinCode.length === 4) {
@@ -600,7 +599,6 @@ function SavdoOynasi({
         console.log(productsArray)
         setarr1(productsArray)
     }, [customerPercent]);
-    console.log(customerPercent)
 
     const [saveModal, setSaveModal] = useState(false)
     const [printDisplay, setPrintDisplay] = useState('none')
@@ -917,7 +915,6 @@ function SavdoOynasi({
 
     useEffect(() => {
         if (tradeIdForEdit) {
-            console.log('tradeIdFor', tradeIdForEdit)
             if (SavdoQoshishReducer.tradeOne) {
                 setlastTradeActive(false)
                 const {
@@ -934,7 +931,7 @@ function SavdoOynasi({
                 setCustomer(SavdoQoshishReducer.tradeOne?.customerId)
                 setCustomerPercent(SavdoQoshishReducer.tradeOne?.customerPercent)
                 const findUser = XodimReducer.usersFiltering?.find(item => item.id === userId)
-                setUserId(findUser)
+                setUserId({...findUser,pinCode: (findUser?.pinCode ? findUser.pinCode : 1111)})
                 setThisDay(formatDateMinus(date))
                 setNoChangesPaidSum(paidSum)
                 SavdoQoshishReducer.tradeOne?.tradeProductDtoList?.map(val =>
@@ -1130,7 +1127,7 @@ function SavdoOynasi({
                         }
                         <ReactTooltip/>
                         {
-                            users.getTrade &&
+                            users.getTrade && !tradeIdForEdit &&
                             <div className={'shopping-btn-header'} onClick={toggle4}
                             ><p className={'shopping-btn-text-header'}>
                                 {t('mah.80')}
@@ -2141,7 +2138,6 @@ function SavdoOynasi({
                                                                     SavdoQoshishReducer.trades?.list?.map((item, index) =>
                                                                         <tr
                                                                             key={item?.id}>
-                                                                            {console.log(item)}
                                                                             <td>{index + 1}</td>
                                                                             <td>{moment(new Date(item?.createdAt)).format('lll')}</td>
                                                                             <td className={item.edit && 'bg-warning'}>{item?.invoice}</td>
@@ -2214,8 +2210,6 @@ function SavdoOynasi({
                                                    ...findUser,
                                                    pinCode: (findUser?.pinCode ? findUser.pinCode : 1111)
                                                })
-                                               setarr1([])
-                                               setSearch('')
                                                setIsSearchProduct([])
                                                setPinCode('')
                                            }}/>
@@ -2247,6 +2241,11 @@ function SavdoOynasi({
                                                     }}>{item}</button>
                                         )
                                     }
+                                    <button onClick={() => {
+                                        setPinCode('')
+                                    }} className={'btn btn-danger'}
+                                            style={{width: '136px', height: '64px', fontSize: '24px'}}>Tozalash
+                                    </button>
                                     <button onClick={() => {
                                         setPinCode('')
                                     }} className={'btn btn-danger'}

@@ -44,12 +44,13 @@ function SelectAnt({name, permission, selectList, onChange, all, disabled, value
 export default SelectAnt;
 
 
-export function SearchAnt({name, onChange, value}) {
+export function SearchAnt({name, onChange, value,inputRef}) {
     const {t} = useTranslation()
     return (
         <>
             <h5 className={'selectLabel'}>{name}:</h5>
             <Search
+                ref={inputRef}
                 value={value}
                 placeholder={t('ol.23')}
                 allowClear
