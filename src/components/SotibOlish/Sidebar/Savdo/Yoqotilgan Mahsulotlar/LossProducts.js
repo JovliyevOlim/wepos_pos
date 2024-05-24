@@ -20,7 +20,6 @@ import CardBody from "../../../../Components/CardBody";
 import CommonTable from "../../../../Components/CommonTable";
 import {AddButton, ViewButton} from "../../../../Components/Buttons";
 
-import '../BarcaSavdolar/barcasavdolar.css'
 
 function LossProducts({
                           lossReducer,

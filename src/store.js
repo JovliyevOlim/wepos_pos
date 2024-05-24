@@ -15,7 +15,7 @@ import FoydaZararReducer from "./components/SotibOlish/Sidebar/Xisobotlar/reduce
 import XaridlarXisobotiReducer from "./components/SotibOlish/Sidebar/Xisobotlar/reducer/XaridlarXisobotiReducer";
 import MijozHisobotiReducer from './components/SotibOlish/Sidebar/Xisobotlar/reducer/MijozHisobotiReducer'
 import XarajatXisobotReducer from './components/SotibOlish/Sidebar/Xisobotlar/reducer/XarajatXisobotReducer'
-import SavdodagiTulovReducer from './components/SotibOlish/Sidebar/Xisobotlar/reducer/SavdodagiTulovReducer'
+import TradeReportReducer from './components/SotibOlish/Sidebar/Xisobotlar/reducer/TradeReportReducer'
 import MaxsulotxisobotReducer from './components/SotibOlish/Sidebar/Xisobotlar/reducer/MaxsulotxisobotReducer'
 import KopsotilgantovarlarReducer from './components/SotibOlish/Sidebar/Xisobotlar/reducer/KopsotilgantovarlarReducer'
 import QoldiqlarxisobotiReducer from './components/SotibOlish/Sidebar/Xisobotlar/reducer/QoldiqlarxisobotiReducer'
@@ -60,7 +60,7 @@ export default configureStore({
         XaridlarXisobotiReducer,
         MijozHisobotiReducer,
         XarajatXisobotReducer,
-        SavdodagiTulovReducer,
+        TradeReportReducer,
         MaxsulotxisobotReducer,
         KopsotilgantovarlarReducer,
         QoldiqlarxisobotiReducer,

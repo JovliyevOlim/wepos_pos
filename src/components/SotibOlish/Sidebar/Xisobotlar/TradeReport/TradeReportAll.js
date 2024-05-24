@@ -1,5 +1,4 @@
 import {Link, useHistory} from 'react-router-dom'
-import './barcasavdolar.css'
 import React, {useState, useEffect, useRef} from "react";
 import {connect} from "react-redux";
 import SavdoQoshishReducer, {
@@ -10,7 +9,7 @@ import SavdoQoshishReducer, {
     getTradeByBranch,
     getTradeByBusiness,
     viewTradeById
-} from "../reducer/SavdoQoshishReducer";
+} from "../../Savdo/reducer/SavdoQoshishReducer";
 import users from "../../../../../reducer/users";
 import {useTranslation} from "react-i18next";
 import formatDate, {camelize} from "../../../../../util";
@@ -40,7 +39,7 @@ import {CustomButton, DeleteButton, EditButton, ViewButton} from "../../../../Co
 
 import edit from "../../../../../img/pencil.svg"
 
-function BarchaSavdolar({
+function TradeReportAll({
                             XodimReducer,
                             CustomerReducer,
                             getCustomersForTrade,
@@ -215,7 +214,6 @@ function BarchaSavdolar({
 
 
     useEffect(() => {
-        // console.log(dayjs(item).format("YYYY-MM-DD HH:mm:ss"))
         setLoading(false)
         if (users.getTradeAdmin && !mainBranch) {
             getTradeByBusiness({
@@ -331,34 +329,26 @@ function BarchaSavdolar({
 
 
     return (
-        <div>
-            <div className={'d-flex col-md-12 mb-5 align-items-center justify-content-between'}>
-                <MainHeaderText text={t('sidebar.trades')}/>
-                {
-                    users.addTrade ? <Link to={'/shopping'}>
-                        <ButtonAnt text={t('button.add')} icon={<PlusOutlined/>} type={'primary'}/>
-                    </Link> : ''
-                }
-            </div>
+        <>
             {
                 users.getTradeAdmin || users.getTrade ?
                     <CardBody>
-                        <div className="col-md-12 gap-2 gap-sm-0 d-flex flex-wrap">
-                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                        <div className="col-md-12 d-flex flex-wrap">
+                            <div className="col-12 col-sm-6 col-lg-3 p-2">
                                 <SelectAnt
                                     name={t('ol.3')}
                                     onChange={(e) => setMainBranch(e === "" ? null : e)}
                                     permission={users.getTradeAdmin}
                                     selectList={users.branches}/>
                             </div>
-                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                            <div className="col-12 col-sm-6 col-lg-3 p-2">
                                 <SelectAnt
                                     name={'Mijozlar'}
                                     onChange={(e) => setCustomerId(e === "" ? null : e)}
                                     permission={true}
                                     selectList={CustomerReducer.customersTrade}/>
                             </div>
-                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                            <div className="col-12 col-sm-6 col-lg-3 p-2">
                                 <SelectAnt
                                     name={t('ol.9')}
                                     onChange={(e) => setUserId(e === "" ? null : e)}
@@ -368,7 +358,7 @@ function BarchaSavdolar({
                                         name: item.fio
                                     }))}/>
                             </div>
-                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                            <div className="col-12 col-sm-6 col-lg-3 p-2">
                                 <SelectAnt
                                     name={t('ol.5')}
                                     onChange={(e) => setPaymentStatus(e === "" ? null : e)}
@@ -379,13 +369,13 @@ function BarchaSavdolar({
                                         {id: 'QISMAN_TOLANGAN', name: (t('ol.8'))},
                                     ]}/>
                             </div>
-                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                            <div className="col-12 col-sm-6 col-lg-3 p-2">
                                 <h5 className={'selectLabel'}>Sana</h5>
                                 <DatePicker
                                     className="w-100"
                                     onChange={(e) => setStartDate(e === '' ? null : e)}/>
                             </div>
-                            <div className="col-12">
+                            <div className="col-12 p-2">
                                 <SearchAnt name={t('mah.35')}
                                            onChange={(e) => setSearch(e.target.value === '' ? null : e.target.value)}/>
                             </div>
@@ -692,7 +682,7 @@ function BarchaSavdolar({
                     </div>
                 </div>
             </AgreeModal>
-        </div>
+        </>
 
     )
 }
@@ -711,4 +701,4 @@ export default connect((CustomerReducer, checkReducer, SavdoQoshishReducer, user
     editSavdolar,
     deleteSavdolar,
     getPay
-})(BarchaSavdolar)
+})(TradeReportAll)

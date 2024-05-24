@@ -18,13 +18,19 @@ import CardBody from "../../../../Components/CardBody";
 import SelectAnt, {SearchAnt} from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
 
-import './xaridxisobot.css'
-
-function XaridlarXisoboti({
-                              users, XaridlarXisobotiReducer, TaminotReducer, getAllSupplier,
-                              XodimReducer, getUserForFiltering, getUserForFilteringBusiness, MaxsulotlarRoyxariReducer,
-                              getPurchaseReportByBusiness, getPurchaseReportByBranch, getBarcodeAndName
-                          }) {
+function PurchaseReportByProduct({
+                                     users,
+                                     XaridlarXisobotiReducer,
+                                     TaminotReducer,
+                                     getAllSupplier,
+                                     XodimReducer,
+                                     getUserForFiltering,
+                                     getUserForFilteringBusiness,
+                                     MaxsulotlarRoyxariReducer,
+                                     getPurchaseReportByBusiness,
+                                     getPurchaseReportByBranch,
+                                     getBarcodeAndName
+                                 }) {
     const {t} = useTranslation()
     const [mainBranchId, setMainBranchId] = useState(null)
     const [supplierId, setSupplierId] = useState(null)
@@ -79,7 +85,7 @@ function XaridlarXisoboti({
             title: 'Xarid miqdori',
             dataIndex: 'quantity',
             key: 'quantity',
-            render: (item,values) => <p className={'m-0'}>{item} {values.measurementName}</p>,
+            render: (item, values) => <p className={'m-0'}>{item} {values.measurementName}</p>,
             width: '120px'
         },
         {
@@ -87,22 +93,22 @@ function XaridlarXisoboti({
             dataIndex: 'salePrice',
             key: 'salePrice',
             width: '100px',
-            render: (item,values) => <p className={'m-0'}>{item} so'm</p>
+            render: (item, values) => <p className={'m-0'}>{item} so'm</p>
         },
         {
             title: 'Jami summa',
             dataIndex: 'totalSum',
             key: 'totalSum',
             width: '100px',
-            render: (item,values) => <p className={'m-0'}>{item} so'm</p>
+            render: (item, values) => <p className={'m-0'}>{item} so'm</p>
         }
     ];
 
 
     const handlePageChange = (newPage) => {
-        setPage(newPage-1);
+        setPage(newPage - 1);
     };
-    const handleLimitChange = (event,size) => {
+    const handleLimitChange = (event, size) => {
         setPage(0)
         setSize(size);
     };
@@ -168,7 +174,7 @@ function XaridlarXisoboti({
     }, [])
 
     useEffect(() => {
-            setLoading(true)
+        setLoading(true)
     }, [XaridlarXisobotiReducer.getBoolean])
 
     useEffect(() => {
@@ -185,46 +191,45 @@ function XaridlarXisoboti({
     }
 
     return (
-        <div>
-            <div className="col-md-12 d-flex justify-content-between align-items-center mb-3 mb-md-5">
-                <MainHeaderText text={'Xaridlar xisoboti'}/>
-            </div>
+        <>
             <CardBody>
                 <div className="col-md-12 d-flex align-items-end flex-wrap">
-                    <div className="col-md-4 p-2 col-12">
+                    <div className="col-sm-4 col-lg-3 p-2 col-12">
                         <SelectAnt name={'Filiallar'} selectList={users.branches} permission={users.getInfoAdmin}
-                                   onChange={(e) => setMainBranchId(e === "" ? null : e)}/>
+                                   onChange={(e) => {
+                                       setMainBranchId(e === "" ? null : e)
+                                       setSearch('')
+                                       setIsView(false)
+                                   }}/>
                     </div>
-                    <div className="col-md-4 p-2 col-12">
+                    <div className="col-sm-4 col-lg-3 p-2 col-12">
                         <SelectAnt name={'Ta\'minotchilar'} selectList={TaminotReducer.AllSupplier} permission={true}
                                    onChange={(e) => setSupplierId(e === "" ? null : e)}/>
                     </div>
-                    <div className="col-md-4 p-2 col-12">
+                    <div className="col-sm-4 col-lg-3 p-2 col-12">
                         <SelectAnt name={'Hodimlar'} selectList={XodimReducer.usersFiltering?.map((item) => ({
                             id: item.id,
                             name: item.fio
                         }))} permission={true}
                                    onChange={(e) => setUserId(e === "" ? null : e)}/>
                     </div>
-                    {
-                        mainBranchId
-                        && <div className="my-3 col-12 z-3 position-relative p-0">
-                            <SearchAnt onChange={changeSearch} name={'Mahsulotni barcode yoki nomi orqali izlash'}/>
-                            {
-                                isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?
-                                    <div className={'Combo-array'}>
-                                        {
-                                            MaxsulotlarRoyxariReducer.productSearch?.map(item =>
-                                                <p onClick={() => selectProduct(item.id, item.name)}>
-                                                    {item.name}
-                                                </p>
-                                            )
-                                        }
-                                    </div>
-                                    : null
-                            }
-                        </div>
-                    }
+                    <div className="my-3 col-12 z-3 position-relative p-2">
+                        <SearchAnt value={search} disabled={!mainBranchId} onChange={changeSearch}
+                                   name={'Mahsulotni barcode yoki nomi orqali izlash'}/>
+                        {
+                            isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?
+                                <div className={'Combo-array scroll'}>
+                                    {
+                                        MaxsulotlarRoyxariReducer.productSearch?.map(item =>
+                                            <p onClick={() => selectProduct(item.id, item.name)}>
+                                                {item.name}
+                                            </p>
+                                        )
+                                    }
+                                </div>
+                                : null
+                        }
+                    </div>
                 </div>
             </CardBody>
 
@@ -233,8 +238,10 @@ function XaridlarXisoboti({
                     {
                         XaridlarXisobotiReducer.purchaseReport?.list?.length > 0 ?
                             <div className="table-responsive mb-4 table-wrapper-scroll-y">
-                                <CommonTable size={size} page={page} columns={columns} data={XaridlarXisobotiReducer.purchaseReport?.list}
-                                             pagination={true} handleLimitChange={handleLimitChange} handlePageChange={handlePageChange}
+                                <CommonTable size={size} page={page} columns={columns}
+                                             data={XaridlarXisobotiReducer.purchaseReport?.list}
+                                             pagination={true} handleLimitChange={handleLimitChange}
+                                             handlePageChange={handlePageChange}
                                              total={XaridlarXisobotiReducer.purchaseReport?.totalItem}/>
                             </div> : <div>
                                 <h4 className={'text-center'}>{XaridlarXisobotiReducer.message}</h4>
@@ -320,7 +327,7 @@ function XaridlarXisoboti({
                     <button onClick={checktoggle} className={'btn btn-outline-primary'}>Chiqish</button>
                 </ModalFooter>
             </Modal>
-        </div>
+        </>
     )
 }
 
@@ -332,4 +339,4 @@ export default connect((XaridlarXisobotiReducer, users, TaminotReducer, Maxsulot
         getUserForFiltering,
         getUserForFilteringBusiness,
         getBarcodeAndName
-    })(XaridlarXisoboti)
+    })(PurchaseReportByProduct)

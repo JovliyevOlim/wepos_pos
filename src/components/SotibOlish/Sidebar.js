@@ -8,7 +8,7 @@ import Icon from '@ant-design/icons';
 import MainHeader from "./header/MainHeader";
 import useWindowWidth from "../Components/useWindowWidth";
 import ProtectedRoute from "./ThirdPage/ProtectedRoute";
-import {routes} from './headerthird';
+import {routes} from './Routes';
 import users from "../../reducer/users";
 import Logo from "../../img/g14.svg"
 import OpenMenu from "../../img/align-right.svg"
@@ -82,7 +82,11 @@ const Sidebar = ({users}) => {
             icon: <Icon component={Kassa}/>,
             check: users.getBalance || users.getBalanceAdmin,
             children: [
-                {label: t("sidebar.balanceStatus"), key: '/main/balanceTable', check: users.getBalance || users.getBalanceAdmin},
+                {
+                    label: t("sidebar.balanceStatus"),
+                    key: '/main/balanceTable',
+                    check: users.getBalance || users.getBalanceAdmin
+                },
                 {
                     label: t("sidebar.balanceChanges"),
                     key: '/main/balanceHistory',
@@ -94,7 +98,11 @@ const Sidebar = ({users}) => {
             label: t("sidebar.users"), key: 'user', check: users.addUser || users.getUserAdmin || users.getUser ||
                 users.addRole || users.getRole, icon: <Icon component={UsersIcon}/>,
             children: [
-                {label: t("sidebar.users"), key: '/main/user', check: users.addUser || users.getUserAdmin || users.getUser},
+                {
+                    label: t("sidebar.users"),
+                    key: '/main/user',
+                    check: users.addUser || users.getUserAdmin || users.getUser
+                },
                 {label: t("sidebar.roles"), key: '/main/role', check: users.addRole || users.getRole},
             ].filter(item => item.check === true)
         },
@@ -114,13 +122,13 @@ const Sidebar = ({users}) => {
             ].filter(item => item.check === true)
         },
         {
-            label:  t("sidebar.report"),
+            label: t("sidebar.report"),
             key: 'grp2',
             check: !collapsed,
             disabled: true,
         },
         {
-            label:  t("sidebar.product"),
+            label: t("sidebar.product"),
             key: 'products',
             check: users.getProductAdmin || users.getProduct || users.addProduct || users.productTypeRoles ||
                 users.measurementRoles || users.brandRoles || users.categoryRoles,
@@ -136,35 +144,17 @@ const Sidebar = ({users}) => {
                 {label: t("sidebar.importProduct"), key: '/main/importProduct', check: users.addProduct},
                 {label: t("sidebar.category"), key: '/main/category', check: users.categoryRoles},
                 {label: t("sidebar.brand"), key: '/main/brand', check: users.brandRoles},
-                {label:t("sidebar.measurement"), key: '/main/measurements', check: users.measurementRoles},
+                {label: t("sidebar.measurement"), key: '/main/measurements', check: users.measurementRoles},
             ].filter(item => item.check === true)
         },
         {
-            label:  t("sidebar.purchase"),
-            key: 'purchase',
-            check: users.getPurchase || users.getPurchaseAdmin || users.addPurchase,
-            icon: <Icon component={PurchaseIcon}/>,
-            children: [
-                {
-                    label: t("sidebar.purchases"),
-                    key: '/main/purchaseList',
-                    check: users.getPurchase || users.getPurchaseAdmin || users.addPurchase
-                },
-                {label: t("sidebar.addPurchases"), key: '/main/addPurchase', check: users.addPurchase},
-            ].filter(item => item.check === true)
-        },
-        {
-            label:  t("sidebar.trade"),
+            label: t("sidebar.trade") + " / " + t("sidebar.purchase"),
             key: 'trades',
             check: users.addTrade || users.getTrade || users.getTradeAdmin || users.getLoss || users.getLossAdmin || users.addLoss,
             icon: <Icon component={TradeIcon}/>,
             children: [
-                {
-                    label: t("sidebar.trades"),
-                    key: '/main/tradeList',
-                    check: users.addTrade || users.getTradeAdmin || users.getTrade
-                },
                 {label: t("sidebar.shopWindow"), key: '/shopping', check: users.addTrade || users.getTrade},
+                {label: t("sidebar.addPurchases"), key: '/main/addPurchase', check: users.addPurchase},
                 {label: t("sidebar.lossProduct"), key: '/main/addLossProducts', check: users.addLoss},
                 {
                     label: t("sidebar.tableLossProduct"),
@@ -174,7 +164,7 @@ const Sidebar = ({users}) => {
             ].filter(item => item.check === true)
         },
         {
-            label:  t("sidebar.outlay"),
+            label: t("sidebar.outlay"),
             key: 'outlay',
             check: users.addOutlay || users.getOutlay || users.getOutlayAdmin,
             icon: <Icon component={OutlayIcon}/>,
@@ -184,28 +174,31 @@ const Sidebar = ({users}) => {
                     key: '/main/outlayList',
                     check: users.addOutlay || users.getOutlay || users.getOutlayAdmin
                 },
-                {label: t("sidebar.outlayCategory"), key: '/main/outlayCategoryList', check: users.addOutlay || users.getOutlay},
+                {
+                    label: t("sidebar.outlayCategory"),
+                    key: '/main/outlayCategoryList',
+                    check: users.addOutlay || users.getOutlay
+                },
             ].filter(item => item.check === true)
         },
         {
-            label:  t("sidebar.report"),
+            label: t("sidebar.report"),
             key: 'reports',
             check: users.getInfo || users.getInfoAdmin,
             icon: <Icon component={ReportIcon}/>,
             children: [
                 {label: t("sidebar.purchaseReport"), key: '/main/purchasesReport', check: true},
-                {label:  t("sidebar.customerReport"), key: '/main/customersReport', check: true},
-                {label:  t("sidebar.supplierReport"), key: '/main/suppliersReport', check: true},
-                {label:  t("sidebar.tradeReport"), key: '/main/tradesReport', check: true},
-                {label:  t("sidebar.productReport"), key: '/main/productsReport', check: true},
-                {label:  t("sidebar.productRemain"), key: '/main/remainProductReport', check: true},
-                {label:  t("sidebar.usersControl"), key: '/main/usersReport', check: true},
-                {label:  t("sidebar.tableLossProduct"), key: '/main/lostProductsReport', check: true},
-                {label:'Mahsulotlar muddati', key: '/main/productLifeTime', check:true},
+                {label: t("sidebar.customerReport"), key: '/main/customersReport', check: true},
+                {label: t("sidebar.tradeReport"), key: '/main/tradesReport', check: true},
+                {label: t("sidebar.productReport"), key: '/main/productsReport', check: true},
+                {label: t("sidebar.productRemain"), key: '/main/remainProductReport', check: true},
+                {label: t("sidebar.usersControl"), key: '/main/usersReport', check: true},
+                {label: t("sidebar.tableLossProduct"), key: '/main/lostProductsReport', check: true},
+                {label: 'Mahsulotlar muddati', key: '/main/productLifeTime', check: true},
             ].filter(item => item.check === true)
         },
         {
-            label:  t("sidebar.setting"),
+            label: t("sidebar.setting"),
             key: '/main/shopSetting',
             check: users.editInvoice || users.editMyBusiness || users.getBranch || users.addBranch || users.getProduct,
             icon: <Icon component={SettingIcon}/>,
@@ -220,12 +213,12 @@ const Sidebar = ({users}) => {
             id="fullscreen"
         >
             <Sider
-              trigger={null}
-              className={`sidebar-scroll ${widthWidth <= 1024 && (collapsed ? 'd-none' : '')}`}
-              collapsible
-              collapsedWidth={widthWidth >= 1024 ? 100 : 0}
-              width={widthWidth <= 1024 ? (collapsed ? 0 : '100%') : (collapsed ? 100 : 250)}
-              collapsed={collapsed}
+                trigger={null}
+                className={`sidebar-scroll ${widthWidth <= 1024 && (collapsed ? 'd-none' : '')}`}
+                collapsible
+                collapsedWidth={widthWidth >= 1024 ? 100 : 0}
+                width={widthWidth <= 1024 ? (collapsed ? 0 : '100%') : (collapsed ? 100 : 250)}
+                collapsed={collapsed}
             >
                 <div className="demo-logo-vertical">
                     {
@@ -249,21 +242,21 @@ const Sidebar = ({users}) => {
                     />
                 </div>
                 <Menu
-                  colorText={'#1AA6E1'}
-                  onOpenChange={onOpenChange}
-                  defaultOpenKeys={openKeys}
-                  defaultSelectedKeys={[location.pathname]}
-                  onClick={(e) => {
-                    history.push(e.key)
-                    if (widthWidth <= 1024) {
-                        setCollapsed(!collapsed)
-                    }
-                  }}
-                  mode="inline"
-                  items={items}/>
+                    colorText={'#1AA6E1'}
+                    onOpenChange={onOpenChange}
+                    defaultOpenKeys={openKeys}
+                    defaultSelectedKeys={[location.pathname]}
+                    onClick={(e) => {
+                        history.push(e.key)
+                        if (widthWidth <= 1024) {
+                            setCollapsed(!collapsed)
+                        }
+                    }}
+                    mode="inline"
+                    items={items}/>
             </Sider>
             <Layout style={{
-                marginLeft: widthWidth <=1024 ? (collapsed ? 0 : '100%') : (collapsed ? 100 : 250),
+                marginLeft: widthWidth <= 1024 ? (collapsed ? 0 : '100%') : (collapsed ? 100 : 250),
                 overflowX: 'hidden'
             }}>
                 <Header className={'sidebar-header'}>
@@ -289,7 +282,7 @@ const Sidebar = ({users}) => {
                         textAlign: 'center',
                     }}
                 >
-                    © {new Date().getFullYear()} created by Jovliyev Olim.   All rights reserved
+                    © {new Date().getFullYear()} created by Jovliyev Olim. All rights reserved
                 </Footer>
             </Layout>
         </Layout>

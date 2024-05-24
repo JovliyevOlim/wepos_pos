@@ -12,7 +12,7 @@ import XaridReducer, {
     deleteXarid,
     editXarid,
     saveXarid, getPurchaseView,
-} from "../reducer/XaridReducer";
+} from "../../Haridlar/reducer/XaridReducer";
 import TaminotReducer, {getAllSupplier} from "../../Hamkorlar/reducer/TaminotReducer";
 import XodimReducer, {getUserForFiltering, getUserForFilteringBusiness} from "../../Hodimlar/reducer/XodimReducer";
 import users from "../../../../../reducer/users";
@@ -26,21 +26,20 @@ import CommonTable from "../../../../Components/CommonTable";
 import {AddButton, DeleteButton, EditButton, ViewButton} from "../../../../Components/Buttons";
 import {prettify} from "../../../../../util";
 
-import './haridlarRoyxati.css'
 
-function HaridlarRoyxati({
-                             getAllSupplier,
-                             getPurchaseByBranch,
-                             getPurchaseByBusiness,
-                             getUserForFiltering,
-                             getUserForFilteringBusiness,
-                             deleteXarid,
-                             XodimReducer,
-                             XaridReducer,
-                             TaminotReducer,
-                             users,
-                             getPurchaseView
-                         }) {
+function PurchaseReportAll({
+                               getAllSupplier,
+                               getPurchaseByBranch,
+                               getPurchaseByBusiness,
+                               getUserForFiltering,
+                               getUserForFilteringBusiness,
+                               deleteXarid,
+                               XodimReducer,
+                               XaridReducer,
+                               TaminotReducer,
+                               users,
+                               getPurchaseView
+                           }) {
     const {t} = useTranslation()
     const history = useHistory()
     const [mainBranchId, setMainBranchId] = useState(null)
@@ -124,15 +123,21 @@ function HaridlarRoyxati({
             width: 170,
             render: (item, values) => <div className={'d-flex justify-content-center gap-2 flex-wrap'}>
                 {
-                    users.getPurchase && <ViewButton onClick={() => {getOneById(values.id)}}/>
+                    users.getPurchase && <ViewButton onClick={() => {
+                        getOneById(values.id)
+                    }}/>
                 }
                 {
                     users.editPurchase && values.editable && <EditButton
-                        onClick={() => {history.push('/main/addPurchase/' + values.id)}}
+                        onClick={() => {
+                            history.push('/main/addPurchase/' + values.id)
+                        }}
                     />
                 }
                 {
-                    users.deletePurchase && values.editable && <DeleteButton onClick={() => {deletePurchaseById(values.id)}}/>
+                    users.deletePurchase && values.editable && <DeleteButton onClick={() => {
+                        deletePurchaseById(values.id)
+                    }}/>
                 }
             </div>,
         },
@@ -216,7 +221,7 @@ function HaridlarRoyxati({
     }, [XaridReducer.current])
 
     useEffect(() => {
-            setLoading(true)
+        setLoading(true)
     }, [XaridReducer.getBoolean])
 
     useEffect(() => {
@@ -224,34 +229,36 @@ function HaridlarRoyxati({
     }, [])
 
     return (
-        <div>
-            <div className={'d-flex col-md-12 mb-5 align-items-center justify-content-between'}>
-                <MainHeaderText text={t('sidebar.purchases')}/>
-                {
-                    users.addPurchase ? <Link to={'/main/addPurchase'}>
-                        <AddButton text={t('button.add')} />
-                    </Link> : null
-                }
-            </div>
+        <>
             {
                 users.getPurchaseAdmin || users.getPurchase ?
                     <CardBody>
-                        <div className="col-md-12 gap-2 gap-sm-0 d-flex flex-wrap">
-                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                        <div className="col-md-12  d-flex flex-wrap">
+                            <div className="col-12 col-sm-6 col-lg-3 p-2">
                                 <SelectAnt
                                     name={t('ol.3')}
                                     onChange={(e) => setMainBranchId(e === "" ? null : e)}
                                     permission={users.getPurchaseAdmin}
                                     selectList={users.branches}/>
                             </div>
-                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                            <div className="col-12 col-sm-6 col-lg-3 p-2">
                                 <SelectAnt
                                     name={t('ol.4')}
                                     onChange={(e) => setSupplierId(e === "" ? null : e)}
                                     permission={true}
                                     selectList={TaminotReducer.AllSupplier}/>
                             </div>
-                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
+                            <div className="col-12 col-sm-6 col-lg-3 p-2">
+                                <SelectAnt
+                                    name={t('ol.9')}
+                                    onChange={(e) => setUserId(e === "" ? null : e)}
+                                    permission={true}
+                                    selectList={XodimReducer.usersFiltering?.map((item) => ({
+                                        id: item.id,
+                                        name: item.fio
+                                    }))}/>
+                            </div>
+                            <div className="col-12 col-sm-6 col-lg-3 p-2">
                                 <SelectAnt
                                     name={t('ol.5')}
                                     onChange={(e) => setPaymentStatus(e === "" ? null : e)}
@@ -262,16 +269,6 @@ function HaridlarRoyxati({
                                         {id: 'QISMAN_TOLANGAN', name: (t('ol.'))},
                                     ]}/>
                             </div>
-                            <div className="col-12 col-sm-6 col-md-3 p-sm-2">
-                                <SelectAnt
-                                    name={t('ol.9')}
-                                    onChange={(e) => setUserId(e === "" ? null : e)}
-                                    permission={true}
-                                    selectList={XodimReducer.usersFiltering?.map((item) => ({
-                                        id: item.id,
-                                        name: item.fio
-                                    }))}/>
-                            </div>
                         </div>
                     </CardBody>
                     : null
@@ -279,28 +276,27 @@ function HaridlarRoyxati({
             <CardBody>
                 {
                     users.getPurchaseAdmin || users.getPurchase ?
-                        <CardBody>
-                            <Loading spinning={loading}>
-                                {
-                                    XaridReducer.purchase?.list?.length > 0 ?
-                                        <div className="table-responsive table-wrapper-scroll-y">
-                                            <CommonTable
-                                                columns={columns}
-                                                size={limit}
-                                                page={page}
-                                                pagination={true}
-                                                data={XaridReducer.purchase?.list}
-                                                total={XaridReducer.purchase?.totalItem}
-                                                handleLimitChange={handleLimitChange}
-                                                handlePageChange={handlePageChange}
-                                            />
-                                        </div>
-                                        : <div className={'border border-2'}>
-                                            <h4 className={'text-center'}>{XaridReducer.message || 'NOT FOUND'}</h4>
-                                        </div>
-                                }
-                            </Loading>
-                        </CardBody> : null
+                        <Loading spinning={loading}>
+                            {
+                                XaridReducer.purchase?.list?.length > 0 ?
+                                    <div className="table-responsive table-wrapper-scroll-y">
+                                        <CommonTable
+                                            columns={columns}
+                                            size={limit}
+                                            page={page}
+                                            pagination={true}
+                                            data={XaridReducer.purchase?.list}
+                                            total={XaridReducer.purchase?.totalItem}
+                                            handleLimitChange={handleLimitChange}
+                                            handlePageChange={handlePageChange}
+                                        />
+                                    </div>
+                                    : <div className={'border border-2'}>
+                                        <h4 className={'text-center'}>{XaridReducer.message || 'NOT FOUND'}</h4>
+                                    </div>
+                            }
+                        </Loading>
+                        : null
                 }
             </CardBody>
             <Modal isOpen={viewOnePurchase} size={'xl'} toggle={() => setViewOnePurchase(!viewOnePurchase)}>
@@ -418,7 +414,7 @@ function HaridlarRoyxati({
             <ModalLoading isOpen={saveModal}/>
             <AgreeModal deleteFunc={deleteFunc} deleteModaltoggle={() => setdeletemodal(prevState => !prevState)}
                         deletemodal={deletemodal}/>
-        </div>
+        </>
     )
 }
 
@@ -433,4 +429,4 @@ export default connect((TaminotReducer, XaridReducer, users, XodimReducer), {
     deleteXarid,
     getPurchaseView
 })
-(HaridlarRoyxati)
+(PurchaseReportAll)

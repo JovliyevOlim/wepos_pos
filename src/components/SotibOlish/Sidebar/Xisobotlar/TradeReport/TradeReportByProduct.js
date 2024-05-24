@@ -3,9 +3,8 @@ import {connect} from 'react-redux'
 import {useTranslation} from "react-i18next";
 import moment from "moment";
 import 'moment/locale/uz-latn'
-
 import users from "../../../../../reducer/users";
-import SavdodagiTulovReducer, {getTradeReportByBranch, getTradeReportByBusiness} from '../reducer/SavdodagiTulovReducer'
+import TradeReportReducer, {getTradeReportByBranch, getTradeReportByBusiness} from '../reducer/TradeReportReducer'
 import CustomerReducer, {
     getCustomersForTrade,
     getCustomersForTradeBusiness
@@ -18,19 +17,17 @@ import CardBody from "../../../../Components/CardBody";
 import SelectAnt, {SearchAnt} from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
 
-import './savdoqilingantulov.css'
-
-function SavdodaTulov({
-                          users,
-                          SavdodagiTulovReducer,
-                          getBarcodeAndName,
-                          MaxsulotlarRoyxariReducer,
-                          CustomerReducer,
-                          XodimReducer,
-                          getCustomersForTrade, getCustomersForTradeBusiness,
-                          getUserForFilteringBusiness, getUserForFiltering,
-                          getTradeReportByBranch, getTradeReportByBusiness
-                      }) {
+function TradeReportByProduct({
+                                  users,
+                                  TradeReportReducer,
+                                  getBarcodeAndName,
+                                  MaxsulotlarRoyxariReducer,
+                                  CustomerReducer,
+                                  XodimReducer,
+                                  getCustomersForTrade, getCustomersForTradeBusiness,
+                                  getUserForFilteringBusiness, getUserForFiltering,
+                                  getTradeReportByBranch, getTradeReportByBusiness
+                              }) {
 
     const {t} = useTranslation()
     const [mainBranchId, setMainBranchId] = useState(null)
@@ -116,11 +113,10 @@ function SavdodaTulov({
     function changeSearch(e) {
         setSearch(e.target.value)
         setIsView(true)
-        if(e.target.value === ''){
+        if (e.target.value === '') {
             setProductId(null)
             setIsView(false)
-        }
-        else{
+        } else {
             getBarcodeAndName({
                 branchId: mainBranchId ? mainBranchId : users.branchId,
                 params: {
@@ -132,9 +128,9 @@ function SavdodaTulov({
     }
 
     const handlePageChange = (newPage) => {
-        setPage(newPage-1);
+        setPage(newPage - 1);
     };
-    const handleLimitChange = (event,size) => {
+    const handleLimitChange = (event, size) => {
         setPage(0)
         setSize(size);
     };
@@ -198,22 +194,24 @@ function SavdodaTulov({
 
 
     useEffect(() => {
-            setLoading(true)
-    }, [SavdodagiTulovReducer.getBoolean])
+        setLoading(true)
+    }, [TradeReportReducer.getBoolean])
 
     useEffect(() => {
         setLoading(false)
     }, [])
 
     return (
-        <div>
-            <div className="col-md-12 d-flex mb-3">
-               <MainHeaderText text={'Savdolar hisoboti'}/>
-            </div>
+        <>
             <CardBody>
-                <div className="col-md-12 d-flex row-gap-4 flex-wrap">
+                <div className="col-md-12 d-flex flex-wrap">
                     <div className="col-12 col-sm-6 col-lg-3 p-2">
-                        <SelectAnt selectList={users?.branches} permission={users.getInfoAdmin} name={'Filiallar'} onChange={(e) => setMainBranchId(e === '' ? null : e)}/>
+                        <SelectAnt selectList={users?.branches} permission={users.getInfoAdmin} name={'Filiallar'}
+                                   onChange={(e) => {
+                                       setMainBranchId(e === '' ? null : e)
+                                       setIsView(false)
+                                       setSearch('')
+                                   }}/>
                     </div>
                     <div className="col-12 col-sm-6 col-lg-3 p-2">
                         <SelectAnt selectList={CustomerReducer.customersTrade} permission={true}
@@ -227,52 +225,52 @@ function SavdodaTulov({
                                    name={'Hodimlar'} onChange={(e) => setUserId(e === '' ? null : e)}/>
                     </div>
                     <div className="col-12 col-sm-6 col-lg-3 p-2">
-                        <SelectAnt selectList={[{id:'true',name:'Qaytarilgan'}]} permission={true}
+                        <SelectAnt selectList={[{id: 'true', name: 'Qaytarilgan'}]} permission={true}
                                    name={'Mahsulotlar'} onChange={changeBacking}/>
                     </div>
-                    {
-                        mainBranchId &&
-                        <div className="col-md-6 position-relative z-3 p-0">
-                            <SearchAnt onChange={changeSearch} name={'Mahsulotni qidirish'}/>
-                            {
-                                isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?
-                                    <div className={'Combo-array'}>
-                                        {
-                                            MaxsulotlarRoyxariReducer.productSearch?.map(item =>
-                                                <p onClick={() => selectProduct(item.id, item.name)}>
-                                                    {item.name}
-                                                </p>
-                                            )
-                                        }
-                                    </div>
-                                    : null
-                            }
-                        </div>
-                    }
+                    <div className="col-12 position-relative z-3 p-2">
+                        <SearchAnt onChange={changeSearch} value={search} disabled={!mainBranchId}
+                                   name={'Mahsulotni qidirish'}/>
+                        {
+                            isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?
+                                <div className={'Combo-array scroll'}>
+                                    {
+                                        MaxsulotlarRoyxariReducer.productSearch?.map(item =>
+                                            <p onClick={() => selectProduct(item.id, item.name)}>
+                                                {item.name}
+                                            </p>
+                                        )
+                                    }
+                                </div>
+                                : null
+                        }
+                    </div>
                 </div>
             </CardBody>
             <CardBody>
                 <Loading spinning={loading}>
                     {
-                            SavdodagiTulovReducer.tradeReports?.list?.length > 0 ?
-                                <div className="table-responsive">
-                                    <CommonTable size={size} page={page} total={SavdodagiTulovReducer.tradeReports?.totalItem}
-                                                 handleLimitChange={handleLimitChange} columns={columns} data={SavdodagiTulovReducer.tradeReports?.list}
-                                                 handlePageChange={handlePageChange} pagination={true}/>
-                                </div>
-                                : <div>
-                                    <h4 className={'text-center'}>{SavdodagiTulovReducer.message}</h4>
-                                </div>
+                        TradeReportReducer.tradeReports?.list?.length > 0 ?
+                            <div className="table-responsive">
+                                <CommonTable size={size} page={page}
+                                             total={TradeReportReducer.tradeReports?.totalItem}
+                                             handleLimitChange={handleLimitChange} columns={columns}
+                                             data={TradeReportReducer.tradeReports?.list}
+                                             handlePageChange={handlePageChange} pagination={true}/>
+                            </div>
+                            : <div>
+                                <h4 className={'text-center'}>{TradeReportReducer.message}</h4>
+                            </div>
                     }
                 </Loading>
             </CardBody>
-        </div>
+        </>
     )
 }
 
-export default connect((users, SavdodagiTulovReducer, CustomerReducer, XodimReducer, MaxsulotlarRoyxariReducer),
+export default connect((users, TradeReportReducer, CustomerReducer, XodimReducer, MaxsulotlarRoyxariReducer),
     {
         getCustomersForTrade, getCustomersForTradeBusiness,
         getUserForFilteringBusiness, getUserForFiltering,
         getTradeReportByBranch, getTradeReportByBusiness, getBarcodeAndName
-    })(SavdodaTulov)
+    })(TradeReportByProduct)

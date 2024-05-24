@@ -13,10 +13,6 @@ const Error404 = () => {
                                 <i className="fa fa-exclamation-triangle text-warning" />{" "}
                                 The page you were looking for is not found!
                             </h4>
-                            <p>
-                                You may have mistyped the address or the page may have
-                                moved.
-                            </p>
                             <div>
                                 <Link className="btn btn-primary" to="/main/dashboard">
                                     Back to Home

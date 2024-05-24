@@ -1136,7 +1136,7 @@ function SavdoOynasi({
                             </div>
                         }
 
-                        <Link to={'/main/tradeList'} style={{backgroundColor: 'red'}} onClick={() => {
+                        <Link to={'/main/dashboard'} style={{backgroundColor: 'red'}} onClick={() => {
                             savdooynasi()
                             clear()
                         }} className={'shopping-btn-header'}>
@@ -2246,11 +2246,14 @@ function SavdoOynasi({
                                     }} className={'btn btn-danger'}
                                             style={{width: '136px', height: '64px', fontSize: '24px'}}>Tozalash
                                     </button>
-                                    <button onClick={() => {
+                                    <Link to={'/main/dashboard'} style={{backgroundColor: 'red'}} onClick={() => {
+                                        savdooynasi()
+                                        clear()
                                         setPinCode('')
-                                    }} className={'btn btn-danger'}
-                                            style={{width: '136px', height: '64px', fontSize: '24px'}}>Tozalash
-                                    </button>
+                                    }} className={'shopping-btn-header'}>
+                                        <p className={'shopping-btn-text-header'} style={{color: '#ffffff'}}>Ortga</p>
+                                        <img src={back} className={'shopping-btn-header-icon'} alt="back"/>
+                                    </Link>
                                 </div>
                             </div>
 

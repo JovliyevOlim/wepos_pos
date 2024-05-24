@@ -18,8 +18,6 @@ import SelectAnt from "../../../../Components/SelectAnt";
 import CommonTable from "../../../../Components/CommonTable";
 import {prettify} from "../../../../../util";
 
-import './supplierReport.css'
-
 function SupplierReport({
                             users,
                             TaminotReducer,
@@ -69,7 +67,7 @@ function SupplierReport({
             title: 'Summa',
             dataIndex: 'sum',
             key: 'sum',
-            render: (item) => <p className={'m-0'}>{prettify(item,0)} so'm</p>
+            render: (item) => <p className={'m-0'}>{prettify(item, 0)} so'm</p>
         },
         {
             title: 'To\'lov turi',
@@ -86,9 +84,9 @@ function SupplierReport({
 
 
     const handlePageChange = (newPage) => {
-        setPage(newPage-1);
+        setPage(newPage - 1);
     };
-    const handleLimitChange = (event,size) => {
+    const handleLimitChange = (event, size) => {
         setPage(0)
         setSize(size);
     };
@@ -129,7 +127,7 @@ function SupplierReport({
 
 
     useEffect(() => {
-            setLoading(true)
+        setLoading(true)
     }, [SupplierReportReducer.getBoolean])
 
     useEffect(() => {
@@ -140,60 +138,57 @@ function SupplierReport({
 
 
     return (
-      <div>
-          <div className="col-md-12 mb-3 mb-lg-5">
-              <MainHeaderText text={'Ta\'minotchilar xisoboti'}/>
-          </div>
-          <CardBody>
-              <div className="col-md-12 d-flex flex-wrap">
-                  <div className="col-12 col-sm-6 col-lg-3 p-2">
-                      <SelectAnt permission={users.getInfoAdmin} name={'Filiallar'}
-                                 onChange={(e) => setMainBranchId(e === "" ? null : e)}
-                                 selectList={users.branches}/>
-                  </div>
-                  <div className="col-12 col-sm-6 col-lg-3 p-2">
-                      <SelectAnt permission={true} name={'Ta\'minotchilar'}
-                                 onChange={(e) => setSupplierId(e === "" ? null : e)}
-                                 selectList={TaminotReducer.AllSupplier}/>
-                  </div>
-                  <div className="col-12 col-sm-6 col-lg-3 p-2">
-                      <SelectAnt permission={true} name={"To'lov turlari"}
-                                 onChange={(e) => setPaymentMethodId(e === "" ? null : e)}
-                                 selectList={PayReducer.paymethod}/>
-                  </div>
-                  <div className="col-12 col-sm-6 col-lg-3x` p-2">
-                      <SelectAnt permission={true} name={"Hodimlar"}
-                                 onChange={(e) => setUserId(e === "" ? null : e)}
-                                 selectList={XodimReducer.usersFiltering?.map((item) => ({
-                                     id: item.id,
-                                     name: item.fio
-                                 }))}/>
-                  </div>
-              </div>
-          </CardBody>
-          <CardBody>
-              <Loading spinning={loading}>
-                  {
-                      SupplierReportReducer.supplierReport?.list?.length > 0 ?
-                        <div className="table-responsive mb-4 table-wrapper-scroll-y">
-                            <CommonTable size={size} page={page} data={SupplierReportReducer.supplierReport?.list}
-                                         columns={columns}
-                                         handlePageChange={handlePageChange} pagination={true}
-                                         handleLimitChange={handleLimitChange}
-                                         total={SupplierReportReducer.supplierReport?.totalItem}
-                            />
-                        </div> : <div>
-                            <h4 className={'text-center'}>{SupplierReportReducer.message}</h4>
-                        </div>
-                  }
-              </Loading>
-          </CardBody>
-      </div>
+        <>
+            <CardBody>
+                <div className="col-md-12 d-flex flex-wrap">
+                    <div className="col-12 col-sm-6 col-lg-3 p-2">
+                        <SelectAnt permission={users.getInfoAdmin} name={'Filiallar'}
+                                   onChange={(e) => setMainBranchId(e === "" ? null : e)}
+                                   selectList={users.branches}/>
+                    </div>
+                    <div className="col-12 col-sm-6 col-lg-3 p-2">
+                        <SelectAnt permission={true} name={'Ta\'minotchilar'}
+                                   onChange={(e) => setSupplierId(e === "" ? null : e)}
+                                   selectList={TaminotReducer.AllSupplier}/>
+                    </div>
+                    <div className="col-12 col-sm-6 col-lg-3 p-2">
+                        <SelectAnt permission={true} name={"Hodimlar"}
+                                   onChange={(e) => setUserId(e === "" ? null : e)}
+                                   selectList={XodimReducer.usersFiltering?.map((item) => ({
+                                       id: item.id,
+                                       name: item.fio
+                                   }))}/>
+                    </div>
+                    <div className="col-12 col-sm-6 col-lg-3 p-2">
+                        <SelectAnt permission={true} name={"To'lov turlari"}
+                                   onChange={(e) => setPaymentMethodId(e === "" ? null : e)}
+                                   selectList={PayReducer.paymethod}/>
+                    </div>
+                </div>
+            </CardBody>
+            <CardBody>
+                <Loading spinning={loading}>
+                    {
+                        SupplierReportReducer.supplierReport?.list?.length > 0 ?
+                            <div className="table-responsive mb-4 table-wrapper-scroll-y">
+                                <CommonTable size={size} page={page} data={SupplierReportReducer.supplierReport?.list}
+                                             columns={columns}
+                                             handlePageChange={handlePageChange} pagination={true}
+                                             handleLimitChange={handleLimitChange}
+                                             total={SupplierReportReducer.supplierReport?.totalItem}
+                                />
+                            </div> : <div>
+                                <h4 className={'text-center'}>{SupplierReportReducer.message}</h4>
+                            </div>
+                    }
+                </Loading>
+            </CardBody>
+        </>
     )
 }
 
 export default connect((users, PayReducer, XodimReducer, TaminotReducer, SupplierReportReducer),
-  {
-      getPay, getUserForFilteringBusiness, getUserForFiltering, getAllSupplier,
-      getSupplierReportByBusiness, getSupplierReportByBranch
-  })(SupplierReport)
+    {
+        getPay, getUserForFilteringBusiness, getUserForFiltering, getAllSupplier,
+        getSupplierReportByBusiness, getSupplierReportByBranch
+    })(SupplierReport)

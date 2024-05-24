@@ -1,41 +1,49 @@
-.la{
+.la {
     background: #a8a8b7;
 }
-:root{
-    --color:"aqua"
+
+:root {
+    --color: "aqua"
 }
 
-body{
+body {
     background: silver;
     height: auto;
 }
+
 body::-webkit-scrollbar {
     border-radius: 2px;
     width: 6px;
 }
+
 body::-webkit-scrollbar-thumb {
-    background:  #1AA6E1;
+    background: #1AA6E1;
     border-radius: 4px;
 }
+
 body::-webkit-scrollbar-track {
     background: #ccc;
 }
+
 .scroll::-webkit-scrollbar {
     border-radius: 2px;
     width: 4px;
 }
+
 .scroll::-webkit-scrollbar-thumb {
-    background:  #1AA6E1;
+    background: #1AA6E1;
     border-radius: 8px;
 }
+
 .scroll::-webkit-scrollbar-track {
     background: #ccc;
 }
-#root{
+
+#root {
     height: 100%;
 }
 
-.app-css{
+.app-css {
     width: 100%;
     display: flex;
     transition: 1s linear;
@@ -43,72 +51,151 @@ body::-webkit-scrollbar-track {
     height: 100%;
     background-color: silver;
 }
-.active-enter-link{
-    color:#0a53be;
+
+.active-enter-link {
+    color: #0a53be;
     /*color: #e3e2e2;*/
     font-weight: bold;
 }
-.border-box{
+
+.border-box {
     box-sizing: border-box !important;
 }
-.border-radius{
+
+.border-radius {
     border-radius: 10px;
 }
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
 input[type=number] {
     -moz-appearance: textfield;
 
 }
-input{
+
+input {
     outline: none;
 }
-.global-label{
+
+.global-label {
     color: #071A33;
-    font-family: 'Inter',sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
     margin-bottom: 10px;
 }
-.global-input{
+
+.global-input {
 
 }
+
 .PhoneInputInput {
     flex: 1 1;
     min-width: 0;
     border: none;
 }
+
 .my-custom-scrollbar {
     position: relative;
     height: 400px;
     overflow: auto;
 }
+
 .table-wrapper-scroll-y {
     display: block;
 }
-.Combo-array{
+
+.Combo-array {
     width: 100%;
     border: 1px solid rgba(199, 199, 199, 0.69);
     background-color: rgb(243, 240, 240);
     box-shadow: 0px 3px 3px 1px #0c63e4;
-    position:absolute;
+    position: absolute;
     max-height: 200px;
     overflow-y: scroll;
     z-index: 100;
 }
-.Combo-array p{
+
+.Combo-array p {
     padding: 5px 15px;
     font-size: 16px;
     font-weight: bold;
     margin: 0;
 }
-.Combo-array p:hover{
+
+.Combo-array p:hover {
     background-color: #0c63e4;
     color: #FFFFFF;
     cursor: pointer;
+}
+
+.ant-segmented {
+    padding: 0 !important;
+}
+
+.ant-segmented-group {
+    display: flex !important;
+    padding: 5px 6px !important;
+    gap: 4px !important;
+    height: 40px !important;
+    border-radius: 8px !important;
+    background: #FFF !important;
+    box-shadow: 0px 16px 24px 0px rgba(223, 226, 231, 0.22);
+}
+
+.ant-segmented-item {
+    padding: 11px 16px !important;
+    background: transparent !important;
+    color: #071A33 !important;
+    text-align: center !important;
+    height: 30px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-feature-settings: 'clig' off, 'liga' off !important;
+    font-family: "Inter", sans-serif !important;
+    font-size: clamp(0.625rem, 0.584rem + 0.2344vw, 0.8125rem) !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: normal !important;
+}
+
+.ant-segmented .ant-segmented-item-label {
+    min-height: 1px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ant-segmented-item-selected {
+    border-radius: 6px !important;
+    background: #FAFBFC !important;
+    box-shadow: 0px 0px 4px 0px rgba(150, 166, 194, 0.16) !important;
+    gap: 8px !important;
+    color: #377DFF !important;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 20px; /* 142.857% */
+
+}
+
+@media screen and (max-width: 329.9px) {
+    .ant-segmented-group {
+        padding: 0px;
+        gap: 2px !important;
+    }
+    .ant-segmented-item {
+        /*width: 70px !important;*/
+        padding: 6px 5px !important;
+        height: 30px !important;
+    }
 }

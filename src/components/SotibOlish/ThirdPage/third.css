@@ -18,52 +18,7 @@
     gap: 24px;
     margin-bottom:24px
 }
-.ant-segmented{
-    padding: 0 !important;
-}
-.ant-segmented-group{
-    display: flex !important;
-    padding: 5px 6px !important;
-    gap: 4px !important;
-    height:40px !important;
-    border-radius: 8px !important;
-    background: #FFF !important;
-    box-shadow: 0px 16px 24px 0px rgba(223, 226, 231, 0.22);
-}
-.ant-segmented-item{
-    padding:11px 16px !important;
-    background: transparent !important;
-    color:  #071A33 !important;
-    text-align: center !important;
-    height: 30px !important;
-    width: 100px!important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-feature-settings: 'clig' off, 'liga' off !important;
-    font-family: "Inter" ,sans-serif !important;
-    font-size: clamp(0.625rem, 0.584rem + 0.2344vw, 0.8125rem) !important;
-    font-style: normal !important;
-    font-weight: 500 !important;
-    line-height: normal !important;
-}
-.ant-segmented .ant-segmented-item-label{
-    min-height: 1px;
-    line-height: 1;
-}
-.ant-segmented-item-selected{
-    border-radius: 6px !important;
-    background: #FAFBFC !important;
-    box-shadow: 0px 0px 4px 0px rgba(150, 166, 194, 0.16) !important;
-    gap: 8px !important;
-    color: #377DFF !important;
-    font-family: 'Inter',sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 20px; /* 142.857% */
 
-}
 .dashboard-datepicker{
     font-family: "Inter" ,sans-serif !important;
     height:40px !important;
@@ -149,15 +104,6 @@
     }
     .dashboard-cards{
         gap:15px;
-    }
-    .ant-segmented-group{
-        padding: 0px;
-        gap: 2px !important;
-    }
-    .ant-segmented-item{
-        width: 70px !important;
-        padding:6px 5px !important;
-        height: 30px !important;
     }
     .dashboard-footer{
         gap: 0;
