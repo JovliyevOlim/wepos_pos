@@ -70,10 +70,10 @@ function Xarid({
         setIsCheck(false)
     }
 
+    const [IsSearchProductList, setIsSearchProduct] = useState([])
 
     function XaridSearch(e) {
         setSearch(e.target.value)
-        setIsView(true)
         getBarcodeAndName({
             branchId: mainBranchId ? mainBranchId : users.branchId,
             params: {
@@ -82,6 +82,37 @@ function Xarid({
             }
         })
     }
+
+
+    useEffect(() => {
+        if (search) {
+            if (6 < search?.length) {
+                const searchPro = setTimeout(() => {
+                    getBarcodeAndName({
+                        branchId: mainBranchId ? mainBranchId : users.branchId,
+                        params: {
+                            search,
+                            isPurchase: false,
+                        }
+                    })
+                }, 10)
+                return () => clearTimeout(searchPro)
+            } else {
+                const searchPro = setTimeout(() => {
+                    getBarcodeAndName({
+                        branchId: mainBranchId ? mainBranchId : users.branchId,
+                        params: {
+                            search,
+                            isPurchase: false,
+                        }
+                    })
+                }, 500)
+                return () => clearTimeout(searchPro)
+            }
+        } else {
+            setIsSearchProduct([])
+        }
+    }, [search])
 
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
@@ -163,23 +194,17 @@ function Xarid({
 
 
     useEffect(() => {
-        if (MaxsulotlarRoyxariReducer.productSearch) {
-            let findProduct = MaxsulotlarRoyxariReducer.productSearch
-                .find(val => val.barcode === search || val.name.toLowerCase() === search.toLowerCase())
-            console.log(findProduct)
-            if (findProduct) {
-                AddXaridArray(findProduct)
-                inputRef.current.focus()
-                setSearch('')
-            }
-            // else {
-            //     inputRef.current.focus()
-            // }
+        if (MaxsulotlarRoyxariReducer?.productSearch && search) {
+            setIsSearchProduct(MaxsulotlarRoyxariReducer.productSearch)
+            let findProduct = MaxsulotlarRoyxariReducer.productSearch.length == 1
+            if (findProduct) AddXaridArray(MaxsulotlarRoyxariReducer.productSearch[0])
         }
         if (MaxsulotlarRoyxariReducer.isClearInput) {
+            setIsSearchProduct([])
             setSearch('')
+            inputRef.current.focus()
         }
-    }, [MaxsulotlarRoyxariReducer.getBoolean])
+    }, [MaxsulotlarRoyxariReducer.productSearch])
 
 
     useEffect(() => {
@@ -297,7 +322,7 @@ function Xarid({
 
     useEffect(() => {
         if (XaridReducer.saveBoolean) {
-            history.push('/main/purchaseList')
+            history.push('/main/purchasesReport')
             setUserId('')
         }
         setSaveModal(false)
@@ -399,10 +424,10 @@ function Xarid({
                                        className={'form-control'}
                                        placeholder={t('ol.50')}/>
                                 {
-                                    isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?
+                                    isView && IsSearchProductList?.length > 0 ?
                                         <div className={'Combo-array scroll'}>
                                             {
-                                                MaxsulotlarRoyxariReducer.productSearch?.map(item =>
+                                                IsSearchProductList?.map(item =>
                                                     <p className={'d-flex justify-content-start gap-4  m-0'}
                                                        onClick={() => AddXaridArray(item)}>
                                                         {item.name} ({item.barcode})

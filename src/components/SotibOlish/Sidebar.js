@@ -42,17 +42,7 @@ const Sidebar = ({users}) => {
     const history = useHistory()
     const {t} = useTranslation()
     const [collapsed, setCollapsed] = useState(widthWidth <= 1024);
-    const rootSubmenuKeys = ['/main/dashboard', '/main/superadmin', '/main/balance', 'user', 'customers', 'products', 'purchase', 'trades', 'outlay', 'reports', 'setting'];
-    const [openKeys, setOpenKeys] = useState(['/main/dashboard']);
 
-    const onOpenChange = (keys) => {
-        const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
-        if (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-            setOpenKeys(keys);
-        } else {
-            setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-        }
-    };
 
     const items = [
         {
@@ -78,7 +68,7 @@ const Sidebar = ({users}) => {
         },
         {
             label: t("sidebar.balance"),
-            key: '/main/balance',
+            key: 'balance',
             icon: <Icon component={Kassa}/>,
             check: users.getBalance || users.getBalanceAdmin,
             children: [
@@ -95,8 +85,10 @@ const Sidebar = ({users}) => {
             ].filter(item => item.check === true)
         },
         {
-            label: t("sidebar.users"), key: 'user', check: users.addUser || users.getUserAdmin || users.getUser ||
-                users.addRole || users.getRole, icon: <Icon component={UsersIcon}/>,
+            label: t("sidebar.users"),
+            key: 'user', check: users.addUser || users.getUserAdmin || users.getUser ||
+                users.addRole || users.getRole,
+            icon: <Icon component={UsersIcon}/>,
             children: [
                 {
                     label: t("sidebar.users"),
@@ -155,6 +147,7 @@ const Sidebar = ({users}) => {
             children: [
                 {label: t("sidebar.shopWindow"), key: '/shopping', check: users.addTrade || users.getTrade},
                 {label: t("sidebar.addPurchases"), key: '/main/addPurchase', check: users.addPurchase},
+                {label: t("sidebar.exchange"), key: '/main/exchange', check: users.addTrade || users.getTrade},
                 {label: t("sidebar.lossProduct"), key: '/main/addLossProducts', check: users.addLoss},
                 {
                     label: t("sidebar.tableLossProduct"),
@@ -195,6 +188,7 @@ const Sidebar = ({users}) => {
                 {label: t("sidebar.usersControl"), key: '/main/usersReport', check: true},
                 {label: t("sidebar.tableLossProduct"), key: '/main/lostProductsReport', check: true},
                 {label: 'Mahsulotlar muddati', key: '/main/productLifeTime', check: true},
+                {label: 'O\'tkazmalar xisoboti', key: '/main/exchangeReport', check: true},
             ].filter(item => item.check === true)
         },
         {
@@ -204,6 +198,48 @@ const Sidebar = ({users}) => {
             icon: <Icon component={SettingIcon}/>,
         },
     ].filter(item => item.check === true);
+
+
+
+    const getLevelKeys = (items1) => {
+        const key = {};
+        const func = (items2, level = 1) => {
+            items2.forEach((item) => {
+                if (item.key) {
+                    key[item.key] = level;
+                }
+                if (item.children) {
+                    func(item.children, level + 1);
+                }
+            });
+        };
+        func(items1);
+        console.log(key)
+        return key;
+    };
+
+    const levelKeys = getLevelKeys(items);
+    const [stateOpenKeys, setStateOpenKeys] = useState([]);
+    const onOpenChange = (openKeys) => {
+        console.log(openKeys)
+        const currentOpenKey = openKeys.find((key) => stateOpenKeys.indexOf(key) === -1);
+        // open
+        if (currentOpenKey !== undefined) {
+            const repeatIndex = openKeys
+                .filter((key) => key !== currentOpenKey)
+                .findIndex((key) => levelKeys[key] === levelKeys[currentOpenKey]);
+            setStateOpenKeys(
+                openKeys
+                    // remove repeat key
+                    .filter((_, index) => index !== repeatIndex)
+                    // remove current level all child
+                    .filter((key) => levelKeys[key] <= levelKeys[currentOpenKey]),
+            );
+        } else {
+            // close
+            setStateOpenKeys(openKeys);
+        }
+    };
 
     return (
         <Layout
@@ -244,7 +280,8 @@ const Sidebar = ({users}) => {
                 <Menu
                     colorText={'#1AA6E1'}
                     onOpenChange={onOpenChange}
-                    defaultOpenKeys={openKeys}
+                    // defaultOpenKeys={stateOpenKeys}
+                    openKeys={stateOpenKeys}
                     defaultSelectedKeys={[location.pathname]}
                     onClick={(e) => {
                         history.push(e.key)

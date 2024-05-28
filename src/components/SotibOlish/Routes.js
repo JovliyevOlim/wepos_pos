@@ -2,6 +2,8 @@ import {lazy} from 'react';
 import ProductLifeTime from "./Sidebar/Xisobotlar/ProductLifeTime/ProductLifeTime";
 import TradeReport from "./Sidebar/Xisobotlar/TradeReport/TradeReport";
 import PurchaseReport from "./Sidebar/Xisobotlar/PurchaseReport/PurchaseReport";
+import Exchange from "./Sidebar/Savdo/Exchange/Exchange";
+import ExchangeReportAll from "./Sidebar/Xisobotlar/ExchangeReport/ExchangeReportAll";
 // import HodimlarRoyhati from "./Sidebar/Hodimlar/hodimlarRoyxati/HodimlarRoyhati";
 // import Lavozimlar from "./Sidebar/Hodimlar/Lavozimlar/Lavozimlar";
 // import Taxrirlash from "./Sidebar/Hodimlar/hodimlarRoyxati/Taxrirlash/Taxrirlash";
@@ -44,7 +46,7 @@ const MaxsulotlarRoyxati = lazy(() => import("./Sidebar/Maxsulotlar/MahsulotlarR
 const MahsulotTurlari = lazy(() => import("./Sidebar/Maxsulotlar/MahsulotTurlari/MahsulotTurlari"))
 const Bolimlar = lazy(() => import("./Sidebar/Maxsulotlar/bolimlar/Bolimlar"))
 const Firmalar = lazy(() => import("./Sidebar/Maxsulotlar/firmalar/Firmalar"))
-const Xarid = lazy(() => import("./Sidebar/Haridlar/Xarid qilish/Xarid"))
+const Xarid = lazy(() => import("./Sidebar/Savdo/Xarid qilish/Xarid"))
 const HaridlarRoyxati = lazy(() => import("./Sidebar/Xisobotlar/PurchaseReport/PurchaseReportAll"))
 const BarchaSavdolar = lazy(() => import("./Sidebar/Xisobotlar/TradeReport/TradeReportAll"))
 const SavdoQoshish = lazy(() => import("./Sidebar/Savdo/AddLossProducts/addLossProducts"))
@@ -97,6 +99,7 @@ export const routes = [
     {path: "addPurchase",component:Xarid,permissions:['ADD_PURCHASE']},
     // {path: "purchaseList",component:HaridlarRoyxati,permissions:['ADD_PURCHASE','GET_PURCHASE','GET_PURCHASE_ADMIN']},
     // {path: "tradeList",component:BarchaSavdolar,permissions:['ADD_TRADE','GET_TRADE','GET_TRADE_ADMIN']},
+    {path: "exchange",component:Exchange,permissions:['ADD_TRADE','GET_TRADE','GET_TRADE_ADMIN']},
     {path: "addLossProducts/:id?",component:SavdoQoshish,permissions:['ADD_LOSS','GET_LOSS','GET_LOSS_ADMIN']},
     {path: "addLossProducts",component:SavdoQoshish,permissions:['ADD_LOSS','GET_LOSS','GET_LOSS_ADMIN']},
     {path: "lossProducts",component:LossProducts,permissions:['GET_LOSS','GET_LOSS_ADMIN']},
@@ -108,6 +111,7 @@ export const routes = [
     {path: "productsReport",component:MaxsulotXisoboti,permissions:['GET_INFO_ADMIN','GET_INFO']},
     {path: "lostProductsReport",component:MaxsulotMiqdoriQoldigi,permissions:['GET_INFO_ADMIN','GET_INFO']},
     {path: "tradesReport",component:TradeReport,permissions:['GET_INFO_ADMIN','GET_INFO']},
+    {path: "exchangeReport",component:ExchangeReportAll,permissions:['GET_INFO_ADMIN','GET_INFO']},
     {path: "purchasesReport",component:PurchaseReport,permissions:['GET_INFO_ADMIN','GET_INFO']},
     {path: "customersReport",component:MijozlarXisoboti,permissions:['GET_INFO_ADMIN','GET_INFO']},
     {path: "usersReport",component:XodimlarNazorati,permissions:['GET_INFO_ADMIN','GET_INFO']},

@@ -41,12 +41,6 @@ export const getXarajatlarTurlari = (data) => apiCall({
     onFail: slice.actions.getFrom.type,
 });
 
-export const getXarajatlarTurlariByBranch = (data) => apiCall({
-    url: '/outlayCategory/get-by-branchId/' + data,
-    method: 'get',
-    onSuccess: slice.actions.getFrom.type,
-    onFail: slice.actions.getFrom.type
-});
 
 export const saveXarajatlarTurlari = (data) => apiCall({
     url: '/outlay-category',

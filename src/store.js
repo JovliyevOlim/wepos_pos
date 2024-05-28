@@ -8,7 +8,7 @@ import TaminotReducer from "./components/SotibOlish/Sidebar/Hamkorlar/reducer/Ta
 import CustomerReducer from "./components/SotibOlish/Sidebar/Hamkorlar/reducer/CustomerReducer";
 import BolimReducer from "./components/SotibOlish/Sidebar/Maxsulotlar/reducer/BolimReducer";
 import FirmaReducer from "./components/SotibOlish/Sidebar/Maxsulotlar/reducer/FirmaReducer";
-import XaridReducer from "./components/SotibOlish/Sidebar/Haridlar/reducer/XaridReducer";
+import XaridReducer from "./components/SotibOlish/Sidebar/Savdo/reducer/XaridReducer";
 import XarajatlarReducer from "./components/SotibOlish/Sidebar/Xarajatlar/reducer/XarajatlarReducer";
 import XarajatTurlariReducer from "./components/SotibOlish/Sidebar/Xarajatlar/reducer/XarajatTurlariReducer";
 import FoydaZararReducer from "./components/SotibOlish/Sidebar/Xisobotlar/reducer/FoydaZararReducer";
@@ -40,6 +40,8 @@ import UserHistoryReducer from "./components/SotibOlish/Sidebar/Xisobotlar/reduc
 import infoReducer from "./reducer/infoReducer";
 import SupplierReportReducer from "./components/SotibOlish/Sidebar/Xisobotlar/reducer/SupplierReportReducer";
 import registerUserReducer from "./components/SotibOlish/Sidebar/SUPERADMIN/pages/registerUsers/registerUserReducer";
+import exchangeReducer from "./reducer/exchangeReducer";
+
 export default configureStore({
     reducer: {
         users,
@@ -81,7 +83,8 @@ export default configureStore({
         lossReducer,
         infoReducer,
         SupplierReportReducer,
-        registerUserReducer
+        registerUserReducer,
+        exchangeReducer
     },
     middleware: [api]
 })

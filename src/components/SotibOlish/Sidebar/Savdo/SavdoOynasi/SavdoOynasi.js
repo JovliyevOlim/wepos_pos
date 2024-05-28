@@ -466,7 +466,6 @@ function SavdoOynasi({
 
 
     function pushesh(val) {
-        console.log(val)
         if (val.amount <= 0 && checkMinusShop) {
             toast.warning(t('mah.68'))
         } else {
@@ -1225,7 +1224,6 @@ function SavdoOynasi({
                                                autoFocus={true}
                                                placeholder={"Maxsulot nomi yoki barcode"}/>
                                         <img src={searchIcon} alt="search"/>
-                                        {console.log(IsSearchProductList)}
                                         {
                                             IsSearchProductList.length > 0 &&
                                             <div className={'shopping-search-list'}>

@@ -59,43 +59,50 @@ function XarajatlarRoyxati({
             title: t('ol.10'),
             dataIndex: 'fio',
             key: 'fio',
+            width: '10%',
         },
         {
             title: t('ol.11'),
             dataIndex: 'createdAt',
             key: 'createdAt',
-            render: (item) => <p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>
+            render: (item) => <p className={'m-0'}>{moment(new Date(item)).format('lll')}</p>,
+            width: '10%',
         },
         {
             title: t('ol.13'),
             dataIndex: 'branchName',
             key: 'branchName',
+            width: '8%',
         },
         {
             title: 'Xarajat turi',
             dataIndex: 'outlayCategoryName',
             key: 'outlayCategoryName',
+            width: '15%',
         },
         {
             title: 'To\'lov turi',
             dataIndex: 'paymentMethodName',
             key: 'paymentMethodName',
+            width: '10%',
         },
         {
             title: 'Jami summa',
             dataIndex: 'sum',
             key: 'sum',
-            render: (item) => <p className={'m-0'}>{prettify(item, 3)} so'm</p>
+            render: (item) => <p className={'m-0'}>{prettify(item, 3)} so'm</p>,
+            width: '10%',
         },
         {
             title: t('Expenses.8'),
             dataIndex: 'description',
             key: 'description',
+            width: '15%%',
         },
         {
             title: t('ol.20'),
             key: 'operation',
-            width: 150,
+            width: "10%",
             render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
                 {
                     users.editOutlay && <EditButton onClick={() => {history.push('/main/addOutlay/' + values.id)}}/>

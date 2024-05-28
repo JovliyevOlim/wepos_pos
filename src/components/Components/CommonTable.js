@@ -6,7 +6,6 @@ import './selectAnt.css'
 
 const CommonTable = ({data,columns,size,page,pagination,total,handleLimitChange,handlePageChange,rowSelection,onchange}) => (
     <Table
-        className={'scroll'}
         columns={columns}
         dataSource={data?.map((item, index) => {
             return {...item, index: index + 1 + (page * size),key:item.id}

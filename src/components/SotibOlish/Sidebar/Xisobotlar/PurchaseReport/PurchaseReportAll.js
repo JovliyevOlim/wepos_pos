@@ -12,7 +12,7 @@ import XaridReducer, {
     deleteXarid,
     editXarid,
     saveXarid, getPurchaseView,
-} from "../../Haridlar/reducer/XaridReducer";
+} from "../../Savdo/reducer/XaridReducer";
 import TaminotReducer, {getAllSupplier} from "../../Hamkorlar/reducer/TaminotReducer";
 import XodimReducer, {getUserForFiltering, getUserForFilteringBusiness} from "../../Hodimlar/reducer/XodimReducer";
 import users from "../../../../../reducer/users";

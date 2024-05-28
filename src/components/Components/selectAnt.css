@@ -126,6 +126,26 @@
     line-height: 20px !important; /* 142.857% */
     text-transform: uppercase !important;
 }
+.ant-table::-webkit-scrollbar-thumb {
+    background-color: blue !important
+}
+
+.ant-table::-webkit-scrollbar {
+    height: 8px;
+}
+.ant-table-content::-webkit-scrollbar {
+    width: 4px !important;
+}
+
+.ant-table-content::-webkit-scrollbar-thumb {
+    background: #1AA6E1 !important;
+    border-radius: 8px !important;
+    border: 3px solid orange;
+}
+
+.ant-table-content::-webkit-scrollbar-track {
+    background: #ccc !important;
+}
 .ant-table-body{
     border-radius: 16px !important;
     background: #ffff !important;
