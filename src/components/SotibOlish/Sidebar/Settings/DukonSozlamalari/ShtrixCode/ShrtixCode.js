@@ -10,7 +10,7 @@ import MaxsulotlarRoyxariReducer, {getBarcodeAndName} from "../../../Maxsulotlar
 import MainHeaderText from "../../../../../Components/MainHeaderText";
 import CardBody from "../../../../../Components/CardBody";
 import SelectAnt, {ButtonAnt, SearchAnt} from "../../../../../Components/SelectAnt";
-import {Checkbox, DatePicker, InputNumber} from 'antd';
+import {Checkbox, DatePicker, InputNumber, Switch} from 'antd';
 import CommonTable from "../../../../../Components/CommonTable";
 import {CloseCircleOutlined} from "@ant-design/icons";
 import moment from "moment";
@@ -26,6 +26,7 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
     const [XaridArrayPost, setXaridArrayPost] = useState([])
     const [fontSize, setFontSize] = useState(24)
     const [isName, setIsName] = useState(true)
+    const [isProductPrice, setIsProductPrice] = useState(true)
     const [isBranchName, setIsBranchName] = useState(true)
     const [isDate, setIsDate] = useState(false)
     const [date, setDate] = useState('')
@@ -225,7 +226,7 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
             }
 
             <CardBody>
-                <div className={'col-md-12 d-flex gap-2 gap-md-4 align-items-center flex-wrap'}>
+                <div className={'col-md-12 d-flex gap-2 gap-md-4 align-items-top flex-wrap'}>
                     <div className={'col-md-3'}>
                         <SelectAnt name={'O\'lchami'} permission={false} selectList={[
                             {id: '1010', name: 'Tanlang'},
@@ -236,15 +237,20 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                             {id: '3020', name: '30x20'},
                         ]} onChange={changeSize}/>
                     </div>
+                    {
+                        cardSize.height == 40 && cardSize.width == 58 &&
+                        <div className={'col-md-3'}>
+                            <h5 className={'selectLabel'}>Mahsulot narxi</h5>
+                            <Switch checked={isProductPrice} onChange={(e) => setIsProductPrice(e)}/>
+                        </div>
+                    }
+
                     {/*<div className={'col-md-3 d-flex flex-column'}>*/}
                     {/*    <label className='barcode-text' htmlFor='grid'>Shrift o'lchami</label>*/}
                     {/*    <InputNumber value={fontSize} onChange={(e) => setFontSize(e)} className={'barcode-input'}*/}
                     {/*                 placeholder="Basic usage"/>*/}
                     {/*</div>*/}
-                    {/*<div className={'col-md-1 d-flex align-items-center'}>*/}
-                    {/*    <Checkbox onChange={(e) => setIsName(e.target.checked)} checked={isName}*/}
-                    {/*              className='barcode-text'>Nomi</Checkbox>*/}
-                    {/*</div>*/}
+
                     {/*<div className={'col-md-1 d-flex align-items-center'}>*/}
                     {/*    <Checkbox onChange={(e) => setIsBranchName(e.target.checked)} checked={isBranchName}*/}
                     {/*              className='barcode-text'>Filial Nomi</Checkbox>*/}
@@ -266,7 +272,8 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                                 while (i < item.purchasedQuantity) {
                                     i++;
                                     array = [...array,
-                                        <BarcodeShablon branchName={branchName} item={item} cardSize={cardSize}/>
+                                        <BarcodeShablon isProductPrice={isProductPrice} branchName={branchName}
+                                                        item={item} cardSize={cardSize}/>
                                     ]
                                 }
                                 return array;
@@ -277,7 +284,8 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                 <div className={`d-flex mt-4 justify-content-start flex-wrap gap-4 align-items-center w-100`}>
                     {
                         XaridArrayPost.map((item) =>
-                            <BarcodeShablon branchName={branchName} item={item} cardSize={cardSize}/>
+                            <BarcodeShablon isProductPrice={isProductPrice} branchName={branchName} item={item}
+                                            cardSize={cardSize}/>
                         )
                     }
                 </div>
@@ -298,7 +306,7 @@ export default connect((users, MaxsulotlarRoyxariReducer),
     {getBarcodeAndName})(ShtrixCode)
 
 
-const BarcodeShablon = ({cardSize, item, branchName}) => {
+const BarcodeShablon = ({cardSize, item, branchName, isProductPrice}) => {
     return (
         <>
             {
@@ -407,6 +415,7 @@ const BarcodeShablon = ({cardSize, item, branchName}) => {
                                 >
                                     {branchName}
                                 </p>
+
                                 <p
                                     className={"barcode-card-text m-0"}
                                     style={{
@@ -416,15 +425,18 @@ const BarcodeShablon = ({cardSize, item, branchName}) => {
                                 >
                                     {item.name}
                                 </p>
-                                <p
-                                    className={"barcode-card-text m-0"}
-                                    style={{
-                                        fontSize: `6mm`,
-                                        fontWeight: 700
-                                    }}
-                                >
-                                    {item.price} so'm
-                                </p>
+                                {
+                                    isProductPrice &&
+                                    <p
+                                        className={"barcode-card-text m-0"}
+                                        style={{
+                                            fontSize: `6mm`,
+                                            fontWeight: 700
+                                        }}
+                                    >
+                                        {item.price} so'm
+                                    </p>
+                                }
                             </div>
                             <div className="barcode-icon" style={{width: "80%"}}>
                                 <Barcode

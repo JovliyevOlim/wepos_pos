@@ -7,7 +7,7 @@ import {useForm} from "react-hook-form";
 import PhoneInput from 'react-phone-number-input'
 import {useHistory} from 'react-router-dom'
 import {toast} from "react-toastify";
-
+import { Switch } from 'antd';
 import users from "../../../../../reducer/users";
 import XaridReducer, {
     getPurchaseById,
@@ -45,6 +45,7 @@ function Xarid({
 
     const {t} = useTranslation()
     const history = useHistory()
+    const [isMainBase,setIsMainBase] = useState(false)
     const [activeSupplier, setActiveSupplier] = useState(false);
     const [supplierName, setSupplierName] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
@@ -92,7 +93,7 @@ function Xarid({
                         branchId: mainBranchId ? mainBranchId : users.branchId,
                         params: {
                             search,
-                            isPurchase: false,
+                            isPurchase: isMainBase,
                         }
                     })
                 }, 10)
@@ -103,7 +104,7 @@ function Xarid({
                         branchId: mainBranchId ? mainBranchId : users.branchId,
                         params: {
                             search,
-                            isPurchase: false,
+                            isPurchase: isMainBase,
                         }
                     })
                 }, 500)
@@ -412,8 +413,15 @@ function Xarid({
                             }
                         </div>
                     </div>
-                    <div className={'col-md-12 mt-4 p-2 px-lg-5'}>
-                        <div className="row">
+                    <div
+                        className="col-md-12 p-2 px-lg-5 mt-4 gap-3 d-flex flex-wrap justify-content-start align-items-center">
+                        <h5 className={'text-center'}>Umumiy bazadan qidirish</h5>
+                        <Switch checked={isMainBase} onChange={(e) => {
+                            setIsMainBase(e)
+                        }}/>
+                    </div>
+                    <div className={'col-md-12 p-2 px-lg-5'}>
+                    <div className="row">
                             <div className="col-md-12 position-relative m-0 p-0">
                                 <input type="text"
                                        autoFocus

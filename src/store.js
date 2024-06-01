@@ -1,5 +1,5 @@
 import {configureStore} from "@reduxjs/toolkit";
-import {api} from './middleware';
+import {api} from './middleware'
 import users from "./reducer/users";
 import functionreducer from "./reducer/functionreducer";
 import XodimReducer from "./components/SotibOlish/Sidebar/Hodimlar/reducer/XodimReducer";
