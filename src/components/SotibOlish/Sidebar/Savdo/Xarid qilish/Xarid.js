@@ -25,6 +25,8 @@ import MaxsulotlarRoyxariReducer, {getBarcodeAndName} from "../../Maxsulotlar/re
 import './xarid.css'
 import 'react-phone-number-input/style.css'
 import {AddButton} from "../../../../Components/Buttons";
+import Loading from "../../../../Loading";
+import {SearchAnt} from "../../../../Components/SelectAnt";
 
 
 function Xarid({
@@ -47,6 +49,7 @@ function Xarid({
     const history = useHistory()
     const [isMainBase,setIsMainBase] = useState(false)
     const [activeSupplier, setActiveSupplier] = useState(false);
+    const [searchProductLoading,setSearchProductLoading] = useState(false)
     const [supplierName, setSupplierName] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
     const [isCheck, setIsCheck] = useState(false)
@@ -75,18 +78,13 @@ function Xarid({
 
     function XaridSearch(e) {
         setSearch(e.target.value)
-        getBarcodeAndName({
-            branchId: mainBranchId ? mainBranchId : users.branchId,
-            params: {
-                search: e.target.value,
-                isPurchase: true,
-            }
-        })
+        setIsView(true)
     }
 
 
     useEffect(() => {
         if (search) {
+            setSearchProductLoading(true)
             if (6 < search?.length) {
                 const searchPro = setTimeout(() => {
                     getBarcodeAndName({
@@ -195,6 +193,7 @@ function Xarid({
 
 
     useEffect(() => {
+        setSearchProductLoading(false)
         if (MaxsulotlarRoyxariReducer?.productSearch && search) {
             setIsSearchProduct(MaxsulotlarRoyxariReducer.productSearch)
             let findProduct = MaxsulotlarRoyxariReducer.productSearch.length == 1
@@ -324,6 +323,7 @@ function Xarid({
     useEffect(() => {
         if (XaridReducer.saveBoolean) {
             history.push('/main/purchasesReport')
+            console.log('wdwd')
             setUserId('')
         }
         setSaveModal(false)
@@ -423,14 +423,7 @@ function Xarid({
                     <div className={'col-md-12 p-2 px-lg-5'}>
                     <div className="row">
                             <div className="col-md-12 position-relative m-0 p-0">
-                                <input type="text"
-                                       autoFocus
-                                       onKeyPress={handleKeyPress}
-                                       ref={inputRef}
-                                       value={search}
-                                       onChange={XaridSearch}
-                                       className={'form-control'}
-                                       placeholder={t('ol.50')}/>
+                                <SearchAnt value={search} onChange={XaridSearch}  loading={searchProductLoading} inputRef={inputRef} name={t('ol.50')}/>
                                 {
                                     isView && IsSearchProductList?.length > 0 ?
                                         <div className={'Combo-array scroll'}>

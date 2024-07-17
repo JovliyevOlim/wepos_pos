@@ -20,7 +20,7 @@ const slice = createSlice({
         excel: '',
         getBoolean: false,
         saveBoolean: false,
-    },
+        },
     reducers: {
         getFromForTable: (state, action) => {
             if (action.payload.success) {

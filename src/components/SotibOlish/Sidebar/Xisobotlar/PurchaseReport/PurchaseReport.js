@@ -43,8 +43,8 @@ function PurchaseReport(props) {
             </div>
             <div>
                 {
-                    changePage === 1 ?
-                        <PurchaseReportByProduct/> : changePage === 2 ? <PurchaseReportAll/> : <SupplierReport/>
+                    changePage === 2 ?
+                        <PurchaseReportByProduct/> : changePage === 1 ? <PurchaseReportAll/> : <SupplierReport/>
                 }
             </div>
         </div>

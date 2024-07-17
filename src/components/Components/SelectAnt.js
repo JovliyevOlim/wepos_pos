@@ -44,7 +44,7 @@ function SelectAnt({name, permission, selectList, onChange, all, disabled, value
 export default SelectAnt;
 
 
-export function SearchAnt({name, onChange, value,inputRef,disabled}) {
+export function SearchAnt({name, onChange, value,inputRef,disabled,loading}) {
     const {t} = useTranslation()
     return (
         <>
@@ -52,6 +52,7 @@ export function SearchAnt({name, onChange, value,inputRef,disabled}) {
             <Search
                 ref={inputRef}
                 value={value}
+                loading={loading}
                 disabled={disabled}
                 placeholder={t('ol.23')}
                 allowClear

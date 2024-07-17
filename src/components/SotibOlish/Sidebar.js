@@ -1,4 +1,4 @@
-import {lazy, useState} from 'react';
+import {lazy, useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import {useTranslation} from "react-i18next";
 import {Route, Switch, useHistory, useLocation} from "react-router-dom";
@@ -200,7 +200,6 @@ const Sidebar = ({users}) => {
     ].filter(item => item.check === true);
 
 
-
     const getLevelKeys = (items1) => {
         const key = {};
         const func = (items2, level = 1) => {
@@ -214,15 +213,15 @@ const Sidebar = ({users}) => {
             });
         };
         func(items1);
-        console.log(key)
         return key;
     };
 
     const levelKeys = getLevelKeys(items);
     const [stateOpenKeys, setStateOpenKeys] = useState([]);
     const onOpenChange = (openKeys) => {
-        console.log(openKeys)
+        console.log(openKeys, 'openkey')
         const currentOpenKey = openKeys.find((key) => stateOpenKeys.indexOf(key) === -1);
+        console.log(currentOpenKey, 'currentopenkey')
         // open
         if (currentOpenKey !== undefined) {
             const repeatIndex = openKeys
@@ -240,6 +239,10 @@ const Sidebar = ({users}) => {
             setStateOpenKeys(openKeys);
         }
     };
+
+    useEffect(() => {
+
+    }, [location.pathname]);
 
     return (
         <Layout
@@ -277,12 +280,14 @@ const Sidebar = ({users}) => {
                         }}
                     />
                 </div>
+                {console.log("stateOpenKeys", stateOpenKeys)}
+                {console.log("location pathname", location.pathname)}
                 <Menu
                     colorText={'#1AA6E1'}
                     onOpenChange={onOpenChange}
-                    // defaultOpenKeys={stateOpenKeys}
+                    defaultOpenKeys={stateOpenKeys}
                     openKeys={stateOpenKeys}
-                    defaultSelectedKeys={[location.pathname]}
+                    selectedKeys={[location.pathname]}
                     onClick={(e) => {
                         history.push(e.key)
                         if (widthWidth <= 1024) {
@@ -319,7 +324,7 @@ const Sidebar = ({users}) => {
                         textAlign: 'center',
                     }}
                 >
-                    © {new Date().getFullYear()} created by Jovliyev Olim. All rights reserved
+                    © {new Date().getFullYear()}. All rights reserved
                 </Footer>
             </Layout>
         </Layout>

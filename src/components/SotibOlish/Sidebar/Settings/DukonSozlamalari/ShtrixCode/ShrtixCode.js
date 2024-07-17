@@ -14,6 +14,7 @@ import {Checkbox, DatePicker, InputNumber, Switch} from 'antd';
 import CommonTable from "../../../../../Components/CommonTable";
 import {CloseCircleOutlined} from "@ant-design/icons";
 import moment from "moment";
+import {DeleteButton} from "../../../../../Components/Buttons";
 
 const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
 
@@ -21,6 +22,8 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
     const [mainBranchId, setMainBranchId] = useState(null)
     const [search, setSearch] = useState('')
     const [isView, setIsView] = useState(false)
+    const [searchProductLoading, setSearchProductLoading] = useState(false)
+
     const [display, setDisplay] = useState('d-none')
 
     const [XaridArrayPost, setXaridArrayPost] = useState([])
@@ -89,29 +92,52 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
             key: 'operation',
             width: 150,
             render: (item, values) => <div className={'d-flex justify-content-center gap-1 flex-wrap'}>
-                <ButtonAnt type={'primary'} danger={true} text={'O\'chirish'}
-                           onClick={() => DeleteXaridArrayPost(values.productId)} icon={<CloseCircleOutlined/>}/>
+                <DeleteButton size={"small"}
+                              onClick={() => DeleteXaridArrayPost(values.productId)}/>
             </div>,
         },
     ];
 
 
+    const [IsSearchProductList, setIsSearchProduct] = useState([])
+
+
     function changeSearch(e) {
         setSearch(e.target.value)
         setIsView(true)
-        if (e.target.value === '') {
-            setIsView(false)
-        } else {
-            getBarcodeAndName({
-                branchId: mainBranchId ? mainBranchId : users.branchId,
-                params: {
-                    search: e.target.value,
-                    isPurchase: false,
-                }
-            })
-        }
-
     }
+
+    useEffect(() => {
+        if (search) {
+            setSearchProductLoading(true)
+            if (6 < search?.length) {
+                const searchPro = setTimeout(() => {
+                    getBarcodeAndName({
+                        branchId: mainBranchId ? mainBranchId : users.branchId,
+                        params: {
+                            search,
+                            isPurchase: false,
+                        }
+                    })
+                }, 10)
+                return () => clearTimeout(searchPro)
+            } else {
+                const searchPro = setTimeout(() => {
+                    getBarcodeAndName({
+                        branchId: mainBranchId ? mainBranchId : users.branchId,
+                        params: {
+                            search,
+                            isPurchase: false,
+                        }
+                    })
+                }, 500)
+                return () => clearTimeout(searchPro)
+            }
+        } else {
+            setIsSearchProduct([])
+        }
+    }, [search])
+
 
     function AddXaridArray(item) {
         setIsView(false)
@@ -133,22 +159,19 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
     }
 
     useEffect(() => {
-        if (MaxsulotlarRoyxariReducer.productSearch) {
-            let findProduct = MaxsulotlarRoyxariReducer.productSearch
-                .find(val => val.barcode === search || val.name.toLowerCase() === search.toLowerCase())
-            if (findProduct) {
-                AddXaridArray(findProduct)
-                inputRef.current.focus()
-                setSearch('')
-            }
-            // else {
-            //     inputRef.current.focus()
-            // }
+        setSearchProductLoading(false)
+        if (MaxsulotlarRoyxariReducer?.productSearch && search) {
+            setIsSearchProduct(MaxsulotlarRoyxariReducer.productSearch)
+            let findProduct = MaxsulotlarRoyxariReducer.productSearch.length == 1
+            if (findProduct) AddXaridArray(MaxsulotlarRoyxariReducer.productSearch[0])
         }
         if (MaxsulotlarRoyxariReducer.isClearInput) {
+            setIsSearchProduct([])
             setSearch('')
+            inputRef.current.focus()
         }
-    }, [MaxsulotlarRoyxariReducer.getBoolean])
+    }, [MaxsulotlarRoyxariReducer.productSearch])
+
 
     function ComboChangeAmount(e, id) {
         let b = XaridArrayPost.map(item => {
@@ -195,13 +218,14 @@ const ShtrixCode = ({MaxsulotlarRoyxariReducer, users, getBarcodeAndName}) => {
                         />
                     </div>
                     <div className="col-md-6 offset-1 py-2 position-relative">
-                        <SearchAnt value={search} inputRef={inputRef} name={'Mahsulotni qidirish'}
+                        <SearchAnt value={search} inputRef={inputRef} loading={searchProductLoading}
+                                   name={'Mahsulotni qidirish'}
                                    onChange={changeSearch}/>
                         {
-                            isView && MaxsulotlarRoyxariReducer.productSearch?.length > 0 ?
+                            isView && IsSearchProductList?.length > 0 ?
                                 <div className={'Combo-array'}>
                                     {
-                                        MaxsulotlarRoyxariReducer.productSearch?.map(item =>
+                                        IsSearchProductList?.map(item =>
                                             <p
                                                 onClick={() => AddXaridArray(item)}
                                             >

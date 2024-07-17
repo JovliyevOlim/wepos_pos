@@ -401,7 +401,6 @@ function SavdoOynasi({
 
     function mahsulotnomi(e) {
         setSearch(e.target.value)
-
     }
 
     useEffect(() => {
@@ -473,7 +472,7 @@ function SavdoOynasi({
             if (someProduct) {
                 setCount(val.id)
             } else {
-                let mainPriceType = grossPriceType ? val.grossPrice : val.salePrice
+                let mainPriceType = grossPriceType ? val.grossPrice : val.salePriceR
                 let mainPrice = mainPriceType - (mainPriceType * customerPercent / 100)
                 setChangesId(val.id)
                 arr1.unshift({
@@ -2264,7 +2263,7 @@ function SavdoOynasi({
 
             </div>
             <div style={{display: 'none'}}>
-                <div ref={componentRef}>
+                <div ref={componentRef} className={'p-3'}>
                     <div className={'d-flex justify-content-center align-items-center'}>
                         {
                             checkReducer.check ?
