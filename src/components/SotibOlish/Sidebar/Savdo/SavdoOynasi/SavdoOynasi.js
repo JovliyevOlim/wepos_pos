@@ -472,7 +472,7 @@ function SavdoOynasi({
             if (someProduct) {
                 setCount(val.id)
             } else {
-                let mainPriceType = grossPriceType ? val.grossPrice : val.salePriceR
+                let mainPriceType = grossPriceType ? val.grossPrice : val.salePrice
                 let mainPrice = mainPriceType - (mainPriceType * customerPercent / 100)
                 setChangesId(val.id)
                 arr1.unshift({
