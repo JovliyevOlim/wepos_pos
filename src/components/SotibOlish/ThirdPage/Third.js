@@ -1,5 +1,5 @@
 import './third.css'
-import {Link, useHistory, useLocation} from 'react-router-dom'
+import {useHistory, useLocation} from 'react-router-dom'
 import React, {useEffect} from 'react';
 import {useState} from "react";
 import {connect} from "react-redux";

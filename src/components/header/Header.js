@@ -1,8 +1,7 @@
-import {useEffect} from "react";
 import './header.css'
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
-import {Link, useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import uzLanguage from "../../img/uz.svg";
 import rusLanguage from "../../img/ru.svg";
 import Logo from "../../img/wepos_logo.png";
@@ -13,12 +12,7 @@ function Header({id}) {
     const widthWidth = useWindowWidth()
     const appLang =  localStorage.getItem("miroLang") || "uz"
     const [lang, setLang] = useState(appLang)
-    const {t, i18n} = useTranslation();
-    const location = useLocation();
-
-    function toggle() {
-
-    }
+    const {i18n} = useTranslation();
 
     function ChangeLanguage(e) {
         setLang(e)

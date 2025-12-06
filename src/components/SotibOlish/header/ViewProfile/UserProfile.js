@@ -1,15 +1,13 @@
 import {useTranslation} from 'react-i18next';
-import React, {useState} from "react";
+import React from "react";
 import {connect} from "react-redux";
 import users, {userInfo} from "../../../../reducer/users";
 import XodimReducer, {getXodim} from "../../Sidebar/Hodimlar/reducer/XodimReducer";
-import {BaseUrl} from "../../../../middleware";
 
 function UserProfile() {
-    const {t} = useTranslation();
 
 
-    const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user'))
+    // const user = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user'))
 
 
     return (

@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import photoreducer, {savephoto, clearPhotoId, deletePhoto} from "../../../reducer/photoreducer";
 import users, {editMyProfile, getSelfInfo} from "../../../reducer/users";
 import {useTranslation} from "react-i18next";
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {BaseUrl} from "../../../middleware";
 import {toast} from "react-toastify";
 import people from "../../../img/person-default.png";
@@ -106,7 +106,7 @@ function Profil({savephoto, getSelfInfo, users, photoreducer, clearPhotoId, dele
                             <label htmlFor={'fio'}>F.I.O</label>
                             <input type="text" id={'fio'}
                                    {...register('fio', {required: {value: true, message: 'F.I.O kiriting'}})}
-                                   placeholder={'F.I.O'}
+                                   placeholder={"F.I.O"}
                                    defaultValue={''}
                                    className={'form-control'}/>
                             {

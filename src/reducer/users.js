@@ -139,7 +139,7 @@ export const slice = createSlice({
                 }
                 state.logout = false
                 state.roles = state.users.permissions
-                state.users.permissions?.map(item => {
+                state.users.permissions?.forEach(item => {
                     switch (item) {
                         case "SUPER_ADMIN":
                             state.isSuperAdmin = true
