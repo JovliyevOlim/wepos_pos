@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const BaseUrl = 'http://192.168.1.217:8090/api'
-// export  const  BaseUrl = 'https://backend.miro.uz/api'
+// export const BaseUrl = 'http://192.168.1.217:8090/api'
+export  const  BaseUrl = 'https://app.wepos.uz/api'
 
 
 export const api = ({dispatch}) => (next) => (action) => {
