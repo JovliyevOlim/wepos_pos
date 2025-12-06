@@ -4,37 +4,6 @@ import TradeReport from "./Sidebar/Xisobotlar/TradeReport/TradeReport";
 import PurchaseReport from "./Sidebar/Xisobotlar/PurchaseReport/PurchaseReport";
 import Exchange from "./Sidebar/Savdo/Exchange/Exchange";
 import ExchangeReportAll from "./Sidebar/Xisobotlar/ExchangeReport/ExchangeReportAll";
-// import HodimlarRoyhati from "./Sidebar/Hodimlar/hodimlarRoyxati/HodimlarRoyhati";
-// import Lavozimlar from "./Sidebar/Hodimlar/Lavozimlar/Lavozimlar";
-// import Taxrirlash from "./Sidebar/Hodimlar/hodimlarRoyxati/Taxrirlash/Taxrirlash";
-// import Taminotchilar from "./Sidebar/Hamkorlar/taminotchilar/Taminotchilar";
-// import Customers from "./Sidebar/Hamkorlar/Customers/Customers";
-// import MahsulotImport from "./Sidebar/Maxsulotlar/MahsulotlarImporti/MahsulotImport";
-// import MaxsulotlarRoyxati from "./Sidebar/Maxsulotlar/MahsulotlarRuyxati/MaxsulotlarRoyxati";
-// import MahsulotTurlari from "./Sidebar/Maxsulotlar/MahsulotTurlari/MahsulotTurlari";
-// import Bolimlar from "./Sidebar/Maxsulotlar/bolimlar/Bolimlar";
-// import Firmalar from "./Sidebar/Maxsulotlar/firmalar/Firmalar";
-// import Xarid from "./Sidebar/Haridlar/Xarid qilish/Xarid";
-// import HaridlarRoyxati from "./Sidebar/Haridlar/haridlarRoyxati/HaridlarRoyxati";
-// import BarchaSavdolar from "./Sidebar/Savdo/BarcaSavdolar/BarchaSavdolar";
-// import SavdoQoshish from "./Sidebar/Savdo/AddLossProducts/addLossProducts";
-// import XarajatlarRoyxati from "./Sidebar/Xarajatlar/xarajatlarRoyxati/XarajatlarRoyxati";
-// import XarajatQoshish from "./Sidebar/Xarajatlar/Qoshish/XarajatQoshish";
-// import XarajatTurlari from "./Sidebar/Xarajatlar/xarajatTurlari/XarajatTurlari";
-// import PurchaseReport from "./Sidebar/Xisobotlar/PurchaseReport/PurchaseReport";
-// import MijozlarXisoboti from "./Sidebar/Xisobotlar/MijozlarXisoboti/MijozlarXisoboti";
-// import MaxsulotXisoboti from "./Sidebar/Xisobotlar/MaxsulotlarXisoboti/MaxsulotXisoboti";
-// import SavdodaTulov from "./Sidebar/Xisobotlar/TradeReport/SavdodaTulov";
-// import QoldiqlarXisoboti from "./Sidebar/Xisobotlar/qoldiqlarXisoboti/QoldiqlarXisoboti";
-// import Dukon from "./Sidebar/Settings/DukonSozlamalari/Dukon";
-// import Bazalar from "./Sidebar/Settings/bazalar/Bazalar";
-// import SuperAdmin from "./Sidebar/SUPERADMIN/SuperAdmin";
-// import MaxsulotMiqdoriQoldigi from "./Sidebar/Xisobotlar/MahsulotMiqdoriQoldigi/MaxsulotMiqdoriQoldigi";
-// import LossProducts from "./Sidebar/Savdo/Yoqotilgan Mahsulotlar/LossProducts";
-// import Measurement from "./Sidebar/Maxsulotlar/Measurements/Measurement";
-// import BalanceTableAt from "./Sidebar/Balance/BalanceTableAt/BalanceTableAt";
-// import BalanceHistory from "./Sidebar/Balance/BalanceHistory/BalanceHistory";
-// import SupplierReport from "./Sidebar/Xisobotlar/SupplierReport/SupplierReport";
 
 const HodimlarRoyhati = lazy(() => import("./Sidebar/Hodimlar/hodimlarRoyxati/HodimlarRoyhati"))
 const Lavozimlar = lazy(() => import("./Sidebar/Hodimlar/Lavozimlar/Lavozimlar"))

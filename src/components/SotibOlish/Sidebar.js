@@ -10,7 +10,7 @@ import useWindowWidth from "../Components/useWindowWidth";
 import ProtectedRoute from "./ThirdPage/ProtectedRoute";
 import {routes} from './Routes';
 import users from "../../reducer/users";
-import Logo from "../../img/g14.svg"
+import Logo from "../../img/wepos_logo.png"
 import OpenMenu from "../../img/align-right.svg"
 import {
     CustomerIcon,
@@ -262,8 +262,7 @@ const Sidebar = ({users}) => {
                 <div className="demo-logo-vertical">
                     {
                         !collapsed && <div className={'d-flex gap-1 align-items-center'}>
-                            <img src={Logo} width={32} height={29} alt="logo"/>
-                            <h4 className={'demo-logo-text'}>Miro</h4>
+                            <img src={Logo} width={100} height={40} alt="logo"/>
                         </div>
                     }
                     <Button

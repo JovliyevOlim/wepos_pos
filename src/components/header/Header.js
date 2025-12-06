@@ -5,7 +5,7 @@ import {useTranslation} from "react-i18next";
 import {Link, useLocation} from "react-router-dom";
 import uzLanguage from "../../img/uz.svg";
 import rusLanguage from "../../img/ru.svg";
-import Logo from "../../img/g14.svg";
+import Logo from "../../img/wepos_logo.png";
 import {Select} from "antd";
 import useWindowWidth from "../Components/useWindowWidth";
 
@@ -31,8 +31,7 @@ function Header({id}) {
             <div className="homebody d-flex col-md-12 align-items-center">
                 <div className="col-5">
                     <div className={'d-flex gap-1 align-items-center'}>
-                        <img src={Logo} width={50} height={50} alt="logo"/>
-                        <h4 style={{fontSize:'32px',margin:0,fontWeight:'600'}}>Miro</h4>
+                        <img src={Logo} width={150} height={60} alt="logo"/>
                     </div>
                 </div>
                 <div className="col-7 d-flex gap-2 gap-lg-4 align-items-center justify-content-end">
